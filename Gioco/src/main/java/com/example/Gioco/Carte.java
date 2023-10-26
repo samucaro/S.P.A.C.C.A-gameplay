@@ -1,3 +1,5 @@
+package com.example.Gioco;
+
 import javafx.application.Application;
 import javafx.stage.Stage;
 
