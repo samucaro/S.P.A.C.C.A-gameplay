@@ -4,23 +4,41 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="451.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="361.0" prefWidth="370.0" style="-fx-background-color: #010820; -fx-background-radius: 10" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="159.0" layoutY="28.0" text="S.P.A.C.C.A.">
+      <Label layoutX="121.0" layoutY="167.0" text="Administrator" textFill="WHITE">
          <font>
-            <Font size="27.0" />
+            <Font name="Segoe UI Italic" size="23.0" />
          </font>
       </Label>
-      <TextField layoutX="151.0" layoutY="175.0" promptText="Utente" />
-      <PasswordField layoutX="151.0" layoutY="219.0" promptText="Password" />
-      <Button layoutX="189.0" layoutY="262.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="73.0" text="Login">
+      <TextField layoutX="115.0" layoutY="201.0" promptText="Utente" />
+      <PasswordField layoutX="115.0" layoutY="233.0" promptText="Password" />
+      <Button layoutX="149.0" layoutY="272.0" mnemonicParsing="false" prefHeight="23.0" prefWidth="73.0" text="Login">
          <font>
             <Font size="11.0" />
          </font>
       </Button>
+      <Pane layoutX="128.0" layoutY="36.0" prefHeight="117.0" prefWidth="116.0" style="-fx-background-color: white; -fx-background-radius: 25;">
+         <effect>
+            <Shadow>
+               <color>
+                  <Color red="1.0" green="1.0" blue="1.0" />
+               </color>
+            </Shadow>
+         </effect>
+      </Pane>
+      <ImageView fitHeight="107.0" fitWidth="111.0" layoutX="132.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@rounded-in-photoretrica.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
