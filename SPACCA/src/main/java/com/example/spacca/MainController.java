@@ -19,7 +19,7 @@ public class MainController {
 
     @FXML
     public void initialize() {
-        Image sfondo = new Image("file:sfondostelle.jpg");
+        Image sfondo = new Image(getClass().getResource("sfondostelle.jpg").toString());
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, false, true);
         BackgroundImage backgroundImage = new BackgroundImage(sfondo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         anchorPane.setBackground(new Background(backgroundImage));

@@ -64,31 +64,31 @@ public class OvalPaneController {
         Image immaggine;
         switch (i) {
             case 0:
-                immaggine = new Image("file:mercury.jpg");
+                immaggine = new Image(getClass().getResource("mercury.jpg").toString());
                 break;
             case 1:
-                immaggine = new Image("file:venus.jpg");
+                immaggine = new Image(getClass().getResource("venus.jpg").toString());
                 break;
             case 2:
-                immaggine = new Image("file:earth.jpg");
+                immaggine = new Image(getClass().getResource("earth.jpg").toString());
                 break;
             case 3:
-                immaggine = new Image("file:mars.jpg");
+                immaggine = new Image(getClass().getResource("mars.jpg").toString());
                 break;
             case 4:
-                immaggine = new Image("file:jupiter.jpg");
+                immaggine = new Image(getClass().getResource("jupiter.jpg").toString());
                 break;
             case 5:
-                immaggine = new Image("file:saturn.jpg");
+                immaggine = new Image(getClass().getResource("saturn.jpg").toString());
                 break;
             case 6:
-                immaggine = new Image("file:uranus.jpg");
+                immaggine = new Image(getClass().getResource("uranus.jpg").toString());
                 break;
             case 7:
-                immaggine = new Image("file:neptune.jpg");
+                immaggine = new Image(getClass().getResource("neptune.jpg").toString());
                 break;
             default:
-                immaggine = new Image("file:earth.jpg");
+                immaggine = new Image(getClass().getResource("earth.jpg").toString());
                 break;
         }
         return immaggine;
