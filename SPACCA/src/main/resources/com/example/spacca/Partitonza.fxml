@@ -5,9 +5,9 @@
 <?import javafx.scene.layout.Pane?>
 
 <AnchorPane fx:id="anchorPane" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.spacca.MainController">
-   <Pane prefHeight="900.0" prefWidth="1300.0">
+   <Pane>
       <children>
-            <fx:include fx:id="ovalPane" prefHeight="900.0" prefWidth="1300.0" source="OvalPane.fxml" />
+            <fx:include fx:id="ovalPane" source="OvalPane.fxml" />
       </children>
    </Pane>
       <Button fx:id="turnButton" alignment="CENTER" contentDisplay="CENTER" layoutX="606.0" layoutY="850.0" onAction="#handleTurnButton" text="Cambia Turno" />
