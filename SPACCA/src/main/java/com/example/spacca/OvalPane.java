@@ -12,8 +12,8 @@ public class OvalPane extends Application {
     public void start(Stage primaryStage) throws Exception{
         //primaryStage.setResizable(false);
         Parent root = FXMLLoader.load(getClass().getResource("Partitonza.fxml"));
-        primaryStage.setMinWidth(250);
-        primaryStage.setMinHeight(150);
+        primaryStage.setMinWidth(900);
+        primaryStage.setMinHeight(600);
         Scene scene = new Scene(root);
         impostaListener(scene);
         PerspectiveCamera cam = new PerspectiveCamera();
