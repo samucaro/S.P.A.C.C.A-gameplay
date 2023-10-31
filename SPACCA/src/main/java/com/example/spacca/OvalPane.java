@@ -10,14 +10,27 @@ import javafx.stage.Stage;
 public class OvalPane extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
-        primaryStage.setResizable(false);
+        //primaryStage.setResizable(false);
         Parent root = FXMLLoader.load(getClass().getResource("Partitonza.fxml"));
+        primaryStage.setMinWidth(250);
+        primaryStage.setMinHeight(150);
         Scene scene = new Scene(root);
+        impostaListener(scene);
         PerspectiveCamera cam = new PerspectiveCamera();
         scene.setCamera(cam);
         primaryStage.setTitle("Test JFX");
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    public void impostaListener(Scene scene){
+        scene.widthProperty().addListener((obs, oldVal, newVal) -> {
+            OvalPaneController.setScenaX((Double) newVal);
+        });
+
+        scene.heightProperty().addListener((obs, oldVal, newVal) -> {
+            OvalPaneController.setScenaY((Double) newVal);
+        });
     }
 
     public static void main(String[] args) {
