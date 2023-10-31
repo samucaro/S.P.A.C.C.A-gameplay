@@ -90,19 +90,13 @@ public class HomePageController {
                 System.out.println("Se sbagli un'altra volta l'accesso verrà bloccato per 30 secondi");
             }
             else if(cont == 5) {
-                login.setDisable(true);
                 textTimer3.run();
-                login.setDisable(false);
             }
             else if(cont == 6) {
-                login.setDisable(true);
                 textTimer6.run();
-                login.setDisable(false);
             }
             else if(cont == 7) {
-                login.setDisable(true);
                 textTimer5.run();
-                login.setDisable(false);
             }
             else if(cont >= 8) {
                 login.setDisable(true);
