@@ -38,8 +38,9 @@ public class OvalPaneController {
             Image texture = textures(i);
             material.setDiffuseMap(texture);
             ((Sphere) spheres[i].getChildren().get(0)).setMaterial(material);
-            ((Sphere) spheres[i].getChildren().get(0)).setRotationAxis(Rotate.Y_AXIS);
+            spheres[i].getChildren().get(0).setRotationAxis(Rotate.Y_AXIS);
             provaAnimazione(i);
+
             /*if (i==5){
                 Cylinder ring = new Cylinder(80, 3);
                 PhongMaterial materialS = new PhongMaterial();
@@ -59,7 +60,7 @@ public class OvalPaneController {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
-                ((Sphere) spheres[i].getChildren().get(0)).rotateProperty().set(((Sphere) spheres[i].getChildren().get(0)).getRotate() + 0.2);
+                spheres[i].getChildren().get(0).rotateProperty().set(spheres[i].getChildren().get(0).getRotate() + 0.2);
             }
         };
         timer.start();
@@ -77,37 +78,16 @@ public class OvalPaneController {
     }
 
     private Image textures(int i){
-        Image immaggine;
-        switch (i) {
-            case 0:
-                immaggine = new Image(getClass().getResource("mercury.jpg").toString());
-                break;
-            case 1:
-                immaggine = new Image(getClass().getResource("venus.jpg").toString());
-                break;
-            case 2:
-                immaggine = new Image(getClass().getResource("earth.jpg").toString());
-                break;
-            case 3:
-                immaggine = new Image(getClass().getResource("mars.jpg").toString());
-                break;
-            case 4:
-                immaggine = new Image(getClass().getResource("jupiter.jpg").toString());
-                break;
-            case 5:
-                immaggine = new Image(getClass().getResource("saturn.jpg").toString());
-                break;
-            case 6:
-                immaggine = new Image(getClass().getResource("uranus.jpg").toString());
-                break;
-            case 7:
-                immaggine = new Image(getClass().getResource("neptune.jpg").toString());
-                break;
-            default:
-                immaggine = new Image(getClass().getResource("earth.jpg").toString());
-                break;
-        }
-        return immaggine;
+        return switch (i) {
+            case 0 -> new Image(getClass().getResource("mercury.jpg").toString());
+            case 1 -> new Image(getClass().getResource("venus.jpg").toString());
+            case 3 -> new Image(getClass().getResource("mars.jpg").toString());
+            case 4 -> new Image(getClass().getResource("jupiter.jpg").toString());
+            case 5 -> new Image(getClass().getResource("saturn.jpg").toString());
+            case 6 -> new Image(getClass().getResource("uranus.jpg").toString());
+            case 7 -> new Image(getClass().getResource("neptune.jpg").toString());
+            default -> new Image(getClass().getResource("earth.jpg").toString());
+        };
     }
 
 
@@ -118,7 +98,6 @@ public class OvalPaneController {
             spheres[indice].setTranslateX(radiusX * Math.cos(2 * Math.PI * (i + 1) / n) + centroX);
             spheres[indice].setTranslateY(radiusY * Math.sin(2 * Math.PI * (i + 1) / n) + centroY);
         }
-
     }
 
     public void cambiaTurno() {
@@ -134,9 +113,10 @@ public class OvalPaneController {
         KeyFrame kf = new KeyFrame(Duration.seconds(1), kv1, kv2);
         timeline.getKeyFrames().add(kf);
         timeline.playFromStart();
-        turnoDi=(turnoDi==7)?0:turnoDi+1;
-        System.out.println(turnoDi);
-        System.out.println("Fatto!!");
+        timeline.setOnFinished(event -> {
+            turnoDi=(turnoDi==7)?0:turnoDi+1;
+            posizionaSfere();
+        });
     }
 
     private void addSelectionMouse() {
