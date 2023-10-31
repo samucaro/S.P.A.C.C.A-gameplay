@@ -8,7 +8,7 @@
    <Pane prefHeight="900.0" prefWidth="1300.0">
       <children>
             <fx:include fx:id="ovalPane" prefHeight="900.0" prefWidth="1300.0" source="OvalPane.fxml" />
+            <Button fx:id="turnButton" alignment="CENTER" contentDisplay="CENTER" layoutX="605.0" layoutY="826.0" onAction="#handleTurnButton" text="Cambia Turno" />
       </children>
    </Pane>
-      <Button fx:id="turnButton" alignment="CENTER" contentDisplay="CENTER" layoutX="606.0" layoutY="850.0" onAction="#handleTurnButton" text="Cambia Turno" />
 </AnchorPane>
