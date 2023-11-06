@@ -42,7 +42,6 @@ public class BlockPageController {
     }
 
     public void switchToHomePage() throws IOException {
-        System.out.println("ciao");
         root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
         stage =(Stage) timer.getScene().getWindow();
         scene = new Scene(root);

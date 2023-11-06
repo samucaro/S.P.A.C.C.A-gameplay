@@ -72,13 +72,6 @@ public class HomePageController {
         stage.setScene(scene);
         stage.show();
     }
-    /*public void switchToHomePage(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
-        stage =(Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }*/
 
     private void setPassword(String psw) {
         this.psw = psw;
