@@ -40,5 +40,6 @@
             <Image url="@../../../logo.png" />
          </image>
       </ImageView>
+      <Label fx:id="error" layoutX="77.0" layoutY="264.0" text="Accesso Negato! Utente o Password errati!" textFill="RED" visible="false" />
    </children>
 </AnchorPane>

@@ -3,107 +3,87 @@ package com.example.spacca;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import java.io.IOException;
 
 
 public class HomePageController {
+    private String psw;
+    private String ut;
+    private Scene scene;
+    private Parent root;
     @FXML
-    private TextField username = null;
+    private TextField username;
     @FXML
-    private PasswordField password = null;
-    private final Button login = new Button("Label del Pulsante");;
-    private static int cont=1;
-    private Task<Void> textTimer3, textTimer6, textTimer5, textTimer;
+    private PasswordField password;
+    @FXML
+    private Button login;
+    private static int cont;
+    @FXML
+    private Label error;
 
     @FXML
     public void initialize() {
-        textTimer3 = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-                int seconds = 1;
-                while(seconds<=30) {
-                    System.out.println(seconds);
-                    seconds++;
-                    Thread.sleep(1000);
-                }
-                return null;
-            }
-        };
-        textTimer3.setOnSucceeded(event -> {
-            username.deleteText(0, username.getLength());
-            password.deleteText(0, password.getLength());
-            System.out.println("Ora puoi reinserire le credenziali.");
-            System.out.println("Consigliamo di ricercare le credenziali o fare il recupero delle credenziali." +
-                    "Da ora in poi avrai una sola possibilità, se sbagli l'accesso verrà bloccato per 1 minuto");
-        });
-
-        textTimer6 = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-                int seconds = 1;
-                while(seconds<=60) {
-                    System.out.println(seconds);
-                    seconds++;
-                    Thread.sleep(1000);
-                }
-                return null;
-            }
-        };
-        textTimer6.setOnSucceeded(event -> {
-            username.deleteText(0, username.getLength());
-            password.deleteText(0, password.getLength());
-            System.out.println("Ora puoi reinserire le credenziali.");
-            System.out.println("Consigliamo di ricercare le credenziali o fare il recupero delle credenziali." +
-                    "Da ora in poi avrai una sola possibilità, se sbagli l'accesso verrà bloccato per 5 minuti");
-        });
-        textTimer5 = new Task<Void>() {
-            @Override
-            protected Void call() throws Exception {
-                int seconds = 1;
-                while(seconds<=300000) {
-                    System.out.println(seconds);
-                    seconds++;
-                    Thread.sleep(1000);
-                }
-                return null;
-            }
-        };
-        textTimer5.setOnSucceeded(event -> {
-            username.deleteText(0, username.getLength());
-            password.deleteText(0, password.getLength());
-            System.out.println("Ora puoi reinserire le credenziali.");
-            System.out.println("Consigliamo di ricercare le credenziali o fare il recupero delle credenziali." +
-                    "Da ora in poi avrai una sola possibilità, se sbagli l'accesso verrà bloccato definitivamente.");
-        });
+        ut = "samucaro";
+        psw = "Fiorentina60S!";
+        cont=1;
     }
 
-    public void verifyLogin() {
-        if(username.getText().equals("samucaro") && password.getText().equals("Fiorentina60S!")) {
+    public void verifyLogin(ActionEvent event) throws IOException {
+        if(username.getText().equals("samucaro") && password.getText().equals(psw)) {
             System.out.println("Accesso Riuscito!");
             cont=1;
         }
         else {
-            System.out.println("Accesso Negato! Utente o Password errati!");
+            error.setVisible(true);
             if(cont == 4) {
                 System.out.println("Se sbagli un'altra volta l'accesso verrà bloccato per 30 secondi");
             }
             else if(cont == 5) {
-                textTimer3.run();
+                switchToBlockPage(event);
             }
             else if(cont == 6) {
-                textTimer6.run();
+                switchToBlockPage(event);
             }
             else if(cont == 7) {
-                textTimer5.run();
+                switchToBlockPage(event);
             }
             else if(cont >= 8) {
-                login.setDisable(true);
+                switchToBlockPage(event);
             }
             cont++;
             username.deleteText(0, username.getLength());
             password.deleteText(0, password.getLength());
         }
+    }
+
+    public void switchToBlockPage(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("BlockPage.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    /*public void switchToHomePage(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
+        stage =(Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }*/
+
+    private void setPassword(String psw) {
+        this.psw = psw;
+    }
+    private void setUsername(String ut) {
+        this.ut = ut;
     }
 }
