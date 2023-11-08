@@ -6,8 +6,10 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="SPACCA" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="SPACCA" target="21" />
+    </bytecodeTargetLevel>
   </component>
 </project>
