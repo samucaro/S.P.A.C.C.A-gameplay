@@ -7,8 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Cylinder;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
@@ -18,13 +16,11 @@ public class OvalPaneController {
     @FXML
     private Pane ovalPane;
     private static Group[] spheres;
-    private static double radiusX = 500.0;
-    private static double radiusY = 300.0;
-    private static double centroX = 650.0;
-    private static double centroY = 450.0;
+    private static double centroX;
+    private static double centroY;
     private static final int n = 8;
     private double anchorX, anchorY;
-    private static int turnoDi = 0;
+    private static int turnoDi = 5;
     private double anchorAngleX = 0;
     private double anchorAngleY = 0;
 
@@ -33,14 +29,13 @@ public class OvalPaneController {
         spheres = new Group[n];
         for (int i = 0; i < n; i++) {
             spheres[i] = new Group();
-            spheres[i].getChildren().add(new Sphere(50));
+            spheres[i].getChildren().add(new Sphere(60));
             PhongMaterial material = new PhongMaterial();
             Image texture = textures(i);
             material.setDiffuseMap(texture);
             ((Sphere) spheres[i].getChildren().get(0)).setMaterial(material);
             spheres[i].getChildren().get(0).setRotationAxis(Rotate.Y_AXIS);
             provaAnimazione(i);
-
             /*if (i==5){
                 Cylinder ring = new Cylinder(80, 3);
                 PhongMaterial materialS = new PhongMaterial();
@@ -52,7 +47,6 @@ public class OvalPaneController {
             }*/
             ovalPane.getChildren().add(spheres[i]);
         }
-        ovalPane.heightProperty().addListener((obs, oldVal, newVal) -> posizionaSfere());
         addSelectionMouse();
     }
 
@@ -65,52 +59,54 @@ public class OvalPaneController {
         };
         timer.start();
     }
-
+    private Image textures(int i){
+        return switch (i) {
+            case 7 -> new Image(getClass().getResource("mercury.jpg").toString());
+            case 6 -> new Image(getClass().getResource("venus.jpg").toString());
+            case 5 -> new Image(getClass().getResource("earth.jpg").toString());
+            case 4 -> new Image(getClass().getResource("mars.jpg").toString());
+            case 3 -> new Image(getClass().getResource("jupiter.jpg").toString());
+            default -> new Image(getClass().getResource("saturn.jpg").toString());
+            case 1 -> new Image(getClass().getResource("uranus.jpg").toString());
+            case 0 -> new Image(getClass().getResource("neptune.jpg").toString());
+        };
+    }
     public static void setScenaX(double x){
-        radiusX=(x/2-250);
         centroX=x/2;
         posizionaSfere();
     }
     public static void setScenaY(double y){
-        radiusY=(y/2-150);
         centroY=y/2;
         posizionaSfere();
     }
-
-    private Image textures(int i){
-        return switch (i) {
-            case 0 -> new Image(getClass().getResource("mercury.jpg").toString());
-            case 1 -> new Image(getClass().getResource("venus.jpg").toString());
-            case 3 -> new Image(getClass().getResource("mars.jpg").toString());
-            case 4 -> new Image(getClass().getResource("jupiter.jpg").toString());
-            case 5 -> new Image(getClass().getResource("saturn.jpg").toString());
-            case 6 -> new Image(getClass().getResource("uranus.jpg").toString());
-            case 7 -> new Image(getClass().getResource("neptune.jpg").toString());
-            default -> new Image(getClass().getResource("earth.jpg").toString());
-        };
-    }
-
-
-
     private static void posizionaSfere() {
         for (int i = 0; i < n; i++) {
             int indice = ((8-turnoDi) + i) % n;
-            spheres[indice].setTranslateX(radiusX * Math.cos(2 * Math.PI * (i + 1) / n) + centroX);
-            spheres[indice].setTranslateY(radiusY * Math.sin(2 * Math.PI * (i + 1) / n) + centroY);
+            //System.out.println(centroX-centroY>=0?centroY/5:centroX/7.5);
+            ((Sphere) spheres[indice].getChildren().get(0)).setRadius(centroX-centroY>=0?centroY/5:centroX/7.5);
+            spheres[indice].setTranslateX((centroX-((Sphere) spheres[indice].getChildren().get(0)).getRadius()*2+50) * Math.cos(2 * Math.PI * (i + 1) / n) + centroX);
+            spheres[indice].setTranslateY((centroY-((Sphere) spheres[indice].getChildren().get(0)).getRadius()*2+40) * Math.sin(2 * Math.PI * (i + 1) / n) + centroY);
+            spheres[indice].setScaleX(i==1?0.6:1);
+            spheres[indice].setScaleY(i==1?0.6:1);
         }
     }
-
     public void cambiaTurno() {
+        posizionaSfere();
         Timeline timeline = new Timeline();
-        for (int i = 0; i < n-1; i++) {
+        for (int ind = 0; ind < n-1; ind++) {
+            int i = ind % n;
             KeyValue kv1 = new KeyValue(spheres[i].translateXProperty(), spheres[i+1].getTranslateX());
             KeyValue kv2 = new KeyValue(spheres[i].translateYProperty(), spheres[i+1].getTranslateY());
-            KeyFrame kf = new KeyFrame(Duration.seconds(1), kv1, kv2);
+            KeyValue kv3 = new KeyValue(spheres[i].scaleXProperty(), spheres[i+1].getScaleX());
+            KeyValue kv4 = new KeyValue(spheres[i].scaleYProperty(), spheres[i+1].getScaleY());
+            KeyFrame kf = new KeyFrame(Duration.seconds(1), kv1, kv2, kv3, kv4);
             timeline.getKeyFrames().add(kf);
         }
         KeyValue kv1 = new KeyValue(spheres[n-1].translateXProperty(), spheres[0].getTranslateX());
         KeyValue kv2 = new KeyValue(spheres[n-1].translateYProperty(), spheres[0].getTranslateY());
-        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv1, kv2);
+        KeyValue kv3 = new KeyValue(spheres[n-1].scaleXProperty(), spheres[0].getScaleX());
+        KeyValue kv4 = new KeyValue(spheres[n-1].scaleYProperty(), spheres[0].getScaleY());
+        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv1, kv2, kv3, kv4);
         timeline.getKeyFrames().add(kf);
         timeline.playFromStart();
         timeline.setOnFinished(event -> {
@@ -118,25 +114,20 @@ public class OvalPaneController {
             posizionaSfere();
         });
     }
-
     private void addSelectionMouse() {
         for (int i = 0; i < n; i++) {
             final Sphere currentSphere = ((Sphere) spheres[i].getChildren().get(0));
             final Group currentGroup = spheres[i];
             currentSphere.setOnMousePressed(event -> {
+                MainController.setDisableHD(false);
                 double x = currentGroup.getTranslateX();
                 double y = currentGroup.getTranslateY();
-                double z = currentGroup.getTranslateZ();
-                Timeline timeline = new Timeline();
-                KeyValue kv1 = new KeyValue(currentGroup.translateXProperty(), centroX);
-                KeyValue kv2 = new KeyValue(currentGroup.translateYProperty(), centroY);
-                KeyValue kv3 = new KeyValue(currentGroup.translateZProperty(), -(centroX-centroY>=0?centroY*2.8:centroX*2.8));
-                KeyFrame kf = new KeyFrame(Duration.seconds(1), kv1, kv2, kv3);
-                timeline.getKeyFrames().add(kf);
-                timeline.play();
+                double s = currentGroup.getScaleX();
+                double scala = (centroX%centroY)/100;
+                spostaSfere(currentGroup, scala, centroX, centroY);
                 Button bottone = new Button("<---");
-                bottone.setTranslateX(x-35);
-                bottone.setTranslateY(y);
+                bottone.setTranslateX(10);
+                bottone.setTranslateY(10);
                 Pane overlay = new Pane();
                 overlay.setPrefSize(centroX*2,centroY*2);
                 overlay.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");
@@ -144,34 +135,40 @@ public class OvalPaneController {
                 pause.setOnFinished(mettibottone -> {
                     ovalPane.getChildren().add(overlay);
                     ovalPane.getChildren().remove(currentGroup);
-                    ovalPane.getChildren().addAll(currentGroup, bottone);
+                    ovalPane.getChildren().addAll(bottone, currentGroup);
                     addMouseHandlers(currentSphere);
                 });
                 pause.play();
                 bottone.setOnAction(evento -> {
-                    Timeline timelinez = new Timeline();
-                    System.out.println("okokok");
-                    KeyValue kva = new KeyValue(currentGroup.translateXProperty(), x);
-                    KeyValue kvb = new KeyValue(currentGroup.translateYProperty(), y);
-                    KeyValue kvc = new KeyValue(currentGroup.translateZProperty(), z);
-                    KeyFrame kff = new KeyFrame(Duration.seconds(1), kva, kvb, kvc);
-                    timelinez.getKeyFrames().add(kff);
-                    timelinez.play();
+                    MainController.setDisableHD(true);
+                    spostaSfere(currentGroup, s, x, y);
                     ovalPane.getChildren().removeAll(bottone,overlay);
                     resetMouseHandlers(currentSphere);
+                    posizionaSfere();
+
                 });
             });
 
         }
     }
-    private void resetMouseHandlers(Sphere sfera) {
-        final Sphere currentSphere = sfera;
-        currentSphere.setOnMousePressed(null);
-        currentSphere.setOnMouseDragged(null);
-        currentSphere.setOnMouseReleased(null);
-        addSelectionMouse();
+
+    private void spostaSfere(Group currentGroup, double scala, double centroX, double centroY) {
+        Timeline timeline = new Timeline();
+        KeyValue kv1 = new KeyValue(currentGroup.translateXProperty(), centroX);
+        KeyValue kv2 = new KeyValue(currentGroup.translateYProperty(), centroY);
+        KeyValue scx = new KeyValue(currentGroup.scaleXProperty(), scala);
+        KeyValue scy = new KeyValue(currentGroup.scaleYProperty(), scala);
+        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv1, kv2, scx, scy);
+        timeline.getKeyFrames().add(kf);
+        timeline.play();
     }
 
+    private void resetMouseHandlers(Sphere sfera) {
+        sfera.setOnMousePressed(null);
+        sfera.setOnMouseDragged(null);
+        sfera.setOnMouseReleased(null);
+        addSelectionMouse();
+    }
     private void addMouseHandlers(Sphere sfera) {
         final Sphere currentSphere = sfera;
         currentSphere.setOnMousePressed(event -> {
@@ -187,9 +184,11 @@ public class OvalPaneController {
                 double deltaX = event.getSceneX() - anchorX;
                 double deltaY = event.getSceneY() - anchorY;
                 currentSphere.setRotate(anchorAngleX - (deltaX * 0.2));
-                currentSphere.getTransforms().add(new Rotate(deltaY * 0.2, Rotate.X_AXIS));
+                Rotate RX = new Rotate(deltaY * 0.2, Rotate.X_AXIS);
+                currentSphere.getTransforms().add(RX);
                 currentSphere.setRotate(anchorAngleY - (deltaY * 0.2));
-                currentSphere.getTransforms().add(new Rotate(-deltaX * 0.2, Rotate.Y_AXIS));
+                Rotate RY = new Rotate(-deltaX * 0.2, Rotate.Y_AXIS);
+                currentSphere.getTransforms().add(RY);
                 anchorX = event.getSceneX();
                 anchorY = event.getSceneY();
             }

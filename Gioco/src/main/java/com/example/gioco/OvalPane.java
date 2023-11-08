@@ -2,6 +2,7 @@ package com.example.gioco;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.ParallelCamera;
 import javafx.scene.Parent;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
@@ -15,7 +16,9 @@ public class OvalPane extends Application {
         primaryStage.setMinHeight(600);
         Scene scene = new Scene(root);
         impostaListener(scene);
-        PerspectiveCamera cam = new PerspectiveCamera();
+        ParallelCamera cam = new ParallelCamera();
+        cam.setFarClip(2000);
+        cam.setNearClip(0.5);
         scene.setCamera(cam);
         primaryStage.setTitle("Test JFX");
         primaryStage.setScene(scene);
@@ -25,10 +28,12 @@ public class OvalPane extends Application {
     public void impostaListener(Scene scene){
         scene.widthProperty().addListener((obs, oldVal, newVal) -> {
             OvalPaneController.setScenaX((Double) newVal);
+            MainController.setScenaX((Double) newVal);
         });
 
         scene.heightProperty().addListener((obs, oldVal, newVal) -> {
             OvalPaneController.setScenaY((Double) newVal);
+            MainController.setScenaY((Double) newVal);
         });
     }
 
