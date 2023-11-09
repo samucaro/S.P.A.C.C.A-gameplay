@@ -97,7 +97,6 @@ public class MainController {
     }
     public static void reShape() {
         double h = centroX-centroY>=0?centroY/5:centroX/7.5;
-        System.out.println(h);
         orx=h + centroX*1/2;
         ory=h + centroY*1/1.5;
         irx=2*h;

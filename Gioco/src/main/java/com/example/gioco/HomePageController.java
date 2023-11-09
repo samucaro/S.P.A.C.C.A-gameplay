@@ -39,7 +39,7 @@ public class HomePageController {
     }
 
     public void verifyLogin(ActionEvent event) throws IOException {
-        if(username.getText().equals("samucaro") && password.getText().equals(psw)) {
+        if(username.getText().equals(ut) && password.getText().equals(psw)) {
             switchOvalPane(event);
             cont=1;
         }
@@ -69,15 +69,15 @@ public class HomePageController {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setMinWidth(900);
         stage.setMinHeight(600);
-        Scene scene = new Scene(root);
+        scene = new Scene(root);
         impostaListener(scene);
         ParallelCamera cam = new ParallelCamera();
         cam.setFarClip(2000);
         cam.setNearClip(0.5);
         scene.setCamera(cam);
-        stage.setTitle("S.P.A.C.C.A.");
-        Image logo = new Image("logo.png");
-        stage.getIcons().add(logo);
+        //stage.setTitle("S.P.A.C.C.A.");
+        //Image logo = new Image("logo.png");
+        //stage.getIcons().add(logo);
         stage.setScene(scene);
         stage.show();
     }
