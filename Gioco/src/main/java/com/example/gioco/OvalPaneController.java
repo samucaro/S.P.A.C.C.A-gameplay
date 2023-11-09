@@ -1,5 +1,4 @@
 package com.example.gioco;
-//aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
