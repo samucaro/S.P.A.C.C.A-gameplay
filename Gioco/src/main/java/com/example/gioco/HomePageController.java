@@ -40,6 +40,7 @@ public class HomePageController {
 
     public void verifyLogin(ActionEvent event) throws IOException {
         if(username.getText().equals(ut) && password.getText().equals(psw)) {
+            System.out.println("ciao");
             switchOvalPane(event);
             cont=1;
         }
@@ -75,9 +76,6 @@ public class HomePageController {
         cam.setFarClip(2000);
         cam.setNearClip(0.5);
         scene.setCamera(cam);
-        //stage.setTitle("S.P.A.C.C.A.");
-        //Image logo = new Image("logo.png");
-        //stage.getIcons().add(logo);
         stage.setScene(scene);
         stage.show();
     }
