@@ -11,18 +11,16 @@ import javafx.scene.control.Label;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.io.IOException;
+import java.util.Objects;
+
 public class BlockPageController {
-    private Stage stage;
-    private Scene scene;
-    private Parent root;
     @FXML
     private Label timer;
-    private Timeline timeline;
     private int seconds;
     @FXML
     public void initialize() {
         seconds=1;
-        timeline = new Timeline(new KeyFrame(Duration.seconds(1), this::updateTimer));
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), this::updateTimer));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
@@ -40,9 +38,9 @@ public class BlockPageController {
     }
 
     public void switchToHomePage() throws IOException {
-        root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
-        stage =(Stage) timer.getScene().getWindow();
-        scene = new Scene(root);
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("HomePage.fxml")));
+        Stage stage = (Stage) timer.getScene().getWindow();
+        Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
