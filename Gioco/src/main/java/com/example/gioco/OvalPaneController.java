@@ -165,6 +165,7 @@ public class OvalPaneController {
         timeline.play();
     }
     private void resetMouseHandlers(Sphere sfera) {
+        System.out.println("ciao");
         sfera.setOnMousePressed(null);
         sfera.setOnMouseDragged(null);
         sfera.setOnMouseReleased(null);
