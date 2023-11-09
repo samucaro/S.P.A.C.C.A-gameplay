@@ -26,7 +26,6 @@ public class BlockPageController {
     }
 
     private void updateTimer(ActionEvent event) {
-        System.out.println("ciao");
         timer.setText("" + seconds);
         seconds++;
         if(seconds == 32) {
