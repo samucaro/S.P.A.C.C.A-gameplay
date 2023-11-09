@@ -7,7 +7,9 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
+import javafx.scene.shape.Cylinder;
 import javafx.scene.shape.Sphere;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
@@ -16,6 +18,7 @@ public class OvalPaneController {
     @FXML
     private Pane ovalPane;
     private static Group[] spheres;
+    private Cylinder ring;
     private static double centroX;
     private static double centroY;
     private static final int n = 8;
@@ -23,7 +26,6 @@ public class OvalPaneController {
     private static int turnoDi = 5;
     private double anchorAngleX = 0;
     private double anchorAngleY = 0;
-
     @FXML
     public void initialize() {
         spheres = new Group[n];
@@ -36,20 +38,19 @@ public class OvalPaneController {
             ((Sphere) spheres[i].getChildren().get(0)).setMaterial(material);
             spheres[i].getChildren().get(0).setRotationAxis(Rotate.Y_AXIS);
             provaAnimazione(i);
-            /*if (i==5){
-                Cylinder ring = new Cylinder(80, 3);
+            if (i==2){
+                ring = new Cylinder(80, 3);
                 PhongMaterial materialS = new PhongMaterial();
                 materialS.setDiffuseColor(Color.BEIGE);
                 ring.setMaterial(materialS);
                 ring.setRotationAxis(Rotate.Y_AXIS);
                 ring.setRotate(75);
                 spheres[i].getChildren().add(ring);
-            }*/
+            }
             ovalPane.getChildren().add(spheres[i]);
         }
         addSelectionMouse();
     }
-
     private void provaAnimazione(int i) {
         AnimationTimer timer = new AnimationTimer() {
             @Override
@@ -81,8 +82,10 @@ public class OvalPaneController {
     }
     private static void posizionaSfere() {
         for (int i = 0; i < n; i++) {
-            int indice = ((8-turnoDi) + i) % n;
-            //System.out.println(centroX-centroY>=0?centroY/5:centroX/7.5);
+            int indice = ((8 - turnoDi) + i) % n;
+            if (indice == 2){
+                ((Cylinder) spheres[indice].getChildren().get(1)).setRadius((centroX-centroY>=0?centroY/5:centroX/7.5)+30);
+            }
             ((Sphere) spheres[indice].getChildren().get(0)).setRadius(centroX-centroY>=0?centroY/5:centroX/7.5);
             spheres[indice].setTranslateX((centroX-((Sphere) spheres[indice].getChildren().get(0)).getRadius()*2+50) * Math.cos(2 * Math.PI * (i + 1) / n) + centroX);
             spheres[indice].setTranslateY((centroY-((Sphere) spheres[indice].getChildren().get(0)).getRadius()*2+40) * Math.sin(2 * Math.PI * (i + 1) / n) + centroY);
@@ -151,7 +154,6 @@ public class OvalPaneController {
 
         }
     }
-
     private void spostaSfere(Group currentGroup, double scala, double centroX, double centroY) {
         Timeline timeline = new Timeline();
         KeyValue kv1 = new KeyValue(currentGroup.translateXProperty(), centroX);
@@ -162,7 +164,6 @@ public class OvalPaneController {
         timeline.getKeyFrames().add(kf);
         timeline.play();
     }
-
     private void resetMouseHandlers(Sphere sfera) {
         sfera.setOnMousePressed(null);
         sfera.setOnMouseDragged(null);

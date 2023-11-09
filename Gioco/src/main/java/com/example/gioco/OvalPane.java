@@ -6,6 +6,7 @@ import javafx.scene.ParallelCamera;
 import javafx.scene.Parent;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class OvalPane extends Application {
@@ -20,7 +21,9 @@ public class OvalPane extends Application {
         cam.setFarClip(2000);
         cam.setNearClip(0.5);
         scene.setCamera(cam);
-        primaryStage.setTitle("Test JFX");
+        primaryStage.setTitle("S.P.A.C.C.A.");
+        Image logo = new Image("logo.png");
+        primaryStage.getIcons().add(logo);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
