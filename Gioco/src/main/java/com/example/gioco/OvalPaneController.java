@@ -196,6 +196,7 @@ public class OvalPaneController {
         });
         currentSphere.setOnMouseReleased(event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
+                System.out.println("ciao");
                 currentSphere.setRotate(0);
                 currentSphere.setRotationAxis(Rotate.Y_AXIS);
                 currentSphere.getTransforms().clear();
