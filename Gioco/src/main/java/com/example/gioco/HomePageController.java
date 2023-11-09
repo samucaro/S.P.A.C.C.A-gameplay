@@ -41,7 +41,6 @@ public class HomePageController {
     public void verifyLogin(ActionEvent event) throws IOException {
         if(username.getText().equals(ut) && password.getText().equals(psw)) {
             switchOvalPane(event);
-            System.out.println("ciao");
             cont=1;
         }
         else {
