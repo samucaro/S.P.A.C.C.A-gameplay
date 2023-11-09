@@ -28,7 +28,7 @@ public class BlockPageController {
     private void updateTimer(ActionEvent event) {
         timer.setText("" + seconds);
         seconds++;
-        if(seconds == 32) {
+        if(seconds == 33) {
             try {
                 switchToHomePage();
             } catch (IOException e) {
