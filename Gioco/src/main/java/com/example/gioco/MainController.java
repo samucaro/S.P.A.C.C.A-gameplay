@@ -18,6 +18,7 @@ public class MainController {
     @FXML
     private OvalPaneController ovalPaneController;
     private static BooleanProperty resetHD = new SimpleBooleanProperty(false);
+    private static Partita partita;
     private static double centroX = 450.0;
     private static double centroY = 300.0;
     private static double orx = 230.0;
@@ -38,6 +39,12 @@ public class MainController {
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, false, true);
         BackgroundImage backgroundImage = new BackgroundImage(sfondo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         anchorPane.setBackground(new Background(backgroundImage));
+        partita = new Partita();
+        partita.iniziaPartita(new String[]{"Nome1", "Nome2", "Nome3", "Nome4", "Nome5", "Nome6", "Nome7", "Nome8"});
+        iniziaHD();
+    }
+
+    private void iniziaHD() {
         outerArc = new Arc();
         innerArc = new Arc();
         outerArc.setCenterX(100.0);
@@ -52,8 +59,6 @@ public class MainController {
         innerArc.setCenterY(100.0);
         innerArc.setRadiusX(irx);
         innerArc.setRadiusY(iry);
-        innerArc.setRadiusX(100.0);
-        innerArc.setRadiusY(220.0);
         innerArc.setStartAngle(0.0);
         innerArc.setLength(180.0);
         innerArc.setType(ArcType.ROUND);
@@ -84,6 +89,7 @@ public class MainController {
             resetHD.set(false);
         });
     }
+
     public static void setDisableHD(boolean b){
         halfDonut.setVisible(b);
     }
