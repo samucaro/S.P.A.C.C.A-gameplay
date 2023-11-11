@@ -1,6 +1,7 @@
 package com.example.gioco;
 
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -12,6 +13,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import java.io.IOException;
 
@@ -25,8 +30,6 @@ public class HomePageController {
     private TextField username;
     @FXML
     private PasswordField password;
-    @FXML
-    private Button login;
     private static int cont;
     @FXML
     private Label error;
@@ -40,8 +43,9 @@ public class HomePageController {
 
     public void verifyLogin(ActionEvent event) throws IOException {
         if(username.getText().equals(ut) && password.getText().equals(psw)) {
-            switchOvalPane(event);
+            //switchOvalPane(event);
             cont=1;
+            switchToLoginPage(event);
         }
         else {
             error.setVisible(true);
@@ -64,6 +68,16 @@ public class HomePageController {
         stage.setScene(scene);
         stage.show();
     }
+
+    public void switchToLoginPage(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    /*
     public void switchOvalPane(ActionEvent event) throws IOException {
         root = FXMLLoader.load(getClass().getResource("Partitonza.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -89,6 +103,7 @@ public class HomePageController {
             MainController.setScenaY((Double) newVal);
         });
     }
+     */
     private void setPassword(String psw) {
         this.psw = psw;
     }
