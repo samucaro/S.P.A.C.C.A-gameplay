@@ -1,31 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.effect.Shadow?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #010820;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gioco.LoginPageController">
    <children>
-      <Pane layoutX="221.0" layoutY="27.0" prefHeight="160.0" prefWidth="159.0" style="-fx-background-color: white; -fx-background-radius: 25;">
-         <effect>
-            <Shadow>
-               <color>
-                  <Color red="1.0" green="1.0" blue="1.0" />
-               </color>
-            </Shadow>
-         </effect>
-      </Pane>
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="224.0" layoutY="32.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="400.0" fitWidth="600.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" smooth="false">
+         <image>
+            <Image url="@../../../_33e14802-fae8-45d6-80aa-5b89524679cb.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="135.0" fitWidth="135.0" layoutX="404.0" layoutY="32.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" smooth="false">
          <image>
             <Image url="@../../../logo.png" />
          </image>
+         <effect>
+            <DropShadow blurType="GAUSSIAN" height="64.72" radius="33.68" width="72.0">
+               <color>
+                  <Color red="1.0" green="1.0" blue="1.0" />
+               </color>
+            </DropShadow>
+         </effect>
       </ImageView>
-      <MenuButton layoutX="73.0" layoutY="222.0" mnemonicParsing="false" text="Numero Giocatori">
+      <MenuButton layoutX="59.0" layoutY="222.0" mnemonicParsing="false" text="Numero Giocatori">
         <items>
           <MenuItem mnemonicParsing="false" text="1" />
           <MenuItem mnemonicParsing="false" text="2" />
@@ -37,5 +44,53 @@
             <MenuItem mnemonicParsing="false" text="8" />
         </items>
       </MenuButton>
+      <Button layoutX="174.0" layoutY="300.0" mnemonicParsing="false" text="Assegna Ruoli" visible="false" />
+      <Button layoutX="367.0" layoutY="300.0" mnemonicParsing="false" text="Assegna Personaggi" visible="false" />
+      <Text fill="WHITE" layoutX="73.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="S.P.A.C.C.A">
+         <font>
+            <Font name="Game of Thrones" size="50.0" />
+         </font>
+         <stroke>
+            <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </RadialGradient>
+         </stroke>
+         <effect>
+            <DropShadow>
+               <color>
+                  <Color red="0.5723684430122375" green="0.5286458134651184" blue="0.5286458134651184" />
+               </color>
+            </DropShadow>
+         </effect>
+      </Text>
+      <MenuButton layoutX="265.0" layoutY="222.0" mnemonicParsing="false" text="Giochi con Robot?">
+         <items>
+            <MenuItem mnemonicParsing="false" text="Sì" />
+            <MenuItem mnemonicParsing="false" text="No" />
+         </items>
+      </MenuButton>
+      <MenuButton layoutX="466.0" layoutY="222.0" mnemonicParsing="false" text="Quanti?">
+         <items>
+            <MenuItem disable="true" mnemonicParsing="false" text="1" />
+            <MenuItem disable="true" mnemonicParsing="false" text="2" />
+            <MenuItem disable="true" mnemonicParsing="false" text="3" />
+            <MenuItem disable="true" mnemonicParsing="false" text="4" />
+            <MenuItem disable="true" mnemonicParsing="false" text="5" />
+            <MenuItem disable="true" mnemonicParsing="false" text="6" />
+            <MenuItem disable="true" mnemonicParsing="false" text="7" />
+         </items>
+      </MenuButton>
+      <Button disable="true" layoutX="503.0" layoutY="354.0" mnemonicParsing="false" text="Start Game" />
    </children>
 </AnchorPane>
