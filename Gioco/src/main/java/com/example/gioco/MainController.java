@@ -102,11 +102,16 @@ public class MainController {
         reShape();
     }
     public static void reShape() {
-        double h = centroX-centroY>=0?centroY/5:centroX/7.5;
+        double h = (60 * Math.min(centroX, centroY)) / 300;
         orx=h + centroX*1/2;
+        System.out.println(orx);
         ory=h + centroY*1/1.5;
+        System.out.println(ory);
         irx=2*h;
+        System.out.println(irx);
         iry=centroY/5+h;
+        System.out.println(iry);
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         resetHD.set(true);
         halfDonut.setTranslateX(centroX-100);
         halfDonut.setTranslateY(centroY*2-100);

@@ -4,7 +4,6 @@ public class Giocatore {
     private String nome;
     private int hp;
     private ArrayList<Carta> mano;
-
     public Giocatore(String nome) {
         this.nome = nome;
         this.mano = new ArrayList<Carta>();
@@ -13,6 +12,19 @@ public class Giocatore {
     public void aggiungiCarta(Carta carta){
         mano.add(carta);
     }
-
-    // Metodi per gestire le carte in mano...
+    public void subisciDanno(int danno){
+        hp=hp-danno;
+    }
+    public void cura(int cura){
+        hp= Math.min(hp + cura, 100);
+    }
+    public String getNome() {
+        return nome;
+    }
+    public int getHp() {
+        return hp;
+    }
+    public ArrayList<Carta> getMano() {
+        return mano;
+    }
 }
