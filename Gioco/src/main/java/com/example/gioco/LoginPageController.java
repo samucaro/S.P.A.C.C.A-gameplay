@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class LoginPageController {
+    private GameData gameData = GameData.getInstance();
     private Scene scene;
     private Parent root;
     private int numPersone;
@@ -147,6 +148,7 @@ public class LoginPageController {
     }
 
     public void switchToAccessPlayer(ActionEvent event) throws IOException {
+        gameData.setNumero(numGiocatori);
         root = FXMLLoader.load(getClass().getResource("AccessPlayerPage.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);

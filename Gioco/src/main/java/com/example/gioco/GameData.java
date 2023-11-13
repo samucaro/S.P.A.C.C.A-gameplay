@@ -16,5 +16,6 @@ public class GameData {
 
     public void setNumero(int numeroGG) {
         this.numeroGG = numeroGG;
+
     }
 }

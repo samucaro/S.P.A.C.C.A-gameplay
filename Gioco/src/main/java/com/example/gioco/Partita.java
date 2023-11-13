@@ -13,7 +13,7 @@ public class Partita {
 
     public void iniziaPartita(String[] nomi) {
         for (int i = 0; i < gameData.getNumero(); i++) {
-            giocatori[i] = new Giocatore(nomi[i]);
+            //giocatori[i] = new Giocatore(nomi[i]);
             for (int j = 0; j < 7; j++) {
                 giocatori[i].aggiungiCarta(mazzo.pesca());
             }
