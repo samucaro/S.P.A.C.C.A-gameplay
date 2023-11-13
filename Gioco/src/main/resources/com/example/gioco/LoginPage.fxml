@@ -71,7 +71,7 @@
             </DropShadow>
          </effect>
       </Text>
-      <MenuButton fx:id="numRobot" layoutX="404.0" layoutY="222.0" mnemonicParsing="false" onAction="#setNumRobot" onMousePressed="#setNumRobot" text="Quanti?">
+      <MenuButton fx:id="numRobot" layoutX="404.0" layoutY="222.0" mnemonicParsing="false" onAction="#setNumRobot" onMousePressed="#setNumRobot" text="Quanti?" visible="false">
          <items>
             <MenuItem mnemonicParsing="false" onAction="#opzione1R" text="1 robot" />
             <MenuItem mnemonicParsing="false" onAction="#opzione2R" text="2 robot" />
@@ -83,10 +83,10 @@
             <MenuItem mnemonicParsing="false" onAction="#opzione8R" text="8 robot" />
          </items>
       </MenuButton>
-      <Button disable="true" layoutX="503.0" layoutY="354.0" mnemonicParsing="false" onAction="#switchToAccessPlayer" text="Start Game" />
+      <Button fx:id="startGame" disable="true" layoutX="503.0" layoutY="354.0" mnemonicParsing="false" onAction="#switchToAccessPlayer" text="Start Game" />
       <Button layoutX="21.0" layoutY="20.0" mnemonicParsing="false" text="Regole" />
       <Button layoutX="243.0" layoutY="222.0" mnemonicParsing="false" onAction="#activeChois" text="Giochi con Robot?" />
-      <CheckBox fx:id="rispostaSi" layoutX="177.0" layoutY="257.0" mnemonicParsing="false" onAction="#giocoConRobot" text="Sì" textFill="WHITE" visible="false" />
-      <CheckBox fx:id="rispostaNo" layoutX="177.0" layoutY="283.0" mnemonicParsing="false" onAction="#giocoSenzaRobot" text="No" textFill="WHITE" visible="false" />
+      <CheckBox fx:id="rispostaSi" layoutX="281.0" layoutY="261.0" mnemonicParsing="false" onAction="#giocoConRobot" text="Sì" textFill="WHITE" visible="false" />
+      <CheckBox fx:id="rispostaNo" layoutX="281.0" layoutY="287.0" mnemonicParsing="false" onAction="#giocoSenzaRobot" text="No" textFill="WHITE" visible="false" />
    </children>
 </AnchorPane>

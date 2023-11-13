@@ -90,6 +90,9 @@ public class LoginPageController {
 
 
     public void setNumRobot(MouseEvent event) {
+        for(int i=0; i<numGiocatori; i++) {
+            numRobot.getItems().get(i).setVisible(true);
+        }
         for(int i=7; i>numGiocatori-1; i--) {
             numRobot.getItems().get(i).setVisible(false);
         }
