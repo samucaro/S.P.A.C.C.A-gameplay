@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.effect.DropShadow?>
@@ -13,10 +14,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #010820;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gioco.LoginPageController">
    <children>
-      <ImageView fitHeight="402.0" fitWidth="600.0" layoutY="-2.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" smooth="false">
+      <ImageView fitHeight="402.0" fitWidth="600.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" smooth="false">
          <image>
             <Image url="@../../../_33e14802-fae8-45d6-80aa-5b89524679cb.jpg" />
          </image>
@@ -33,20 +33,18 @@
             </DropShadow>
          </effect>
       </ImageView>
-      <MenuButton layoutX="59.0" layoutY="222.0" mnemonicParsing="false" text="Numero Giocatori">
+      <MenuButton layoutX="14.0" layoutY="222.0" mnemonicParsing="false" text="Numero Giocatori">
         <items>
-          <MenuItem mnemonicParsing="false" text="1" />
-          <MenuItem mnemonicParsing="false" text="2" />
-            <MenuItem mnemonicParsing="false" text="3" />
-            <MenuItem mnemonicParsing="false" text="4" />
-            <MenuItem mnemonicParsing="false" text="5" />
-            <MenuItem mnemonicParsing="false" text="6" />
-            <MenuItem mnemonicParsing="false" text="7" />
-            <MenuItem mnemonicParsing="false" text="8" />
+            <MenuItem mnemonicParsing="false" onAction="#opzione1" text="3 giocatori" />
+            <MenuItem mnemonicParsing="false" onAction="#opzione2" text="4 giocatori" />
+            <MenuItem mnemonicParsing="false" onAction="#opzione3" text="5 giocatori" />
+            <MenuItem mnemonicParsing="false" onAction="#opzione4" text="6 giocatori" />
+            <MenuItem mnemonicParsing="false" onAction="#opzione5" text="7 giocatori" />
+            <MenuItem mnemonicParsing="false" onAction="#opzione6" text="8 giocatori" />
         </items>
       </MenuButton>
-      <Button layoutX="174.0" layoutY="300.0" mnemonicParsing="false" text="Assegna Ruoli" visible="false" />
-      <Button layoutX="367.0" layoutY="300.0" mnemonicParsing="false" text="Assegna Personaggi" visible="false" />
+      <Button disable="true" layoutX="359.0" layoutY="222.0" mnemonicParsing="false" text="Assegna Ruoli" />
+      <Button disable="true" layoutX="463.0" layoutY="222.0" mnemonicParsing="false" text="Assegna Personaggi" />
       <Text fill="WHITE" layoutX="73.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="S.P.A.C.C.A">
          <font>
             <Font name="Game of Thrones" size="50.0" />
@@ -75,23 +73,22 @@
             </DropShadow>
          </effect>
       </Text>
-      <MenuButton layoutX="265.0" layoutY="222.0" mnemonicParsing="false" text="Giochi con Robot?">
+      <MenuButton fx:id="numRobot" layoutX="274.0" layoutY="222.0" mnemonicParsing="false" onAction="#setNumRobot" onMousePressed="#setNumRobot" text="Quanti?" visible="false">
          <items>
-            <MenuItem mnemonicParsing="false" text="Sì" />
-            <MenuItem mnemonicParsing="false" text="No" />
-         </items>
-      </MenuButton>
-      <MenuButton layoutX="466.0" layoutY="222.0" mnemonicParsing="false" text="Quanti?" visible="false">
-         <items>
-            <MenuItem disable="true" mnemonicParsing="false" text="1" />
-            <MenuItem disable="true" mnemonicParsing="false" text="2" />
-            <MenuItem disable="true" mnemonicParsing="false" text="3" />
-            <MenuItem disable="true" mnemonicParsing="false" text="4" />
-            <MenuItem disable="true" mnemonicParsing="false" text="5" />
-            <MenuItem disable="true" mnemonicParsing="false" text="6" />
-            <MenuItem disable="true" mnemonicParsing="false" text="7" />
+            <MenuItem mnemonicParsing="false" onAction="#opzione1R" text="1 robot" />
+            <MenuItem mnemonicParsing="false" onAction="#opzione2R" text="2 robot" />
+            <MenuItem mnemonicParsing="false" onAction="#opzione3R" text="3 robot" />
+            <MenuItem mnemonicParsing="false" onAction="#opzione4R" text="4 robot" />
+            <MenuItem mnemonicParsing="false" onAction="#opzione5R" text="5 robot" />
+            <MenuItem mnemonicParsing="false" onAction="#opzione6R" text="6 robot" />
+            <MenuItem mnemonicParsing="false" onAction="#opzione7R" text="7 robot" />
+            <MenuItem mnemonicParsing="false" onAction="#opzione8R" text="8 robot" />
          </items>
       </MenuButton>
       <Button disable="true" layoutX="503.0" layoutY="354.0" mnemonicParsing="false" text="Start Game" />
+      <Button layoutX="21.0" layoutY="20.0" mnemonicParsing="false" text="Regole" />
+      <Button layoutX="151.0" layoutY="222.0" mnemonicParsing="false" onAction="#activeChois" text="Giochi con Robot?" />
+      <CheckBox fx:id="rispostaSi" layoutX="177.0" layoutY="257.0" mnemonicParsing="false" onAction="#giocoConRobot" text="Sì" textFill="WHITE" visible="false" />
+      <CheckBox fx:id="rispostaNo" layoutX="177.0" layoutY="283.0" mnemonicParsing="false" onAction="#giocoSenzaRobot" text="No" textFill="WHITE" visible="false" />
    </children>
 </AnchorPane>
