@@ -33,8 +33,8 @@ public class HomePageController {
 
     @FXML
     public void initialize() {
-        ut = "a";
-        psw = "b";
+        ut = "samucaro";
+        psw = "112233";
         cont=1;
     }
 
