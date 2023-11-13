@@ -3,11 +3,11 @@ package com.example.gioco;
 import java.util.ArrayList;
 
 public class GiocatorePersona extends Giocatore{
-    private String nome;
+    private Ruoli ruolo;
     private int hp;
     private ArrayList<Carta> mano;
-    public GiocatorePersona(String nome) {
-        this.nome = nome;
+    public GiocatorePersona(Ruoli ruolo){
+        this.ruolo = ruolo;
         this.mano = new ArrayList<Carta>();
         hp = 100;
     }
@@ -21,8 +21,8 @@ public class GiocatorePersona extends Giocatore{
     public void cura(int cura){
         hp= Math.min(hp + cura, 100);
     }
-    public String getNome() {
-        return nome;
+    public Ruoli getRuolo() {
+        return ruolo;
     }
     public int getHp() {
         return hp;
