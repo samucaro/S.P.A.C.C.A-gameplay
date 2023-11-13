@@ -33,7 +33,7 @@
             </DropShadow>
          </effect>
       </ImageView>
-      <MenuButton layoutX="14.0" layoutY="222.0" mnemonicParsing="false" text="Numero Giocatori">
+      <MenuButton layoutX="81.0" layoutY="222.0" mnemonicParsing="false" text="Numero Giocatori">
         <items>
             <MenuItem mnemonicParsing="false" onAction="#opzione1" text="3 giocatori" />
             <MenuItem mnemonicParsing="false" onAction="#opzione2" text="4 giocatori" />
@@ -43,8 +43,6 @@
             <MenuItem mnemonicParsing="false" onAction="#opzione6" text="8 giocatori" />
         </items>
       </MenuButton>
-      <Button disable="true" layoutX="359.0" layoutY="222.0" mnemonicParsing="false" text="Assegna Ruoli" />
-      <Button disable="true" layoutX="463.0" layoutY="222.0" mnemonicParsing="false" text="Assegna Personaggi" />
       <Text fill="WHITE" layoutX="73.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="S.P.A.C.C.A">
          <font>
             <Font name="Game of Thrones" size="50.0" />
@@ -73,7 +71,7 @@
             </DropShadow>
          </effect>
       </Text>
-      <MenuButton fx:id="numRobot" layoutX="274.0" layoutY="222.0" mnemonicParsing="false" onAction="#setNumRobot" onMousePressed="#setNumRobot" text="Quanti?" visible="false">
+      <MenuButton fx:id="numRobot" layoutX="404.0" layoutY="222.0" mnemonicParsing="false" onAction="#setNumRobot" onMousePressed="#setNumRobot" text="Quanti?">
          <items>
             <MenuItem mnemonicParsing="false" onAction="#opzione1R" text="1 robot" />
             <MenuItem mnemonicParsing="false" onAction="#opzione2R" text="2 robot" />
@@ -85,9 +83,9 @@
             <MenuItem mnemonicParsing="false" onAction="#opzione8R" text="8 robot" />
          </items>
       </MenuButton>
-      <Button disable="true" layoutX="503.0" layoutY="354.0" mnemonicParsing="false" text="Start Game" />
+      <Button disable="true" layoutX="503.0" layoutY="354.0" mnemonicParsing="false" onAction="#switchToAccessPlayer" text="Start Game" />
       <Button layoutX="21.0" layoutY="20.0" mnemonicParsing="false" text="Regole" />
-      <Button layoutX="151.0" layoutY="222.0" mnemonicParsing="false" onAction="#activeChois" text="Giochi con Robot?" />
+      <Button layoutX="243.0" layoutY="222.0" mnemonicParsing="false" onAction="#activeChois" text="Giochi con Robot?" />
       <CheckBox fx:id="rispostaSi" layoutX="177.0" layoutY="257.0" mnemonicParsing="false" onAction="#giocoConRobot" text="Sì" textFill="WHITE" visible="false" />
       <CheckBox fx:id="rispostaNo" layoutX="177.0" layoutY="283.0" mnemonicParsing="false" onAction="#giocoSenzaRobot" text="No" textFill="WHITE" visible="false" />
    </children>
