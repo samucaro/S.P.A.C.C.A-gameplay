@@ -18,6 +18,7 @@ public class OvalPaneController {
     private Pane ovalPane;
     private static Group[] spheres;
     private Cylinder ring;
+    private boolean isPaused = false;
     private static double centroX;
     private static double centroY;
     private static final int n = 8;
@@ -50,15 +51,27 @@ public class OvalPaneController {
         }
         addSelectionMouse();
     }
+
     private void provaAnimazione(int i) {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
-                spheres[i].getChildren().get(0).rotateProperty().set(spheres[i].getChildren().get(0).getRotate() + 0.2);
+                if (!isPaused) {
+                    spheres[i].getChildren().get(0).rotateProperty().set(spheres[i].getChildren().get(0).getRotate() + 0.2);
+                }
             }
         };
         timer.start();
     }
+
+    public void pauseAnimation() {
+        isPaused = true;
+    }
+
+    public void resumeAnimation() {
+        isPaused = false;
+    }
+
     private Image textures(int i){
         return switch (i) {
             case 7 -> new Image(getClass().getResource("mercury.jpg").toString());
@@ -83,9 +96,9 @@ public class OvalPaneController {
         for (int i = 0; i < n; i++) {
             int indice = ((8 - turnoDi) + i) % n;
             if (indice == 2){
-                ((Cylinder) spheres[indice].getChildren().get(1)).setRadius((centroX-centroY>=0?centroY/5:centroX/7.5)+30);
+                ((Cylinder) spheres[indice].getChildren().get(1)).setRadius((60 * Math.min(centroX, centroY)) / 300 + 30);
             }
-            ((Sphere) spheres[indice].getChildren().get(0)).setRadius(centroX-centroY>=0?centroY/5:centroX/7.5);
+            ((Sphere) spheres[indice].getChildren().get(0)).setRadius((60 * Math.min(centroX, centroY)) / 300);
             spheres[indice].setTranslateX((centroX-((Sphere) spheres[indice].getChildren().get(0)).getRadius()*2+50) * Math.cos(2 * Math.PI * (i + 1) / n) + centroX);
             spheres[indice].setTranslateY((centroY-((Sphere) spheres[indice].getChildren().get(0)).getRadius()*2+40) * Math.sin(2 * Math.PI * (i + 1) / n) + centroY);
             spheres[indice].setScaleX(i==1?0.6:1);
@@ -135,9 +148,8 @@ public class OvalPaneController {
                 overlay.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");
                 PauseTransition pause = new PauseTransition(Duration.seconds(1));
                 pause.setOnFinished(mettibottone -> {
-                    ovalPane.getChildren().add(overlay);
                     ovalPane.getChildren().remove(currentGroup);
-                    ovalPane.getChildren().addAll(bottone, currentGroup);
+                    ovalPane.getChildren().addAll(overlay, bottone, currentGroup);
                     addMouseHandlers(currentSphere);
                 });
                 pause.play();
@@ -177,6 +189,7 @@ public class OvalPaneController {
                 anchorY = event.getSceneY();
                 anchorAngleX = currentSphere.getRotate();
                 anchorAngleY = currentSphere.getRotationAxis().getY();
+                pauseAnimation();
             }
         });
         currentSphere.setOnMouseDragged(event -> {
@@ -198,6 +211,7 @@ public class OvalPaneController {
                 currentSphere.setRotate(0);
                 currentSphere.setRotationAxis(Rotate.Y_AXIS);
                 currentSphere.getTransforms().clear();
+                resumeAnimation();
             }
         });
     }
