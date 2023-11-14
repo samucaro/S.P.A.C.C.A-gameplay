@@ -24,7 +24,6 @@ public class AccessPlayerPageController {
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, false, true);
         BackgroundImage backgroundImage = new BackgroundImage(sfondo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         borderP.setBackground(new Background(backgroundImage));
-
     }
 
     public void switchOvalPane(ActionEvent event) throws IOException {
