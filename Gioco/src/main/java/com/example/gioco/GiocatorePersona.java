@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class GiocatorePersona extends Giocatore{
     private Ruoli ruolo;
+    //private Personaggi personaggio;
     private int hp;
     private ArrayList<Carta> mano;
     public GiocatorePersona(Ruoli ruolo){
