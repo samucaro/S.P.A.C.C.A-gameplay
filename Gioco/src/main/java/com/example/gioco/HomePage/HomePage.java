@@ -34,8 +34,8 @@ public class HomePage extends Application {
             primaryStage.getIcons().add(logo);
             primaryStage.setScene(scene);
             primaryStage.show();
-        } catch(IOException e) {
-            System.out.println(e.toString());
+        } catch(IOException e1) {
+            System.out.println(e1.getMessage());
         } catch(Exception e) {
             logger.log(Level.SEVERE, "An error occurred", e);
         }
