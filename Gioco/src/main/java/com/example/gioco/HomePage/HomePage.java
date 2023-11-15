@@ -36,6 +36,7 @@ public class HomePage extends Application {
             primaryStage.show();
         } catch(IOException e1) {
             System.out.println(e1.getMessage());
+            System.exit(0);
         } catch(Exception e) {
             logger.log(Level.SEVERE, "An error occurred", e);
         }
