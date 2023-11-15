@@ -1,5 +1,6 @@
-package com.example.gioco;
+package com.example.gioco.Giocatore;
 
+import com.example.gioco.Partita.Carta;
 import java.util.ArrayList;
 
 public class GiocatoreRobot extends Giocatore {

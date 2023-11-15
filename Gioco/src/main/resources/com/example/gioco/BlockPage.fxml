@@ -9,11 +9,11 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="360.0" prefWidth="370.0" style="-fx-background-color: #010820;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gioco.BlockPageController">
+<AnchorPane prefHeight="360.0" prefWidth="370.0" style="-fx-background-color: #010820;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gioco.HomePage.BlockPageController">
    <children>
       <ImageView fitHeight="107.0" fitWidth="111.0" layoutX="132.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../logo.png" />
+            <Image url="@logo.png" />
          </image>
          <effect>
             <DropShadow height="37.03" radius="15.829999999999998" spread="0.33" width="28.29">
