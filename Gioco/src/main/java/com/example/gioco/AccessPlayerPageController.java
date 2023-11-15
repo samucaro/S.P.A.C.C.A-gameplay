@@ -1,5 +1,5 @@
 package com.example.gioco;
-
+//aaaaaaaaaaaaaaaaaaaaaaaaa
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
