@@ -5,21 +5,15 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.ParallelCamera;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import java.io.IOException;
-
 
 public class HomePageController {
     private String psw;
@@ -39,11 +33,24 @@ public class HomePageController {
         ut = "samucaro";
         psw = "112233";
         cont=1;
+
+        password.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent keyEvent) {
+                if (keyEvent.getCode() == KeyCode.ENTER) {
+                    ActionEvent event = new ActionEvent(password, null);
+                    try {
+                        verifyLogin(event);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
     }
 
     public void verifyLogin(ActionEvent event) throws IOException {
         if(username.getText().equals(ut) && password.getText().equals(psw)) {
-            //switchOvalPane(event);
             cont=1;
             switchToLoginPage(event);
         }

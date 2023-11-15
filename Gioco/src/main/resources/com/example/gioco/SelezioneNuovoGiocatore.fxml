@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<HBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml" fx:id="header" alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+    <children>
+        <Label text="G1" textFill="WHITE" />
+        <TextField prefHeight="25.0" prefWidth="76.0" promptText="Nome giocatore" text="Giocatore1" />
+        <CheckBox fx:id="checkBot" mnemonicParsing="false" text="Bot" textFill="WHITE" />
+        <ChoiceBox fx:id="choicePianeti" prefHeight="25.0" prefWidth="90.0" />
+        <ChoiceBox fx:id="choiceRuolo" prefHeight="25.0" prefWidth="90.0" />
+        <Button fx:id="upButton" mnemonicParsing="false" text="Su" />
+        <Button fx:id="downButton" mnemonicParsing="false" text="Giu" />
+        <Button fx:id="removePlayer" mnemonicParsing="false" text="-" />
+    </children>
+    <VBox.margin>
+        <Insets />
+    </VBox.margin>
+</HBox>

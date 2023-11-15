@@ -18,7 +18,7 @@
    <children>
       <ImageView fitHeight="402.0" fitWidth="600.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" smooth="false">
          <image>
-            <Image url="@_33e14802-fae8-45d6-80aa-5b89524679cb.jpg" />
+            <Image url="@../../../_33e14802-fae8-45d6-80aa-5b89524679cb.jpg" />
          </image>
       </ImageView>
       <ImageView fitHeight="135.0" fitWidth="135.0" layoutX="404.0" layoutY="32.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" smooth="false">

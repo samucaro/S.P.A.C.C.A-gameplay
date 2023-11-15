@@ -111,7 +111,7 @@ public class MainController {
         System.out.println(irx);
         iry=centroY/5+h;
         System.out.println(iry);
-        System.out.println("ciao");
+        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         resetHD.set(true);
         halfDonut.setTranslateX(centroX-100);
         halfDonut.setTranslateY(centroY*2-100);

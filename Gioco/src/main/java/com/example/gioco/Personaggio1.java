@@ -2,7 +2,7 @@ package com.example.gioco;
 
 public class Personaggio1 implements Personaggi {
     private String nome;
-    private final int hp;
+    private int hp;
     private String effetto;
 
     public Personaggio1(String nome, int hp,String effetto) {
@@ -11,9 +11,6 @@ public class Personaggio1 implements Personaggi {
         this.effetto = effetto;
     }
 
-    public void useEffetto() {
-
-    }
     public void setNome(String nome) {
         this.nome = nome;
     }
@@ -29,5 +26,9 @@ public class Personaggio1 implements Personaggi {
     }
     public int getHp() {
         return hp;
+    }
+    @Override
+    public void useEffetto() {
+
     }
 }

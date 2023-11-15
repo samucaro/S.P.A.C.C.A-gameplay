@@ -1,5 +1,4 @@
 package com.example.gioco;
-
 import java.util.ArrayList;
 public abstract class Giocatore {
     abstract public void aggiungiCarta(Carta carta);

@@ -1,24 +1,22 @@
 package com.example.gioco;
 
 import javafx.application.Application;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import java.util.logging.Logger;
+
+import java.io.IOException;
 
 public class HomePage extends Application {
-    private static final Logger logger = Logger.getLogger(HomePage.class.getName());
 
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
-    public void start(Stage primaryStage) {
-        try {
+    public void start(Stage primaryStage) throws IOException {
             primaryStage.setTitle("S.P.A.C.C.A.");
             Parent root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
             Image logo = new Image("logo.png");
@@ -26,8 +24,5 @@ public class HomePage extends Application {
             primaryStage.getIcons().add(logo);
             primaryStage.setScene(scene);
             primaryStage.show();
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
     }
 }

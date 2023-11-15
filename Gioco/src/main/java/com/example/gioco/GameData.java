@@ -1,9 +1,9 @@
 package com.example.gioco;
-
 public class GameData {
     private static GameData instance = null;
     private int numeroGG;
     private Ruoli[] ruolo;
+    private String[] pianeta;
     private Boolean[] bot;
     private GameData() {}
     public static GameData getInstance() {
@@ -18,6 +18,9 @@ public class GameData {
     public Ruoli getRuolo(int i) {
         return ruolo[i];
     }
+    public String getPianeta(int i) {
+        return pianeta[i];
+    }
 
     public void setNumero(int numeroGG) {
         this.numeroGG = numeroGG;
@@ -27,6 +30,11 @@ public class GameData {
         if (ruolo==null)
             ruolo = new Ruoli[numeroGG];
         ruolo[i]=r;
+    }
+    public void setPianeta(int i, String p) {
+        if (pianeta==null)
+            pianeta = new String[numeroGG];
+        pianeta[i]=p;
     }
     public void setBot(int i, Boolean b) {
         if (bot==null)

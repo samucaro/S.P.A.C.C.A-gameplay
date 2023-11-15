@@ -1,5 +1,4 @@
 package com.example.gioco;
-
 public class Partita {
     private Giocatore[] giocatori;
     private GameData gameData = GameData.getInstance();

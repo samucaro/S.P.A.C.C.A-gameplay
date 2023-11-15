@@ -2,7 +2,7 @@ package com.example.gioco;
 
 import java.util.ArrayList;
 
-public class GiocatorePersona extends Giocatore {
+public class GiocatorePersona extends Giocatore{
     private Ruoli ruolo;
     //private Personaggi personaggio;
     private int hp;
