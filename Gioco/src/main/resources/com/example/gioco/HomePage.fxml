@@ -12,7 +12,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="360.0" prefWidth="370.0" style="-fx-background-color: #010820;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gioco.HomePage.HomePageController">
+<BorderPane prefHeight="360.0" prefWidth="370.0" style="-fx-background-color: #010820;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gioco.HomePageController">
    <center>
       <AnchorPane prefHeight="366.0" prefWidth="392.0" BorderPane.alignment="CENTER">
          <children>
@@ -23,7 +23,7 @@
             </Label>
             <ImageView fitHeight="107.0" fitWidth="107.0" layoutX="144.0" layoutY="34.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="logo.png" />
+                  <Image url="@../../../logo.png" />
                </image>
                <effect>
                   <DropShadow blurType="GAUSSIAN" height="64.71" radius="23.842499999999998" spread="0.26" width="32.66">
