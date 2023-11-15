@@ -1,10 +1,7 @@
-package com.example.gioco.HomePage;
+package com.example.gioco;
 
 import javafx.application.Application;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.logging.Level;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -23,22 +20,14 @@ public class HomePage extends Application {
     public void start(Stage primaryStage) {
         try {
             primaryStage.setTitle("S.P.A.C.C.A.");
-            URL url = getClass().getResource("HomePage.fxml");
-            if (url == null) {
-                throw new IOException("FXML file not found");
-            }
-            FXMLLoader loader = new FXMLLoader(url);
-            Parent root = loader.load();
-            Image logo = new Image("com/example/gioco/logo.png");
+            Parent root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
+            Image logo = new Image("logo.png");
             Scene scene = new Scene(root);
             primaryStage.getIcons().add(logo);
             primaryStage.setScene(scene);
             primaryStage.show();
-        } catch(IOException e1) {
-            System.out.println(e1.getMessage());
-            System.exit(0);
         } catch(Exception e) {
-            logger.log(Level.SEVERE, "An error occurred", e);
+            e.printStackTrace();
         }
     }
 }

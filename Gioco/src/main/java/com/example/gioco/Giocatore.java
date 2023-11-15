@@ -1,6 +1,5 @@
-package com.example.gioco.Giocatore;
+package com.example.gioco;
 
-import com.example.gioco.Partita.Carta;
 import java.util.ArrayList;
 public abstract class Giocatore {
     abstract public void aggiungiCarta(Carta carta);

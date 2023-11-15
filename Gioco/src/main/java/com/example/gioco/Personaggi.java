@@ -1,4 +1,4 @@
-package com.example.gioco.Giocatore;
+package com.example.gioco;
 
 public interface Personaggi {
     void useEffetto();

@@ -1,4 +1,4 @@
-package com.example.gioco.Partita;
+package com.example.gioco;
 import javafx.animation.*;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
@@ -74,14 +74,14 @@ public class OvalPaneController {
 
     private Image textures(int i){
         return switch (i) {
-            case 7 -> new Image(getClass().getResource("PianetiIMG/mercury.jpg").toString());
-            case 6 -> new Image(getClass().getResource("PianetiIMG/venus.jpg").toString());
-            case 5 -> new Image(getClass().getResource("PianetiIMG/earth.jpg").toString());
-            case 4 -> new Image(getClass().getResource("PianetiIMG/mars.jpg").toString());
-            case 3 -> new Image(getClass().getResource("PianetiIMG/jupiter.jpg").toString());
-            default -> new Image(getClass().getResource("PianetiIMG/saturn.jpg").toString());
-            case 1 -> new Image(getClass().getResource("PianetiIMG/uranus.jpg").toString());
-            case 0 -> new Image(getClass().getResource("PianetiIMG/neptune.jpg").toString());
+            case 7 -> new Image(getClass().getResource("mercury.jpg").toString());
+            case 6 -> new Image(getClass().getResource("venus.jpg").toString());
+            case 5 -> new Image(getClass().getResource("earth.jpg").toString());
+            case 4 -> new Image(getClass().getResource("mars.jpg").toString());
+            case 3 -> new Image(getClass().getResource("jupiter.jpg").toString());
+            default -> new Image(getClass().getResource("saturn.jpg").toString());
+            case 1 -> new Image(getClass().getResource("uranus.jpg").toString());
+            case 0 -> new Image(getClass().getResource("neptune.jpg").toString());
         };
     }
     public static void setScenaX(double x){

@@ -1,4 +1,4 @@
-package com.example.gioco.HomePage;
+package com.example.gioco;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -38,7 +38,7 @@ public class BlockPageController {
     }
 
     public void switchToHomePage() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("HomePage.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("com/example/gioco/HomePage.fxml")));
         Stage stage = (Stage) timer.getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);

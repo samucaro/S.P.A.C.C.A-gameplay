@@ -1,7 +1,4 @@
-package com.example.gioco.Partita;
-
-import com.example.gioco.GameData;
-import com.example.gioco.Giocatore.Giocatore;
+package com.example.gioco;
 
 public class Partita {
     private Giocatore[] giocatori;

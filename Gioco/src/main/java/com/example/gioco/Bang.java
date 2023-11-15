@@ -1,7 +1,7 @@
-package com.example.gioco.Partita;
+package com.example.gioco;
 
-import com.example.gioco.Giocatore.Abilita;
-import com.example.gioco.Giocatore.Giocatore;
+import com.example.gioco.Abilita;
+import com.example.gioco.Giocatore;
 
 public class Bang implements Abilita {
     @Override

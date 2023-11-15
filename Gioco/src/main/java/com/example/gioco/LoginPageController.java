@@ -1,4 +1,4 @@
-package com.example.gioco.HomePage;
+package com.example.gioco;
 
 import com.example.gioco.GameData;
 import javafx.event.ActionEvent;

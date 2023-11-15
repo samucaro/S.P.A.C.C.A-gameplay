@@ -1,13 +1,13 @@
-package com.example.gioco.Giocatore;
+package com.example.gioco;
 
-import com.example.gioco.Partita.Carta;
 import java.util.ArrayList;
 
-public class GiocatoreRobot extends Giocatore {
+public class GiocatorePersona extends Giocatore {
     private Ruoli ruolo;
+    //private Personaggi personaggio;
     private int hp;
     private ArrayList<Carta> mano;
-    public GiocatoreRobot(Ruoli ruolo) {
+    public GiocatorePersona(Ruoli ruolo){
         this.ruolo = ruolo;
         this.mano = new ArrayList<Carta>();
         hp = 100;

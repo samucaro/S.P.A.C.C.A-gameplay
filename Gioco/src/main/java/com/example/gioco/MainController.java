@@ -1,4 +1,4 @@
-package com.example.gioco.Partita;
+package com.example.gioco;
 
 import javafx.animation.*;
 import javafx.beans.property.BooleanProperty;

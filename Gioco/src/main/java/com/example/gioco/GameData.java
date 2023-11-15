@@ -1,10 +1,5 @@
 package com.example.gioco;
 
-import com.example.gioco.Giocatore.GiocatoreRobot;
-import com.example.gioco.Giocatore.Giocatore;
-import com.example.gioco.Giocatore.GiocatorePersona;
-import com.example.gioco.Giocatore.Ruoli;
-
 public class GameData {
     private static GameData instance = null;
     private int numeroGG;
