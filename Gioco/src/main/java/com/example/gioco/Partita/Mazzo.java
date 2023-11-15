@@ -1,4 +1,4 @@
-package com.example.gioco;
+package com.example.gioco.Partita;
 
 import java.util.ArrayList;
 import java.util.Random;

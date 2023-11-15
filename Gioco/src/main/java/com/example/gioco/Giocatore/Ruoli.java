@@ -1,4 +1,4 @@
-package com.example.gioco;
+package com.example.gioco.Giocatore;
 
 public enum Ruoli {
     SCERIFFO,

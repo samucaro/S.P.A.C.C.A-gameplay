@@ -1,5 +1,7 @@
-package com.example.gioco;
+package com.example.gioco.HomePage;
 
+import com.example.gioco.Partita.MainController;
+import com.example.gioco.Partita.OvalPaneController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +22,7 @@ public class AccessPlayerPageController {
     private BorderPane borderP;
     @FXML
     public void initialize() {
-        Image sfondo = new Image(getClass().getResource("_33e14802-fae8-45d6-80aa-5b89524679cb.jpg").toString());
+        Image sfondo = new Image(getClass().getResource("com/example/gioco/_33e14802-fae8-45d6-80aa-5b89524679cb.jpg").toString());
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, false, true);
         BackgroundImage backgroundImage = new BackgroundImage(sfondo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         borderP.setBackground(new Background(backgroundImage));

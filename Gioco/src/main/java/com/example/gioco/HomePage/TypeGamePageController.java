@@ -1,4 +1,4 @@
-package com.example.gioco;
+package com.example.gioco.HomePage;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
