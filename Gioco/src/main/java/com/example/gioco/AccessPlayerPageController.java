@@ -52,7 +52,8 @@ public class AccessPlayerPageController {
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, false, true);
         BackgroundImage backgroundImage = new BackgroundImage(sfondo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         borderP.setBackground(new Background(backgroundImage));
-
+        if (numerogg==0)
+            addPlayer();
     }
     @FXML
     public void addPlayer() {
@@ -93,9 +94,12 @@ public class AccessPlayerPageController {
         }
     }
     private void removePlayer(HBox g1){
-        numerogg--;
-        giocatoriSelezionati.remove(g1);
-        Vboxx.getChildren().remove(g1);
+        if (numerogg!=1) {
+            numerogg--;
+            giocatoriSelezionati.remove(g1);
+            Vboxx.getChildren().remove(g1);
+            addButton.setDisable(false);
+        }
     }
     private void sistemaPianetiSelezione(String oldValue, String newValue, HBox g1) {
         int numero = Integer.parseInt(((Label) g1.getChildren().get(0)).getText().substring(1));
