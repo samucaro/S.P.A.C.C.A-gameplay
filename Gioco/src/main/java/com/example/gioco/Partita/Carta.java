@@ -1,5 +1,6 @@
-package com.example.gioco;
+package com.example.gioco.Partita;
 
+import com.example.gioco.Giocatore.Abilita;
 import javafx.scene.image.Image;
 public class Carta {
     private Image img;

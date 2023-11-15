@@ -1,5 +1,6 @@
-package com.example.gioco;
+package com.example.gioco.HomePage;
 
+import com.example.gioco.GameData;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

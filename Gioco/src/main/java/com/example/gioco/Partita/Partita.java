@@ -1,4 +1,8 @@
-package com.example.gioco;
+package com.example.gioco.Partita;
+
+import com.example.gioco.GameData;
+import com.example.gioco.Giocatore.Giocatore;
+
 public class Partita {
     private Giocatore[] giocatori;
     private GameData gameData = GameData.getInstance();

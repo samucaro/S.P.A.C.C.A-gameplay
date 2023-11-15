@@ -1,4 +1,4 @@
-package com.example.gioco;
+package com.example.gioco.Partita;
 
 import javafx.animation.*;
 import javafx.beans.property.BooleanProperty;
@@ -111,7 +111,7 @@ public class MainController {
         System.out.println(irx);
         iry=centroY/5+h;
         System.out.println(iry);
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        System.out.println("ciao");
         resetHD.set(true);
         halfDonut.setTranslateX(centroX-100);
         halfDonut.setTranslateY(centroY*2-100);
