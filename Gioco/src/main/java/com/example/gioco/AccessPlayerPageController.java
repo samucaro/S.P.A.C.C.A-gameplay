@@ -31,6 +31,15 @@ public class AccessPlayerPageController {
     ObservableList<String> pianetiItems = FXCollections.observableArrayList("Mercurio", "Venere", "Terra", "Marte", "Giove", "Saturno", "Urano", "Nettuno");
     ObservableList<String> ruoliItems = FXCollections.observableArrayList("Sceriffo", "Rinnegato", "Fuorilegge", "Vice");
     int[] ruoliQ = new int[4];
+    int[][] matrix = {
+            {1,1,1,1}, //sceriffi, rinnegato, fuorilegge, vice
+            {1,1,2,0},
+            {1,1,2,1},
+            {1,1,3,1},
+            {1,1,3,2},
+            {1,1,4,2}
+    };
+
     private Parent root;
     private Scene scene;
     private ArrayList<Integer> troppi;
@@ -52,20 +61,23 @@ public class AccessPlayerPageController {
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, false, true);
         BackgroundImage backgroundImage = new BackgroundImage(sfondo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         borderP.setBackground(new Background(backgroundImage));
-
+        if (index<=gameData.getNumero())
+            addPlayer();
+        /*for(int i=1; i<=gameData.getNumero(); i++) {
+            addPlayer(i);
+        }*/
     }
-    @FXML
     public void addPlayer() {
         try{
-            numerogg++;
+            index++;
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(getClass().getResource("SelezioneNuovoGiocatore.fxml"));
             loader.setController(this);
             HBox g1 = loader.load();
-            ((Label) g1.getChildren().get(0)).setText("G" + numerogg);
-            ((ChoiceBox<String>) g1.getChildren().get(3)).setItems(pianetiItems);
-            ((ChoiceBox<String>) g1.getChildren().get(4)).setItems(ruoliItems);
-            ((ChoiceBox<String>) g1.getChildren().get(3)).getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            ((Label) g1.getChildren().get(0)).setText("G" + index);
+            ((ChoiceBox<String>) g1.getChildren().get(2)).setItems(pianetiItems);
+            ((ChoiceBox<String>) g1.getChildren().get(3)).setItems(ruoliItems);
+            ((ChoiceBox<String>) g1.getChildren().get(2)).getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
                 @Override
                 public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
                     sistemaPianetiSelezione(oldValue, newValue, g1);
@@ -74,13 +86,7 @@ public class AccessPlayerPageController {
             ((ChoiceBox<String>) g1.getChildren().get(4)).getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
                 @Override
                 public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
-                    ruoliSelezione(oldValue, newValue, g1);
-                }
-            });
-            ((Button) g1.getChildren().get(7)).setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    removePlayer(g1);
+                    ruoliSelezione(oldValue, newValue, g1, gameData.getNumero());
                 }
             });
 
@@ -108,7 +114,7 @@ public class AccessPlayerPageController {
             }
         }
     }
-    private void ruoliSelezione(String oldValue, String newValue, HBox g1) {
+    private void ruoliSelezione(String oldValue, String newValue, HBox g1, int numGiocatori) {
         int numero = Integer.parseInt(((Label) g1.getChildren().get(0)).getText().substring(1));
         switch (newValue){
             case "Sceriffo" -> {
