@@ -124,13 +124,11 @@ public class LoginPageController {
         System.out.println("Hai selezionato 4 robot, numero persone: " + numPersone);
         startGame.setDisable(false);
     }
-
     public void opzione5R(ActionEvent event) {
         numPersone = numGiocatori-5;
         System.out.println("Hai selezionato 5 robot, numero persone: " + numPersone);
         startGame.setDisable(false);
     }
-
     public void opzione6R(ActionEvent event) {
         numPersone = numGiocatori-6;
         System.out.println("Hai selezionato 6 robot, numero persone: " + numPersone);

@@ -19,13 +19,10 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-
 public class AccessPlayerPageController {
     private GameData gameData = GameData.getInstance();
     ObservableList<String> pianetiItems = FXCollections.observableArrayList("Mercurio", "Venere", "Terra", "Marte", "Giove", "Saturno", "Urano", "Nettuno");
@@ -41,11 +38,8 @@ public class AccessPlayerPageController {
     };
 
     private Parent root;
+    private int index=0;
     private Scene scene;
-    private ArrayList<Integer> troppi;
-    private int numerogg=0;
-    @FXML
-    private Button addButton;
     @FXML
     private Label errorMessage;
     @FXML
@@ -53,8 +47,6 @@ public class AccessPlayerPageController {
     private ArrayList<HBox> giocatoriSelezionati = new ArrayList<>();
     @FXML
     private VBox Vboxx;
-    @FXML
-    private ChoiceBox<String> choicePianeti;
     @FXML
     public void initialize() {
         Image sfondo = new Image(getClass().getResource("_33e14802-fae8-45d6-80aa-5b89524679cb.jpg").toString());
@@ -83,7 +75,7 @@ public class AccessPlayerPageController {
                     sistemaPianetiSelezione(oldValue, newValue, g1);
                 }
             });
-            ((ChoiceBox<String>) g1.getChildren().get(4)).getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            ((ChoiceBox<String>) g1.getChildren().get(3)).getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
                 @Override
                 public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
                     ruoliSelezione(oldValue, newValue, g1, gameData.getNumero());
@@ -91,17 +83,10 @@ public class AccessPlayerPageController {
             });
 
             giocatoriSelezionati.add(g1);
-            Vboxx.getChildren().add(Vboxx.getChildren().size()-1,giocatoriSelezionati.get(giocatoriSelezionati.size()-1));
-            if (Vboxx.getChildren().size()==9)
-                addButton.setDisable(true);
+            Vboxx.getChildren().add(Vboxx.getChildren().size(),giocatoriSelezionati.get(giocatoriSelezionati.size()-1));
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-    private void removePlayer(HBox g1){
-        numerogg--;
-        giocatoriSelezionati.remove(g1);
-        Vboxx.getChildren().remove(g1);
     }
     private void sistemaPianetiSelezione(String oldValue, String newValue, HBox g1) {
         int numero = Integer.parseInt(((Label) g1.getChildren().get(0)).getText().substring(1));
@@ -118,7 +103,6 @@ public class AccessPlayerPageController {
         int numero = Integer.parseInt(((Label) g1.getChildren().get(0)).getText().substring(1));
         switch (newValue){
             case "Sceriffo" -> {
-                System.out.println("bbbbbbbbbbbbbbbbbbbbb");
                 ruoliQ[0]++;
                 if (ruoliQ[0]==1)
                     ruoliItems.remove(newValue);
@@ -142,7 +126,6 @@ public class AccessPlayerPageController {
         if (oldValue!=null)
             switch (oldValue){
                 case "Sceriffo" -> {
-                    System.out.println("aaaaaaaaaaaaaaaaaaaaaa");
                     ruoliQ[0]--;
                     if (ruoliQ[0]==0)
                         ruoliItems.add(oldValue);
@@ -166,23 +149,18 @@ public class AccessPlayerPageController {
         System.out.println(ruoliQ[0]);
         for (int i = 0; i<giocatoriSelezionati.size(); i++){
             if (i+1!=numero) {
-                ((ChoiceBox<String>) giocatoriSelezionati.get(i).getChildren().get(4)).setItems(ruoliItems);
+                ((ChoiceBox<String>) giocatoriSelezionati.get(i).getChildren().get(3)).setItems(ruoliItems);
             }
-        }
-    }
-    public void setBot(){
-        for (int i = 0; i<giocatoriSelezionati.size(); i++) {
-            gameData.setBot(i,((CheckBox) giocatoriSelezionati.get(i).getChildren().get(2)).isSelected());
         }
     }
     public void setPianeti(){
         for (int i = 0; i<giocatoriSelezionati.size(); i++) {
-            gameData.setPianeta(i,((ChoiceBox<String>) giocatoriSelezionati.get(i).getChildren().get(3)).getValue());
+            gameData.setPianeta(i,((ChoiceBox<String>) giocatoriSelezionati.get(i).getChildren().get(2)).getValue());
         }
     }
     public void setRuoli(){
         for (int i = 0; i<giocatoriSelezionati.size(); i++) {
-            switch (((ChoiceBox<String>) giocatoriSelezionati.get(i).getChildren().get(4)).getValue()){
+            switch (((ChoiceBox<String>) giocatoriSelezionati.get(i).getChildren().get(3)).getValue()){
                 case "Sceriffo" -> gameData.setRuolo(i,Ruoli.SCERIFFO);
                 case "Fuorilegge" -> gameData.setRuolo(i,Ruoli.FUORILEGGE);
                 case "Rinnegato" -> gameData.setRuolo(i,Ruoli.RINNEGATO);
@@ -195,7 +173,6 @@ public class AccessPlayerPageController {
         if (ruoliItems.contains("Sceriffo")&&ruoliItems.contains("Fuorilegge")&&ruoliItems.contains("Rinnegato")){
             errorMessage.setText("");
             gameData.setNumero(giocatoriSelezionati.size());
-            setBot();
             setPianeti();
             setRuoli();
             root = FXMLLoader.load(getClass().getResource("Partitonza.fxml"));
