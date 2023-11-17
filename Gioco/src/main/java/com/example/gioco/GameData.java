@@ -61,16 +61,14 @@ public class GameData {
     }
 
     public void aggiugniPersonaggi() {
-        arrayPersonaggi[0] = new Personaggio1("Samuel", 4, "Pesca la prima carta del mazzo");
-        /*
-        arrayPersonaggi[1] = new Personaggio2();
-        arrayPersonaggi[2] = new Personaggio3();
-        arrayPersonaggi[3] = new Personaggio4();
-        arrayPersonaggi[4] = new Personaggio5();
-        arrayPersonaggi[5] = new Personaggio6();
-        arrayPersonaggi[6] = new Personaggio7();
-        arrayPersonaggi[7] = new Personaggio8();
-        */
+        arrayPersonaggi[0] = new Personaggio1("Zodiac", 4, "Può pescare la prima carta dalla mano di un giocatore.");
+        arrayPersonaggi[1] = new Personaggio2("Ted Bundy", 4, "Può scartare due carte per recuperare un punto vita.");
+        arrayPersonaggi[2] = new Personaggio3("Killer Clown", 4, "Ogni volta che viene ferito pesca una carta.");
+        arrayPersonaggi[3] = new Personaggio4("Aileen Wuornos", 4, "Può giocare le carte BANG come carte Mancato, e viceversa.");
+        arrayPersonaggi[4] = new Personaggio5("Ed Gein", 4, "Può giocare un numero qualsiasi di carte BANG.");
+        arrayPersonaggi[5] = new Personaggio6("Jeffrey Dahmer", 4, "Può pescare la prima carta dalla cima degli scarti.");
+        arrayPersonaggi[6] = new Personaggio7("The River Man", 3, "Ogni volta che viene ferito da un giocatore, pesca una carta dalla mano di quel giocatore.");
+        arrayPersonaggi[7] = new Personaggio8("BTK Killer", 3, "Per evitare i suoi BANG occorrono due carte Mancato.");
     }
     private Set<Integer> setPersonaggi() {
         int min = 0;

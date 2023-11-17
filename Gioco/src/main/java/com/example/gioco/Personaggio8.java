@@ -1,11 +1,11 @@
 package com.example.gioco;
 
-public class Personaggio1 implements Personaggi {
+public class Personaggio8 implements Personaggi{
     private String nome;
     private final int hp;
     private String effetto;
 
-    public Personaggio1(String nome, int hp, String effetto) {
+    public Personaggio8(String nome, int hp, String effetto) {
         this.nome = nome;
         this.hp = hp;
         this.effetto = effetto;
