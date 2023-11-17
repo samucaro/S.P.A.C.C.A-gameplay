@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class GiocatorePersona extends Giocatore{
     private Ruoli ruolo;
-    //private Personaggi personaggio;
+    private Personaggi personaggio;
     private int hp;
     private ArrayList<Carta> mano;
     public GiocatorePersona(Ruoli ruolo){
@@ -30,6 +30,9 @@ public class GiocatorePersona extends Giocatore{
     }
     public Ruoli getRuolo() {
         return ruolo;
+    }
+    public void setPersonaggio(Personaggi personaggio) {
+        this.personaggio = personaggio;
     }
     public int getHp() {
         return hp;

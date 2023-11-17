@@ -163,6 +163,9 @@ public class LoginPageController {
     }
 
     public void switchToFastGamePage(ActionEvent event) throws IOException {
+        gameData.setNumero(numGiocatori);
+        gameData.setPersone(numPersone);
+        gameData.setRobot(numGiocatori-numPersone);
         root = FXMLLoader.load(getClass().getResource("FastGamePage.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);

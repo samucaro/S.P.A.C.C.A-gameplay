@@ -1,9 +1,6 @@
 package com.example.gioco;
 
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.Set;
-import java.util.HashSet;
+import java.util.*;
 
 public class GameData {
     private static GameData instance = null;
@@ -16,6 +13,8 @@ public class GameData {
             {1,1,4,2}
     };
     private int numeroGG;
+    private int numeroR;
+    private int numeroP;
     private int numeroPersone; //da assegnarli il valore
     private int numeroRobot; //da assegnarli il valore
     private final Personaggi[] arrayPersonaggi = new Personaggi[8]; //vettore con tutti i personaggi
@@ -104,6 +103,12 @@ public class GameData {
     public void setNumero(int numeroGG) {
         this.numeroGG = numeroGG;
     }
+    public void setPersone(int numeroP) {
+        this.numeroP = numeroP;
+    }
+    public void setRobot(int numeroR) {
+        this.numeroR = numeroR;
+    }
 
     public void setRuolo(int i, Ruoli r) {
         if (ruolo==null)
@@ -136,7 +141,7 @@ public class GameData {
         int max = ruoliPartita.size()-1;
         return (int) (Math.random()*(max-min+1))+1;
     }
-    public Giocatore[] getGGRandom() {
+    public ArrayList<Giocatore> getGGRandom() {
         ArrayList<Giocatore> giocatoriPartita = new ArrayList<>();
         int index = 0;
         setRuoliPartita();
@@ -149,21 +154,13 @@ public class GameData {
             index++;
         }
         index=0;
-        //setPersonaggi() creare un vettore Personaggi
+        ArrayList<Integer> valori = new ArrayList<>(Arrays.asList(setPersonaggi().toArray(new Integer[0])));
         while(index < numeroPersone ) {
             Giocatore g = new GiocatorePersona();
-            //g.setPersonaggio(ruoliPartita.get(val)); //creare metodo setPersonaggio in Giocatore e implementarlo in Giocatore Persona
-            //ruoliPartita.remove(val);
+            g.setPersonaggio(arrayPersonaggi[valori.get(index)]);
             giocatoriPartita.add(g);
+            index++;
         }
-        Giocatore[] ggs = new Giocatore[numeroGG];
-        for (int i = 0; i<numeroGG; i++){
-            if (bot[i]) {
-                ggs[i]= new GiocatoreRobot();
-            } else {
-                ggs[i] = new GiocatorePersona(ruolo[i]);
-            }
-        }
-        return ggs;
+        return giocatoriPartita;
     }
 }

@@ -2,8 +2,10 @@ package com.example.gioco;
 
 import javafx.fxml.FXML;
 
+import java.util.ArrayList;
+
 public class FastGamePageController {
-    private Giocatore[] giocatori;
+    private ArrayList<Giocatore> giocatori;
     @FXML
     public void initalize() {
 
