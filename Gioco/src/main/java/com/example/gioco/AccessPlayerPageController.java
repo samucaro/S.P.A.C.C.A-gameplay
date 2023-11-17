@@ -29,7 +29,7 @@ public class AccessPlayerPageController {
     ObservableList<String> ruoliItems = FXCollections.observableArrayList("Sceriffo", "Rinnegato", "Fuorilegge", "Vice");
     int[] ruoliQ = new int[4];
     int[][] matrix = {
-            {1,1,1,1}, //sceriffi, rinnegato, fuorilegge, vice
+            {1,1,1,0}, //sceriffi, rinnegato, fuorilegge, vice
             {1,1,2,0},
             {1,1,2,1},
             {1,1,3,1},
