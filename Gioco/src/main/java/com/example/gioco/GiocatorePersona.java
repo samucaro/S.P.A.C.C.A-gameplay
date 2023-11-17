@@ -12,6 +12,9 @@ public class GiocatorePersona extends Giocatore{
         this.mano = new ArrayList<Carta>();
         hp = 100;
     }
+    public GiocatorePersona() {
+        this.mano = new ArrayList<Carta>();
+    }
 
     public void aggiungiCarta(Carta carta){
         mano.add(carta);
@@ -21,6 +24,9 @@ public class GiocatorePersona extends Giocatore{
     }
     public void cura(int cura){
         hp= Math.min(hp + cura, 100);
+    }
+    public void setRuolo(Ruoli ruolo) {
+        this.ruolo = ruolo;
     }
     public Ruoli getRuolo() {
         return ruolo;

@@ -9,12 +9,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class LoginPageController {
     private GameData gameData = GameData.getInstance();
@@ -30,6 +27,8 @@ public class LoginPageController {
     private MenuButton numRobot;
     @FXML
     private Button startGame;
+    @FXML
+    private Button fastGame;
 
     @FXML
     public void initialize() {
@@ -86,6 +85,7 @@ public class LoginPageController {
             numRobot.setVisible(false);
         }
         startGame.setDisable(false);
+        fastGame.setDisable(false);
         System.out.println("Giochi senza robot");
     }
 
@@ -105,49 +105,65 @@ public class LoginPageController {
         numPersone = numGiocatori-1;
         System.out.println("Hai selezionato 1 robot, numero persone: " + numPersone);
         startGame.setDisable(false);
+        fastGame.setDisable(false);
     }
 
     public void opzione2R(ActionEvent event) {
         numPersone = numGiocatori-2;
         System.out.println("Hai selezionato 2 robot, numero persone: " + numPersone);
         startGame.setDisable(false);
+        fastGame.setDisable(false);
     }
 
     public void opzione3R(ActionEvent event) {
         numPersone = numGiocatori-3;
         System.out.println("Hai selezionato 3 robot, numero persone: " + numPersone);
         startGame.setDisable(false);
+        fastGame.setDisable(false);
     }
 
     public void opzione4R(ActionEvent event) {
         numPersone = numGiocatori-4;
         System.out.println("Hai selezionato 4 robot, numero persone: " + numPersone);
         startGame.setDisable(false);
+        fastGame.setDisable(false);
     }
     public void opzione5R(ActionEvent event) {
         numPersone = numGiocatori-5;
         System.out.println("Hai selezionato 5 robot, numero persone: " + numPersone);
         startGame.setDisable(false);
+        fastGame.setDisable(false);
     }
     public void opzione6R(ActionEvent event) {
         numPersone = numGiocatori-6;
         System.out.println("Hai selezionato 6 robot, numero persone: " + numPersone);
         startGame.setDisable(false);
+        fastGame.setDisable(false);
     }
     public void opzione7R(ActionEvent event) {
         numPersone = numGiocatori-7;
         System.out.println("Hai selezionato 7 robot, numero persone: " + numPersone);
         startGame.setDisable(false);
+        fastGame.setDisable(false);
     }
     public void opzione8R(ActionEvent event) {
         numPersone = numGiocatori-8;
         System.out.println("Hai selezionato 8 robot, numero persone: " + numPersone);
         startGame.setDisable(false);
+        fastGame.setDisable(false);
     }
 
     public void switchToAccessPlayer(ActionEvent event) throws IOException {
         gameData.setNumero(numGiocatori);
         root = FXMLLoader.load(getClass().getResource("AccessPlayerPage.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switchToFastGamePage(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(getClass().getResource("FastGamePage.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);

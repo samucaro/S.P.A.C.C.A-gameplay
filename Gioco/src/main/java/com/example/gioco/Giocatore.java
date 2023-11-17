@@ -4,7 +4,9 @@ public abstract class Giocatore {
     abstract public void aggiungiCarta(Carta carta);
     abstract void subisciDanno(int danno);
     abstract void cura(int cura);
+    abstract void setRuolo(Ruoli ruolo);
     abstract public Ruoli getRuolo();
     abstract int getHp();
     abstract public ArrayList<Carta> getMano();
+
 }

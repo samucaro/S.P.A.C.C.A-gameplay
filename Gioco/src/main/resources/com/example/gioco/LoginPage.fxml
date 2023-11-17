@@ -88,5 +88,6 @@
       <Button layoutX="243.0" layoutY="222.0" mnemonicParsing="false" onAction="#activeChois" text="Giochi con Robot?" />
       <CheckBox fx:id="rispostaSi" layoutX="281.0" layoutY="261.0" mnemonicParsing="false" onAction="#giocoConRobot" text="Sì" textFill="WHITE" visible="false" />
       <CheckBox fx:id="rispostaNo" layoutX="281.0" layoutY="287.0" mnemonicParsing="false" onAction="#giocoSenzaRobot" text="No" textFill="WHITE" visible="false" />
+      <Button fx:id="fastGame" disable="true" layoutX="29.0" layoutY="354.0" mnemonicParsing="false" onAction="#switchToFastGamePage" text="Fast Game" />
    </children>
 </AnchorPane>

@@ -6,10 +6,14 @@ public class GiocatoreRobot extends Giocatore {
     private Ruoli ruolo;
     private int hp;
     private ArrayList<Carta> mano;
-    public GiocatoreRobot(Ruoli ruolo) {
+    private Personaggi personaggio;
+    public GiocatoreRobot(Ruoli ruolo, Personaggi personaggio) {
         this.ruolo = ruolo;
         this.mano = new ArrayList<Carta>();
-        hp = 100;
+        this.personaggio = personaggio;
+    }
+    public GiocatoreRobot() {
+        this.mano = new ArrayList<Carta>();
     }
 
     public void aggiungiCarta(Carta carta){
@@ -20,6 +24,13 @@ public class GiocatoreRobot extends Giocatore {
     }
     public void cura(int cura){
         hp= Math.min(hp + cura, 100);
+    }
+
+    public void setPersonaggio(Personaggi personaggio) {
+        this.personaggio = personaggio;
+    }
+    public void setRuolo(Ruoli ruolo) {
+        this.ruolo = ruolo;
     }
     public Ruoli getRuolo() {
         return ruolo;
