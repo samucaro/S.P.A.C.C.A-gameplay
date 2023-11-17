@@ -1,6 +1,9 @@
 package com.example.gioco;
 
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.Set;
+import java.util.HashSet;
 
 public class GameData {
     private static GameData instance = null;
@@ -70,6 +73,24 @@ public class GameData {
         arrayPersonaggi[7] = new Personaggio8();
         */
     }
+    private Set<Integer> setPersonaggi() {
+        int min = 0;
+        int max = 7;
+        int numeriDaStampare = numeroGG;
+        return generaNumeriCasualiUnici(min, max, numeriDaStampare);
+    }
+    private static Set<Integer> generaNumeriCasualiUnici(int min, int max, int count) {
+        if (count > (max - min + 1) || count < 0) {
+            throw new IllegalArgumentException("Invalid range or count");
+        }
+        Set<Integer> numeriCasualiUnici = new HashSet<>();
+        Random rand = new Random();
+        while (numeriCasualiUnici.size() < count) {
+            int numeroCasuale = rand.nextInt((max - min) + 1) + min;
+            numeriCasualiUnici.add(numeroCasuale);
+        }
+        return numeriCasualiUnici;
+    }
     public int getNumero() {
         return numeroGG;
     }
@@ -131,8 +152,7 @@ public class GameData {
         //setPersonaggi() creare un vettore Personaggi
         while(index < numeroPersone ) {
             Giocatore g = new GiocatorePersona();
-            int val = metodino();
-            g.setRuolo(ruoliPartita.get(val));
+            g.setPersonaggio(ruoliPartita.get(val)); //creare metodo setPersonaggio in Giocatore e implementarlo in Giocatore Persona
             ruoliPartita.remove(val);
             giocatoriPartita.add(g);
         }
