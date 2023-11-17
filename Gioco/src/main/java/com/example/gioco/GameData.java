@@ -152,8 +152,8 @@ public class GameData {
         //setPersonaggi() creare un vettore Personaggi
         while(index < numeroPersone ) {
             Giocatore g = new GiocatorePersona();
-            g.setPersonaggio(ruoliPartita.get(val)); //creare metodo setPersonaggio in Giocatore e implementarlo in Giocatore Persona
-            ruoliPartita.remove(val);
+            //g.setPersonaggio(ruoliPartita.get(val)); //creare metodo setPersonaggio in Giocatore e implementarlo in Giocatore Persona
+            //ruoliPartita.remove(val);
             giocatoriPartita.add(g);
         }
         Giocatore[] ggs = new Giocatore[numeroGG];
