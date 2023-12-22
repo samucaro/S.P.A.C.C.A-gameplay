@@ -31,11 +31,11 @@
                   <MenuItem mnemonicParsing="false" onAction="#opzione6" text="8 giocatori" />
               </items>
             </MenuButton>
-            <VBox alignment="TOP_CENTER" spacing="10.0" HBox.hgrow="ALWAYS">
+            <VBox alignment="CENTER" spacing="10.0" HBox.hgrow="ALWAYS">
                <children>
                   <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#activeChois" text="Giochi con Robot?" VBox.vgrow="ALWAYS" />
-                  <CheckBox fx:id="rispostaSi" mnemonicParsing="false" onAction="#giocoConRobot" text="Sì" textFill="WHITE" visible="false" VBox.vgrow="ALWAYS" />
-                  <CheckBox fx:id="rispostaNo" mnemonicParsing="false" onAction="#giocoSenzaRobot" text="No" textFill="WHITE" visible="false" VBox.vgrow="ALWAYS" />
+                  <CheckBox fx:id="rispostaSi" mnemonicParsing="false" onAction="#giocoConRobot" prefHeight="17.0" prefWidth="42.0" text="Sì" textFill="WHITE" visible="false" VBox.vgrow="ALWAYS" />
+                  <CheckBox fx:id="rispostaNo" mnemonicParsing="false" onAction="#giocoSenzaRobot" prefHeight="17.0" prefWidth="42.0" text="No" textFill="WHITE" visible="false" VBox.vgrow="ALWAYS" />
                </children>
                <HBox.margin>
                   <Insets left="75.0" right="100.0" />
@@ -65,7 +65,7 @@
             <Button mnemonicParsing="false" text="Regole" VBox.vgrow="ALWAYS" />
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0" VBox.vgrow="ALWAYS">
                <children>
-                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="S.P.A.C.C.A" HBox.hgrow="ALWAYS">
+                  <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="S.P.A.C.C.A">
                      <font>
                         <Font name="Game of Thrones" size="50.0" />
                      </font>
@@ -114,9 +114,14 @@
       </VBox>
    </top>
    <bottom>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="200.0" BorderPane.alignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" BorderPane.alignment="CENTER">
          <children>
             <Button fx:id="fastGame" disable="true" mnemonicParsing="false" onAction="#switchToFastGamePage" text="Fast Game" HBox.hgrow="ALWAYS" />
+            <Text fx:id="outputText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-effect: dropshadow( gaussian, rgba(0,0,250,0.8), 10 , 0 , 0 , 2 );" textAlignment="CENTER" visible="false" wrappingWidth="211.685546875">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Text>
             <Button fx:id="startGame" disable="true" mnemonicParsing="false" onAction="#switchToAccessPlayer" text="Start Game" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>

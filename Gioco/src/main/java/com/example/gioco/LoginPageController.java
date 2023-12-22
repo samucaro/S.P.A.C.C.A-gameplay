@@ -10,8 +10,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.MenuButton;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+
+
 
 public class LoginPageController {
     private GameData gameData = GameData.getInstance();
@@ -19,6 +26,7 @@ public class LoginPageController {
     private Parent root;
     private int numPersone;
     private int numGiocatori;
+    private File fileTesto;
     @FXML
     private CheckBox rispostaSi;
     @FXML
@@ -29,6 +37,8 @@ public class LoginPageController {
     private Button startGame;
     @FXML
     private Button fastGame;
+    @FXML
+    private Text outputText;
 
     @FXML
     public void initialize() {
@@ -38,32 +48,38 @@ public class LoginPageController {
 
     public void opzione1(ActionEvent event) {
         numGiocatori = 3;
-        System.out.println("Hai selezionato 3 giocatori");
+        outputText.setText("Hai selezionato 3 giocatori");
+        outputText.setVisible(true);
     }
 
     public void opzione2(ActionEvent event) {
         numGiocatori = 4;
-        System.out.println("Hai selezionato 4 giocatori");
+        outputText.setText("Hai selezionato 4 giocatori");
+        outputText.setVisible(true);
     }
 
     public void opzione3(ActionEvent event) {
         numGiocatori = 5;
-        System.out.println("Hai selezionato 5 giocatori");
+        outputText.setText("Hai selezionato 5 giocatori");
+        outputText.setVisible(true);
     }
 
     public void opzione4(ActionEvent event) {
         numGiocatori = 6;
-        System.out.println("Hai selezionato 6 giocatori");
+        outputText.setText("Hai selezionato 6 giocatori");
+        outputText.setVisible(true);
     }
 
     public void opzione5(ActionEvent event) {
         numGiocatori = 7;
-        System.out.println("Hai selezionato 7 giocatori");
+        outputText.setText("Hai selezionato 7 giocatori");
+        outputText.setVisible(true);
     }
 
     public void opzione6(ActionEvent event) {
         numGiocatori = 8;
-        System.out.println("Hai selezionato 8 giocatori");
+        outputText.setText("Hai selezionato 8 giocatori");
+        outputText.setVisible(true);
     }
 
 
@@ -103,55 +119,68 @@ public class LoginPageController {
 
     public void opzione1R(ActionEvent event) {
         numPersone = numGiocatori-1;
-        System.out.println("Hai selezionato 1 robot, numero persone: " + numPersone);
+        System.out.println();
+        outputText.setText("Hai selezionato 1 robot, numero persone: " + numPersone);
         startGame.setDisable(false);
         fastGame.setDisable(false);
     }
 
     public void opzione2R(ActionEvent event) {
         numPersone = numGiocatori-2;
-        System.out.println("Hai selezionato 2 robot, numero persone: " + numPersone);
+        outputText.setText("Hai selezionato 2 robot, numero persone: " + numPersone);
         startGame.setDisable(false);
         fastGame.setDisable(false);
     }
 
     public void opzione3R(ActionEvent event) {
         numPersone = numGiocatori-3;
-        System.out.println("Hai selezionato 3 robot, numero persone: " + numPersone);
+        outputText.setText("Hai selezionato 3 robot, numero persone: " + numPersone);;
         startGame.setDisable(false);
         fastGame.setDisable(false);
     }
 
     public void opzione4R(ActionEvent event) {
         numPersone = numGiocatori-4;
-        System.out.println("Hai selezionato 4 robot, numero persone: " + numPersone);
+        outputText.setText("Hai selezionato 4 robot, numero persone: " + numPersone);
         startGame.setDisable(false);
         fastGame.setDisable(false);
     }
     public void opzione5R(ActionEvent event) {
         numPersone = numGiocatori-5;
-        System.out.println("Hai selezionato 5 robot, numero persone: " + numPersone);
+        outputText.setText("Hai selezionato 5 robot, numero persone: " + numPersone);
         startGame.setDisable(false);
         fastGame.setDisable(false);
     }
     public void opzione6R(ActionEvent event) {
         numPersone = numGiocatori-6;
-        System.out.println("Hai selezionato 6 robot, numero persone: " + numPersone);
+        outputText.setText("Hai selezionato 6 robot, numero persone: " + numPersone);
         startGame.setDisable(false);
         fastGame.setDisable(false);
     }
     public void opzione7R(ActionEvent event) {
         numPersone = numGiocatori-7;
-        System.out.println("Hai selezionato 7 robot, numero persone: " + numPersone);
+        outputText.setText("Hai selezionato 7 robot, numero persone: " + numPersone);
         startGame.setDisable(false);
         fastGame.setDisable(false);
     }
     public void opzione8R(ActionEvent event) {
         numPersone = numGiocatori-8;
-        System.out.println("Hai selezionato 8 robot, numero persone: " + numPersone);
+        outputText.setText("Hai selezionato 8 robot, numero persone: " + numPersone);
         startGame.setDisable(false);
         fastGame.setDisable(false);
     }
+
+    /*
+    public void regole(ActionEvent event) {
+        try {
+            FileChooser fileChooser = new FileChooser();
+            fileTesto = new File();
+        }
+        catch(FileNotFoundException e) {
+            System.out.println("ERRORE! " + e.getMessage());
+        }
+    }
+     */
 
     public void switchToAccessPlayer(ActionEvent event) throws IOException {
         gameData.setNumero(numGiocatori);

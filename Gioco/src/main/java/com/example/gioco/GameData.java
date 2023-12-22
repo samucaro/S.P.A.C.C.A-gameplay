@@ -151,6 +151,7 @@ public class GameData {
             giocatoriPartita.add(g);
             index++;
         }
+        //farli entrambi per giocatoreRobot e per giocatorePersona
         index=0;
         ArrayList<Integer> valori = new ArrayList<>(Arrays.asList(setPersonaggi().toArray(new Integer[0])));
         while(index < numeroPersone ) {
