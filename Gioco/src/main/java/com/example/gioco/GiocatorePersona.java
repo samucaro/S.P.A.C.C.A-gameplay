@@ -3,39 +3,47 @@ package com.example.gioco;
 import java.util.ArrayList;
 
 public class GiocatorePersona extends Giocatore{
-    private Ruoli ruolo;
-    private Personaggi personaggio;
-    private int hp;
+    private final Ruoli ruolo;
+    private final Personaggi personaggio;
+    private int hpRimanente;
     private ArrayList<Carta> mano;
-    public GiocatorePersona(Ruoli ruolo){
+    public GiocatorePersona(Ruoli ruolo, Personaggi personaggio){
         this.ruolo = ruolo;
-        this.mano = new ArrayList<Carta>();
-        hp = 100;
+        mano = new ArrayList<Carta>();
+        this.personaggio = personaggio;
+        hpRimanente = personaggio.getHp();
     }
-    public GiocatorePersona() {
+    /*public GiocatorePersona() {
         this.mano = new ArrayList<Carta>();
     }
-
+    */
     public void aggiungiCarta(Carta carta){
-        mano.add(carta);
+        if(mano.size() == 6) { //modificare con il numero massimo di carte in mano
+           System.out.println("Hai già il numero massimo di carte in mano");
+        }
+        else {
+            mano.add(carta);
+        }
     }
     public void subisciDanno(int danno){
-        hp=hp-danno;
+        if(hpRimanente == 0) {
+            System.out.println("Il giocatore è già eliminato");
+        }
+        hpRimanente-=danno;
     }
-    public void cura(int cura){
-        hp= Math.min(hp + cura, 100);
-    }
-    public void setRuolo(Ruoli ruolo) {
-        this.ruolo = ruolo;
+    public void cura(int vita){
+        if(hpRimanente == personaggio.getHp()) { //l'hp del personaggio è final e non può cambiare
+            System.out.println("Il personaggio ha già la vita massima, non verrà aggiunto nessun punto vita");
+        }
+        else {
+            hpRimanente+=vita; //se si vuole aggiungere più fi una vita fare un ciclo for, meglio lasciare che si può aggiungere solo una vita per volta
+        }
     }
     public Ruoli getRuolo() {
         return ruolo;
     }
-    public void setPersonaggio(Personaggi personaggio) {
-        this.personaggio = personaggio;
-    }
-    public int getHp() {
-        return hp;
+    public int getHpRimanente() {
+        return hpRimanente;
     }
     public ArrayList<Carta> getMano() {
         return mano;

@@ -39,6 +39,7 @@
                <VBox.margin>
                   <Insets />
                </VBox.margin></Label>
+            <Label fx:id="timeError" alignment="CENTER" contentDisplay="CENTER" prefHeight="0.0" prefWidth="330.0" text="Se sbagli un'altra volta l'accesso verrà bloccato per 30 secondi" textAlignment="CENTER" textFill="RED" visible="false" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
    </center>

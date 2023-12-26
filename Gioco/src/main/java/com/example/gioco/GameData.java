@@ -15,20 +15,22 @@ public class GameData {
     private int numeroGG;
     private int numeroR;
     private int numeroP;
-    private int numeroPersone; //da assegnarli il valore
-    private int numeroRobot; //da assegnarli il valore
     private final Personaggi[] arrayPersonaggi = new Personaggi[8]; //vettore con tutti i personaggi
-    private Ruoli[] ruolo;
-    private String[] pianeta;
-    private Boolean[] bot;
+    //private Ruoli[] ruolo;
+    //private String[] pianeta;
+    //private Boolean[] bot;
     ArrayList<Ruoli> ruoliPartita = new ArrayList<>();
-    private GameData() {}
+
+    public GameData() {
+        aggiugniPersonaggi();
+    }
     public static GameData getInstance() {
         if (instance == null) {
             instance = new GameData();
         }
         return instance;
     }
+
 
     private void setRuoliPartita() {
         for(int i=0; i<4; i++) {
@@ -60,7 +62,7 @@ public class GameData {
         }
     }
 
-    public void aggiugniPersonaggi() {
+    private void aggiugniPersonaggi() {
         arrayPersonaggi[0] = new Personaggio1("Zodiac", 4, "Può pescare la prima carta dalla mano di un giocatore.");
         arrayPersonaggi[1] = new Personaggio2("Ted Bundy", 4, "Può scartare due carte per recuperare un punto vita.");
         arrayPersonaggi[2] = new Personaggio3("Killer Clown", 4, "Ogni volta che viene ferito pesca una carta.");
@@ -70,17 +72,23 @@ public class GameData {
         arrayPersonaggi[6] = new Personaggio7("The River Man", 3, "Ogni volta che viene ferito da un giocatore, pesca una carta dalla mano di quel giocatore.");
         arrayPersonaggi[7] = new Personaggio8("BTK Killer", 3, "Per evitare i suoi BANG occorrono due carte Mancato.");
     }
+
     private Set<Integer> setPersonaggi() {
         int min = 0;
         int max = 7;
         int numeriDaStampare = numeroGG;
         return generaNumeriCasualiUnici(min, max, numeriDaStampare);
     }
-    private static Set<Integer> generaNumeriCasualiUnici(int min, int max, int count) {
-        if (count > (max - min + 1) || count < 0) {
-            throw new IllegalArgumentException("Invalid range or count");
+    private Set<Integer> generaNumeriCasualiUnici(int min, int max, int count) {
+        try {
+            if (count > (max - min + 1) || count < 0) {
+                throw new IllegalArgumentException("ERRORE! Range non valido.");
+            }
         }
-        Set<Integer> numeriCasualiUnici = new HashSet<>();
+        catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        Set<Integer> numeriCasualiUnici = new LinkedHashSet<>();
         Random rand = new Random();
         while (numeriCasualiUnici.size() < count) {
             int numeroCasuale = rand.nextInt((max - min) + 1) + min;
@@ -88,16 +96,30 @@ public class GameData {
         }
         return numeriCasualiUnici;
     }
+
+    public Personaggi[] arrayPersonaggi() {
+        Personaggi[] vettP = new Personaggi[numeroGG];
+        Integer[] valori = setPersonaggi().toArray(new Integer[0]);
+        for(int i = 0; i < vettP.length; i++) {
+            vettP[i] = arrayPersonaggi[valori[i]];
+        }
+        return vettP;
+    }
+    /*
     public int getNumero() {
         return numeroGG;
     }
+    */
+    /*
     public Ruoli getRuolo(int i) {
         return ruolo[i];
     }
-    public String getPianeta(int i) {
+    */
+
+    /*public String getPianeta(int i) {
         return pianeta[i];
     }
-
+    */
     public void setNumero(int numeroGG) {
         this.numeroGG = numeroGG;
     }
@@ -108,21 +130,28 @@ public class GameData {
         this.numeroR = numeroR;
     }
 
+    /*
     public void setRuolo(int i, Ruoli r) {
         if (ruolo==null)
             ruolo = new Ruoli[numeroGG];
         ruolo[i]=r;
     }
+    */
+    /*
     public void setPianeta(int i, String p) {
         if (pianeta==null)
             pianeta = new String[numeroGG];
         pianeta[i]=p;
     }
+    */
+    /*
     public void setBot(int i, Boolean b) {
         if (bot==null)
             bot = new Boolean[numeroGG];
         bot[i]=b;
     }
+    */
+    /*
     public Giocatore[] getGG() {
         Giocatore[] ggs = new Giocatore[numeroGG];
         for (int i = 0; i<numeroGG; i++){
@@ -134,16 +163,20 @@ public class GameData {
         }
         return ggs;
     }
+    */
+    /*
     private int metodino() {
         int min = 0;
         int max = ruoliPartita.size()-1;
         return (int) (Math.random()*(max-min+1))+1;
     }
+    */
+    /*
     public ArrayList<Giocatore> getGGRandom() {
         ArrayList<Giocatore> giocatoriPartita = new ArrayList<>();
         int index = 0;
         setRuoliPartita();
-        while(index < numeroRobot ) {
+        while(index < numeroR ) {
             Giocatore g = new GiocatoreRobot();
             int val = metodino();
             g.setRuolo(ruoliPartita.get(val));
@@ -154,7 +187,7 @@ public class GameData {
         //farli entrambi per giocatoreRobot e per giocatorePersona
         index=0;
         ArrayList<Integer> valori = new ArrayList<>(Arrays.asList(setPersonaggi().toArray(new Integer[0])));
-        while(index < numeroPersone ) {
+        while(index < numeroP ) {
             Giocatore g = new GiocatorePersona();
             g.setPersonaggio(arrayPersonaggi[valori.get(index)]);
             giocatoriPartita.add(g);
@@ -162,4 +195,5 @@ public class GameData {
         }
         return giocatoriPartita;
     }
+    */
 }

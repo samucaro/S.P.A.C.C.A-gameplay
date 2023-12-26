@@ -14,9 +14,10 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class BlockPageController {
+    private int seconds;
     @FXML
     private Label timer;
-    private int seconds;
+
     @FXML
     public void initialize() {
         seconds=1;
@@ -38,7 +39,7 @@ public class BlockPageController {
     }
 
     public void switchToHomePage() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("com/example/gioco/HomePage.fxml")));
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("HomePage.fxml")));
         Stage stage = (Stage) timer.getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);

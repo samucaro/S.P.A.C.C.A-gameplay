@@ -21,7 +21,7 @@
    <center>
       <HBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
          <children>
-            <MenuButton mnemonicParsing="false" text="Numero Giocatori" HBox.hgrow="ALWAYS">
+            <MenuButton mnemonicParsing="false" onAction="#reset" onMouseClicked="#reset" text="Numero Giocatori" HBox.hgrow="ALWAYS">
               <items>
                   <MenuItem mnemonicParsing="false" onAction="#opzione1" text="3 giocatori" />
                   <MenuItem mnemonicParsing="false" onAction="#opzione2" text="4 giocatori" />
@@ -31,7 +31,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#opzione6" text="8 giocatori" />
               </items>
             </MenuButton>
-            <VBox alignment="CENTER" spacing="10.0" HBox.hgrow="ALWAYS">
+            <VBox alignment="TOP_CENTER" spacing="10.0" HBox.hgrow="ALWAYS">
                <children>
                   <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#activeChois" text="Giochi con Robot?" VBox.vgrow="ALWAYS" />
                   <CheckBox fx:id="rispostaSi" mnemonicParsing="false" onAction="#giocoConRobot" prefHeight="17.0" prefWidth="42.0" text="Sì" textFill="WHITE" visible="false" VBox.vgrow="ALWAYS" />
@@ -41,7 +41,7 @@
                   <Insets left="75.0" right="100.0" />
                </HBox.margin>
             </VBox>
-            <MenuButton fx:id="numRobot" mnemonicParsing="false" onAction="#setNumRobot" onMousePressed="#setNumRobot" text="Quanti?" visible="false" HBox.hgrow="ALWAYS">
+            <MenuButton fx:id="numRobot" mnemonicParsing="false" onMouseClicked="#setNumRobot" text="Quanti?" visible="false" HBox.hgrow="ALWAYS">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#opzione1R" text="1 robot" />
                   <MenuItem mnemonicParsing="false" onAction="#opzione2R" text="2 robot" />

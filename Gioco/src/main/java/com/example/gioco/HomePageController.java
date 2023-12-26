@@ -1,7 +1,6 @@
 package com.example.gioco;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -11,22 +10,24 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.Objects;
 
 public class HomePageController {
     private String psw;
     private String ut;
+    private static int cont;
     private Scene scene;
     private Parent root;
     @FXML
     private TextField username;
     @FXML
     private PasswordField password;
-    private static int cont;
     @FXML
     private Label error;
+    @FXML
+    private Label timeError;
 
     @FXML
     public void initialize() {
@@ -34,16 +35,13 @@ public class HomePageController {
         psw = "112233";
         cont=1;
 
-        password.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent keyEvent) {
-                if (keyEvent.getCode() == KeyCode.ENTER) {
-                    ActionEvent event = new ActionEvent(password, null);
-                    try {
-                        verifyLogin(event);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+        password.setOnKeyPressed(keyEvent -> {
+            if (keyEvent.getCode() == KeyCode.ENTER) {
+                ActionEvent event = new ActionEvent(password, null);
+                try {
+                    verifyLogin(event);
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -57,7 +55,7 @@ public class HomePageController {
         else {
             error.setVisible(true);
             if(cont == 4) {
-                System.out.println("Se sbagli un'altra volta l'accesso verrà bloccato per 30 secondi");
+                timeError.setVisible(true);
             }
             else if(cont >= 5) {
                 switchToBlockPage(event);
@@ -69,7 +67,7 @@ public class HomePageController {
     }
 
     public void switchToBlockPage(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("BlockPage.fxml"));
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("BlockPage.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
@@ -77,17 +75,19 @@ public class HomePageController {
     }
 
     public void switchToLoginPage(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(getClass().getResource("TypeGamePage.fxml"));
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("TypeGamePage.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }
 
+    /*
     private void setPassword(String psw) {
         this.psw = psw;
     }
     private void setUsername(String ut) {
         this.ut = ut;
     }
+    */
 }

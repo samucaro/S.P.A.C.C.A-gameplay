@@ -67,7 +67,7 @@
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="200.0" BorderPane.alignment="CENTER">
          <children>
             <Button mnemonicParsing="false" text="Assegna Ruoli" HBox.hgrow="ALWAYS" />
-            <Button mnemonicParsing="false" text="Assegna Personaggi" HBox.hgrow="ALWAYS" />
+            <Button mnemonicParsing="false" onAction="#assegnaPersonaggi" text="Assegna Personaggi" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>
    </center>

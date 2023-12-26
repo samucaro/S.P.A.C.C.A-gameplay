@@ -40,7 +40,7 @@ public class MainController {
         BackgroundImage backgroundImage = new BackgroundImage(sfondo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         anchorPane.setBackground(new Background(backgroundImage));
         partita = new Partita();
-        partita.iniziaPartita();
+        //partita.iniziaPartita();
         iniziaHD();
     }
 

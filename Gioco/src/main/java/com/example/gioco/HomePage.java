@@ -6,8 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-
 import java.io.IOException;
+import java.util.Objects;
 
 public class HomePage extends Application {
 
@@ -18,7 +18,7 @@ public class HomePage extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
             primaryStage.setTitle("S.P.A.C.C.A.");
-            Parent root = FXMLLoader.load(getClass().getResource("HomePage.fxml"));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("HomePage.fxml")));
             Image logo = new Image("logo.png");
             Scene scene = new Scene(root);
             primaryStage.getIcons().add(logo);

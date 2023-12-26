@@ -53,7 +53,7 @@ public class AccessPlayerPageController {
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, false, true);
         BackgroundImage backgroundImage = new BackgroundImage(sfondo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         borderP.setBackground(new Background(backgroundImage));
-        if (index<=gameData.getNumero())
+        //if (index<=gameData.getNumero())
             addPlayer();
         /*for(int i=1; i<=gameData.getNumero(); i++) {
             addPlayer(i);
@@ -78,7 +78,7 @@ public class AccessPlayerPageController {
             ((ChoiceBox<String>) g1.getChildren().get(3)).getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
                 @Override
                 public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
-                    ruoliSelezione(oldValue, newValue, g1, gameData.getNumero());
+                    //ruoliSelezione(oldValue, newValue, g1, gameData.getNumero());
                 }
             });
 
@@ -155,17 +155,18 @@ public class AccessPlayerPageController {
     }
     public void setPianeti(){
         for (int i = 0; i<giocatoriSelezionati.size(); i++) {
-            gameData.setPianeta(i,((ChoiceBox<String>) giocatoriSelezionati.get(i).getChildren().get(2)).getValue());
+            //gameData.setPianeta(i,((ChoiceBox<String>) giocatoriSelezionati.get(i).getChildren().get(2)).getValue());
         }
     }
     public void setRuoli(){
         for (int i = 0; i<giocatoriSelezionati.size(); i++) {
-            switch (((ChoiceBox<String>) giocatoriSelezionati.get(i).getChildren().get(3)).getValue()){
+            /*switch (((ChoiceBox<String>) giocatoriSelezionati.get(i).getChildren().get(3)).getValue()){
                 case "Sceriffo" -> gameData.setRuolo(i,Ruoli.SCERIFFO);
                 case "Fuorilegge" -> gameData.setRuolo(i,Ruoli.FUORILEGGE);
                 case "Rinnegato" -> gameData.setRuolo(i,Ruoli.RINNEGATO);
                 case "Vice" -> gameData.setRuolo(i,Ruoli.VICE);
             }
+            */
         }
     }
 
