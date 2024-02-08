@@ -62,6 +62,7 @@ public class GameData {
         }
     }
 
+    //Metodo che crea un vettore con tutti i personaggi possibili
     private void aggiugniPersonaggi() {
         arrayPersonaggi[0] = new Personaggio1("Zodiac", 4, "Può pescare la prima carta dalla mano di un giocatore.");
         arrayPersonaggi[1] = new Personaggio2("Ted Bundy", 4, "Può scartare due carte per recuperare un punto vita.");
