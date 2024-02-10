@@ -4,6 +4,7 @@ import java.util.*;
 
 public class GameData {
     private static GameData instance = null;
+    ArrayList<Giocatore> giocatoriPartita = new ArrayList<>();
     int[][] matrix = {
             {1,1,1,0}, //sceriffi, rinnegato, fuorilegge, vice
             {1,1,2,0},
@@ -31,10 +32,67 @@ public class GameData {
         return instance;
     }
 
+    public void setNumero(int numeroGG) {
+        this.numeroGG = numeroGG;
+    }
+    public void setPersone(int numeroP) {
+        this.numeroP = numeroP;
+    }
+    public void setRobot(int numeroR) {
+        this.numeroR = numeroR;
+    }
 
+    //Metodo che crea un vettore con tutti i personaggi possibili
+    private void aggiugniPersonaggi() {
+        arrayPersonaggi[0] = new Personaggio1("Zodiac", 4, "Può pescare la prima carta dalla mano di un giocatore.");
+        arrayPersonaggi[1] = new Personaggio2("Ted Bundy", 4, "Può scartare due carte per recuperare un punto vita.");
+        arrayPersonaggi[2] = new Personaggio3("Killer Clown", 4, "Ogni volta che viene ferito pesca una carta.");
+        arrayPersonaggi[3] = new Personaggio4("Aileen Wuornos", 4, "Può giocare le carte BANG come carte Mancato, e viceversa.");
+        arrayPersonaggi[4] = new Personaggio5("Ed Gein", 4, "Può giocare un numero qualsiasi di carte BANG.");
+        arrayPersonaggi[5] = new Personaggio6("Jeffrey Dahmer", 4, "Può pescare la prima carta dalla cima degli scarti.");
+        arrayPersonaggi[6] = new Personaggio7("The River Man", 3, "Ogni volta che viene ferito da un giocatore, pesca una carta dalla mano di quel giocatore.");
+        arrayPersonaggi[7] = new Personaggio8("BTK Killer", 3, "Per evitare i suoi BANG occorrono due carte Mancato.");
+    }
+    //crea un array di tipo Set con tot valori unici e casuali
+    private Set<Integer> setPersonaggi() {
+        int min = 0;
+        int max = 7;
+        int numeriDaStampare = numeroGG;
+        return generaNumeriCasualiUnici(min, max, numeriDaStampare);
+    }
+    //genra un insieme di numeri tutti diversi e non ordinati
+    private Set<Integer> generaNumeriCasualiUnici(int min, int max, int count) {
+        try {
+            if (count > (max - min + 1) || count < 0) {
+                throw new IllegalArgumentException("ERRORE! Range non valido.");
+            }
+        }
+        catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+        Set<Integer> numeriCasualiUnici = new LinkedHashSet<>();
+        Random rand = new Random();
+        while (numeriCasualiUnici.size() < count) {
+            int numeroCasuale = rand.nextInt((max - min) + 1) + min;
+            numeriCasualiUnici.add(numeroCasuale);
+        }
+        return numeriCasualiUnici;
+    }
+    //Da un array di tipo Set estrae i valori e li trasforma in interi i quali vengono poi usati per attribuire il
+    //personaggio corrispondente
+    private Personaggi[] arrayPersonaggi() {
+        Personaggi[] vettP = new Personaggi[numeroGG];
+        Integer[] valori = setPersonaggi().toArray(new Integer[0]); //non so se funziona
+        for(int i = 0; i < vettP.length; i++) {
+            vettP[i] = arrayPersonaggi[valori[i]];
+        }
+        return vettP;
+    }
+
+    //Stabilisce il numero di ogni rulo in base al numero di giocatori
     private void setRuoliPartita() {
         for(int i=0; i<4; i++) {
-            int val = matrix[numeroGG][i];
+            int val = matrix[numeroGG-3][i];
             if(i==0) {
                 while(val>0) {
                     ruoliPartita.add(Ruoli.SCERIFFO);
@@ -62,50 +120,37 @@ public class GameData {
         }
     }
 
-    //Metodo che crea un vettore con tutti i personaggi possibili
-    private void aggiugniPersonaggi() {
-        arrayPersonaggi[0] = new Personaggio1("Zodiac", 4, "Può pescare la prima carta dalla mano di un giocatore.");
-        arrayPersonaggi[1] = new Personaggio2("Ted Bundy", 4, "Può scartare due carte per recuperare un punto vita.");
-        arrayPersonaggi[2] = new Personaggio3("Killer Clown", 4, "Ogni volta che viene ferito pesca una carta.");
-        arrayPersonaggi[3] = new Personaggio4("Aileen Wuornos", 4, "Può giocare le carte BANG come carte Mancato, e viceversa.");
-        arrayPersonaggi[4] = new Personaggio5("Ed Gein", 4, "Può giocare un numero qualsiasi di carte BANG.");
-        arrayPersonaggi[5] = new Personaggio6("Jeffrey Dahmer", 4, "Può pescare la prima carta dalla cima degli scarti.");
-        arrayPersonaggi[6] = new Personaggio7("The River Man", 3, "Ogni volta che viene ferito da un giocatore, pesca una carta dalla mano di quel giocatore.");
-        arrayPersonaggi[7] = new Personaggio8("BTK Killer", 3, "Per evitare i suoi BANG occorrono due carte Mancato.");
-    }
-
-    private Set<Integer> setPersonaggi() {
+    //permette di generare un numero casuale comepreso tra il numero di ruoli rimasti e 0
+    private int metodino() {
         int min = 0;
-        int max = 7;
-        int numeriDaStampare = numeroGG;
-        return generaNumeriCasualiUnici(min, max, numeriDaStampare);
+        int max = ruoliPartita.size()-1;
+        return (int) (Math.random()*(max-min+1))+1;
     }
-    private Set<Integer> generaNumeriCasualiUnici(int min, int max, int count) {
-        try {
-            if (count > (max - min + 1) || count < 0) {
-                throw new IllegalArgumentException("ERRORE! Range non valido.");
-            }
+    //Assegna ruoli e personaggi seguendo i metodi precedenti
+    public void getGGRandom() {
+        Personaggi[] pPartita = arrayPersonaggi();
+        int indexR = 0;
+        int indexP = pPartita.length-1;
+        setRuoliPartita();
+        while(indexR < numeroR ) {
+            int val = metodino();
+            Giocatore g = new GiocatoreRobot(ruoliPartita.get(val), pPartita[indexP]);
+            ruoliPartita.remove(val);
+            giocatoriPartita.add(g);
+            indexR++;
+            indexP--;
         }
-        catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+        indexR=0;
+        while(indexR < numeroP ) {
+            int val = metodino();
+            Giocatore g = new GiocatoreRobot(ruoliPartita.get(val), pPartita[indexP]);
+            ruoliPartita.remove(val);
+            giocatoriPartita.add(g);
+            indexR++;
+            indexP--;
         }
-        Set<Integer> numeriCasualiUnici = new LinkedHashSet<>();
-        Random rand = new Random();
-        while (numeriCasualiUnici.size() < count) {
-            int numeroCasuale = rand.nextInt((max - min) + 1) + min;
-            numeriCasualiUnici.add(numeroCasuale);
-        }
-        return numeriCasualiUnici;
     }
 
-    public Personaggi[] arrayPersonaggi() {
-        Personaggi[] vettP = new Personaggi[numeroGG];
-        Integer[] valori = setPersonaggi().toArray(new Integer[0]);
-        for(int i = 0; i < vettP.length; i++) {
-            vettP[i] = arrayPersonaggi[valori[i]];
-        }
-        return vettP;
-    }
     /*
     public int getNumero() {
         return numeroGG;
@@ -121,16 +166,6 @@ public class GameData {
         return pianeta[i];
     }
     */
-    public void setNumero(int numeroGG) {
-        this.numeroGG = numeroGG;
-    }
-    public void setPersone(int numeroP) {
-        this.numeroP = numeroP;
-    }
-    public void setRobot(int numeroR) {
-        this.numeroR = numeroR;
-    }
-
     /*
     public void setRuolo(int i, Ruoli r) {
         if (ruolo==null)
@@ -163,38 +198,6 @@ public class GameData {
             }
         }
         return ggs;
-    }
-    */
-    /*
-    private int metodino() {
-        int min = 0;
-        int max = ruoliPartita.size()-1;
-        return (int) (Math.random()*(max-min+1))+1;
-    }
-    */
-    /*
-    public ArrayList<Giocatore> getGGRandom() {
-        ArrayList<Giocatore> giocatoriPartita = new ArrayList<>();
-        int index = 0;
-        setRuoliPartita();
-        while(index < numeroR ) {
-            Giocatore g = new GiocatoreRobot();
-            int val = metodino();
-            g.setRuolo(ruoliPartita.get(val));
-            ruoliPartita.remove(val);
-            giocatoriPartita.add(g);
-            index++;
-        }
-        //farli entrambi per giocatoreRobot e per giocatorePersona
-        index=0;
-        ArrayList<Integer> valori = new ArrayList<>(Arrays.asList(setPersonaggi().toArray(new Integer[0])));
-        while(index < numeroP ) {
-            Giocatore g = new GiocatorePersona();
-            g.setPersonaggio(arrayPersonaggi[valori.get(index)]);
-            giocatoriPartita.add(g);
-            index++;
-        }
-        return giocatoriPartita;
     }
     */
 }
