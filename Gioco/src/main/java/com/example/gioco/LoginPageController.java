@@ -196,10 +196,12 @@ public class LoginPageController {
         stage.show();
     }
 
+    //Da cambiare, deve switchare sulla partita direttamente
     public void switchToFastGamePage(ActionEvent event) throws IOException {
         gameData.setNumero(numGiocatori);
         gameData.setPersone(numPersone);
         gameData.setRobot(numGiocatori-numPersone);
+        gameData.getGGRandom();
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("FastGamePage.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
