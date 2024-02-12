@@ -192,6 +192,7 @@ public class AccessPlayerPageController {
             errorMessage.setText("Selezionare almeno uno sceriffo, un fuorilegge e un rinnegato.");
         }
     }
+
     public void impostaListener(Scene scene){
         scene.widthProperty().addListener((obs, oldVal, newVal) -> {
             OvalPaneController.setScenaX((Double) newVal);
