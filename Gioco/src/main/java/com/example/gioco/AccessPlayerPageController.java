@@ -157,6 +157,7 @@ public class AccessPlayerPageController {
                         ruoliItems.add(oldValue);
                 }
             }
+
         System.out.println(ruoliQ[0]);
         for (int i = 0; i<giocatoriSelezionati.size(); i++){
             if (i+1!=numero) {
