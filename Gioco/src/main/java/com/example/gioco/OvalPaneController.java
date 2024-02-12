@@ -16,12 +16,13 @@ import javafx.util.Duration;
 public class OvalPaneController {
     @FXML
     private Pane ovalPane;
+    private static GameData gameData = GameData.getInstance();
     private static Group[] spheres;
     private Cylinder ring;
     private boolean isPaused = false;
     private static double centroX;
     private static double centroY;
-    private static final int n = 8;
+    private static final int n = gameData.getNumero();
     private double anchorX, anchorY;
     private static int turnoDi = 5;
     private double anchorAngleX = 0;

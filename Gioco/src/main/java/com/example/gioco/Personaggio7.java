@@ -31,4 +31,8 @@ public class Personaggio7 implements Personaggi{
     public void useEffetto() {
         //implementare l'effetto scritto nella stringa effetto
     }
+    @Override
+    public String toString() {
+        return "Nome: " + nome;
+    }
 }

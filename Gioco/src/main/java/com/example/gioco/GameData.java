@@ -86,7 +86,6 @@ public class GameData {
         }
         return vettP;
     }
-
     //Stabilisce il numero di ogni rulo in base al numero di giocatori
     private void setRuoliPartita() {
         for(int i=0; i<4; i++) {
@@ -122,7 +121,9 @@ public class GameData {
     private int metodino() {
         int min = 0;
         int max = ruoliPartita.size()-1;
-        return (int) (Math.random()*(max-min+1))+1;
+        int var = (int) (Math.random()*(max-min+1))+min;
+        System.out.println(var);
+        return var;
     }
     //Assegna ruoli e personaggi seguendo i metodi precedenti
     public void getGGRandom() {
@@ -148,13 +149,12 @@ public class GameData {
             indexR++;
             indexP++;
         }
+        System.out.println(giocatoriPartita.toString());
     }
 
-    /*
     public int getNumero() {
         return numeroGG;
     }
-    */
     /*
     public Ruoli getRuolo(int i) {
         return ruolo[i];

@@ -82,7 +82,6 @@ public class LoginPageController {
         outputText.setText("Hai selezionato 8 giocatori");
         outputText.setVisible(true);
     }
-
     public void giocoConRobot() {
         startGame.setDisable(true);
         fastGame.setDisable(true);
@@ -200,11 +199,9 @@ public class LoginPageController {
 
     //Da cambiare, deve switchare sulla partita direttamente
     public void switchToFastGamePage(ActionEvent event) throws IOException {
-        /*
         gameData.setNumero(numGiocatori);
         gameData.setPersone(numPersone);
-        gameData.setRobot(numGiocatori-numPersone);
-        gameData.getGGRandom();*/
+        gameData.getGGRandom();
         root = FXMLLoader.load(getClass().getResource("Partitonza.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setMinWidth(900);

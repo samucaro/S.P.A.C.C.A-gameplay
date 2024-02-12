@@ -45,4 +45,14 @@ public class GiocatoreRobot extends Giocatore {
     public ArrayList<Carta> getMano() {
         return mano;
     }
+    @Override
+    public String toString() {
+        return "GiocatoreRobot{" +
+                "ruolo=" + ruolo +
+                ", hpRimanente=" + hpRimanente +
+                ", mano=" + mano +
+                ", personaggio=" + personaggio +
+                '}';
+    }
+
 }
