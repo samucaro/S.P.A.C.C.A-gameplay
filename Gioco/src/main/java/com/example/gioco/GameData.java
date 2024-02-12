@@ -128,24 +128,25 @@ public class GameData {
     public void getGGRandom() {
         Personaggi[] pPartita = arrayPersonaggi();
         int indexR = 0;
-        int indexP = pPartita.length-1;
+        int indexP = 0;
         setRuoliPartita();
-        while(indexR < numeroR ) {
+        while(indexR < numeroR) {
             int val = metodino();
             Giocatore g = new GiocatoreRobot(ruoliPartita.get(val), pPartita[indexP]);
             ruoliPartita.remove(val);
             giocatoriPartita.add(g);
             indexR++;
-            indexP--;
+            indexP++;
+
         }
         indexR=0;
         while(indexR < numeroP ) {
             int val = metodino();
-            Giocatore g = new GiocatoreRobot(ruoliPartita.get(val), pPartita[indexP]);
+            Giocatore g = new GiocatorePersona(ruoliPartita.get(val), pPartita[indexP]);
             ruoliPartita.remove(val);
             giocatoriPartita.add(g);
             indexR++;
-            indexP--;
+            indexP++;
         }
     }
 

@@ -48,4 +48,14 @@ public class GiocatorePersona extends Giocatore{
     public ArrayList<Carta> getMano() {
         return mano;
     }
+
+    @Override
+    public String toString() {
+        return "GiocatorePersona{" +
+                "ruolo=" + ruolo +
+                ", hpRimanente=" + hpRimanente +
+                ", mano=" + mano +
+                ", personaggio=" + personaggio +
+                '}';
+    }
 }

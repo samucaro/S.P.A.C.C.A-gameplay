@@ -111,6 +111,7 @@ public class LoginPageController {
             rispostaSi.setSelected(false);
             numRobot.setVisible(false);
             outputText.setText("Giochi senza robot");
+            numPersone = numGiocatori;
         }
         gameData.setRobot(0);
         startGame.setDisable(false);
