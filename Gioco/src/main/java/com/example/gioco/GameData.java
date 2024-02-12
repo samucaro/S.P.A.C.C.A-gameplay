@@ -21,7 +21,6 @@ public class GameData {
     //private String[] pianeta;
     //private Boolean[] bot;
     ArrayList<Ruoli> ruoliPartita = new ArrayList<>();
-
     public GameData() {
         aggiugniPersonaggi();
     }
@@ -31,7 +30,6 @@ public class GameData {
         }
         return instance;
     }
-
     public void setNumero(int numeroGG) {
         this.numeroGG = numeroGG;
     }
