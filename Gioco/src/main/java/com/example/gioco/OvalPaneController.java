@@ -108,6 +108,7 @@ public class OvalPaneController {
     }
     public void cambiaTurno() {
         posizionaSfere();
+        //gameData.getGiocatoriPartita().get()
         Timeline timeline = new Timeline();
         for (int ind = 0; ind < n-1; ind++) {
             int i = ind % n;

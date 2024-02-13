@@ -4,7 +4,8 @@ import java.util.*;
 
 public class GameData {
     private static GameData instance = null;
-    ArrayList<Giocatore> giocatoriPartita = new ArrayList<>();
+    private ArrayList<Giocatore> giocatoriPartita = new ArrayList<>();
+    private Mazzo mazzo;
     int[][] matrix = {
             {1,1,1,0}, //sceriffi, rinnegato, fuorilegge, vice
             {1,1,2,0},
@@ -23,6 +24,7 @@ public class GameData {
     ArrayList<Ruoli> ruoliPartita = new ArrayList<>();
     public GameData() {
         aggiugniPersonaggi();
+        mazzo = new Mazzo();
     }
     public static GameData getInstance() {
         if (instance == null) {
@@ -38,6 +40,12 @@ public class GameData {
     }
     public void setRobot(int numeroR) {
         this.numeroR = numeroR;
+    }
+    public void setMazzo(Mazzo mazzo) {
+        this.mazzo = mazzo;
+    }
+    public Mazzo getMazzo() {
+        return mazzo;
     }
 
     //Metodo che crea un vettore con tutti i personaggi possibili
@@ -152,6 +160,10 @@ public class GameData {
 
     public int getNumero() {
         return numeroGG;
+    }
+
+    public ArrayList<Giocatore> getGiocatoriPartita() {
+        return giocatoriPartita;
     }
     /*
     public Ruoli getRuolo(int i) {

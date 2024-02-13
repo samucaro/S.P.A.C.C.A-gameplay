@@ -7,5 +7,6 @@ public abstract class Giocatore {
     abstract public Ruoli getRuolo();
     abstract int getHpRimanente();
     abstract public ArrayList<Carta> getMano();
-
+    abstract public void setTurno(boolean turno);
+    abstract public boolean getTurno();
 }

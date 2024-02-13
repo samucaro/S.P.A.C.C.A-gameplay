@@ -6,6 +6,7 @@ public class GiocatoreRobot extends Giocatore {
     private final Ruoli ruolo;
     private int hpRimanente;
     private ArrayList<Carta> mano;
+    private boolean turno;
     private final Personaggi personaggio;
     public GiocatoreRobot(Ruoli ruolo, Personaggi personaggio){
         this.ruolo = ruolo;
@@ -45,6 +46,13 @@ public class GiocatoreRobot extends Giocatore {
     public ArrayList<Carta> getMano() {
         return mano;
     }
+    public void setTurno(boolean turno) {
+        this.turno = turno;
+    }
+    public boolean getTurno() {
+        return turno;
+    }
+
     @Override
     public String toString() {
         return "\n***GiocatoreRobot***\n" +

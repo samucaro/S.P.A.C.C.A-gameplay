@@ -7,6 +7,7 @@ public class GiocatorePersona extends Giocatore{
     private final Personaggi personaggio;
     private int hpRimanente;
     private ArrayList<Carta> mano;
+    private boolean turno;
     public GiocatorePersona(Ruoli ruolo, Personaggi personaggio){
         this.ruolo = ruolo;
         mano = new ArrayList<Carta>();
@@ -47,6 +48,12 @@ public class GiocatorePersona extends Giocatore{
     }
     public ArrayList<Carta> getMano() {
         return mano;
+    }
+    public void setTurno(boolean turno) {
+        this.turno = turno;
+    }
+    public boolean getTurno() {
+        return turno;
     }
 
     @Override
