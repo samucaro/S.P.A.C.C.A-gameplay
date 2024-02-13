@@ -47,12 +47,13 @@ public class GiocatoreRobot extends Giocatore {
     }
     @Override
     public String toString() {
-        return "GiocatoreRobot{\n" +
+        return "\n***GiocatoreRobot***\n" +
                 "-ruolo: " + ruolo +
                 ";\n-hpRimanente: " + hpRimanente +
                 ";\n-mano: " + mano +
                 ";\n-personaggio: " + personaggio +
-                "\n}\n";
+                "\n******************************************************************" +
+                "**********************************************************";
     }
 
 }
