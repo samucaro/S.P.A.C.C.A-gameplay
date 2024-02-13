@@ -50,9 +50,9 @@ public class GiocatoreRobot extends Giocatore {
         return "GiocatoreRobot{\n" +
                 "-ruolo: " + ruolo +
                 ";\n-hpRimanente: " + hpRimanente +
-                ";\nmano: " + mano +
-                ";\npersonaggio: " + personaggio +
-                "\n}";
+                ";\n-mano: " + mano +
+                ";\n-personaggio: " + personaggio +
+                "\n}\n";
     }
 
 }

@@ -46,7 +46,7 @@ public class GameData {
         arrayPersonaggi[1] = new Personaggio2("Ted Bundy", 4, "Può scartare due carte per recuperare un punto vita.");
         arrayPersonaggi[2] = new Personaggio3("Killer Clown", 4, "Ogni volta che viene ferito pesca una carta.");
         arrayPersonaggi[3] = new Personaggio4("Aileen Wuornos", 4, "Può giocare le carte BANG come carte Mancato, e viceversa.");
-        arrayPersonaggi[4] = new Personaggio5("Ed Gein", 4, "Può giocare un numero qualsiasi di carte BANG.");
+        arrayPersonaggi[4] = new Personaggio5("Ed Gein", 3, "Può giocare un numero qualsiasi di carte BANG.");
         arrayPersonaggi[5] = new Personaggio6("Jeffrey Dahmer", 4, "Può pescare la prima carta dalla cima degli scarti.");
         arrayPersonaggi[6] = new Personaggio7("The River Man", 3, "Ogni volta che viene ferito da un giocatore, pesca una carta dalla mano di quel giocatore.");
         arrayPersonaggi[7] = new Personaggio8("BTK Killer", 3, "Per evitare i suoi BANG occorrono due carte Mancato.");
@@ -86,7 +86,7 @@ public class GameData {
         }
         return vettP;
     }
-    //Stabilisce il numero di ogni rulo in base al numero di giocatori
+    //Stabilisce il numero di ogni ruolo in base al numero di giocatori
     private void setRuoliPartita() {
         for(int i=0; i<4; i++) {
             int val = matrix[numeroGG-3][i];
@@ -117,13 +117,11 @@ public class GameData {
         }
     }
 
-    //permette di generare un numero casuale comepreso tra il numero di ruoli rimasti e 0
+    //permette di generare un numero casuale compreso tra il numero di ruoli rimasti e 0
     private int metodino() {
         int min = 0;
         int max = ruoliPartita.size()-1;
-        int var = (int) (Math.random()*(max-min+1))+min;
-        System.out.println(var);
-        return var;
+        return (int) (Math.random()*(max-min+1))+min;
     }
     //Assegna ruoli e personaggi seguendo i metodi precedenti
     public void getGGRandom() {
