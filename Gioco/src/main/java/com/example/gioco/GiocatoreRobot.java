@@ -47,12 +47,12 @@ public class GiocatoreRobot extends Giocatore {
     }
     @Override
     public String toString() {
-        return "GiocatoreRobot{" +
-                "ruolo=" + ruolo +
-                ", hpRimanente=" + hpRimanente +
-                ", mano=" + mano +
-                ", personaggio=" + personaggio +
-                '}';
+        return "GiocatoreRobot{\n" +
+                "-ruolo: " + ruolo +
+                ";\n-hpRimanente: " + hpRimanente +
+                ";\nmano: " + mano +
+                ";\npersonaggio: " + personaggio +
+                "\n}";
     }
 
 }

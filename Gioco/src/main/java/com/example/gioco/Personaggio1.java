@@ -1,20 +1,13 @@
 package com.example.gioco;
 
 public class Personaggio1 implements Personaggi {
-    private String nome;
+    private final String nome;
     private final int hp;
-    private String effetto;
+    private final String effetto;
 
     public Personaggio1(String nome, int hp, String effetto) {
         this.nome = nome;
         this.hp = hp;
-        this.effetto = effetto;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-    public void setEffetto(String effetto) {
         this.effetto = effetto;
     }
 
@@ -34,6 +27,6 @@ public class Personaggio1 implements Personaggi {
 
     @Override
     public String toString() {
-        return "Nome: " + nome;
+        return "[nome: " + nome + ", hpIniziale: " + hp + ", effetto: " + effetto + "]";
     }
 }

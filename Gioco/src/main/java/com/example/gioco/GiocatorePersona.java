@@ -51,11 +51,11 @@ public class GiocatorePersona extends Giocatore{
 
     @Override
     public String toString() {
-        return "GiocatorePersona{" +
-                "ruolo=" + ruolo +
-                ", hpRimanente=" + hpRimanente +
-                ", mano=" + mano +
-                ", personaggio=" + personaggio +
-                '}';
+        return "GiocatorePersona{\n" +
+                "-ruolo: " + ruolo +
+                ";\n-hpRimanente: " + hpRimanente +
+                ";\nmano: " + mano +
+                ";\npersonaggio: " + personaggio +
+                "\n}";
     }
 }
