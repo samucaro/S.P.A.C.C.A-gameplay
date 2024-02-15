@@ -19,27 +19,26 @@ public class Mazzo {
 
     private void componiMazzo() {
         for(int i = 1; i <= 30; i++) {
-            carte.add(new CartaBang(new Image("pistola.jpg"), "Spara a un tuo avversario"));
+            carte.add(new CartaBang("Spara a un tuo avversario"));
         }
         for(int i = 1; i <= 18; i++) {
-            carte.add(new CartaMancato(new Image("matrix.jpg"), "Colpo schivato!"));
+            carte.add(new CartaMancato("Colpo schivato!"));
         }
         for(int i = 1; i <= 2; i++) {
-            carte.add(new CartaDuello(new Image("duello.jpg"), "A turno tu e il tuo avversario" +
+            carte.add(new CartaDuello("A turno tu e il tuo avversario" +
                     "scartate un Bang, il primo che rimane senza perde un punto vita. Parte l'avversario."));
         }
         for(int i = 1; i <= 2; i++) {
-            carte.add(new CartaPerdiCarta(new Image("perdiCarta.jpg"), "Pesca la prima carta da un" +
-                    "avversario a tua scelta"));
+            carte.add(new CartaPerdiCarta("Pesca la prima carta da un avversario a tua scelta"));
         }
         for(int i = 1; i <= 2; i++) {
-            carte.add(new CartaScartaBang(new Image("scartaBang.jpg"), "Tutti i tuoi avversari scartano una carta Bang"));
+            carte.add(new CartaScartaBang("Tutti i tuoi avversari scartano una carta Bang"));
         }
         for(int i = 1; i <= 2; i++) {
-            carte.add(new CartaSparaTutti(new Image("scartaBang.jpg"), "Spara a tutti gli avversari contemporaneamente"));
+            carte.add(new CartaSparaTutti("Spara a tutti gli avversari contemporaneamente"));
         }
         for(int i = 1; i <= 8; i++) {
-            carte.add(new CartaRecuperaVita(new Image("vita.jpg"), "Recuperi un punto vita"));
+            carte.add(new CartaRecuperaVita("Recuperi un punto vita"));
         }
         mescola();
     }
