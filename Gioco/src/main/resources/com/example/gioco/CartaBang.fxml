@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" prefHeight="272.0" prefWidth="176.0" style="-fx-background-radius: 10px;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gioco.CartaBang">
+   <children>
+      <ImageView fitHeight="274.0" fitWidth="239.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@rounded-in-photoretrica.png" />
+         </image>
+      </ImageView>
+   </children>
+</VBox>
