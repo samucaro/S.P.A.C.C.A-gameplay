@@ -17,4 +17,8 @@ public class CartaRecuperaVita implements Carta{
     public void usaAbilita() {
         //implementare
     }
+
+    public String toString() {
+        return "-" + desc + ";\n";
+    }
 }

@@ -197,11 +197,21 @@ public class LoginPageController {
         stage.show();
     }
 
-    //Da cambiare, deve switchare sulla partita direttamente
+    private void assegnaMano() {
+        for(Giocatore g : gameData.getGiocatoriPartita()) {
+            for (int i = 1; i <= 6; i++) {
+                g.aggiungiCarta(gameData.getMazzo().pesca());
+            }
+        }
+    }
+    //switchare sulla partita direttamente
     public void switchToFastGamePage(ActionEvent event) throws IOException {
         gameData.setNumero(numGiocatori);
         gameData.setPersone(numPersone);
         gameData.getGGRandom();
+        gameData.setMazzo(new Mazzo());
+        assegnaMano();
+        System.out.println(gameData.getGiocatoriPartita().toString());
         root = FXMLLoader.load(getClass().getResource("Partitonza.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         stage.setMinWidth(900);

@@ -155,7 +155,6 @@ public class GameData {
             indexR++;
             indexP++;
         }
-        System.out.println(giocatoriPartita.toString());
     }
 
     public int getNumero() {

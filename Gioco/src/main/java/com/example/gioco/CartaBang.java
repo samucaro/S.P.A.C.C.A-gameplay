@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 
 public class CartaBang implements Carta{
     private String desc;
-    public CartaBang( String desc) {
+    public CartaBang(String desc) {
         this.desc = desc;
     }
 
@@ -17,5 +17,9 @@ public class CartaBang implements Carta{
 
     public void usaAbilita() {
         //implementare
+    }
+
+    public String toString() {
+        return "-" + desc + ";\n";
     }
 }

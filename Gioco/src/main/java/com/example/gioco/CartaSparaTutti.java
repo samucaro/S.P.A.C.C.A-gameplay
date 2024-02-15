@@ -18,4 +18,8 @@ public class CartaSparaTutti implements Carta{
     public void usaAbilita() {
         //implementare
     }
+
+    public String toString() {
+        return "-" + desc + ";\n";
+    }
 }

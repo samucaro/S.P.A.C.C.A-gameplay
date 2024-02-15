@@ -135,6 +135,11 @@ public class OvalPaneController {
             posizionaSfere();
         });
     }
+
+    public void giocoIo(int turnoDi) {
+        Giocatore player = gameData.getGiocatoriPartita().get(turnoDi);
+        player.getMano();
+    }
     private void addSelectionMouse() {
         for (int i = 0; i < n; i++) {
             final Sphere currentSphere = ((Sphere) spheres[i].getChildren().get(0));

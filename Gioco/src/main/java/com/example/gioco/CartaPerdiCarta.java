@@ -17,4 +17,8 @@ public class CartaPerdiCarta implements Carta{
     public void usaAbilita() {
         //implementare
     }
+
+    public String toString() {
+        return "-" + desc + ";\n";
+    }
 }

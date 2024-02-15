@@ -46,6 +46,9 @@ public class GiocatorePersona extends Giocatore{
     public int getHpRimanente() {
         return hpRimanente;
     }
+    public void setMano(ArrayList<Carta> mano) {
+        this.mano = mano;
+    }
     public ArrayList<Carta> getMano() {
         return mano;
     }
