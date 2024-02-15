@@ -24,7 +24,7 @@ public class OvalPaneController {
     private static double centroY;
     private static final int n = gameData.getNumero();
     private double anchorX, anchorY;
-    private static int turnoDi = 5;
+    private static int turnoDi = 0;
     private double anchorAngleX = 0;
     private double anchorAngleY = 0;
     @FXML
@@ -94,20 +94,28 @@ public class OvalPaneController {
         posizionaSfere();
     }
     private static void posizionaSfere() {
+        System.out.println("sbudububudubububbubu AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        System.out.println("centrox "+centroX);
+        System.out.println("centroy "+centroY);
         for (int i = 0; i < n; i++) {
-            int indice = ((8 - turnoDi) + i) % n;
-            if (indice == 2){
+            int indice = ((n - turnoDi) + i) % n;
+            System.out.println("i "+i);
+            System.out.println("indice "+indice);
+            System.out.println("Turnodi "+turnoDi);
+            if (indice == 2) {
                 ((Cylinder) spheres[indice].getChildren().get(1)).setRadius((60 * Math.min(centroX, centroY)) / 300 + 30);
             }
             ((Sphere) spheres[indice].getChildren().get(0)).setRadius((60 * Math.min(centroX, centroY)) / 300);
-            spheres[indice].setTranslateX((centroX-((Sphere) spheres[indice].getChildren().get(0)).getRadius()*2+50) * Math.cos(2 * Math.PI * (i + 1) / n) + centroX);
-            spheres[indice].setTranslateY((centroY-((Sphere) spheres[indice].getChildren().get(0)).getRadius()*2+40) * Math.sin(2 * Math.PI * (i + 1) / n) + centroY);
-            spheres[indice].setScaleX(i==1?0.6:1);
-            spheres[indice].setScaleY(i==1?0.6:1);
+
+            System.out.println((centroX - ((Sphere) spheres[indice].getChildren().get(0)).getRadius() * 2 + 50) * Math.cos(2 * Math.PI * (i + 1) / n) + centroX + "qqqqqqqqqqqqqqqqqqqqqqqqqq");
+            System.out.println((centroY - ((Sphere) spheres[indice].getChildren().get(0)).getRadius() * 2 + 40) * Math.sin(2 * Math.PI * (i + 1) / n) + centroY + "pppppppppppppppppppppppppp");
+            spheres[indice].setTranslateX((centroX - ((Sphere) spheres[indice].getChildren().get(0)).getRadius() * 2 + 50) * Math.cos((2 * Math.PI * (i + 1) / n)+(Math.PI/2)) + centroX);
+            spheres[indice].setTranslateY((centroY - ((Sphere) spheres[indice].getChildren().get(0)).getRadius() * 2 + 40) * Math.sin((2 * Math.PI * (i + 1) / n)+(Math.PI/2)) + centroY);
+            spheres[indice].setScaleX(i == 1 ? 0.6 : 1);
+            spheres[indice].setScaleY(i == 1 ? 0.6 : 1);
         }
     }
     public void cambiaTurno() {
-        posizionaSfere();
         Timeline timeline = new Timeline();
         for (int ind = 0; ind < n-1; ind++) {
             int i = ind % n;
@@ -126,7 +134,7 @@ public class OvalPaneController {
         timeline.getKeyFrames().add(kf);
         timeline.playFromStart();
         timeline.setOnFinished(event -> {
-            turnoDi=(turnoDi==7)?0:turnoDi+1;
+            turnoDi=(turnoDi==(n-1))?0:turnoDi+1;
             posizionaSfere();
         });
     }

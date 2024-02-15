@@ -10,6 +10,5 @@
          <fx:include fx:id="ovalPane" prefHeight="900.0" prefWidth="1300.0" source="OvalPane.fxml" />
       </children>
    </Pane>
-   <Button layoutX="450.0" layoutY="250.0" mnemonicParsing="false" text="Button" />
    <Button fx:id="turnButton" alignment="CENTER" contentDisplay="CENTER" onAction="#handleTurnButton" prefHeight="0.0" prefWidth="90.0" text="Cambia Turno" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="500.0" />
 </AnchorPane>
