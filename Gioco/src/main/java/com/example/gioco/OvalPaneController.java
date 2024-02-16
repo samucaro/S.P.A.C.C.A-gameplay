@@ -104,7 +104,7 @@ public class OvalPaneController {
             }
             ((Sphere) spheres[indice].getChildren().get(0)).setRadius((60 * Math.min(centroX, centroY)) / 300);
 
-            System.out.println((centroX - ((Sphere) spheres[indice].getChildren().get(0)).getRadius() * 2 + 50) * Math.cos(2 * Math.PI * (i + 1) / n) + centroX + "qqqqqqqqqqqqqqqqqqqqqqqqqq");
+            System.out.println((centroX - ((Sphere) spheres[indice].getChildren().get(0)).getRadius() * 2 + 50) * Math.cos((2 * Math.PI * (i + 1) / n)+(Math.PI/2)) + centroX + "qqqqqqqqqqqqqqqqqqqqqqqqqq");
             System.out.println((centroY - ((Sphere) spheres[indice].getChildren().get(0)).getRadius() * 2 + 40) * Math.sin(2 * Math.PI * (i + 1) / n) + centroY + "pppppppppppppppppppppppppp");
             spheres[indice].setTranslateX((centroX - ((Sphere) spheres[indice].getChildren().get(0)).getRadius() * 2 + 50) * Math.cos((2 * Math.PI * (i + 1) / n)+(Math.PI/2)) + centroX);
             spheres[indice].setTranslateY((centroY - ((Sphere) spheres[indice].getChildren().get(0)).getRadius() * 2 + 40) * Math.sin((2 * Math.PI * (i + 1) / n)+(Math.PI/2)) + centroY);
