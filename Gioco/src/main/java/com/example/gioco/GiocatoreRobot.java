@@ -52,7 +52,9 @@ public class GiocatoreRobot extends Giocatore {
     public boolean getTurno() {
         return turno;
     }
-
+    public void setMano(ArrayList<Carta> mano){
+        this.mano=mano;
+    }
     @Override
     public String toString() {
         return "\n***GiocatoreRobot***\n" +

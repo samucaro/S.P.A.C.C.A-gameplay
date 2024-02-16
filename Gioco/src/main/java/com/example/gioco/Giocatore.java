@@ -6,6 +6,7 @@ public abstract class Giocatore {
     abstract void cura(int cura);
     abstract public Ruoli getRuolo();
     abstract int getHpRimanente();
+    abstract public void setMano(ArrayList<Carta> mano);
     abstract public ArrayList<Carta> getMano();
     abstract public void setTurno(boolean turno);
     abstract public boolean getTurno();

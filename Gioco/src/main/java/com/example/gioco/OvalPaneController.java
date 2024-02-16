@@ -132,6 +132,7 @@ public class OvalPaneController {
         timeline.playFromStart();
         timeline.setOnFinished(event -> {
             turnoDi=(turnoDi==(n-1))?0:turnoDi+1;
+            giocoIo(turnoDi);
             posizionaSfere();
         });
     }
