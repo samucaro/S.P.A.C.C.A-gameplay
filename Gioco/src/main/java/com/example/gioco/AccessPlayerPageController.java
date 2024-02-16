@@ -4,25 +4,20 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.ParallelCamera;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+
 public class AccessPlayerPageController {
     private GameData gameData = GameData.getInstance();
     ObservableList<String> pianetiItems = FXCollections.observableArrayList("Mercurio", "Venere", "Terra", "Marte", "Giove", "Saturno", "Urano", "Nettuno");
@@ -49,7 +44,7 @@ public class AccessPlayerPageController {
     private VBox Vboxx;
     @FXML
     public void initialize() {
-        Image sfondo = new Image(getClass().getResource("_33e14802-fae8-45d6-80aa-5b89524679cb.jpg").toString());
+        Image sfondo = new Image(getClass().getResource("BaseLogin.jpg").toString());
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, false, true);
         BackgroundImage backgroundImage = new BackgroundImage(sfondo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         borderP.setBackground(new Background(backgroundImage));

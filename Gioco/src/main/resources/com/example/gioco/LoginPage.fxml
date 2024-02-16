@@ -17,7 +17,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url(_33e14802-fae8-45d6-80aa-5b89524679cb.jpg); -fx-background-size: cover; -fx-background-repeat: no-repeat;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gioco.LoginPageController">
+<BorderPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url(BaseLogin.jpg); -fx-background-size: cover; -fx-background-repeat: no-repeat;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gioco.LoginPageController">
    <center>
       <HBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
          <children>
