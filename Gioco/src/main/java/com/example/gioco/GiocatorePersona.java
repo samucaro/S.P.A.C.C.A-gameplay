@@ -19,12 +19,7 @@ public class GiocatorePersona extends Giocatore{
     }
     */
     public void aggiungiCarta(Carta carta){
-        if(mano.size() == 6) { //modificare con il numero massimo di carte in mano
-           System.out.println("Hai già il numero massimo di carte in mano");
-        }
-        else {
-            mano.add(carta);
-        }
+        mano.add(carta);
     }
     public void subisciDanno(int danno){
         if(hpRimanente == 0) {

@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -139,6 +140,7 @@ public class OvalPaneController {
 
     public void giocoIo(int turnoDi) {
         Giocatore player = gameData.getGiocatoriPartita().get(turnoDi);
+        gameData.setTurnoCorrente(turnoDi);
         player.getMano();
     }
     private void addSelectionMouse() {

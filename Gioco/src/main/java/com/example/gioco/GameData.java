@@ -3,6 +3,7 @@ package com.example.gioco;
 import java.util.*;
 
 public class GameData {
+    private int turnoCorrente;
     private static GameData instance = null;
     private ArrayList<Giocatore> giocatoriPartita = new ArrayList<>();
     private Mazzo mazzo;
@@ -46,6 +47,12 @@ public class GameData {
     }
     public Mazzo getMazzo() {
         return mazzo;
+    }
+    public void setTurnoCorrente(int turnoCorrente) {
+        this.turnoCorrente = turnoCorrente;
+    }
+    public int getTurnoCorrente() {
+        return turnoCorrente;
     }
 
     //Metodo che crea un vettore con tutti i personaggi possibili
