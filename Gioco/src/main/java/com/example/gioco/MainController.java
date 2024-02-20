@@ -34,8 +34,6 @@ public class MainController {
     private Button turnButton;
     @FXML
     private AnchorPane anchorPane;
-    @FXML
-    private ImageView mazzo;
 
     @FXML
     public void initialize() {
