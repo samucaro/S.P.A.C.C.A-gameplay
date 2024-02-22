@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.layout.Background;
 import javafx.scene.shape.Arc;
@@ -20,7 +21,6 @@ public class MainController {
     private OvalPaneController ovalPaneController;
     private static GameData gameData = GameData.getInstance();
     private static BooleanProperty resetHD = new SimpleBooleanProperty(false);
-    private static Partita partita;
     private static double centroX = 450.0;
     private static double centroY = 300.0;
     private static double orx = 230.0;
@@ -34,6 +34,8 @@ public class MainController {
     private Button turnButton;
     @FXML
     private AnchorPane anchorPane;
+    @FXML
+    private ImageView mazzo;
 
     @FXML
     public void initialize() {
@@ -41,8 +43,6 @@ public class MainController {
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, false, true);
         BackgroundImage backgroundImage = new BackgroundImage(sfondo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         anchorPane.setBackground(new Background(backgroundImage));
-        partita = new Partita();
-        //partita.iniziaPartita();
         iniziaHD();
     }
 
@@ -121,10 +121,11 @@ public class MainController {
         ovalPaneController.cambiaTurno();
         pause.play();
     }
-    public void pescataGiocatore() {
+    public void pescataInizialeGiocatore() {
         Giocatore player = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente());
         for(int i = 1; i <= 2; i++) {
             player.aggiungiCarta(gameData.getMazzo().pesca());
+            System.out.println("Ho pescato");
         }
     }
 }

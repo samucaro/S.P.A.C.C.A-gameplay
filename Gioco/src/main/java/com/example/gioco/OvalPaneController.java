@@ -37,8 +37,8 @@ public class OvalPaneController {
             PhongMaterial material = new PhongMaterial();
             Image texture = textures(i);
             material.setDiffuseMap(texture);
-            ((Sphere) spheres[i].getChildren().get(0)).setMaterial(material);
-            spheres[i].getChildren().get(0).setRotationAxis(Rotate.Y_AXIS);
+            ((Sphere) spheres[i].getChildren().getFirst()).setMaterial(material);
+            spheres[i].getChildren().getFirst().setRotationAxis(Rotate.Y_AXIS);
             provaAnimazione(i);
             if (i==2){
                 ring = new Cylinder(80, 3);
@@ -59,7 +59,7 @@ public class OvalPaneController {
             @Override
             public void handle(long l) {
                 if (!isPaused) {
-                    spheres[i].getChildren().get(0).rotateProperty().set(spheres[i].getChildren().get(0).getRotate() + 0.2);
+                    spheres[i].getChildren().getFirst().rotateProperty().set(spheres[i].getChildren().getFirst().getRotate() + 0.2);
                 }
             }
         };
@@ -97,20 +97,20 @@ public class OvalPaneController {
     private static void posizionaSfere() {
         for (int i = 0; i < n; i++) {
             int indice = ((n - turnoDi) + i) % n;
-            System.out.println("i "+i);
-            System.out.println("indice "+indice);
-            System.out.println("Turnodi "+turnoDi);
+            //System.out.println("i "+i);
+            //System.out.println("indice "+indice);
+            //System.out.println("Turnodi "+turnoDi);
             if (indice == 2) {
                 ((Cylinder) spheres[indice].getChildren().get(1)).setRadius((60 * Math.min(centroX, centroY)) / 300 + 30);
             }
             ((Sphere) spheres[indice].getChildren().get(0)).setRadius((60 * Math.min(centroX, centroY)) / 300);
 
-            System.out.println((centroX - ((Sphere) spheres[indice].getChildren().get(0)).getRadius() * 2 + 50) * Math.cos((2 * Math.PI * (i + 1) / n)+(Math.PI/2)) + centroX + "qqqqqqqqqqqqqqqqqqqqqqqqqq");
-            System.out.println((centroY - ((Sphere) spheres[indice].getChildren().get(0)).getRadius() * 2 + 40) * Math.sin(2 * Math.PI * (i + 1) / n) + centroY + "pppppppppppppppppppppppppp");
-            spheres[indice].setTranslateX((centroX - ((Sphere) spheres[indice].getChildren().get(0)).getRadius() * 2 + 50) * Math.cos((2 * Math.PI * (i + 1) / n)+(Math.PI/2)) + centroX);
-            spheres[indice].setTranslateY((centroY - ((Sphere) spheres[indice].getChildren().get(0)).getRadius() * 2 + 40) * Math.sin((2 * Math.PI * (i + 1) / n)+(Math.PI/2)) + centroY);
-            spheres[indice].setScaleX(i == 1 ? 0.6 : 1);
-            spheres[indice].setScaleY(i == 1 ? 0.6 : 1);
+            System.out.println((centroX - ((Sphere) spheres[indice].getChildren().get(0)).getRadius() * 2 + 50) * Math.cos((2 * Math.PI * (i + 1) / n)+(Math.PI/2)) + centroX);
+            System.out.println((centroY - ((Sphere) spheres[indice].getChildren().getFirst()).getRadius() * 2 + 40) * Math.sin(2 * Math.PI * (i + 1) / n) + centroY);
+            spheres[indice].setTranslateX((centroX - ((Sphere) spheres[indice].getChildren().getFirst()).getRadius() * 2 + 50) * Math.cos((2 * Math.PI * (i + 1) / n)+(Math.PI/2)) + centroX);
+            spheres[indice].setTranslateY((centroY - ((Sphere) spheres[indice].getChildren().getFirst()).getRadius() * 2 + 40) * Math.sin((2 * Math.PI * (i + 1) / n)+(Math.PI/2)) + centroY);
+            spheres[indice].setScaleX(i == n-1 ? 0.6 : 1);
+            spheres[indice].setScaleY(i == n-1 ? 0.6 : 1);
         }
     }
     public void cambiaTurno() {
@@ -145,7 +145,7 @@ public class OvalPaneController {
     }
     private void addSelectionMouse() {
         for (int i = 0; i < n; i++) {
-            final Sphere currentSphere = ((Sphere) spheres[i].getChildren().get(0));
+            final Sphere currentSphere = ((Sphere) spheres[i].getChildren().getFirst());
             final Group currentGroup = spheres[i];
             currentSphere.setOnMousePressed(event -> {
                 MainController.setDisableHD(false);
@@ -173,10 +173,8 @@ public class OvalPaneController {
                     ovalPane.getChildren().removeAll(bottone,overlay);
                     resetMouseHandlers(currentSphere);
                     posizionaSfere();
-
                 });
             });
-
         }
     }
     private void spostaSfere(Group currentGroup, double scala, double centroX, double centroY) {

@@ -9,8 +9,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane fx:id="anchorPane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gioco.MainController">
-   <BorderPane prefHeight="600.0" prefWidth="900.0">
+<AnchorPane fx:id="anchorPane" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gioco.MainController">
+   <BorderPane>
       <center>
          <HBox prefHeight="600.0" prefWidth="900.0" BorderPane.alignment="CENTER">
             <children>
@@ -19,7 +19,7 @@
                      <fx:include fx:id="ovalPane" prefHeight="900.0" prefWidth="1300.0" source="OvalPane.fxml" />
                      <HBox layoutX="380.0" layoutY="161.0" prefHeight="98.0" prefWidth="148.0" spacing="20.0">
                         <children>
-                           <ImageView fitHeight="81.0" fitWidth="75.0" onMousePressed="#pescataGiocatore" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+                           <ImageView fx:id="mazzo" fitHeight="81.0" fitWidth="75.0" onMousePressed="#pescataInizialeGiocatore" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
                               <image>
                                  <Image url="@../../../RetroCarta.png" />
                               </image>

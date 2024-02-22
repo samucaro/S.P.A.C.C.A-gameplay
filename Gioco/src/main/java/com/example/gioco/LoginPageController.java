@@ -199,7 +199,7 @@ public class LoginPageController {
 
     private void assegnaMano() {
         for(Giocatore g : gameData.getGiocatoriPartita()) {
-            for (int i = 1; i <= 6; i++) {
+            for (int i = 1; i <= 5; i++) {
                 g.aggiungiCarta(gameData.getMazzo().pesca());
             }
         }
@@ -211,11 +211,11 @@ public class LoginPageController {
         gameData.getGGRandom();
         gameData.setMazzo(new Mazzo());
         assegnaMano();
-        System.out.println(gameData.getGiocatoriPartita().toString());
+        //System.out.println(gameData.getGiocatoriPartita().toString());
         root = FXMLLoader.load(getClass().getResource("Partitonza.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setMinWidth(900);
-        stage.setMinHeight(600);
+        //stage.setMinWidth(900);
+        //stage.setMinHeight(600);
         scene = new Scene(root);
         impostaListener(scene);
         ParallelCamera cam = new ParallelCamera();
@@ -236,46 +236,4 @@ public class LoginPageController {
             MainController.setScenaY((Double) newVal);
         });
     }
-
-    /*@FXML
-    public void assegnaRuoli(ActionEvent event) {
-        //creaGiocatore();
-        Ruoli[] array = new Ruoli[numGiocatori];
-        if(numGiocatori==3) {
-            array[0]=Ruoli.SCERIFFO;
-            array[1]=Ruoli.RINNEGATO;
-            array[2]=Ruoli.FUORILEGGE;
-            for(int i=0; i<numGiocatori; i++) {
-                int ref = (int) (Math.random()*numGiocatori)+1;
-                switch(ref) {
-                    case 1:
-                        array[i]=Ruoli.SCERIFFO;
-                        break;
-                    case 2:
-                        array[i]=Ruoli.RINNEGATO;
-                }
-            }
-
-        }
-        else if(numGiocatori==4) {
-
-        }
-        else if(numGiocatori==5) {
-
-        }
-        else if(numGiocatori==6) {
-
-        }
-        else if(numGiocatori==7) {
-
-        }
-        else {
-
-        }
-    }
-    @FXML
-    public void assegnaPersonaggi(ActionEvent event) {
-        int val = (int) (Math.random()*(4-1) + 1);
-        System.out.println(val);
-    }*/
 }

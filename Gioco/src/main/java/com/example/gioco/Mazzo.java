@@ -52,17 +52,16 @@ public class Mazzo {
         }
     }
     public Carta pesca(){
-        Carta ct = carte.get(0);
-        carte.remove(0);
-        if (carte.size()==0) {
+        if (carte.isEmpty()) {
             carte = scarti;
             mescola();
         }
+        Carta ct = carte.getLast();
+        carte.removeLast();
         return ct;
     }
     public void scarta(Carta scarto){
         scarti.add(scarto);
     }
-
     // Metodi per mescolare il mazzo e distribuire le carte...
 }
