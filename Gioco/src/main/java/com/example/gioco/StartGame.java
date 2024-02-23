@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class HomePage extends Application {
+public class StartGame extends Application {
 
     public static void main(String[] args) {
         launch(args);
@@ -18,7 +18,7 @@ public class HomePage extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
             primaryStage.setTitle("S.P.A.C.C.A.");
-            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("HomePage.fxml")));
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AdminPlayerPage.fxml")));
             Image logo = new Image("logo.png");
             Scene scene = new Scene(root);
             primaryStage.getIcons().add(logo);

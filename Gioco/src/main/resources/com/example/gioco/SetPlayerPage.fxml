@@ -5,6 +5,7 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -17,7 +18,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url(BaseLogin.jpg); -fx-background-size: cover; -fx-background-repeat: no-repeat;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gioco.LoginPageController">
+<BorderPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url(BaseLogin.jpg); -fx-background-size: cover; -fx-background-repeat: no-repeat;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gioco.SetPlayerPageController">
    <center>
       <HBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
          <children>
@@ -62,7 +63,7 @@
    <top>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="Regole" VBox.vgrow="ALWAYS" />
+            <Button mnemonicParsing="false" onAction="#switchToTypeGamePage" text="Back" VBox.vgrow="ALWAYS" />
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0" VBox.vgrow="ALWAYS">
                <children>
                   <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="S.P.A.C.C.A">
@@ -114,16 +115,34 @@
       </VBox>
    </top>
    <bottom>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="fastGame" disable="true" mnemonicParsing="false" onAction="#switchToFastGamePage" text="Fast Game" HBox.hgrow="ALWAYS" />
-            <Text fx:id="outputText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-effect: dropshadow( gaussian, rgba(0,0,250,0.8), 10 , 0 , 0 , 2 );" textAlignment="CENTER" visible="false" wrappingWidth="211.685546875">
+            <Text fx:id="outputText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-effect: dropshadow( gaussian, rgba(0,0,250,0.8), 10 , 0 , 0 , 2 );" textAlignment="CENTER" visible="false" wrappingWidth="211.685546875" VBox.vgrow="ALWAYS">
                <font>
                   <Font size="20.0" />
                </font>
             </Text>
-            <Button fx:id="startGame" disable="true" mnemonicParsing="false" onAction="#switchToAccessPlayer" text="Start Game" HBox.hgrow="ALWAYS" />
+            <HBox alignment="CENTER" spacing="10.0" VBox.vgrow="ALWAYS">
+               <children>
+                  <TextField fx:id="codice" alignment="CENTER" prefWidth="102.0" promptText="codice partita" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets left="100.0" right="200.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Button fx:id="saveLogout" disable="true" mnemonicParsing="false" onAction="#switchToAdminPlayerPage" text="Save &amp; Logout" HBox.hgrow="ALWAYS">
+                     <HBox.margin>
+                        <Insets right="65.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <VBox.margin>
+                  <Insets right="20.0" />
+               </VBox.margin>
+            </HBox>
          </children>
-      </HBox>
+         <BorderPane.margin>
+            <Insets bottom="25.0" />
+         </BorderPane.margin>
+      </VBox>
    </bottom>
 </BorderPane>

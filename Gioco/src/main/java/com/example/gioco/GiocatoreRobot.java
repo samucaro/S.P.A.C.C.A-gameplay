@@ -3,16 +3,14 @@ package com.example.gioco;
 import java.util.ArrayList;
 
 public class GiocatoreRobot extends Giocatore {
-    private final Ruoli ruolo;
+    private  String nome;
+    private final int HP = 5;
     private int hpRimanente;
     private ArrayList<Carta> mano;
     private boolean turno;
-    private final Personaggi personaggio;
-    public GiocatoreRobot(Ruoli ruolo, Personaggi personaggio){
-        this.ruolo = ruolo;
+    public GiocatoreRobot(){
+        hpRimanente = HP;
         mano = new ArrayList<Carta>();
-        this.personaggio = personaggio;
-        hpRimanente = personaggio.getHp();
     }
 
     public void aggiungiCarta(Carta carta){
@@ -30,15 +28,12 @@ public class GiocatoreRobot extends Giocatore {
         hpRimanente-=danno;
     }
     public void cura(int vita){
-        if(hpRimanente == personaggio.getHp()) { //l'hp del personaggio è final e non può cambiare
+        if(hpRimanente == HP) { //l'hp del personaggio è final e non può cambiare
             System.out.println("Il personaggio ha già la vita massima, non verrà aggiunto nessun punto vita");
         }
         else {
             hpRimanente+=vita; //se si vuole aggiungere più fi una vita fare un ciclo for, meglio lasciare che si può aggiungere solo una vita per volta
         }
-    }
-    public Ruoli getRuolo() {
-        return ruolo;
     }
     public int getHpRimanente() {
         return hpRimanente;
@@ -55,14 +50,15 @@ public class GiocatoreRobot extends Giocatore {
     public void setMano(ArrayList<Carta> mano){
         this.mano=mano;
     }
+    public int getHp() {
+        return HP;
+    }
     @Override
     public String toString() {
         return "\n***GiocatoreRobot***\n" +
-                "-ruolo: " + ruolo +
-                ";\n-hpRimanente: " + hpRimanente +
+                "\n-hpRimanente: " + hpRimanente +
                 ";\n-mano: " + mano +
-                ";\n-personaggio: " + personaggio +
-                "\n******************************************************************" +
+                ";\n******************************************************************" +
                 "**********************************************************";
     }
 
