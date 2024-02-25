@@ -22,7 +22,7 @@
          </BorderPane.margin>
          <children>
             <Button mnemonicParsing="false" onAction="#switchToLoginAdminPage" text="Login Admin" HBox.hgrow="ALWAYS" />
-            <Button mnemonicParsing="false" text="Login Player" HBox.hgrow="ALWAYS">
+            <Button mnemonicParsing="false" onAction="#switchToSetGamePage" text="Login Player" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets />
                </HBox.margin>
