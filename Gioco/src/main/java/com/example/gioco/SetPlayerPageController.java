@@ -20,6 +20,8 @@ import java.util.Objects;
 public class SetPlayerPageController {
     private GameData gameData = GameData.getInstance();
     private Scene scene;
+    private DataSet DataS = new DataSet();
+    private int code;
     private Parent root;
     private int numPersone;
     private int numGiocatori;
@@ -172,7 +174,7 @@ public class SetPlayerPageController {
     }
 
     private String generaCodice() {
-        int code = (int) (Math.random() * (9999 - 1000 +1)) + 1000;
+        code = (int) (Math.random() * (9999 - 1000 +1)) + 1000;
         return "" + code;
     }
 
@@ -242,6 +244,7 @@ public class SetPlayerPageController {
     public void switchToAdminPlayerPage(ActionEvent event) throws IOException {
         gameData.setNumero(numGiocatori);
         gameData.setPersone(numPersone);
+        DataS.creaFile(code);
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AdminPlayerPage.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
