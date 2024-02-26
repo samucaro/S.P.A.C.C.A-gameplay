@@ -52,7 +52,7 @@ public class SetGamePageController {
         g1.setVisible(true);
         g2.setVisible(true);
         g3.setVisible(true);
-        //g4.setVisible(true);
+        g4.setVisible(true);
         g5.setVisible(true);
         g6.setVisible(true);
         g7.setVisible(true);
