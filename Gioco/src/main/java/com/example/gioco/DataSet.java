@@ -1,20 +1,21 @@
 package com.example.gioco;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DataSet {
-    private File myObj;
     public DataSet() {
     }
 
-
     public void creaFile(int codice) {
         String percorsoCartellaProgetto = getProjectFolderPath();
-        System.out.println("Percorso della cartella del progetto: " + percorsoCartellaProgetto);
         try {
             String nome = percorsoCartellaProgetto + File.separator + codice + ".txt";
-            myObj = new File(nome);
+            File myObj = new File(nome);
             if (myObj.createNewFile()) {
                 System.out.println("File creato: " + myObj.getName());
             } else {
@@ -25,7 +26,22 @@ public class DataSet {
             e.printStackTrace();
         }
     }
-
+    public boolean checkCode(int codice) {
+        String percorsoCartellaProgetto = getProjectFolderPath();
+        List<Integer> numbers = new ArrayList<>();
+        File cart = new File(percorsoCartellaProgetto);
+        File[] files = cart.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile() && file.getName().matches("\\d{4}\\.txt")) {
+                    String fileName = file.getName();
+                    int number = Integer.parseInt(fileName.substring(0, 4));
+                    numbers.add(number);
+                }
+            }
+        }
+        return numbers.contains(codice);
+    }
     public static String getProjectFolderPath() {
         String currentDirectory = System.getProperty("user.dir");
         System.out.println(currentDirectory);

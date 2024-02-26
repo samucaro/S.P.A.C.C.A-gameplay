@@ -38,6 +38,9 @@ public class SetPlayerPageController {
     @FXML
     private TextField codice;
 
+    public SetPlayerPageController() throws IOException {
+    }
+
     @FXML
     public void initialize() {
         numPersone = 0;
@@ -57,6 +60,7 @@ public class SetPlayerPageController {
     public void opzione1() {
         numGiocatori = 3;
         codice.setText(generaCodice());
+        gameData.setCode(code);
         outputText.setText("Hai selezionato 3 giocatori");
         outputText.setVisible(true);
     }
@@ -174,7 +178,9 @@ public class SetPlayerPageController {
     }
 
     private String generaCodice() {
-        code = (int) (Math.random() * (9999 - 1000 +1)) + 1000;
+        do {
+            code = (int) (Math.random() * (9999 - 1000 + 1)) + 1000;
+        } while (DataS.checkCode(code));
         return "" + code;
     }
 
@@ -245,6 +251,7 @@ public class SetPlayerPageController {
         gameData.setNumero(numGiocatori);
         gameData.setPersone(numPersone);
         DataS.creaFile(code);
+        gameData.scrivi();
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AdminPlayerPage.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
