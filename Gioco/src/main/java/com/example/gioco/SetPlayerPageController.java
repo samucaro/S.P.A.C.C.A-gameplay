@@ -60,7 +60,6 @@ public class SetPlayerPageController {
     public void opzione1() {
         numGiocatori = 3;
         codice.setText(generaCodice());
-        gameData.setCode(code);
         outputText.setText("Hai selezionato 3 giocatori");
         outputText.setVisible(true);
     }
@@ -181,74 +180,22 @@ public class SetPlayerPageController {
         do {
             code = (int) (Math.random() * (9999 - 1000 + 1)) + 1000;
         } while (DataS.checkCode(code));
+        gameData.setCode(code);
         return "" + code;
-    }
-
-    /*
-    public void regole(ActionEvent event) {
-        try {
-            FileChooser fileChooser = new FileChooser();
-            fileTesto = new File();
-        }
-        catch(FileNotFoundException e) {
-            System.out.println("ERRORE! " + e.getMessage());
-        }
-    }
-     */
-    private void assegnaMano() {
-        for(Giocatore g : gameData.getGiocatoriPartita()) {
-            for (int i = 1; i <= 5; i++) {
-                g.aggiungiCarta(gameData.getMazzo().pesca());
-            }
-        }
-    }
-
-    public void impostaListener(Scene scene){
-        scene.widthProperty().addListener((obs, oldVal, newVal) -> {
-            OvalPaneController.setScenaX((Double) newVal);
-            MainController.setScenaX((Double) newVal);
-        });
-
-        scene.heightProperty().addListener((obs, oldVal, newVal) -> {
-            OvalPaneController.setScenaY((Double) newVal);
-            MainController.setScenaY((Double) newVal);
-        });
     }
 
     public void switchToTypeGamePage(ActionEvent event) throws IOException {
         gameData.setNumero(numGiocatori);
         gameData.setPersone(numPersone);
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AccessPlayerPage.fxml")));
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("TypeGamePage.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    //switchare sulla partita direttamente
-    public void switchToGamePage(ActionEvent event) throws IOException {
-        gameData.setNumero(numGiocatori);
-        gameData.setPersone(numPersone);
-        gameData.getGGRandom();
-        gameData.setMazzo(new Mazzo());
-        assegnaMano();
-        //System.out.println(gameData.getGiocatoriPartita().toString());
-        root = FXMLLoader.load(getClass().getResource("Partitonza.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        //stage.setMinWidth(900);
-        //stage.setMinHeight(600);
-        scene = new Scene(root);
-        impostaListener(scene);
-        ParallelCamera cam = new ParallelCamera();
-        cam.setFarClip(2000);
-        cam.setNearClip(0.5);
-        scene.setCamera(cam);
         stage.setScene(scene);
         stage.show();
     }
 
     public void switchToAdminPlayerPage(ActionEvent event) throws IOException {
-        gameData.setNumero(numGiocatori);
+        gameData.setNumero(numGiocatori); //cambiare
         gameData.setPersone(numPersone);
         DataS.creaFile(code);
         gameData.scrivi();

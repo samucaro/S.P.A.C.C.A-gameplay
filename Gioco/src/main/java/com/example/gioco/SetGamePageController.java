@@ -6,6 +6,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.ParallelCamera;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
@@ -18,6 +19,7 @@ import java.util.Objects;
 public class SetGamePageController {
     private Scene scene;
     private Parent root;
+    private GameData gameData = GameData.getInstance();
     @FXML
     private ListView list;
     @FXML
@@ -67,6 +69,43 @@ public class SetGamePageController {
         stage.show();
     }
 
-    public void prova() {
+    private void assegnaMano() {
+        for(Giocatore g : gameData.getGiocatoriPartita()) {
+            for (int i = 1; i <= 5; i++) {
+                g.aggiungiCarta(gameData.getMazzo().pesca());
+            }
+        }
+    }
+
+    public void impostaListener(Scene scene){
+        scene.widthProperty().addListener((obs, oldVal, newVal) -> {
+            OvalPaneController.setScenaX((Double) newVal);
+            MainController.setScenaX((Double) newVal);
+        });
+
+        scene.heightProperty().addListener((obs, oldVal, newVal) -> {
+            OvalPaneController.setScenaY((Double) newVal);
+            MainController.setScenaY((Double) newVal);
+        });
+    }
+
+    //switchare sulla partita direttamente
+    public void switchToGamePage(ActionEvent event) throws IOException {
+        gameData.getGGRandom();
+        gameData.setMazzo(new Mazzo());
+        assegnaMano();
+        //System.out.println(gameData.getGiocatoriPartita().toString());
+        root = FXMLLoader.load(getClass().getResource("Partitonza.fxml"));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        //stage.setMinWidth(900);
+        //stage.setMinHeight(600);
+        scene = new Scene(root);
+        impostaListener(scene);
+        ParallelCamera cam = new ParallelCamera();
+        cam.setFarClip(2000);
+        cam.setNearClip(0.5);
+        scene.setCamera(cam);
+        stage.setScene(scene);
+        stage.show();
     }
 }

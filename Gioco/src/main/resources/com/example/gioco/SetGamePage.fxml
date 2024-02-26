@@ -10,6 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.paint.RadialGradient?>
 <?import javafx.scene.paint.Stop?>
@@ -91,7 +92,12 @@
                   <TextField fx:id="g8" alignment="CENTER" layoutX="26.0" layoutY="174.0" promptText="Nome Giocatore 8" visible="false" />
                </children>
             </AnchorPane>
-            <Button alignment="BASELINE_RIGHT" mnemonicParsing="false" onAction="#switchToAdminPlayerPage" text="Back" HBox.hgrow="ALWAYS" />
+            <VBox alignment="CENTER" spacing="30.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#switchToGamePage" text="Strart" />
+                  <Button alignment="BASELINE_RIGHT" mnemonicParsing="false" onAction="#switchToAdminPlayerPage" text="Back" />
+               </children>
+            </VBox>
          </children>
          <BorderPane.margin>
             <Insets bottom="25.0" left="10.0" right="10.0" top="10.0" />

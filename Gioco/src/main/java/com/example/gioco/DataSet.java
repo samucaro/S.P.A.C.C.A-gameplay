@@ -1,9 +1,7 @@
 package com.example.gioco;
 
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,9 +42,7 @@ public class DataSet {
     }
     public static String getProjectFolderPath() {
         String currentDirectory = System.getProperty("user.dir");
-        System.out.println(currentDirectory);
         String projectFolderPath = currentDirectory + File.separator + "src/main/resources/FileGioco";
-        System.out.println(projectFolderPath);
         File folder = new File(projectFolderPath);
         if (!folder.exists()) {
             System.err.println("La cartella non esiste!");
@@ -54,4 +50,12 @@ public class DataSet {
         return projectFolderPath;
     }
 
+    public void eliminaFile(String percorsoFile) {
+        File file = new File(percorsoFile);
+        if (file.delete()) {
+            System.out.println("Il file è stato eliminato con successo.");
+        } else {
+            System.out.println("File non presente");
+        }
+    }
 }
