@@ -2,9 +2,8 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
@@ -20,43 +19,32 @@
 
 <BorderPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url(BaseLogin.jpg); -fx-background-size: cover; -fx-background-repeat: no-repeat;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gioco.SetPlayerPageController">
    <center>
-      <HBox alignment="TOP_CENTER" BorderPane.alignment="CENTER">
+      <HBox alignment="TOP_CENTER" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <MenuButton mnemonicParsing="false" onAction="#reset" onMouseClicked="#reset" text="Numero Giocatori" HBox.hgrow="ALWAYS">
-              <items>
-                  <MenuItem mnemonicParsing="false" onAction="#opzione1" text="3 giocatori" />
-                  <MenuItem mnemonicParsing="false" onAction="#opzione2" text="4 giocatori" />
-                  <MenuItem mnemonicParsing="false" onAction="#opzione3" text="5 giocatori" />
-                  <MenuItem mnemonicParsing="false" onAction="#opzione4" text="6 giocatori" />
-                  <MenuItem mnemonicParsing="false" onAction="#opzione5" text="7 giocatori" />
-                  <MenuItem mnemonicParsing="false" onAction="#opzione6" text="8 giocatori" />
-              </items>
-            </MenuButton>
-            <VBox alignment="TOP_CENTER" spacing="10.0" HBox.hgrow="ALWAYS">
-               <children>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#activeChois" text="Giochi con Robot?" VBox.vgrow="ALWAYS" />
-                  <CheckBox fx:id="rispostaSi" mnemonicParsing="false" onAction="#giocoConRobot" prefHeight="17.0" prefWidth="42.0" text="Sì" textFill="WHITE" visible="false" VBox.vgrow="ALWAYS" />
-                  <CheckBox fx:id="rispostaNo" mnemonicParsing="false" onAction="#giocoSenzaRobot" prefHeight="17.0" prefWidth="42.0" text="No" textFill="WHITE" visible="false" VBox.vgrow="ALWAYS" />
-               </children>
-               <HBox.margin>
-                  <Insets left="75.0" right="100.0" />
-               </HBox.margin>
-            </VBox>
-            <MenuButton fx:id="numRobot" mnemonicParsing="false" onMouseClicked="#setNumRobot" text="Quanti?" visible="false" HBox.hgrow="ALWAYS">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#opzione1R" text="1 robot" />
-                  <MenuItem mnemonicParsing="false" onAction="#opzione2R" text="2 robot" />
-                  <MenuItem mnemonicParsing="false" onAction="#opzione3R" text="3 robot" />
-                  <MenuItem mnemonicParsing="false" onAction="#opzione4R" text="4 robot" />
-                  <MenuItem mnemonicParsing="false" onAction="#opzione5R" text="5 robot" />
-                  <MenuItem mnemonicParsing="false" onAction="#opzione6R" text="6 robot" />
-                  <MenuItem mnemonicParsing="false" onAction="#opzione7R" text="7 robot" />
-                  <MenuItem mnemonicParsing="false" onAction="#opzione8R" text="8 robot" />
-               </items>
-            </MenuButton>
+            <ChoiceBox fx:id="numGiocatoriItem" prefWidth="150.0" />
+            <ChoiceBox fx:id="numRobotItem" prefWidth="150.0" />
+            <ScrollPane fx:id="setNomi" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="ALWAYS" HBox.hgrow="ALWAYS">
+               <content>
+                  <VBox fx:id="nomiGiocatori" alignment="TOP_CENTER">
+                     <children>
+                        <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 1" visible="false" VBox.vgrow="ALWAYS" />
+                        <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 2" visible="false" VBox.vgrow="ALWAYS" />
+                        <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 3" visible="false" VBox.vgrow="ALWAYS" />
+                        <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 4" visible="false" VBox.vgrow="ALWAYS" />
+                        <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 5" visible="false" VBox.vgrow="ALWAYS" />
+                        <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 6" visible="false" VBox.vgrow="ALWAYS" />
+                        <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 7" visible="false" VBox.vgrow="ALWAYS" />
+                        <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 8" visible="false" VBox.vgrow="ALWAYS" />
+                     </children>
+                  </VBox>
+               </content>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </ScrollPane>
          </children>
          <BorderPane.margin>
-            <Insets left="30.0" right="30.0" top="20.0" />
+            <Insets left="10.0" right="10.0" top="20.0" />
          </BorderPane.margin>
       </HBox>
    </center>

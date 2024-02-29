@@ -31,8 +31,8 @@ public class LoginAdminPageController {
 
     @FXML
     public void initialize() {
-        ut = "samucaro";
-        psw = "112233";
+        ut = "";
+        psw = "";
         cont=1;
 
         password.setOnKeyPressed(keyEvent -> {

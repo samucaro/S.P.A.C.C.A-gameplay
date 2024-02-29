@@ -14,10 +14,9 @@ public class Mazzo {
         this.carte = new ArrayList<Carta>();
         this.scarti = new ArrayList<Carta>();
         this.random = new Random();
-        componiMazzo();
     }
 
-    private void componiMazzo() {
+    public void componiMazzo() {
         for(int i = 1; i <= 30; i++) {
             carte.add(new CartaBang("Spara a un tuo avversario"));
         }
