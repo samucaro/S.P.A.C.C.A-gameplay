@@ -21,27 +21,54 @@
    <center>
       <HBox alignment="TOP_CENTER" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <ChoiceBox fx:id="numGiocatoriItem" prefWidth="150.0" />
-            <ChoiceBox fx:id="numRobotItem" prefWidth="150.0" />
-            <ScrollPane fx:id="setNomi" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="ALWAYS" HBox.hgrow="ALWAYS">
-               <content>
-                  <VBox fx:id="nomiGiocatori" alignment="TOP_CENTER">
-                     <children>
-                        <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 1" visible="false" VBox.vgrow="ALWAYS" />
-                        <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 2" visible="false" VBox.vgrow="ALWAYS" />
-                        <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 3" visible="false" VBox.vgrow="ALWAYS" />
-                        <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 4" visible="false" VBox.vgrow="ALWAYS" />
-                        <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 5" visible="false" VBox.vgrow="ALWAYS" />
-                        <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 6" visible="false" VBox.vgrow="ALWAYS" />
-                        <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 7" visible="false" VBox.vgrow="ALWAYS" />
-                        <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 8" visible="false" VBox.vgrow="ALWAYS" />
-                     </children>
-                  </VBox>
-               </content>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-            </ScrollPane>
+            <VBox alignment="TOP_CENTER" spacing="5.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Text fill="WHITE" stroke="BLACK" strokeType="OUTSIDE" text="Secgli num giocatori" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="Game of Thrones" size="10.0" />
+                     </font>
+                  </Text>
+                  <ChoiceBox fx:id="numGiocatoriItem" prefWidth="150.0" VBox.vgrow="ALWAYS" />
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" spacing="5.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Text fill="WHITE" stroke="BLACK" strokeType="OUTSIDE" text="Scegli num bot" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="Game of Thrones" size="10.0" />
+                     </font>
+                  </Text>
+                  <ChoiceBox fx:id="numRobotItem" prefWidth="150.0" VBox.vgrow="ALWAYS" />
+               </children>
+            </VBox>
+            <VBox alignment="TOP_CENTER" spacing="5.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Text fill="WHITE" stroke="BLACK" strokeType="OUTSIDE" text="Imposta nomi giocatori" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="Game of Thrones" size="10.0" />
+                     </font>
+                  </Text>
+                  <ScrollPane fx:id="setNomi" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
+                     <content>
+                        <VBox fx:id="nomiGiocatori" alignment="TOP_CENTER">
+                           <children>
+                              <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 1" visible="false" VBox.vgrow="ALWAYS" />
+                              <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 2" visible="false" VBox.vgrow="ALWAYS" />
+                              <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 3" visible="false" VBox.vgrow="ALWAYS" />
+                              <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 4" visible="false" VBox.vgrow="ALWAYS" />
+                              <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 5" visible="false" VBox.vgrow="ALWAYS" />
+                              <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 6" visible="false" VBox.vgrow="ALWAYS" />
+                              <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 7" visible="false" VBox.vgrow="ALWAYS" />
+                              <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 8" visible="false" VBox.vgrow="ALWAYS" />
+                           </children>
+                        </VBox>
+                     </content>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </ScrollPane>
+               </children>
+            </VBox>
          </children>
          <BorderPane.margin>
             <Insets left="10.0" right="10.0" top="20.0" />

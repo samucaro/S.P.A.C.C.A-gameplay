@@ -67,6 +67,7 @@ public class SetPlayerPageController {
                     }
                     numRobotItem.getSelectionModel().selectedItemProperty().addListener(
                             (obs, oldV, newV) -> {
+                                int verify = 0;
                                 selezioneNomi();
                                 if(newV != null) {
                                     if (newV.equals("Nessuno")) {
@@ -77,6 +78,14 @@ public class SetPlayerPageController {
                                         outputText.setText("Hai selezionato " + (numGiocatori - numPersone) + " robot, numero persone: " + numPersone);
                                     }
                                     selezioneNomi();
+                                    for(int i = 0; i < numGiocatori; i++) {
+                                        if(numRobotItem.getItems().get(i) != null) {
+                                            verify++;
+                                        }
+                                        if(verify == numGiocatori) {
+                                            saveLogout.setDisable(false);
+                                        }
+                                    }
                                 }
                             }
                     );
