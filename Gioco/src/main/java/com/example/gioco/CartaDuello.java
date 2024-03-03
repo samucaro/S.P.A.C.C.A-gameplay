@@ -18,8 +18,11 @@ public class CartaDuello implements Carta {
     public void usaAbilita() {
         //implementare
     }
-
+    @Override
     public String toString() {
         return "-" + desc + ";\n";
+    }
+    public String toStringNome() {
+        return "Duello";
     }
 }

@@ -61,7 +61,7 @@ public class GameData {
     }
 
     //Assegna ruoli e personaggi seguendo i metodi precedenti
-    public void getGGRandom() {
+    public void getGG() {
         int indexR = 0;
         int indexP = 0;
         while(indexR < numeroR) {
@@ -84,13 +84,13 @@ public class GameData {
         return giocatoriPartita;
     }
 
-    public void scrivi() throws IOException {
+    /*public void scrivi() throws IOException {
         String filePartita = DS.getProjectFolderPath() + File.separator + "/" + code + ".txt";
         FileWriter writer = new FileWriter(filePartita, true);
         PrintWriter pw = new PrintWriter(writer);
         pw.println("ciao");
         pw.close();
-    }
+    }*/
     /*
     public Ruoli getRuolo(int i) {
         return ruolo[i];

@@ -18,7 +18,11 @@ public class CartaPerdiCarta implements Carta{
         //implementare
     }
 
+    @Override
     public String toString() {
         return "-" + desc + ";\n";
+    }
+    public String toStringNome() {
+        return "PerdiCarta";
     }
 }

@@ -50,7 +50,7 @@
                   </Text>
                   <ScrollPane fx:id="setNomi" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
                      <content>
-                        <VBox fx:id="nomiGiocatori" alignment="TOP_CENTER">
+                        <VBox fx:id="nomiGiocatori" alignment="TOP_CENTER" onKeyReleased="#verificaNomi">
                            <children>
                               <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 1" visible="false" VBox.vgrow="ALWAYS" />
                               <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 2" visible="false" VBox.vgrow="ALWAYS" />
@@ -132,11 +132,6 @@
    <bottom>
       <VBox alignment="CENTER" prefWidth="600.0" spacing="10.0" BorderPane.alignment="CENTER">
          <children>
-            <Text fx:id="outputText" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-effect: dropshadow( gaussian, rgba(0,0,250,0.8), 10 , 0 , 0 , 2 );" textAlignment="CENTER" visible="false" wrappingWidth="211.685546875" VBox.vgrow="ALWAYS">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Text>
             <HBox alignment="CENTER" spacing="10.0" VBox.vgrow="ALWAYS">
                <children>
                   <TextField fx:id="codice" alignment="CENTER" prefWidth="102.0" promptText="codice partita" HBox.hgrow="ALWAYS">
@@ -156,7 +151,7 @@
             </HBox>
          </children>
          <BorderPane.margin>
-            <Insets bottom="25.0" />
+            <Insets bottom="25.0" top="25.0" />
          </BorderPane.margin>
       </VBox>
    </bottom>

@@ -3,11 +3,9 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -80,18 +78,6 @@
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="25.0" BorderPane.alignment="CENTER">
          <children>
             <ListView fx:id="list" editable="true" HBox.hgrow="ALWAYS" />
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
-               <children>
-                  <TextField fx:id="g1" alignment="CENTER" layoutX="26.0" layoutY="2.0" promptText="Nome Giocatore 1" visible="false" />
-                  <TextField fx:id="g2" alignment="CENTER" layoutX="26.0" layoutY="27.0" promptText="Nome Giocatore 2" visible="false" />
-                  <TextField fx:id="g3" alignment="CENTER" layoutX="26.0" layoutY="52.0" promptText="Nome Giocatore 3" visible="false" />
-                  <TextField fx:id="g4" alignment="CENTER" layoutX="26.0" layoutY="74.0" promptText="Nome Giocatore 4" visible="false" />
-                  <TextField fx:id="g5" alignment="CENTER" layoutX="26.0" layoutY="99.0" promptText="Nome Giocatore 5" visible="false" />
-                  <TextField fx:id="g6" alignment="CENTER" layoutX="26.0" layoutY="124.0" promptText="Nome Giocatore 6" visible="false" />
-                  <TextField fx:id="g7" alignment="CENTER" layoutX="26.0" layoutY="149.0" promptText="Nome Giocatore 7" visible="false" />
-                  <TextField fx:id="g8" alignment="CENTER" layoutX="26.0" layoutY="174.0" promptText="Nome Giocatore 8" visible="false" />
-               </children>
-            </AnchorPane>
             <VBox alignment="CENTER" spacing="30.0" HBox.hgrow="ALWAYS">
                <children>
                   <Button mnemonicParsing="false" onAction="#switchToGamePage" text="Strart" />

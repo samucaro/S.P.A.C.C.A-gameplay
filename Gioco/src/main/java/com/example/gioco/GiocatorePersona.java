@@ -51,7 +51,6 @@ public class GiocatorePersona extends Giocatore{
     public int getHp() {
         return HP;
     }
-
     @Override
     public String toString() {
         return "\n***GiocatorePersona***\n" +
@@ -59,5 +58,13 @@ public class GiocatorePersona extends Giocatore{
                 ";\n-mano: " + mano +
                 ";\n******************************************************************" +
                 "**********************************************************";
+    }
+
+    public String toStringMano() {
+        String str = "";
+        for(Carta c: mano) {
+            str += c.toStringNome() + " ";
+        }
+        return str;
     }
 }

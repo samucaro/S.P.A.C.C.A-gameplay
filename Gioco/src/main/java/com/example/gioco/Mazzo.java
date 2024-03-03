@@ -63,4 +63,13 @@ public class Mazzo {
         scarti.add(scarto);
     }
     // Metodi per mescolare il mazzo e distribuire le carte...
+
+    @Override
+    public String toString() {
+        String str = "";
+        for(Carta c: carte) {
+            str += c.toStringNome() + " ";
+        }
+        return str;
+    }
 }

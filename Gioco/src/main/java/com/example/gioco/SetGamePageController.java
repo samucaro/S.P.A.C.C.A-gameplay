@@ -69,20 +69,13 @@ public class SetGamePageController {
         stage.show();
     }
 
-    private void assegnaMano() {
-        for(Giocatore g : gameData.getGiocatoriPartita()) {
-            for (int i = 1; i <= 5; i++) {
-                g.aggiungiCarta(gameData.getMazzo().pesca());
-            }
-        }
-    }
+
 
     public void impostaListener(Scene scene){
         scene.widthProperty().addListener((obs, oldVal, newVal) -> {
             OvalPaneController.setScenaX((Double) newVal);
             MainController.setScenaX((Double) newVal);
         });
-
         scene.heightProperty().addListener((obs, oldVal, newVal) -> {
             OvalPaneController.setScenaY((Double) newVal);
             MainController.setScenaY((Double) newVal);
@@ -91,9 +84,8 @@ public class SetGamePageController {
 
     //switchare sulla partita direttamente
     public void switchToGamePage(ActionEvent event) throws IOException {
-        gameData.getGGRandom();
+        gameData.getGG();
         gameData.setMazzo(new Mazzo());
-        assegnaMano();
         //System.out.println(gameData.getGiocatoriPartita().toString());
         root = FXMLLoader.load(getClass().getResource("Partitonza.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

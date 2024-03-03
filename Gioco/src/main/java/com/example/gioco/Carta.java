@@ -8,4 +8,5 @@ public interface Carta {
     public void usaAbilita();
 
     public String toString();
+    public String toStringNome();
 }

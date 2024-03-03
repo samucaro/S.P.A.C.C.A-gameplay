@@ -19,7 +19,11 @@ public class CartaScartaBang implements Carta{
         //implementare
     }
 
+    @Override
     public String toString() {
         return "-" + desc + ";\n";
+    }
+    public String toStringNome() {
+        return "ScartaBang";
     }
 }
