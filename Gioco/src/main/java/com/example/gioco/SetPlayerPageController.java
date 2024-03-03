@@ -100,7 +100,7 @@ public class SetPlayerPageController {
     private void selezioneNomi(){
         for (int i = 0; i < numGiocatori; i++){
             nomiGiocatori.getChildren().get(i).setVisible(true);
-            ((TextField) nomiGiocatori.getChildren().get(i)).setText("Giocatore " + (i+1));
+            //((TextField) nomiGiocatori.getChildren().get(i)).setText("Giocatore " + (i+1));
             nomiGiocatori.getChildren().get(i).setDisable(false);
         }
         for (int i = numGiocatori; i < 8; i++ )
