@@ -100,7 +100,8 @@ public class SetPlayerPageController {
             saveLogout.setDisable(false);
             for(int i = 0; i < numGiocatori; i++)
                 nomi[i] = ((TextField) nomiGiocatori.getChildren().get(i)).getText();
-        }
+        } else
+            saveLogout.setDisable(true);
     }
     private void selezioneNomi(){
         for (int i = 0; i < numGiocatori; i++){

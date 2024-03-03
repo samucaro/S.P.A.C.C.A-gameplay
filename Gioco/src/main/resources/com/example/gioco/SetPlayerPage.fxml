@@ -1,23 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.effect.DropShadow?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.Color?>
-<?import javafx.scene.paint.RadialGradient?>
-<?import javafx.scene.paint.Stop?>
-<?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url(BaseLogin.jpg); -fx-background-size: cover; -fx-background-repeat: no-repeat;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gioco.SetPlayerPageController">
+<BorderPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url(BaseLogin.jpg); -fx-background-size: cover; -fx-background-repeat: no-repeat;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gioco.SetPlayerPageController">
    <center>
       <HBox alignment="TOP_CENTER" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
@@ -52,14 +43,14 @@
                      <content>
                         <VBox fx:id="nomiGiocatori" alignment="TOP_CENTER">
                            <children>
-                              <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 1" visible="false" VBox.vgrow="ALWAYS" />
-                              <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 2" visible="false" VBox.vgrow="ALWAYS" />
-                              <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 3" visible="false" VBox.vgrow="ALWAYS" />
-                              <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 4" visible="false" VBox.vgrow="ALWAYS" />
-                              <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 5" visible="false" VBox.vgrow="ALWAYS" />
-                              <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 6" visible="false" VBox.vgrow="ALWAYS" />
-                              <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 7" visible="false" VBox.vgrow="ALWAYS" />
-                              <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 8" visible="false" VBox.vgrow="ALWAYS" />
+                              <TextField alignment="TOP_CENTER" disable="true" onKeyReleased="#verificaNomi" promptText="Giocatore 1" visible="false" VBox.vgrow="ALWAYS" />
+                              <TextField alignment="TOP_CENTER" disable="true" onKeyReleased="#verificaNomi" promptText="Giocatore 2" visible="false" VBox.vgrow="ALWAYS" />
+                              <TextField alignment="TOP_CENTER" disable="true" onKeyReleased="#verificaNomi" promptText="Giocatore 3" visible="false" VBox.vgrow="ALWAYS" />
+                              <TextField alignment="TOP_CENTER" disable="true" onKeyReleased="#verificaNomi" promptText="Giocatore 4" visible="false" VBox.vgrow="ALWAYS" />
+                              <TextField alignment="TOP_CENTER" disable="true" onKeyReleased="#verificaNomi" promptText="Giocatore 5" visible="false" VBox.vgrow="ALWAYS" />
+                              <TextField alignment="TOP_CENTER" disable="true" onKeyReleased="#verificaNomi" promptText="Giocatore 6" visible="false" VBox.vgrow="ALWAYS" />
+                              <TextField alignment="TOP_CENTER" disable="true" onKeyReleased="#verificaNomi" promptText="Giocatore 7" visible="false" VBox.vgrow="ALWAYS" />
+                              <TextField alignment="TOP_CENTER" disable="true" onKeyReleased="#verificaNomi" promptText="Giocatore 8" visible="false" VBox.vgrow="ALWAYS" />
                            </children>
                         </VBox>
                      </content>
