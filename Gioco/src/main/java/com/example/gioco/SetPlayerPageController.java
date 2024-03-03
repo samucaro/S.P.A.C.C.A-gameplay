@@ -64,6 +64,8 @@ public class SetPlayerPageController {
     public void impostaGiocatori() {
         numGiocatoriItem.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> {
+                    for (int i = 0; i < 8; i++ )
+                        nomiGiocatori.getChildren().get(i).setVisible(false);
                     saveLogout.setDisable(true);
                     numGiocatori = Integer.parseInt(newValue.split(" ")[0]);
                     numPersone = numGiocatori;
