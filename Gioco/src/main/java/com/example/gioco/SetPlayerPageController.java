@@ -26,6 +26,7 @@ public class SetPlayerPageController {
     private DataSet DataS = new DataSet();
     private int code;
     private String[] mani;
+    private String[] tipoGiocatore;
     private Parent root;
     private int numPersone;
     private Mazzo m;
@@ -78,7 +79,6 @@ public class SetPlayerPageController {
         numRobotItem.getSelectionModel().selectedItemProperty().addListener(
                 (obs, oldV, newV) -> {
                     saveLogout.setDisable(true);
-                    selezioneNomi();
                     if(newV != null) {
                         if (newV.equals("Nessuno")) {
                             numPersone = numGiocatori;
@@ -104,18 +104,22 @@ public class SetPlayerPageController {
             saveLogout.setDisable(true);
     }
     private void selezioneNomi(){
+        tipoGiocatore = new String[numGiocatori];
         for (int i = 0; i < numGiocatori; i++){
             nomiGiocatori.getChildren().get(i).setVisible(true);
             ((TextField) nomiGiocatori.getChildren().get(i)).setPromptText("Giocatore " + (i+1));
             ((TextField) nomiGiocatori.getChildren().get(i)).setText("");
             nomiGiocatori.getChildren().get(i).setDisable(false);
+            tipoGiocatore[i] = "Persona";
         }
-        for (int i = numGiocatori; i < 8; i++ )
+        for (int i = numGiocatori; i < 8; i++ ){
             nomiGiocatori.getChildren().get(i).setVisible(false);
+        }
         for (int i = numPersone; i < numGiocatori; i++) {
             nomiGiocatori.getChildren().get(i).setVisible(true);
             ((TextField) nomiGiocatori.getChildren().get(i)).setText("Bot " + (i-numPersone+1));
             nomiGiocatori.getChildren().get(i).setDisable(true);
+            tipoGiocatore[i] = "Bot";
         }
     }
     private String generaCodice() {
@@ -172,13 +176,7 @@ public class SetPlayerPageController {
                 writer.println("Giocatore " + (i + 1) + ":");
                 writer.println("Nome: " + nomi[i]);
                 writer.println("Mano: " + mani[i]);
-                if(numPersone >= 0) {
-                    writer.println("Tipo: Persona");
-                    numPersone--;
-                }
-                else {
-                    writer.println("Tipo: Bot");
-                }
+                writer.println("Tipo: " + tipoGiocatore[i]);
                 writer.println("HpRimanente: " + 5);
                 writer.println("******************************");
             }
