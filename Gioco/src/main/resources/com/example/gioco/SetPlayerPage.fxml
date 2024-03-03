@@ -50,7 +50,7 @@
                   </Text>
                   <ScrollPane fx:id="setNomi" fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" vbarPolicy="ALWAYS" VBox.vgrow="ALWAYS">
                      <content>
-                        <VBox fx:id="nomiGiocatori" alignment="TOP_CENTER" onKeyReleased="#verificaNomi">
+                        <VBox fx:id="nomiGiocatori" alignment="TOP_CENTER">
                            <children>
                               <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 1" visible="false" VBox.vgrow="ALWAYS" />
                               <TextField alignment="TOP_CENTER" disable="true" promptText="Giocatore 2" visible="false" VBox.vgrow="ALWAYS" />
