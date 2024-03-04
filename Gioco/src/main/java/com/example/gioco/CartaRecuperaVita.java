@@ -3,15 +3,10 @@ package com.example.gioco;
 import javafx.scene.image.Image;
 
 public class CartaRecuperaVita implements Carta{
-    private String desc;
-    public CartaRecuperaVita(String desc) {
-        this.desc = desc;
-    }
+    private String desc = "Recuperi un punto vita";
+    public CartaRecuperaVita() {}
     public String getDesc() {
         return desc;
-    }
-    public void setDesc(String desc) {
-        this.desc = desc;
     }
 
     public void usaAbilita() {

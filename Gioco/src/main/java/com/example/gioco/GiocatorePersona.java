@@ -12,12 +12,13 @@ public class GiocatorePersona extends Giocatore{
         hpRimanente = HP;
         mano = new ArrayList<Carta>();
     }
-    /*public GiocatorePersona() {
-        this.mano = new ArrayList<Carta>();
-    }
-    */
-    public void aggiungiCarta(Carta carta){
-        mano.add(carta);
+    public void addCarta(Carta carta){
+        if(mano.size() == 6) { //modificare con il numero massimo di carte in mano
+            System.out.println("Hai già il numero massimo di carte in mano");
+        }
+        else {
+            mano.add(carta);
+        }
     }
     public void subisciDanno(int danno){
         if(hpRimanente == 0) {
@@ -33,6 +34,9 @@ public class GiocatorePersona extends Giocatore{
             hpRimanente+=vita; //se si vuole aggiungere più fi una vita fare un ciclo for, meglio lasciare che si può aggiungere solo una vita per volta
         }
     }
+    public void setHpRimanente(int hp) {
+        this.hpRimanente = hp;
+    }
     public int getHpRimanente() {
         return hpRimanente;
     }
@@ -42,24 +46,26 @@ public class GiocatorePersona extends Giocatore{
     public ArrayList<Carta> getMano() {
         return mano;
     }
+    public void setNome(String n) {
+        this.nome = n;
+    }
+    public String getNome() {
+        return nome;
+    }
     public void setTurno(boolean turno) {
         this.turno = turno;
     }
     public boolean getTurno() {
         return turno;
     }
-    public int getHp() {
-        return HP;
-    }
     @Override
     public String toString() {
         return "\n***GiocatorePersona***\n" +
                 "\n-hpRimanente: " + hpRimanente +
-                ";\n-mano: " + mano +
+                ";\n-mano: " + toStringMano() +
                 ";\n******************************************************************" +
                 "**********************************************************";
     }
-
     public String toStringMano() {
         String str = "";
         for(Carta c: mano) {

@@ -124,7 +124,7 @@ public class MainController {
     public void pescataInizialeGiocatore() {
         Giocatore player = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente());
         for(int i = 1; i <= 2; i++) {
-            player.aggiungiCarta(gameData.getMazzo().pesca());
+            player.addCarta(gameData.getMazzo().pesca());
             System.out.println("Ho pescato");
         }
     }

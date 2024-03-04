@@ -3,10 +3,8 @@ package com.example.gioco;
 import javafx.scene.image.Image;
 
 public class CartaSparaTutti implements Carta{
-    private String desc;
-    public CartaSparaTutti(String desc) {
-        this.desc = desc;
-    }
+    private String desc = "Spara a tutti gli avversari contemporaneamente";
+    public CartaSparaTutti() {}
 
     public String getDesc() {
         return desc;

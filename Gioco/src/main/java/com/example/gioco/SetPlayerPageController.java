@@ -128,7 +128,6 @@ public class SetPlayerPageController {
         do {
             code = (int) (Math.random() * (9999 - 1000 + 1)) + 1000;
         } while (DataS.checkCode(code));
-        gameData.setCode(code);
         return "" + code;
     }
     private void assegnaMano() {
@@ -140,8 +139,7 @@ public class SetPlayerPageController {
             }
             mani[i] = str;
             str = "";
-        }
-    }
+        }    }
     public void switchToTypeGamePage(ActionEvent event) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("TypeGamePage.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -161,7 +159,6 @@ public class SetPlayerPageController {
         stage.setScene(scene);
         stage.show();
     }
-
     private void nuovoFile() {
         try {
             FileWriter file = new FileWriter((DataS.getProjectFolderPath() + File.separator + "/" + code + ".txt"), true);
@@ -172,13 +169,11 @@ public class SetPlayerPageController {
             writer.println("Mazzo: " + m.toString());
             writer.println("Scarti: ");
             writer.println("******************************");
-
-            // Informazioni dei giocatori
             for (int i = 0; i < numGiocatori; i++) {
                 writer.println("Giocatore " + (i + 1) + ":");
+                writer.println("Tipo: " + tipoGiocatore[i]);
                 writer.println("Nome: " + nomi[i]);
                 writer.println("Mano: " + mani[i]);
-                writer.println("Tipo: " + tipoGiocatore[i]);
                 writer.println("HpRimanente: " + 5);
                 writer.println("******************************");
             }
@@ -188,5 +183,3 @@ public class SetPlayerPageController {
         }
     }
 }
-
-

@@ -18,28 +18,33 @@ public class Mazzo {
 
     public void componiMazzo() {
         for(int i = 1; i <= 30; i++) {
-            carte.add(new CartaBang("Spara a un tuo avversario"));
+            carte.add(new CartaBang());
         }
         for(int i = 1; i <= 18; i++) {
-            carte.add(new CartaMancato("Colpo schivato!"));
+            carte.add(new CartaMancato());
         }
         for(int i = 1; i <= 2; i++) {
-            carte.add(new CartaDuello("A turno tu e il tuo avversario" +
-                    "scartate un Bang, il primo che rimane senza perde un punto vita. Parte l'avversario."));
+            carte.add(new CartaDuello());
         }
         for(int i = 1; i <= 2; i++) {
-            carte.add(new CartaPerdiCarta("Pesca la prima carta da un avversario a tua scelta"));
+            carte.add(new CartaPerdiCarta());
         }
         for(int i = 1; i <= 2; i++) {
-            carte.add(new CartaScartaBang("Tutti i tuoi avversari scartano una carta Bang"));
+            carte.add(new CartaScartaBang());
         }
         for(int i = 1; i <= 2; i++) {
-            carte.add(new CartaSparaTutti("Spara a tutti gli avversari contemporaneamente"));
+            carte.add(new CartaSparaTutti());
         }
         for(int i = 1; i <= 8; i++) {
-            carte.add(new CartaRecuperaVita("Recuperi un punto vita"));
+            carte.add(new CartaRecuperaVita());
         }
         mescola();
+    }
+    public void addCarta(Carta c) {
+        carte.add(c);
+    }
+    public void addScarto(Carta c) {
+        scarti.add(c);
     }
 
     public void mescola() {
@@ -68,6 +73,13 @@ public class Mazzo {
     public String toString() {
         String str = "";
         for(Carta c: carte) {
+            str += c.toStringNome() + " ";
+        }
+        return str;
+    }
+    public String toStringScarti() {
+        String str = "";
+        for(Carta c: scarti) {
             str += c.toStringNome() + " ";
         }
         return str;

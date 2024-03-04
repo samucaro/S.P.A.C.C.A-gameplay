@@ -1,12 +1,11 @@
 package com.example.gioco;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.*;
 
+
 public class GameData {
+    private int codicePartita;
     private int turnoCorrente;
     private static GameData instance = null;
     private final ArrayList<Giocatore> giocatoriPartita = new ArrayList<>();
@@ -19,7 +18,6 @@ public class GameData {
     //private String[] pianeta;
     //private Boolean[] bot;
     public GameData() throws IOException {
-        mazzo = new Mazzo();
     }
     public static GameData getInstance() {
         try {
@@ -32,107 +30,129 @@ public class GameData {
         }
         return instance;
     }
+    public void leggiFile(int code) {
+        this.code = code;
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(code + ".txt"));
+            int c = 0;
+            String line;
+            while ((line = reader.readLine()) != null) {
+                if (line.startsWith("NumGiocatori:")) {
+                    numeroGG = Integer.parseInt(line.split(":")[1].trim());
+                } else if (line.startsWith("Turno:")) {
+                    turnoCorrente = Integer.parseInt(line.split(":")[1].trim());
+                } else if (line.startsWith("Mazzo:")) {
+                    String carteMazzo = line.split(":")[1].trim();
+                    String[] carteM = carteMazzo.split(" ");
+                    for (String nomeCarta : carteM) {
+                        mazzo.addCarta(stringaCarta(nomeCarta));
+                    }
+                } else if (line.startsWith("Scarti:")) {
+                    String carteScarti = line.split(":")[1].trim();
+                    String[] carteS = carteScarti.split(" ");
+                    for (String nomeCarta : carteS) {
+                        mazzo.addScarto(stringaCarta(nomeCarta));
+                    }
+                } else if (line.startsWith("Giocatore")) {
+                    c = Integer.parseInt(line.split(":")[1].trim())-1;
+                    if (reader.readLine().split(":")[1].trim().equals("Persona"))
+                        giocatoriPartita.add(new GiocatorePersona());
+                    else
+                        giocatoriPartita.add(new GiocatoreRobot());
+                } else if (line.startsWith("Nome:")) {
+                    giocatoriPartita.get(c).setNome(line.split(":")[1].trim());
+                } else if (line.startsWith("Mano:")) {
+                    String carteMano = line.split(":")[1].trim();
+                    String[] carteMa = carteMano.split(" ");
+                    for (String nomeCarta : carteMa) {
+                        giocatoriPartita.get(c).addCarta(stringaCarta(nomeCarta));
+                    }
+                } else if (line.startsWith("HpRimanente:")) {
+                    giocatoriPartita.get(c).setHpRimanente(Integer.parseInt(line.split(":")[1].trim()));
+                }
+            }
+            reader.close();
+        } catch (IOException e) {
+            System.err.println("Errore durante la lettura del file: " + e.getMessage());
+        }
+    }
+    public void aggiornaFile(){
+        try {
+            FileWriter file = new FileWriter((DS.getProjectFolderPath() + File.separator + "/" + code + ".txt"), true);
+            PrintWriter writer = new PrintWriter(file);
+            writer.println("Dati Generali Partita:");
+            writer.println("NumGiocatori: " + numeroGG);
+            writer.println("Turno: " + turnoCorrente);
+            writer.println("Mazzo: " + mazzo.toString());
+            writer.println("Scarti: " + mazzo.toStringScarti());
+            writer.println("******************************");
+            for (int i = 0; i < numeroGG; i++) {
+                writer.println("Giocatore " + (i + 1) + ":");
+                writer.println("Tipo: " + (giocatoriPartita.get(i).getClass().getSimpleName().equals("giocatorePersona")?"Persona":"Bot"));
+                writer.println("Nome: " + giocatoriPartita.get(i).getNome());
+                writer.println("Mano: " + giocatoriPartita.get(i).toStringMano());
+                writer.println("HpRimanente: " + giocatoriPartita.get(i).getHpRimanente());
+                writer.println("******************************");
+            }
+            writer.close();
+        } catch (IOException e) {
+            System.err.println("Errore durante la creazione del file: " + e.getMessage());
+        }
+    }
+    public Carta stringaCarta(String c) {
+        switch (c) {
+            case "Bang":
+                return new CartaBang();
+            case "Mancato":
+                return new CartaMancato();
+            case "Duello":
+                return new CartaDuello();
+            case "PerdiCarta":
+                return new CartaPerdiCarta();
+            case "ScartaBang":
+                return new CartaScartaBang();
+            case "SparaTutti":
+                return new CartaSparaTutti();
+            case "RecuperaVita":
+                return new CartaRecuperaVita();
+            default:
+                return null;
+        }
+    }
+    //MODIFICA
     public void setNumero(int numeroGG) {
         this.numeroGG = numeroGG;
     }
-    public void setPersone(int numeroP) {
-        this.numeroP = numeroP;
-    }
-    public void setRobot(int numeroR) {
-        this.numeroR = numeroR;
-    }
+    //MODIFICA
     public void setMazzo(Mazzo mazzo) {
         this.mazzo = mazzo;
     }
+    //MODIFICA
     public void setCode(int code) {
         this.code = code;
     }
+    //MODIFICA
     public Mazzo getMazzo() {
         return mazzo;
     }
+    //MODIFICA
     public void setTurnoCorrente(int turnoCorrente) {
         this.turnoCorrente = turnoCorrente;
     }
+    //MODIFICA
     public int getTurnoCorrente() {
         return turnoCorrente;
     }
+    //MODIFICA
     public int getCode() {
         return code;
     }
-
-    //Assegna ruoli e personaggi seguendo i metodi precedenti
-    public void getGG() {
-        int indexR = 0;
-        int indexP = 0;
-        while(indexR < numeroR) {
-            Giocatore g = new GiocatoreRobot();
-            giocatoriPartita.add(g);
-            indexR++;
-        }
-        while(indexP < numeroP ) {
-            Giocatore g = new GiocatorePersona();
-            giocatoriPartita.add(g);
-            indexP++;
-        }
-    }
-
+    //MODIFICA
     public int getNumero() {
         return numeroGG;
     }
-
+    //MODIFICA
     public ArrayList<Giocatore> getGiocatoriPartita() {
         return giocatoriPartita;
     }
-
-    /*public void scrivi() throws IOException {
-        String filePartita = DS.getProjectFolderPath() + File.separator + "/" + code + ".txt";
-        FileWriter writer = new FileWriter(filePartita, true);
-        PrintWriter pw = new PrintWriter(writer);
-        pw.println("ciao");
-        pw.close();
-    }*/
-    /*
-    public Ruoli getRuolo(int i) {
-        return ruolo[i];
-    }
-    */
-
-    /*public String getPianeta(int i) {
-        return pianeta[i];
-    }
-    */
-    /*
-    public void setRuolo(int i, Ruoli r) {
-        if (ruolo==null)
-            ruolo = new Ruoli[numeroGG];
-        ruolo[i]=r;
-    }
-    */
-    /*
-    public void setPianeta(int i, String p) {
-        if (pianeta==null)
-            pianeta = new String[numeroGG];
-        pianeta[i]=p;
-    }
-    */
-    /*
-    public void setBot(int i, Boolean b) {
-        if (bot==null)
-            bot = new Boolean[numeroGG];
-        bot[i]=b;
-    }
-    */
-    /*
-    public Giocatore[] getGG() {
-        Giocatore[] ggs = new Giocatore[numeroGG];
-        for (int i = 0; i<numeroGG; i++){
-            if (bot[i]) {
-                ggs[i]= new GiocatoreRobot();
-            } else {
-                ggs[i] = new GiocatorePersona(ruolo[i]);
-            }
-        }
-        return ggs;
-    }
-    */
 }

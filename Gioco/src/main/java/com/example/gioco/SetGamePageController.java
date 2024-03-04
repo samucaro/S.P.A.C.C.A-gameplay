@@ -84,13 +84,8 @@ public class SetGamePageController {
 
     //switchare sulla partita direttamente
     public void switchToGamePage(ActionEvent event) throws IOException {
-        gameData.getGG();
-        gameData.setMazzo(new Mazzo());
-        //System.out.println(gameData.getGiocatoriPartita().toString());
         root = FXMLLoader.load(getClass().getResource("Partitonza.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        //stage.setMinWidth(900);
-        //stage.setMinHeight(600);
         scene = new Scene(root);
         impostaListener(scene);
         ParallelCamera cam = new ParallelCamera();
