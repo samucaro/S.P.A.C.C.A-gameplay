@@ -17,7 +17,9 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Objects;
+import java.util.Vector;
 
 
 public class SetPlayerPageController {
@@ -97,7 +99,6 @@ public class SetPlayerPageController {
         for(int i = 0; i < numGiocatori; i++) {
             check = check && !((TextField) nomiGiocatori.getChildren().get(i)).getText().isEmpty();
         }
-        System.out.println(check);
         if (check) {
             saveLogout.setDisable(false);
             for(int i = 0; i < numGiocatori; i++)
@@ -160,6 +161,10 @@ public class SetPlayerPageController {
         stage.show();
     }
     private void nuovoFile() {
+        Vector<Integer> vector = new Vector<>();
+        for (int i = 0; i < numGiocatori; i++)
+            vector.add(i);
+        Collections.shuffle(vector);
         try {
             FileWriter file = new FileWriter((DataS.getProjectFolderPath() + File.separator + "/" + code + ".txt"), true);
             PrintWriter writer = new PrintWriter(file);
@@ -169,7 +174,7 @@ public class SetPlayerPageController {
             writer.println("Mazzo: " + m.toString());
             writer.println("Scarti: ");
             writer.println("******************************");
-            for (int i = 0; i < numGiocatori; i++) {
+            for (int i : vector) {
                 writer.println("Giocatore " + (i + 1) + ":");
                 writer.println("Tipo: " + tipoGiocatore[i]);
                 writer.println("Nome: " + nomi[i]);
