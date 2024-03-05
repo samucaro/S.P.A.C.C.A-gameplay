@@ -37,15 +37,7 @@ public class SetPlayerPageController {
     @FXML
     private VBox nomiGiocatori;
     @FXML
-    private CheckBox rispostaSi;
-    @FXML
-    private CheckBox rispostaNo;
-    @FXML
-    private MenuButton numRobot;
-    @FXML
     private Button saveLogout;
-    @FXML
-    private Text outputText;
     @FXML
     private TextField codice;
     @FXML

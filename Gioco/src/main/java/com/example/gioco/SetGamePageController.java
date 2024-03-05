@@ -1,7 +1,5 @@
 package com.example.gioco;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,10 +7,10 @@ import javafx.scene.Node;
 import javafx.scene.ParallelCamera;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import java.io.File;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.util.Objects;
 
@@ -21,44 +19,34 @@ public class SetGamePageController {
     private Parent root;
     private GameData gameData = GameData.getInstance();
     @FXML
-    private ListView list;
+    private ChoiceBox<String> list;
     @FXML
-    private TextField g1;
-    @FXML
-    private TextField g2;
-    @FXML
-    private TextField g3;
-    @FXML
-    private TextField g4;
-    @FXML
-    private TextField g5;
-    @FXML
-    private TextField g6;
-    @FXML
-    private TextField g7;
-    @FXML
-    private TextField g8;
+    private Button start;
+    private DataSet DataS = new DataSet();
     @FXML
     public void initialize() {
-        ObservableList<Integer> items = FXCollections.observableArrayList();
-        items.add(1);
-        items.add(2);
-        items.add(3);
-        items.add(4);
-        list.setItems(items);
-
-        mostraNomi();
+        mostraPartite();
+        list.getSelectionModel().selectedItemProperty().addListener(
+                (obs, oldV, newV) -> {
+                    if(newV != null)
+                        start.setDisable(false);
+                }
+        );
     }
 
-    public void mostraNomi() {
-        g1.setVisible(true);
-        g2.setVisible(true);
-        g3.setVisible(true);
-        g4.setVisible(true);
-        g5.setVisible(true);
-        g6.setVisible(true);
-        g7.setVisible(true);
-        g8.setVisible(true);
+    public void mostraPartite() {
+        String percorsoCartellaProgetto = DataS.getProjectFolderPath();
+        File directory = new File(percorsoCartellaProgetto);
+        if (directory.exists() && directory.isDirectory()) {
+            String[] files = directory.list();
+            if (files != null) {
+                for (String fileName : files) {
+                    list.getItems().add(fileName.substring(0, 4));
+                }
+            }
+        } else {
+            System.err.println("La cartella specificata non esiste o non è una cartella valida.");
+        }
     }
 
     public void switchToAdminPlayerPage(ActionEvent event) throws IOException {
@@ -68,8 +56,6 @@ public class SetGamePageController {
         stage.setScene(scene);
         stage.show();
     }
-
-
 
     public void impostaListener(Scene scene){
         scene.widthProperty().addListener((obs, oldVal, newVal) -> {
