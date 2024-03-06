@@ -166,13 +166,15 @@ public class SetPlayerPageController {
             writer.println("Mazzo: " + m.toString());
             writer.println("Scarti: ");
             writer.println("******************************");
+            int j = 1;
             for (int i : vector) {
-                writer.println("Giocatore " + (i + 1) + ":");
+                writer.println("Giocatore: " + j);
                 writer.println("Tipo: " + tipoGiocatore[i]);
                 writer.println("Nome: " + nomi[i]);
                 writer.println("Mano: " + mani[i]);
                 writer.println("HpRimanente: " + 5);
                 writer.println("******************************");
+                j++;
             }
             writer.close();
         } catch (IOException e) {

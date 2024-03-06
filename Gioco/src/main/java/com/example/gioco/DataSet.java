@@ -40,7 +40,7 @@ public class DataSet {
         }
         return numbers.contains(codice);
     }
-    public static String getProjectFolderPath() {
+    public String getProjectFolderPath() {
         String currentDirectory = System.getProperty("user.dir");
         String projectFolderPath = currentDirectory + File.separator + "src/main/resources/FileGioco";
         File folder = new File(projectFolderPath);
