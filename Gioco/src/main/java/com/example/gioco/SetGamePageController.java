@@ -60,11 +60,9 @@ public class SetGamePageController {
     public void impostaListener(Scene scene){
         scene.widthProperty().addListener((obs, oldVal, newVal) -> {
             OvalPaneController.setScenaX((Double) newVal);
-            MainController.setScenaX((Double) newVal);
         });
         scene.heightProperty().addListener((obs, oldVal, newVal) -> {
             OvalPaneController.setScenaY((Double) newVal);
-            MainController.setScenaY((Double) newVal);
         });
     }
 

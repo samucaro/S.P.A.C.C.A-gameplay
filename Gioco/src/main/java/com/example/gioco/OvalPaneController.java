@@ -1,5 +1,7 @@
 package com.example.gioco;
 import javafx.animation.*;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
@@ -9,8 +11,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
-import javafx.scene.shape.Cylinder;
-import javafx.scene.shape.Sphere;
+import javafx.scene.shape.*;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
@@ -23,6 +24,14 @@ public class OvalPaneController {
     private boolean isPaused = false;
     private static double centroX;
     private static double centroY;
+    private static BooleanProperty resetHD = new SimpleBooleanProperty(false);
+    private static double orx = 230.0;
+    private static double ory = 250.0;
+    private static double irx = 90.0;
+    private static double iry = 130.0;
+    private static Arc outerArc;
+    private static Arc innerArc;
+    private static Shape halfDonut;
     private static final int n = gameData.getNumero();
     private double anchorX, anchorY;
     private static int turnoDi = 0;
@@ -52,6 +61,65 @@ public class OvalPaneController {
             ovalPane.getChildren().add(spheres[i]);
         }
         addSelectionMouse();
+        iniziaHD();
+    }
+
+    private void iniziaHD() {
+        outerArc = new Arc();
+        innerArc = new Arc();
+        outerArc.setCenterX(100.0);
+        outerArc.setCenterY(100.0);
+        outerArc.setRadiusX(orx);
+        outerArc.setRadiusY(ory);
+        outerArc.setStartAngle(0.0);
+        outerArc.setLength(180.0);
+        outerArc.setType(ArcType.ROUND);
+        innerArc.setCenterX(100.0);
+        innerArc.setCenterY(100.0);
+        innerArc.setRadiusX(irx);
+        innerArc.setRadiusY(iry);
+        innerArc.setStartAngle(0.0);
+        innerArc.setLength(180.0);
+        innerArc.setType(ArcType.ROUND);
+
+        halfDonut = Shape.subtract(outerArc, innerArc);
+        ovalPane.getChildren().add(halfDonut);
+        halfDonut.fillProperty().addListener((observable, oldValue, newValue) -> {
+            ovalPane.getChildren().remove(halfDonut);
+            halfDonut.setFill(newValue);
+            ovalPane.getChildren().add(halfDonut);
+        });
+        resetHD.addListener((observable, oldValue, newValue) -> {
+            ovalPane.getChildren().remove(halfDonut);
+            outerArc.setRadiusX(orx);
+            outerArc.setRadiusY(ory);
+            innerArc.setRadiusX(irx);
+            innerArc.setRadiusY(iry);
+            halfDonut = Shape.subtract(outerArc, innerArc);
+            halfDonut.setFill(javafx.scene.paint.Color.rgb(0, 191, 255, 0.2));
+            /*halfDonut.setOnMouseEntered(event -> {
+                halfDonut.setFill(javafx.scene.paint.Color.rgb(0, 191, 255, 0.7));
+            });
+            halfDonut.setOnMouseExited(event -> {
+                halfDonut.setFill(javafx.scene.paint.Color.rgb(0, 191, 255, 0.2));
+            });*/
+            halfDonut.setMouseTransparent(true);
+            ovalPane.getChildren().add(halfDonut);
+            resetHD.set(false);
+        });
+    }
+    public static void setDisableHD(boolean b){
+        halfDonut.setVisible(b);
+    }
+    public static void reShape() {
+        double h = (60 * Math.min(centroX, centroY)) / 300;
+        orx=h + centroX*1/2;
+        ory=h + centroY*1/1.5;
+        irx=2*h;
+        iry=centroY/5+h;
+        resetHD.set(true);
+        halfDonut.setTranslateX(centroX-100);
+        halfDonut.setTranslateY(centroY*2-100);
     }
 
     private void provaAnimazione(int i) {
@@ -89,24 +157,20 @@ public class OvalPaneController {
     public static void setScenaX(double x){
         centroX=x/2;
         posizionaSfere();
+        reShape();
     }
     public static void setScenaY(double y){
         centroY=y/2;
         posizionaSfere();
+        reShape();
     }
     private static void posizionaSfere() {
         for (int i = 0; i < n; i++) {
             int indice = ((n - turnoDi) + i) % n;
-            //System.out.println("i "+i);
-            //System.out.println("indice "+indice);
-            //System.out.println("Turnodi "+turnoDi);
             if (indice == 2) {
                 ((Cylinder) spheres[indice].getChildren().get(1)).setRadius((60 * Math.min(centroX, centroY)) / 300 + 30);
             }
             ((Sphere) spheres[indice].getChildren().get(0)).setRadius((60 * Math.min(centroX, centroY)) / 300);
-
-            System.out.println((centroX - ((Sphere) spheres[indice].getChildren().get(0)).getRadius() * 2 + 50) * Math.cos((2 * Math.PI * (i + 1) / n)+(Math.PI/2)) + centroX);
-            System.out.println((centroY - ((Sphere) spheres[indice].getChildren().getFirst()).getRadius() * 2 + 40) * Math.sin(2 * Math.PI * (i + 1) / n) + centroY);
             spheres[indice].setTranslateX((centroX - ((Sphere) spheres[indice].getChildren().getFirst()).getRadius() * 2 + 50) * Math.cos((2 * Math.PI * (i + 1) / n)+(Math.PI/2)) + centroX);
             spheres[indice].setTranslateY((centroY - ((Sphere) spheres[indice].getChildren().getFirst()).getRadius() * 2 + 40) * Math.sin((2 * Math.PI * (i + 1) / n)+(Math.PI/2)) + centroY);
             spheres[indice].setScaleX(i == n-1 ? 0.6 : 1);
@@ -148,7 +212,7 @@ public class OvalPaneController {
             final Sphere currentSphere = ((Sphere) spheres[i].getChildren().getFirst());
             final Group currentGroup = spheres[i];
             currentSphere.setOnMousePressed(event -> {
-                MainController.setDisableHD(false);
+                setDisableHD(false);
                 double x = currentGroup.getTranslateX();
                 double y = currentGroup.getTranslateY();
                 double s = currentGroup.getScaleX();
@@ -157,20 +221,17 @@ public class OvalPaneController {
                 Button bottone = new Button("<---");
                 bottone.setTranslateX(10);
                 bottone.setTranslateY(10);
-                Pane overlay = new Pane();
-                overlay.setPrefSize(centroX*2,centroY*2);
-                overlay.setStyle("-fx-background-color: rgba(0, 0, 0, 0.5);");
                 PauseTransition pause = new PauseTransition(Duration.seconds(1));
                 pause.setOnFinished(mettibottone -> {
                     ovalPane.getChildren().remove(currentGroup);
-                    ovalPane.getChildren().addAll(overlay, bottone, currentGroup);
+                    ovalPane.getChildren().addAll(bottone, currentGroup);
                     addMouseHandlers(currentSphere);
                 });
                 pause.play();
                 bottone.setOnAction(evento -> {
-                    MainController.setDisableHD(true);
+                    setDisableHD(true);
                     spostaSfere(currentGroup, s, x, y);
-                    ovalPane.getChildren().removeAll(bottone,overlay);
+                    ovalPane.getChildren().removeAll(bottone);
                     resetMouseHandlers(currentSphere);
                     posizionaSfere();
                 });
