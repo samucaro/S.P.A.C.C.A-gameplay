@@ -18,7 +18,7 @@
       <HBox alignment="CENTER" spacing="200.0" BorderPane.alignment="CENTER">
          <children>
             <Button mnemonicParsing="false" onAction="#switchToSetPlayerPage" text="Multiplayer" />
-            <Button mnemonicParsing="false" text="Tournament" />
+            <Button mnemonicParsing="false" onAction="#switchToTournamentPage" text="Tournament" />
          </children>
       </HBox>
    </center>

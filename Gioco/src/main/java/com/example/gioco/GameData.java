@@ -7,6 +7,7 @@ import java.util.*;
 public class GameData {
     private int codicePartita;
     private int turnoCorrente;
+    private String tipo;
     private static GameData instance = null;
     private final ArrayList<Giocatore> giocatoriPartita = new ArrayList<>();
     private DataSet DS = new DataSet();
@@ -38,7 +39,10 @@ public class GameData {
             String line;
             int cont = 0;
             while ((line = reader.readLine()) != null) {
-                if (line.startsWith("NumGiocatori:")) {
+                if(line.startsWith("Dati Generali")) {
+                    tipo = line.split(" ")[2];
+                }
+                else if (line.startsWith("NumGiocatori:")) {
                     numeroGG = Integer.parseInt(line.split(":")[1].trim());
                 }
                 else if (line.startsWith("Turno:")) {
@@ -92,7 +96,7 @@ public class GameData {
         try {
             FileWriter file = new FileWriter((DS.getProjectFolderPath() + File.separator + "/" + code + ".txt"), true);
             PrintWriter writer = new PrintWriter(file);
-            writer.println("Dati Generali Partita:");
+            writer.println("Dati Generali " + tipo + ":");
             writer.println("NumGiocatori: " + numeroGG);
             writer.println("Turno: " + turnoCorrente);
             writer.println("Mazzo: " + mazzo.toString());
@@ -162,6 +166,12 @@ public class GameData {
     //MODIFICA
     public int getNumero() {
         return numeroGG;
+    }
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+    public String getTipo() {
+        return tipo;
     }
     //MODIFICA
     public ArrayList<Giocatore> getGiocatoriPartita() {

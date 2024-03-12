@@ -42,6 +42,7 @@ public class SetGamePageController {
             if (files != null) {
                 for (String fileName : files) {
                     list.getItems().add(fileName.substring(0, 4));
+
                 }
             }
         } else {
