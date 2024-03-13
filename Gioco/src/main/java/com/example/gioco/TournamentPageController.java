@@ -1,11 +1,16 @@
 package com.example.gioco;
 
+import javafx.beans.Observable;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileWriter;
@@ -25,10 +30,23 @@ public class TournamentPageController {
     private String[] nomi;
     private DataSet DataS = new DataSet();
     private GameData gameData = GameData.getInstance();
+    @FXML
+    private AnchorPane anchorPane;
+    @FXML
+    private TextField codice;
+    @FXML
+    private Button saveLogout;
 
     @FXML
     public void initialize() {
-
+        System.out.println("cacca");
+        //non entra????
+        anchorPane.getChildren().addListener(
+                (ListChangeListener<? super Node>) (ObservableList) -> {
+                    System.out.println("cacca");
+                    verificaTesto();
+                }
+        );
     }
     public void switchToTypeGamePage(ActionEvent event) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("TypeGamePage.fxml")));
@@ -36,6 +54,18 @@ public class TournamentPageController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void verificaTesto() {
+        for(Node node: anchorPane.getChildren()) {
+            if (node instanceof TextField) {
+                if (!((TextField) node).getText().isEmpty()) {
+                    codice.setText(generaCodice());
+                    saveLogout.setDisable(false);
+                    System.out.println("Almeno un TextField contiene del testo.");
+                }
+            }
+        }
     }
 
     private String generaCodice() {
