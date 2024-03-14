@@ -48,26 +48,42 @@
                   <TextField alignment="CENTER" layoutX="11.0" layoutY="425.0" promptText="Giocatore" style="-fx-background-color: #00bfff; -fx-text-fill: black;" />
                   <TextField alignment="CENTER" layoutX="11.0" layoutY="475.0" promptText="Giocatore" style="-fx-background-color: #00bfff;" />
                   <TextField alignment="CENTER" layoutX="11.0" layoutY="565.0" promptText="Giocatore" style="-fx-background-color: #00bfff;" />
-                  <Line endX="-90.0" endY="-0.0" layoutX="288.0" layoutY="68.0" startX="-128.0" startY="-0.0" style="-fx-stroke: #00bfff;" />
+                  <TextField alignment="CENTER" layoutX="911.0" layoutY="55.0" promptText="Giocatore" style="-fx-background-color: #00bfff;" />
+                  <TextField alignment="CENTER" layoutX="911.0" layoutY="145.0" promptText="Giocatore" style="-fx-background-color: #00bfff;" />
+                  <TextField alignment="CENTER" layoutX="911.0" layoutY="195.0" promptText="Giocatore" style="-fx-background-color: #00bfff;" />
+                  <TextField alignment="CENTER" layoutX="911.0" layoutY="285.0" promptText="Giocatore" style="-fx-background-color: #00bfff;" />
+                  <TextField alignment="CENTER" layoutX="911.0" layoutY="335.0" promptText="Giocatore" style="-fx-background-color: #00bfff;" />
+                  <TextField alignment="CENTER" layoutX="911.0" layoutY="425.0" promptText="Giocatore" style="-fx-background-color: #00bfff;" />
+                  <TextField alignment="CENTER" layoutX="911.0" layoutY="475.0" promptText="Giocatore" style="-fx-background-color: #00bfff;" />
+                  <TextField alignment="CENTER" layoutX="911.0" layoutY="565.0" promptText="Giocatore" style="-fx-background-color: #00bfff;" />
                   <TextField alignment="CENTER" disable="true" layoutX="126.0" layoutY="100.0" promptText="Giocatore" style="-fx-background-color: #ffd700; -fx-prompt-text: black; -fx-text-fill: black;" />
+                  <TextField alignment="CENTER" disable="true" layoutX="126.0" layoutY="240.0" promptText="Giocatore" style="-fx-background-color: #ffd700; -fx-prompt-text: black;" />
+                  <TextField alignment="CENTER" disable="true" layoutX="126.0" layoutY="378.0" promptText="Giocatore" style="-fx-background-color: #ffd700;" />
+                  <TextField alignment="CENTER" disable="true" layoutX="126.0" layoutY="520.0" promptText="Giocatore" style="-fx-background-color: #ffd700;" />
+                  <TextField alignment="CENTER" disable="true" layoutX="796.0" layoutY="100.0" promptText="Giocatore" style="-fx-background-color: #ffd700;" />
+                  <TextField alignment="CENTER" disable="true" layoutX="796.0" layoutY="240.0" promptText="Giocatore" style="-fx-background-color: #ffd700;" />
+                  <TextField alignment="CENTER" disable="true" layoutX="796.0" layoutY="378.0" promptText="Giocatore" style="-fx-background-color: #ffd700;" />
+                  <TextField alignment="CENTER" disable="true" layoutX="796.0" layoutY="520.0" promptText="Giocatore" style="-fx-background-color: #ffd700;" />
+                  <TextField alignment="CENTER" disable="true" layoutX="681.0" layoutY="170.0" promptText="Giocatore" style="-fx-background-color: #fffacd;" />
+                  <TextField alignment="CENTER" disable="true" layoutX="681.0" layoutY="447.0" promptText="Giocatore" style="-fx-background-color: #fffacd;" />
+                  <TextField alignment="CENTER" disable="true" layoutX="356.0" layoutY="309.0" promptText="Giocatore" style="-fx-background-color: white;" />
+                  <TextField alignment="CENTER" disable="true" layoutX="566.0" layoutY="309.0" promptText="Giocatore" style="-fx-background-color: white;" />
+                  <Line endX="-100.0" endY="-33.0" layoutX="298.0" layoutY="578.0" startX="-100.0" style="-fx-stroke: #00bfff;" />
+                  <Line endX="-90.0" endY="-0.0" layoutX="288.0" layoutY="68.0" startX="-128.0" startY="-0.0" style="-fx-stroke: #00bfff;" />
                   <Line endX="-100.0" endY="32.0" layoutX="298.0" layoutY="68.0" startX="-100.0" style="-fx-stroke: #00bfff;" />
                   <Line endX="-90.0" endY="-0.0" layoutX="288.0" layoutY="158.0" startX="-128.0" startY="-0.0" style="-fx-stroke: #00bfff;" />
                   <Line endX="-100.0" endY="-33.0" layoutX="298.0" layoutY="158.0" startX="-100.0" style="-fx-stroke: #00bfff;" />
-                  <TextField alignment="CENTER" disable="true" layoutX="126.0" layoutY="240.0" promptText="Giocatore" style="-fx-background-color: #ffd700; -fx-prompt-text: black;" />
                   <Line endX="-90.0" endY="-0.0" layoutX="288.0" layoutY="208.0" startX="-128.0" startY="-0.0" style="-fx-stroke: #00bfff;" />
                   <Line endX="-100.0" endY="32.0" layoutX="298.0" layoutY="208.0" startX="-100.0" style="-fx-stroke: #00bfff;" />
                   <Line endX="-90.0" endY="-0.0" layoutX="288.0" layoutY="298.0" startX="-128.0" startY="-0.0" style="-fx-stroke: #00bfff;" />
                   <Line endX="-100.0" endY="-33.0" layoutX="298.0" layoutY="298.0" startX="-100.0" style="-fx-stroke: #00bfff;" />
-                  <TextField alignment="CENTER" disable="true" layoutX="126.0" layoutY="378.0" promptText="Giocatore" style="-fx-background-color: #ffd700;" />
                   <Line endX="-90.0" endY="-0.0" layoutX="288.0" layoutY="346.0" startX="-128.0" startY="-0.0" style="-fx-stroke: #00bfff;" />
                   <Line endX="-100.0" endY="32.0" layoutX="298.0" layoutY="346.0" startX="-100.0" style="-fx-stroke: #00bfff;" />
                   <Line endX="-90.0" endY="-0.0" layoutX="288.0" layoutY="436.0" startX="-128.0" startY="-0.0" style="-fx-stroke: #00bfff;" />
                   <Line endX="-100.0" endY="-33.0" layoutX="298.0" layoutY="436.0" startX="-100.0" style="-fx-stroke: #00bfff;" />
-                  <TextField alignment="CENTER" disable="true" layoutX="126.0" layoutY="520.0" promptText="Giocatore" style="-fx-background-color: #ffd700;" />
                   <Line endX="-90.0" endY="-0.0" layoutX="288.0" layoutY="488.0" startX="-128.0" startY="-0.0" style="-fx-stroke: #00bfff;" />
                   <Line endX="-100.0" endY="32.0" layoutX="298.0" layoutY="488.0" startX="-100.0" style="-fx-stroke: #00bfff;" />
                   <Line endX="-90.0" endY="-0.0" layoutX="288.0" layoutY="578.0" startX="-128.0" startY="-0.0" style="-fx-stroke: #00bfff;" />
-                  <Line endX="-100.0" endY="-33.0" layoutX="298.0" layoutY="578.0" startX="-100.0" style="-fx-stroke: #00bfff;" />
                   <TextField alignment="CENTER" disable="true" layoutX="241.0" layoutY="170.0" promptText="Giocatore" style="-fx-background-color: #fffacd;" />
                   <Line endX="-90.0" endY="-0.0" layoutX="403.0" layoutY="113.0" startX="-128.0" startY="-0.0" style="-fx-stroke: #ffd700;" />
                   <Line endX="-100.0" endY="57.0" layoutX="413.0" layoutY="113.0" startX="-100.0" style="-fx-stroke: #ffd700;" />
@@ -78,22 +94,6 @@
                   <Line endX="-100.0" endY="57.0" layoutX="413.0" layoutY="390.0" startX="-100.0" style="-fx-stroke: #ffd700;" />
                   <Line endX="-90.0" endY="-0.0" layoutX="403.0" layoutY="530.0" startX="-128.0" startY="-0.0" style="-fx-stroke: #ffd700;" />
                   <Line endX="-100.0" endY="-58.0" layoutX="413.0" layoutY="530.0" startX="-100.0" style="-fx-stroke: #ffd700;" />
-                  <TextField alignment="CENTER" disable="true" layoutX="356.0" layoutY="309.0" promptText="Giocatore" style="-fx-background-color: white;" />
-                  <TextField alignment="CENTER" disable="true" layoutX="681.0" layoutY="170.0" promptText="Giocatore" style="-fx-background-color: #fffacd;" />
-                  <TextField alignment="CENTER" disable="true" layoutX="681.0" layoutY="447.0" promptText="Giocatore" style="-fx-background-color: #fffacd;" />
-                  <TextField alignment="CENTER" disable="true" layoutX="566.0" layoutY="309.0" promptText="Giocatore" style="-fx-background-color: white;" />
-                  <TextField alignment="CENTER" disable="true" layoutX="796.0" layoutY="100.0" promptText="Giocatore" style="-fx-background-color: #ffd700;" />
-                  <TextField alignment="CENTER" disable="true" layoutX="796.0" layoutY="240.0" promptText="Giocatore" style="-fx-background-color: #ffd700;" />
-                  <TextField alignment="CENTER" disable="true" layoutX="796.0" layoutY="378.0" promptText="Giocatore" style="-fx-background-color: #ffd700;" />
-                  <TextField alignment="CENTER" disable="true" layoutX="796.0" layoutY="520.0" promptText="Giocatore" style="-fx-background-color: #ffd700;" />
-                  <TextField alignment="CENTER" layoutX="911.0" layoutY="55.0" promptText="Giocatore" style="-fx-background-color: #00bfff;" />
-                  <TextField alignment="CENTER" layoutX="911.0" layoutY="145.0" promptText="Giocatore" style="-fx-background-color: #00bfff;" />
-                  <TextField alignment="CENTER" layoutX="911.0" layoutY="195.0" promptText="Giocatore" style="-fx-background-color: #00bfff;" />
-                  <TextField alignment="CENTER" layoutX="911.0" layoutY="285.0" promptText="Giocatore" style="-fx-background-color: #00bfff;" />
-                  <TextField alignment="CENTER" layoutX="911.0" layoutY="335.0" promptText="Giocatore" style="-fx-background-color: #00bfff;" />
-                  <TextField alignment="CENTER" layoutX="911.0" layoutY="425.0" promptText="Giocatore" style="-fx-background-color: #00bfff;" />
-                  <TextField alignment="CENTER" layoutX="911.0" layoutY="475.0" promptText="Giocatore" style="-fx-background-color: #00bfff;" />
-                  <TextField alignment="CENTER" layoutX="911.0" layoutY="565.0" promptText="Giocatore" style="-fx-background-color: #00bfff;" />
                   <HBox alignment="CENTER" layoutX="304.0" layoutY="-19.0" spacing="20.0">
                      <children>
                         <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="S.P.A.C.C.A" HBox.hgrow="ALWAYS">
@@ -187,7 +187,7 @@
                      </font>
                   </Text>
                   <Line endX="32.0" endY="-0.5" layoutX="534.0" layoutY="322.0" startX="-29.0" startY="-0.5" style="-fx-stroke: white;" />
-                  <TextField fx:id="codice" alignment="CENTER" disable="true" layoutX="462.0" layoutY="376.0" promptText="codice partita" />
+                  <TextField fx:id="codice" alignment="CENTER" editable="false" layoutX="462.0" layoutY="376.0" promptText="codice partita" />
                </children>
              </AnchorPane>
          </children>

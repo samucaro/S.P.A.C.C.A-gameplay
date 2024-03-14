@@ -17,6 +17,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Vector;
 
@@ -39,14 +40,11 @@ public class TournamentPageController {
 
     @FXML
     public void initialize() {
+        code = 0;
         System.out.println("cacca");
+
+        settaTextF();
         //non entra????
-        anchorPane.getChildren().addListener(
-                (ListChangeListener<? super Node>) (ObservableList) -> {
-                    System.out.println("cacca");
-                    verificaTesto();
-                }
-        );
     }
     public void switchToTypeGamePage(ActionEvent event) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("TypeGamePage.fxml")));
@@ -56,22 +54,38 @@ public class TournamentPageController {
         stage.show();
     }
 
-    private void verificaTesto() {
+    private void settaTextF() {
+        int i = 0;
+        LinkedList<TextField> t = new LinkedList<>();
         for(Node node: anchorPane.getChildren()) {
             if (node instanceof TextField) {
-                if (!((TextField) node).getText().isEmpty()) {
-                    codice.setText(generaCodice());
-                    saveLogout.setDisable(false);
-                    System.out.println("Almeno un TextField contiene del testo.");
+                t.add((TextField) node);
+                if (i<16) {
+                    t.get(i).textProperty().addListener((observable, oldValue, newValue) -> {
+                        System.out.println("yoooo");
+                        boolean ver = true;
+                        for (int j = 0; j<16; j++)
+                            ver = ver&&t.get(j).getText().isEmpty();
+                        saveLogout.setDisable(ver);
+                        if (!ver) {
+                            codice.setText(generaCodice());
+                        }
+                        else {
+                            codice.clear();
+                            code = 0;
+                        }
+                    });
                 }
+                i++;
             }
         }
     }
 
     private String generaCodice() {
-        do {
-            code = (int) (Math.random() * (9999 - 1000 + 1)) + 1000;
-        } while (DataS.checkCode(code));
+        if (code == 0)
+            do {
+                code = (int) (Math.random() * (9999 - 1000 + 1)) + 1000;
+            } while (DataS.checkCode(code));
         return "" + code;
     }
     private void nuovoFile() {
