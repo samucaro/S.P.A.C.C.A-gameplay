@@ -27,8 +27,10 @@ public class TypeGamePageController {
     @FXML
     private Text testo;
     private String newValue;
+    private String percorsoCartellaProgetto;
     @FXML
     public void initialize() {
+        percorsoCartellaProgetto = DataS.getProjectFolderPath();
         mostraPartite();
         partite.getSelectionModel().selectedItemProperty().addListener(
                 (obs, oldV, newV) -> {
@@ -58,9 +60,7 @@ public class TypeGamePageController {
     }
 
     public void eliminaPartita() {
-        String percorsoCartellaProgetto = DataS.getProjectFolderPath();
-        String nome = percorsoCartellaProgetto + File.separator + newValue + ".txt";
-        DataS.eliminaFile(nome);
+        DataS.eliminaFile(percorsoCartellaProgetto + File.separator + newValue + ".txt");
         testo.setVisible(true);
         mostraPartite();
     }

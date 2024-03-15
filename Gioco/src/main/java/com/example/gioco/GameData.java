@@ -31,13 +31,12 @@ public class GameData {
         }
         return instance;
     }
-    public void leggiFile(int code) {
+    public void leggiFilePartita(int code) {
         this.code = code;
         try {
             BufferedReader reader = new BufferedReader(new FileReader(DS.getProjectFolderPath() + File.separator + "/" + code + ".txt"));
             int c = 0;
             String line;
-            int cont = 0;
             while ((line = reader.readLine()) != null) {
                 if(line.startsWith("Dati Generali")) {
                     tipo = line.split(" ")[2];

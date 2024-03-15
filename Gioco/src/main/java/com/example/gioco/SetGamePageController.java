@@ -71,7 +71,7 @@ public class SetGamePageController {
     public void switchToGamePage(ActionEvent event) throws IOException {
         String str = list.getValue();
         int codice = Integer.parseInt(str);
-        gameData.leggiFile(codice);
+        gameData.leggiFilePartita(codice);
         root = FXMLLoader.load(getClass().getResource("Partitonza.fxml"));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
