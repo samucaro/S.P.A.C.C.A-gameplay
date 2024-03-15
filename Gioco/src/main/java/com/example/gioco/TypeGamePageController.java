@@ -6,7 +6,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -14,8 +19,50 @@ public class TypeGamePageController {
     private Scene scene;
     private Parent root;
     private GameData gameData = GameData.getInstance();
+    private DataSet DataS = new DataSet();
+    @FXML
+    private ChoiceBox<String> partite;
+    @FXML
+    private Button elimina;
+    @FXML
+    private Text testo;
+    private String newValue;
     @FXML
     public void initialize() {
+        mostraPartite();
+        partite.getSelectionModel().selectedItemProperty().addListener(
+                (obs, oldV, newV) -> {
+                    if(newV != null) {
+                        elimina.setVisible(true);
+                        newValue = newV;
+                    }
+                }
+        );
+    }
+
+    public void mostraPartite() {
+        partite.getItems().clear();
+        String percorsoCartellaProgetto = DataS.getProjectFolderPath();
+        File directory = new File(percorsoCartellaProgetto);
+        if (directory.exists() && directory.isDirectory()) {
+            String[] files = directory.list();
+            if (files != null) {
+                for (String fileName : files) {
+                    partite.getItems().add(fileName.substring(0, 4));
+
+                }
+            }
+        } else {
+            System.err.println("La cartella specificata non esiste o non è una cartella valida.");
+        }
+    }
+
+    public void eliminaPartita() {
+        String percorsoCartellaProgetto = DataS.getProjectFolderPath();
+        String nome = percorsoCartellaProgetto + File.separator + newValue + ".txt";
+        DataS.eliminaFile(nome);
+        testo.setVisible(true);
+        mostraPartite();
     }
     public void switchToSetPlayerPage(ActionEvent event) throws IOException {
         gameData.setTipo("Partita");
