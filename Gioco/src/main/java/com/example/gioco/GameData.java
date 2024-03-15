@@ -5,19 +5,16 @@ import java.util.*;
 
 
 public class GameData {
-    private int codicePartita;
     private int turnoCorrente;
     private String tipo;
     private static GameData instance = null;
+    private LinkedList<Partita> partiteTorneo;
     private final ArrayList<Giocatore> giocatoriPartita = new ArrayList<>();
     private DataSet DS = new DataSet();
     private Mazzo mazzo = new Mazzo();
     private int numeroGG;
-    private int numeroR;
-    private int numeroP;
     private int code;
-    //private String[] pianeta;
-    //private Boolean[] bot;
+
     public GameData() throws IOException {
     }
     public static GameData getInstance() {

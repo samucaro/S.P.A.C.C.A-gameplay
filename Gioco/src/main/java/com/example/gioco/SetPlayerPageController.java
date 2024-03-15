@@ -23,13 +23,12 @@ import java.util.Vector;
 
 
 public class SetPlayerPageController {
-    private GameData gameData = GameData.getInstance();
     private Scene scene;
-    private DataSet DataS = new DataSet();
+    private Parent root;
+    private DataSet DataS;
     private int code;
     private String[] mani;
     private String[] tipoGiocatore;
-    private Parent root;
     private int numPersone;
     private Mazzo m;
     private int numGiocatori;
@@ -41,20 +40,19 @@ public class SetPlayerPageController {
     @FXML
     private TextField codice;
     @FXML
-    private ScrollPane setNomi;
-    @FXML
     private ChoiceBox<String> numGiocatoriItem;
     @FXML
     private ChoiceBox<String> numRobotItem;
-    public SetPlayerPageController() throws IOException {
-    }
     @FXML
     public void initialize() {
+        DataS = new DataSet();
         numPersone = 0;
         numGiocatori = 0;
         numGiocatoriItem.getItems().addAll("3 giocatori", "4 giocatori", "5 giocatori", "6 giocatori", "7 giocatori","8 giocatori");
         impostaGiocatori();
     }
+
+    //Metodo che permette di gestire le opzioni dei choiceBox in base alle scelte dell'utente
     public void impostaGiocatori() {
         numGiocatoriItem.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue) -> {
@@ -86,6 +84,8 @@ public class SetPlayerPageController {
                 }
         );
     }
+
+    //metodo che abilita il salvataggio solo sotto determinate condizioni necessarie
     public void verificaNomi(KeyEvent event) {
         boolean check = true;
         for(int i = 0; i < numGiocatori; i++) {
@@ -98,6 +98,8 @@ public class SetPlayerPageController {
         } else
             saveLogout.setDisable(true);
     }
+
+    //Metodo che gestisce l'insrimento del nome se e solo se il giocatore è una persona
     private void selezioneNomi(){
         tipoGiocatore = new String[numGiocatori];
         for (int i = 0; i < numGiocatori; i++){
@@ -117,12 +119,16 @@ public class SetPlayerPageController {
             tipoGiocatore[i] = "Bot";
         }
     }
+
+    //metodo che genera un codice casuale per il file di salvataggio e la partita
     private String generaCodice() {
         do {
             code = (int) (Math.random() * (9999 - 1000 + 1)) + 1000;
         } while (DataS.checkCode(code));
         return "" + code;
     }
+
+    //mazzo che assegna la mano a ogni giocatore e salva tutto su file
     private void assegnaMano() {
         mani = new String[numGiocatori];
         String str = "";
@@ -132,26 +138,10 @@ public class SetPlayerPageController {
             }
             mani[i] = str;
             str = "";
-        }    }
-    public void switchToTypeGamePage(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("TypeGamePage.fxml")));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        }
     }
-    public void switchToAdminPlayerPage(ActionEvent event) throws IOException {
-        DataS.creaFile(code);
-        m = new Mazzo();
-        m.componiMazzo();
-        assegnaMano();
-        nuovoFile();
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AdminPlayerPage.fxml")));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
+
+    //metodo che genera il file secondo una logica ben precisa
     private void nuovoFile() {
         Vector<Integer> vector = new Vector<>();
         for (int i = 0; i < numGiocatori; i++)
@@ -180,5 +170,25 @@ public class SetPlayerPageController {
         } catch (IOException e) {
             System.err.println("Errore durante la creazione del file: " + e.getMessage());
         }
+    }
+
+    public void switchToTypeGamePage(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("TypeGamePage.fxml")));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void switchToAdminPlayerPage(ActionEvent event) throws IOException {
+        DataS.creaFile(code);
+        m = new Mazzo();
+        m.componiMazzo();
+        assegnaMano();
+        nuovoFile();
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AdminPlayerPage.fxml")));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }
