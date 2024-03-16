@@ -26,7 +26,7 @@
             <Insets bottom="25.0" />
          </BorderPane.margin>
          <children>
-            <Button fx:id="saveLogout" disable="true" mnemonicParsing="false" text="Save &amp; Logout" />
+            <Button fx:id="saveLogout" disable="true" mnemonicParsing="false" onAction="#nuovoFile" text="Save &amp; Logout" />
             <Button mnemonicParsing="false" onAction="#switchToTypeGamePage" text="Back" HBox.hgrow="ALWAYS">
                <HBox.margin>
                   <Insets />

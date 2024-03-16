@@ -9,13 +9,16 @@ public class GameData {
     private String tipo;
     private static GameData instance = null;
     private LinkedList<Partita> partiteTorneo;
-    private final ArrayList<Giocatore> giocatoriPartita = new ArrayList<>();
-    private DataSet DS = new DataSet();
-    private Mazzo mazzo = new Mazzo();
+    private final ArrayList<Giocatore> giocatoriPartita;
+    private final DataSet DS;
+    private Mazzo mazzo;
     private int numeroGG;
     private int code;
 
     public GameData() throws IOException {
+        DS = new DataSet();
+        giocatoriPartita = new ArrayList<>();
+        mazzo = new Mazzo();
     }
     public static GameData getInstance() {
         try {

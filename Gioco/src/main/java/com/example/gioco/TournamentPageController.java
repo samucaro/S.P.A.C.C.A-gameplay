@@ -1,12 +1,9 @@
 package com.example.gioco;
 
-import javafx.beans.Observable;
-import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.ParallelCamera;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -26,9 +23,7 @@ public class TournamentPageController {
     private Mazzo m;
     private String[] tipoGiocatore;
     private String[] mani;
-    private String[] nomi;
     private DataSet DataS = new DataSet();
-    private GameData gameData = GameData.getInstance();
     private int numPartita;
     private LinkedList<TextField> t;
     private LinkedList<Partita> partiteTorneo;
@@ -42,6 +37,7 @@ public class TournamentPageController {
     @FXML
     public void initialize() {
         t = new LinkedList<>();
+        tipoGiocatore = new String[16];
         code = 0;
         settaTextField();
     }
@@ -60,38 +56,63 @@ public class TournamentPageController {
             if(t.get(i).getText().isEmpty()) {
                 cont++;
                 t.get(i).setText("Bot " + cont);
+                tipoGiocatore[i] = "Bot";
             }
-            ArrayList<Giocatore> g = new ArrayList<>();
-
-            String tipo = t.get(i).getText();
-
-            /*partiteTorneo.add(new Partita());*/
+            else {
+                tipoGiocatore[i] = "Persona";
+            }
         }
     }
 
-    private void nuovoFile() {
+    private String assegnaMano() {
+        String str = "";
+        for (int j = 1; j <= 5; j++) {
+            str += m.pesca().toStringNome() + " ";
+        }
+        return str;
+    }
+
+    public void nuovoFile() {
+        impostaTorneo();
         try {
             FileWriter file = new FileWriter((DataS.getProjectFolderPath() + File.separator + "/" + code + ".txt"), true);
             PrintWriter writer = new PrintWriter(file);
             writer.println("Dati Generali Torneo:");
-            writer.println("Partita Corrente: " + numPartita);
+            writer.println("Partita Corrente: 0");
             writer.println("Vincitore: ");
             writer.println("******************************");
-            for(int i = 1; i < 16; i++) {
+            for(int i = 0; i < 15; i++) {
+                m = new Mazzo();
+                m.componiMazzo();
                 writer.println("Numero Partita: " + i);
+                if(i <= 7) {
+                    writer.println("Stato: Pronta");
+                }
+                else {
+                    writer.println("Stato: Attesa");
+                }
                 writer.println("Mazzo: " + m.toString());
                 writer.println("Scarti: ");
-                writer.println("Turno: 1");
-                writer.println("******************************");
-                for (int j = 1; i < 2; i++) {
-                    writer.println("Giocatore: " + j);
-                    writer.println("Tipo: " + tipoGiocatore[i]);
-                    writer.println("Nome: " + nomi[i]);
-                    writer.println("Mano: " + mani[i]);
-                    writer.println("HpRimanente: " + 5);
-                    writer.println("******************************");
-                    j++;
+                writer.println("Turno: 0");
+                if(i <= 7) {
+                    for (int j = 0; j < 2; j++) {
+                        writer.println("Giocatore: " + j);
+                        writer.println("Tipo: " + tipoGiocatore[i+j]);
+                        writer.println("Nome: " + t.get(i+j).getText());
+                        writer.println("Mano: " + assegnaMano());
+                        writer.println("HpRimanente: " + 5);
+                    }
                 }
+                else {
+                    for (int j = 0; j < 2; j++) {
+                        writer.println("Giocatore: " + j);
+                        writer.println("Tipo: ");
+                        writer.println("Nome: ");
+                        writer.println("Mano: " + assegnaMano());
+                        writer.println("HpRimanente: " + 5);
+                    }
+                }
+                writer.println("******************************");
             }
             writer.close();
         } catch (IOException e) {
