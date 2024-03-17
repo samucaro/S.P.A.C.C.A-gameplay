@@ -22,7 +22,6 @@ public class TournamentPageController {
     private int code;
     private Mazzo m;
     private String[] tipoGiocatore;
-    private String[] mani;
     private DataSet DataS = new DataSet();
     private int numPartita;
     private LinkedList<TextField> t;

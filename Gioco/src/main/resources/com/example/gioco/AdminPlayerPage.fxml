@@ -33,7 +33,7 @@
    <top>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <Button mnemonicParsing="false" text="Regole" VBox.vgrow="ALWAYS" />
+            <Button mnemonicParsing="false" onAction="#mostraRegolamento" text="Regole" VBox.vgrow="ALWAYS" />
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="100.0" VBox.vgrow="ALWAYS">
                <children>
                   <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="S.P.A.C.C.A">
