@@ -41,15 +41,8 @@ public class TournamentPageController {
         code = 0;
         settaTextField();
     }
-    public void switchToTypeGamePage(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("TypeGamePage.fxml")));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
 
-    //Completare
+    //Setta i bot nei TextField liberi e salva il tipo
     public void impostaTorneo() {
         int cont = 0;
         for(int i = 0; i < 16; i++) {
@@ -64,6 +57,7 @@ public class TournamentPageController {
         }
     }
 
+    //Imposta la mano iniziale di ogni giocatore
     private String assegnaMano() {
         String str = "";
         for (int j = 1; j <= 5; j++) {
@@ -72,8 +66,8 @@ public class TournamentPageController {
         return str;
     }
 
-    public void nuovoFile() {
-        impostaTorneo();
+    //Crea il file da dove leggere i dati
+    private void nuovoFile() {
         try {
             FileWriter file = new FileWriter((DataS.getProjectFolderPath() + File.separator + "/" + code + ".txt"), true);
             PrintWriter writer = new PrintWriter(file);
@@ -120,23 +114,7 @@ public class TournamentPageController {
         }
     }
 
-    /*
-    public void switchToGamePage(ActionEvent event) throws IOException {
-        String str = list.getValue();
-        int codice = Integer.parseInt(str);
-        gameData.leggiFile(codice);
-        root = FXMLLoader.load(getClass().getResource("Partitonza.fxml"));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        impostaListener(scene);
-        ParallelCamera cam = new ParallelCamera();
-        cam.setFarClip(2000);
-        cam.setNearClip(0.5);
-        scene.setCamera(cam);
-        stage.setScene(scene);
-        stage.show();
-    }
-     */
+    //Permette di attivare e disattivare il salvataggi sotto determinate condizioni
     private void settaTextField() {
         int i = 0;
         for(Node node: anchorPane.getChildren()) {
@@ -166,8 +144,27 @@ public class TournamentPageController {
     private String generaCodice() {
         if (code == 0)
             do {
-                code = (int) (Math.random() * (9999 - 1000 + 1)) + 1000;
+                code = (int) (Math.random() * (999 - 100 + 1)) + 100;
             } while (DataS.checkCode(code));
         return "" + code;
+    }
+
+    public void switchToAdminPlayerPage(ActionEvent event) throws IOException {
+        DataS.creaFile(code);
+        impostaTorneo();
+        nuovoFile();
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AdminPlayerPage.fxml")));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switchToTypeGamePage(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("TypeGamePage.fxml")));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }

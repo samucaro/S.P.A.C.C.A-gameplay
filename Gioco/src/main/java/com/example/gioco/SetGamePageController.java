@@ -41,8 +41,10 @@ public class SetGamePageController {
             String[] files = directory.list();
             if (files != null) {
                 for (String fileName : files) {
-                    list.getItems().add(fileName.substring(0, 4));
-
+                    if(fileName.charAt(3) == '.')
+                        list.getItems().add(fileName.substring(0, 3));
+                    else
+                        list.getItems().add(fileName.substring(0, 4));
                 }
             }
         } else {
