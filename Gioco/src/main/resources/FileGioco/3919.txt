@@ -1,6 +1,0 @@
-Dati Generali Torneo:
-Partita Corrente: 1
-Vincitore: 
-******************************
-Numero Partita: 0
-Stato: Pronta

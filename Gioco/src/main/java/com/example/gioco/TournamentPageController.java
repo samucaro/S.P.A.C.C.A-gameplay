@@ -97,8 +97,8 @@ public class TournamentPageController {
                 if(i <= 7) {
                     for (int j = 0; j < 2; j++) {
                         writer.println("Giocatore: " + j);
-                        writer.println("Tipo: " + tipoGiocatore[i+j]);
-                        writer.println("Nome: " + t.get(i+j).getText());
+                        writer.println("Tipo: " + tipoGiocatore[i+i+j]);
+                        writer.println("Nome: " + t.get(i+i+j).getText());
                         writer.println("Mano: " + assegnaMano());
                         writer.println("HpRimanente: " + 5);
                     }
