@@ -65,22 +65,13 @@ public class OvalPaneController {
     }
 
     private void iniziaHD() {
-        outerArc = new Arc();
-        innerArc = new Arc();
-        outerArc.setCenterX(100.0);
-        outerArc.setCenterY(100.0);
-        outerArc.setRadiusX(orx);
-        outerArc.setRadiusY(ory);
-        outerArc.setStartAngle(0.0);
-        outerArc.setLength(180.0);
+
+        Arc outerArc = new Arc(100.0, 100.0, orx, ory, 0.0, 180.0);
         outerArc.setType(ArcType.ROUND);
-        innerArc.setCenterX(100.0);
-        innerArc.setCenterY(100.0);
-        innerArc.setRadiusX(irx);
-        innerArc.setRadiusY(iry);
-        innerArc.setStartAngle(0.0);
-        innerArc.setLength(180.0);
+
+        Arc innerArc = new Arc(100.0, 100.0, irx, iry, 0.0, 180.0);
         innerArc.setType(ArcType.ROUND);
+
 
         halfDonut = Shape.subtract(outerArc, innerArc);
         ovalPane.getChildren().add(halfDonut);
@@ -97,13 +88,13 @@ public class OvalPaneController {
             innerArc.setRadiusY(iry);
             halfDonut = Shape.subtract(outerArc, innerArc);
             halfDonut.setFill(javafx.scene.paint.Color.rgb(0, 191, 255, 0.2));
-            /*halfDonut.setOnMouseEntered(event -> {
+            halfDonut.setOnMouseEntered(event -> {
                 halfDonut.setFill(javafx.scene.paint.Color.rgb(0, 191, 255, 0.7));
             });
             halfDonut.setOnMouseExited(event -> {
                 halfDonut.setFill(javafx.scene.paint.Color.rgb(0, 191, 255, 0.2));
-            });*/
-            halfDonut.setMouseTransparent(true);
+            });
+            //halfDonut.setMouseTransparent(true);
             ovalPane.getChildren().add(halfDonut);
             resetHD.set(false);
         });

@@ -23,7 +23,7 @@ public class MainController {
     @FXML
     private Button turnButton;
     @FXML
-    private BorderPane borderPane;
+    private StackPane stackPane;
     @FXML
     private ImageView mazzo;
 
