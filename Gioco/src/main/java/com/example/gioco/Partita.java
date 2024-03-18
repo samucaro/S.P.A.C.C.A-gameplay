@@ -67,4 +67,12 @@ public class Partita {
     public ArrayList<Giocatore> setGiocatori() {
         return giocatori;
     }
+
+    public String toString() {
+         return "Numero Partita: " + numero +
+                 "\nStato: " + stato +
+                 "\nTurno: " + turno +
+                 "\nMazzo: " + mazzo.toString() +
+                 "\nGiocatori: " + giocatori.toString();
+    }
 }

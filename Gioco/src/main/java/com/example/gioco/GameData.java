@@ -170,7 +170,7 @@ public class GameData {
                     partiteTorneo.add(new Partita(n, stato, turnoCorrente, mazzo, giocatoriPartita));
                 }
             }
-            System.out.println(giocatoriPartita);
+            System.out.println(partiteTorneo);
             reader.close();
         } catch (IOException e) {
             System.err.println("Errore durante la lettura del file: " + e.getMessage());
