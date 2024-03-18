@@ -1,5 +1,4 @@
 package com.example.gioco;
-
 import javafx.animation.*;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -14,8 +13,6 @@ import javafx.scene.shape.Arc;
 import javafx.scene.shape.ArcType;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
-
-
 public class MainController {
     @FXML
     private OvalPaneController ovalPaneController;
@@ -25,10 +22,13 @@ public class MainController {
     @FXML
     private StackPane stackPane;
     @FXML
-    private ImageView mazzo;
-
+    private AnchorPane anchorPane;
     @FXML
-    public void initialize() {/*
+    private ImageView mazzo;
+    @FXML
+    public void initialize() {
+        anchorPane.getChildren().get(1);
+        /*
         Image sfondo = new Image(getClass().getResource("SfondoGioco.png").toString());
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, false, true);
         BackgroundImage backgroundImage = new BackgroundImage(sfondo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);

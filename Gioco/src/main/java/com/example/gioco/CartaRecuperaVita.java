@@ -1,10 +1,13 @@
 package com.example.gioco;
 
+import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 
 public class CartaRecuperaVita implements Carta{
     private String desc = "Recuperi un punto vita";
-    public CartaRecuperaVita() {}
+    @FXML
+    public void initialize() {
+    }
     public String getDesc() {
         return desc;
     }

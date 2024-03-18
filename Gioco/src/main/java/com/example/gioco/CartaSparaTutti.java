@@ -1,10 +1,13 @@
 package com.example.gioco;
 
+import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 
 public class CartaSparaTutti implements Carta{
     private String desc = "Spara a tutti gli avversari contemporaneamente";
-    public CartaSparaTutti() {}
+    @FXML
+    public void initialize() {
+    }
 
     public String getDesc() {
         return desc;

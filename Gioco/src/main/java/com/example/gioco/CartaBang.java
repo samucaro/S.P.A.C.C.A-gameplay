@@ -2,10 +2,13 @@ package com.example.gioco;
 
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class CartaBang implements Carta{
     private String desc = "Spara a un tuo avversario";
-    public CartaBang() {
+
+    @FXML
+    public void initialize() {
     }
 
     public String getDesc() {
