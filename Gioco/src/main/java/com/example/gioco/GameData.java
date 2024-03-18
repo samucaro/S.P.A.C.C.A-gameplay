@@ -6,6 +6,7 @@ import java.util.*;
 
 public class GameData {
     private int turnoCorrente;
+    private Stato stato;
     private String tipo;
     private static GameData instance = null;
     private LinkedList<Partita> partiteTorneo;
@@ -83,6 +84,90 @@ public class GameData {
                 }
                 else if (line.startsWith("HpRimanente:")) {
                     giocatoriPartita.get(c).setHpRimanente(Integer.parseInt(line.split(":")[1].trim()));
+                }
+            }
+            System.out.println(giocatoriPartita);
+            reader.close();
+        } catch (IOException e) {
+            System.err.println("Errore durante la lettura del file: " + e.getMessage());
+        }
+    }
+
+    public void leggiFileTorneo(int code) {
+        this.code = code;
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(DS.getProjectFolderPath() + File.separator + "/" + code + ".txt"));
+            int c = 0;
+            String line;
+            numeroGG = 16;
+            while ((line = reader.readLine()) != null) {
+                if (line.startsWith("Partita Corrente:")) {
+                    turnoCorrente = Integer.parseInt(line.split(": ")[1]);
+                }
+                else if (line.startsWith("Numero Partita:")) {
+                    int n = Integer.parseInt(line.split(": ")[1]);
+                    while(!(line = reader.readLine()).equals("******************************")) {
+                        if (line.startsWith("Stato:")) {
+                            String str = line.split(": ")[1];
+                            switch (str) {
+                                case "Completata":
+                                    stato = Stato.COMPLETATA;
+                                    break;
+                                case "Pronta":
+                                        stato = Stato.PRONTA;
+                                        break;
+                                case "Attesa":
+                                    stato = Stato.ATTESA;
+                                    break;
+                                case "Sospesa":
+                                    stato = Stato.SOSPESA;
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                        else if(line.startsWith("Mazzo:")) {
+                            String carteMazzo = line.split(": ")[1];
+                            String[] carteM = carteMazzo.split(" ");
+                            for (String nomeCarta: carteM) {
+                                mazzo.addCarta(stringaCarta(nomeCarta));
+                            }
+                        }
+                        else if (line.startsWith("Scarti:")) {
+                            String carteScarti = line.split(":")[1];
+                            String[] carteS = carteScarti.split(" ");
+                            for (String nomeCarta: carteS) {
+                                mazzo.addScarto(stringaCarta(nomeCarta));
+                            }
+                        }
+                        else if (line.startsWith("Turno:")) {
+                            turnoCorrente = Integer.parseInt(line.split(":")[1].trim());
+                        }
+                        else if (line.startsWith("Giocatore:")) {
+                            c = Integer.parseInt(line.split(": ")[1]);
+                        }
+                        else if (line.startsWith("Tipo:")) {
+                            if (line.split(": ")[1].equals("Persona")) {
+                                giocatoriPartita.add(new GiocatorePersona());
+                            } else {
+                                giocatoriPartita.add(new GiocatoreRobot());
+                            }
+                        }
+                        else if (line.startsWith("Nome:")) {
+                            giocatoriPartita.get(c).setNome(line.split(": ")[1]);
+                        }
+                        else if (line.startsWith("Mano:")) {
+                            String carteMano = line.split(": ")[1];
+                            String[] carteMa = carteMano.split(" ");
+                            for (String s : carteMa) {
+                                giocatoriPartita.get(c).addCarta(stringaCarta(s));
+                            }
+                        }
+                        else if (line.startsWith("HpRimanente:")) {
+                            giocatoriPartita.get(c).setHpRimanente(Integer.parseInt(line.split(":")[1].trim()));
+                        }
+                    }
+                    partiteTorneo.add(new Partita(n, stato, turnoCorrente, mazzo, giocatoriPartita));
                 }
             }
             System.out.println(giocatoriPartita);

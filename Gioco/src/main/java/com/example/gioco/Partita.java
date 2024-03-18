@@ -18,6 +18,13 @@ public class Partita {
          this.mazzo = mazzo;
          this.giocatori = giocatori;
      }
+    public Partita(int numero, Stato stato, int turno, Mazzo mazzo, ArrayList<Giocatore> giocatori) {
+        this.numero = numero;
+        this.stato = stato;
+        this.turno = turno;
+        this.mazzo = mazzo;
+        this.giocatori = giocatori;
+    }
 
     public Partita() {
 
@@ -60,5 +67,4 @@ public class Partita {
     public ArrayList<Giocatore> setGiocatori() {
         return giocatori;
     }
-     
 }
