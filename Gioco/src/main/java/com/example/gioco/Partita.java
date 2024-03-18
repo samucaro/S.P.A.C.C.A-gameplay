@@ -73,6 +73,8 @@ public class Partita {
                  "\nStato: " + stato +
                  "\nTurno: " + turno +
                  "\nMazzo: " + mazzo.toString() +
-                 "\nGiocatori: " + giocatori.toString();
+                 "\nGiocatori: " + giocatori.toString() +
+                 "\n******************************" +
+                 "\nVincitore: " + vincitore;
     }
 }
