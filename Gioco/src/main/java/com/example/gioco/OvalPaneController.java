@@ -29,8 +29,6 @@ public class OvalPaneController {
     private static double ory = 250.0;
     private static double irx = 90.0;
     private static double iry = 130.0;
-    private static Arc outerArc;
-    private static Arc innerArc;
     private static Shape halfDonut;
     private static final int n = gameData.getNumero();
     private double anchorX, anchorY;
@@ -147,11 +145,13 @@ public class OvalPaneController {
     }
     public static void setScenaX(double x){
         centroX=x/2;
+        //MainController.setDim(cen)
         posizionaSfere();
         reShape();
     }
     public static void setScenaY(double y){
         centroY=y/2;
+        //MainController.setY(y);
         posizionaSfere();
         reShape();
     }
@@ -192,7 +192,6 @@ public class OvalPaneController {
             posizionaSfere();
         });
     }
-
     public void giocoIo(int turnoDi) {
         Giocatore player = gameData.getGiocatoriPartita().get(turnoDi);
         gameData.setTurnoCorrente(turnoDi);
@@ -278,5 +277,11 @@ public class OvalPaneController {
                 resumeAnimation();
             }
         });
+    }
+    public static Double getCentroX(){
+        return centroX;
+    }
+    public static Double getCentroY(){
+        return centroY;
     }
 }
