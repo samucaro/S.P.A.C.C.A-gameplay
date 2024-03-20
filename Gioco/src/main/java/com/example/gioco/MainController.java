@@ -76,9 +76,9 @@ public class MainController {
             cardLoader = new FXMLLoader(getClass().getResource(mano.get(0).getFXML()));
             c = cardLoader.load();
             anchorPane.getChildren().add((VBox) c);
-            //RICONTROLLLARE MALAMENTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-            Double scalaFactor = centroX<centroY?(1/((176*12.5)/centroX)):(1/((227.3*68.2)/centroY));
-            System.out.println("SCF: "+scalaFactor);
+            //RICONTROLLLARE MALAMENTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE centroX<centroY?(1/((176*12.5)/centroX)):(1/((227.3*68.2)/centroY));
+            Double scalaFactor = 0.01*((4 * Math.min(centroX, centroY)) / 50);
+            System.out.println("SCF: "+scalaFactor+"\nMATMIN: " + Math.min(centroX, centroY));
             Scale scale = new Scale(scalaFactor, scalaFactor);
             c.getTransforms().add(scale);
         } catch (IOException e) {
