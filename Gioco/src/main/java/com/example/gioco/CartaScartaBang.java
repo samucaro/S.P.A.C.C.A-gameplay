@@ -5,6 +5,9 @@ import javafx.scene.image.Image;
 
 public class CartaScartaBang implements Carta{
     private String desc = "Tutti i tuoi avversari scartano una carta Bang";
+    public String getFXML(){
+        return "CartaScartaBang.fxml";
+    }
     @FXML
     public void initialize() {
     }

@@ -6,6 +6,9 @@ import javafx.scene.image.ImageView;
 
 public class CartaMancato implements Carta {
     private String desc = "Colpo schivato!";
+    public String getFXML(){
+        return "CartaMancato.fxml";
+    }
     @FXML
     public void initialize() {
     }

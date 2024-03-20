@@ -37,6 +37,7 @@ public class OvalPaneController {
     private double anchorAngleY = 0;
     @FXML
     public void initialize() {
+
         spheres = new Group[n];
         for (int i = 0; i < n; i++) {
             spheres[i] = new Group();
@@ -46,7 +47,7 @@ public class OvalPaneController {
             material.setDiffuseMap(texture);
             ((Sphere) spheres[i].getChildren().getFirst()).setMaterial(material);
             spheres[i].getChildren().getFirst().setRotationAxis(Rotate.Y_AXIS);
-            provaAnimazione(i);
+            rotazionePianeti(i);
             if (i==2){
                 ring = new Cylinder(80, 3);
                 PhongMaterial materialS = new PhongMaterial();
@@ -62,6 +63,7 @@ public class OvalPaneController {
         iniziaHD();
     }
 
+    //INIZIO HALF DONUTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
     private void iniziaHD() {
 
         Arc outerArc = new Arc(100.0, 100.0, orx, ory, 0.0, 180.0);
@@ -110,8 +112,9 @@ public class OvalPaneController {
         halfDonut.setTranslateX(centroX-100);
         halfDonut.setTranslateY(centroY*2-100);
     }
-
-    private void provaAnimazione(int i) {
+    //FINE HALF DONUTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+    //INIZIO ANIMAZIONE E ABBELLIMENTO SFEREEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+    private void rotazionePianeti(int i) {
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
@@ -143,18 +146,6 @@ public class OvalPaneController {
             case 0 -> new Image(getClass().getResource("neptune.jpg").toString());
         };
     }
-    public static void setScenaX(double x){
-        centroX=x/2;
-        //MainController.setDim(cen)
-        posizionaSfere();
-        reShape();
-    }
-    public static void setScenaY(double y){
-        centroY=y/2;
-        //MainController.setY(y);
-        posizionaSfere();
-        reShape();
-    }
     private static void posizionaSfere() {
         for (int i = 0; i < n; i++) {
             int indice = ((n - turnoDi) + i) % n;
@@ -167,35 +158,6 @@ public class OvalPaneController {
             spheres[indice].setScaleX(i == n-1 ? 0.6 : 1);
             spheres[indice].setScaleY(i == n-1 ? 0.6 : 1);
         }
-    }
-    public void cambiaTurno() {
-        Timeline timeline = new Timeline();
-        for (int ind = 0; ind < n-1; ind++) {
-            int i = ind % n;
-            KeyValue kv1 = new KeyValue(spheres[i].translateXProperty(), spheres[i+1].getTranslateX());
-            KeyValue kv2 = new KeyValue(spheres[i].translateYProperty(), spheres[i+1].getTranslateY());
-            KeyValue kv3 = new KeyValue(spheres[i].scaleXProperty(), spheres[i+1].getScaleX());
-            KeyValue kv4 = new KeyValue(spheres[i].scaleYProperty(), spheres[i+1].getScaleY());
-            KeyFrame kf = new KeyFrame(Duration.seconds(1), kv1, kv2, kv3, kv4);
-            timeline.getKeyFrames().add(kf);
-        }
-        KeyValue kv1 = new KeyValue(spheres[n-1].translateXProperty(), spheres[0].getTranslateX());
-        KeyValue kv2 = new KeyValue(spheres[n-1].translateYProperty(), spheres[0].getTranslateY());
-        KeyValue kv3 = new KeyValue(spheres[n-1].scaleXProperty(), spheres[0].getScaleX());
-        KeyValue kv4 = new KeyValue(spheres[n-1].scaleYProperty(), spheres[0].getScaleY());
-        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv1, kv2, kv3, kv4);
-        timeline.getKeyFrames().add(kf);
-        timeline.playFromStart();
-        timeline.setOnFinished(event -> {
-            turnoDi=(turnoDi==(n-1))?0:turnoDi+1;
-            giocoIo(turnoDi);
-            posizionaSfere();
-        });
-    }
-    public void giocoIo(int turnoDi) {
-        Giocatore player = gameData.getGiocatoriPartita().get(turnoDi);
-        gameData.setTurnoCorrente(turnoDi);
-        player.getMano();
     }
     private void addSelectionMouse() {
         for (int i = 0; i < n; i++) {
@@ -277,6 +239,46 @@ public class OvalPaneController {
                 resumeAnimation();
             }
         });
+    }
+    //FINE SFEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+    public static void setScenaX(double x){
+        centroX=x/2;
+        posizionaSfere();
+        reShape();
+    }
+    public static void setScenaY(double y){
+        centroY=y/2;
+        posizionaSfere();
+        reShape();
+    }
+    public void cambiaTurno() {
+        Timeline timeline = new Timeline();
+        for (int ind = 0; ind < n-1; ind++) {
+            int i = ind % n;
+            KeyValue kv1 = new KeyValue(spheres[i].translateXProperty(), spheres[i+1].getTranslateX());
+            KeyValue kv2 = new KeyValue(spheres[i].translateYProperty(), spheres[i+1].getTranslateY());
+            KeyValue kv3 = new KeyValue(spheres[i].scaleXProperty(), spheres[i+1].getScaleX());
+            KeyValue kv4 = new KeyValue(spheres[i].scaleYProperty(), spheres[i+1].getScaleY());
+            KeyFrame kf = new KeyFrame(Duration.seconds(1), kv1, kv2, kv3, kv4);
+            timeline.getKeyFrames().add(kf);
+        }
+        KeyValue kv1 = new KeyValue(spheres[n-1].translateXProperty(), spheres[0].getTranslateX());
+        KeyValue kv2 = new KeyValue(spheres[n-1].translateYProperty(), spheres[0].getTranslateY());
+        KeyValue kv3 = new KeyValue(spheres[n-1].scaleXProperty(), spheres[0].getScaleX());
+        KeyValue kv4 = new KeyValue(spheres[n-1].scaleYProperty(), spheres[0].getScaleY());
+        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv1, kv2, kv3, kv4);
+        timeline.getKeyFrames().add(kf);
+        timeline.playFromStart();
+        timeline.setOnFinished(event -> {
+            turnoDi=(turnoDi==(n-1))?0:turnoDi+1;
+            giocoIo(turnoDi);
+            posizionaSfere();
+        });
+    }
+    public void giocoIo(int turnoDi) {
+        Giocatore player = gameData.getGiocatoriPartita().get(turnoDi);
+        gameData.setTurnoCorrente(turnoDi);
+        player.getMano();
     }
     public static Double getCentroX(){
         return centroX;

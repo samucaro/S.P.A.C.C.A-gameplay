@@ -5,6 +5,9 @@ import javafx.scene.image.Image;
 
 public class CartaSparaTutti implements Carta{
     private String desc = "Spara a tutti gli avversari contemporaneamente";
+    public String getFXML(){
+        return "CartaSparaTutti.fxml";
+    }
     @FXML
     public void initialize() {
     }

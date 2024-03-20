@@ -5,6 +5,9 @@ import javafx.scene.image.Image;
 
 public class CartaRecuperaVita implements Carta{
     private String desc = "Recuperi un punto vita";
+    public String getFXML(){
+        return "CartaRecuperaVita.fxml";
+    }
     @FXML
     public void initialize() {
     }

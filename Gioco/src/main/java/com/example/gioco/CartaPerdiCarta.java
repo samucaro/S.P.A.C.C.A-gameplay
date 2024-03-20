@@ -5,6 +5,9 @@ import javafx.scene.image.Image;
 
 public class CartaPerdiCarta implements Carta{
     private String desc = "Pesca la prima carta da un avversario a tua scelta";
+    public String getFXML(){
+        return "CartaPerdiCarta.fxml";
+    }
     @FXML
     public void initialize() {
     }

@@ -7,7 +7,9 @@ import javafx.scene.image.ImageView;
 public class CartaDuello implements Carta {
     private String desc = "A turno tu e il tuo avversario" +
             "scartate un Bang, il primo che rimane senza perde un punto vita. Parte l'avversario.";
-
+    public String getFXML(){
+        return "CartaDuello.fxml";
+    }
     @FXML
     public void initialize() {
     }

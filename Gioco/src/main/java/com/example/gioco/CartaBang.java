@@ -6,7 +6,9 @@ import javafx.scene.image.ImageView;
 
 public class CartaBang implements Carta{
     private String desc = "Spara a un tuo avversario";
-
+    public String getFXML(){
+        return "CartaBang.fxml";
+    }
     @FXML
     public void initialize() {
     }
