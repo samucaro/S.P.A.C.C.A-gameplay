@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
 
-<StackPane fx:id="stackPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url(SfondoGioco.png); -fx-background-position: center; -fx-background-size: cover;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gioco.MainController">
+<StackPane fx:id="stackPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url(SfondoGioco.jpg);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gioco.MainController">
    <children>
       <fx:include fx:id="ovalPane" source="OvalPane.fxml" />
       <AnchorPane id="anchorPane" fx:id="anchorPane">

@@ -19,6 +19,7 @@ public class MainController {
     private OvalPaneController ovalPaneController;
     private double centroX = 300;
     private double centroY = 200;
+    private ArrayList<Carta> manoCorrente;
     private GameData gameData = GameData.getInstance();
     @FXML
     private Button turnButton;
@@ -29,9 +30,11 @@ public class MainController {
     @FXML
     private AnchorPane anchorPane;
     @FXML
+    private ImageView immagineSfondo;
+    @FXML
     public void initialize() {
         impostaCose();
-        mettiCarte();
+        mettiCarte(true);
         /*
         Image sfondo = new Image(getClass().getResource("SfondoGioco.png").toString());
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, false, true);
@@ -43,48 +46,56 @@ public class MainController {
         anchorPane.prefHeightProperty().bind(stackPane.heightProperty());
         anchorPane.widthProperty().addListener((observable, oldValue, newValue) -> {
             centroX = (double) newValue;
-            turnButton.setLayoutX((50) - (88.7 / 2)); //prima il margine poi spazio oggetto
+             turnButton.setLayoutX((50) - (88.7 / 2)); //prima il margine poi spazio oggetto
             mazzoEScarti.setLayoutX((newValue.doubleValue() / 2) - 75);
-            mettiCarte();
-            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            System.out.println(centroX);
-            System.out.println(centroY);
+            mettiCarte(false);
         });
         anchorPane.heightProperty().addListener((observable, oldValue, newValue) -> {
             centroY = (double) newValue;
             turnButton.setLayoutY(newValue.doubleValue() - (20) - 25.3 / 2);
             mazzoEScarti.setLayoutY((newValue.doubleValue() / 2) - (49));
-            mettiCarte();
-            System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            System.out.println(centroX);
-            System.out.println(centroY);
+            mettiCarte(false);
         });
-        mettiCarte();
+        mettiCarte(true);
     }
-    public void mettiCarte() {
-        for (int i = 0; i < anchorPane.getChildren().size(); i++) {
-            if (anchorPane.getChildren().get(i) instanceof VBox) {
-                anchorPane.getChildren().remove(i);
-                i--;
+    public void mettiCarte(boolean b) {
+        ArrayList<Integer> v = new ArrayList<>();
+            for (int i = 0; i < anchorPane.getChildren().size(); i++) {
+                if (anchorPane.getChildren().get(i) instanceof VBox) {
+                    if (b) {
+                        anchorPane.getChildren().remove(i);
+                        i--;
+                    } else {
+                        v.add(i);
+                    }
+                }
             }
-        }
         try {
-            ArrayList<Carta> mano = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano();
-            FXMLLoader cardLoader;
             VBox c;
-            //for (int i = 0; i< mano.size(); i++)
-            cardLoader = new FXMLLoader(getClass().getResource(mano.get(0).getFXML()));
-            c = cardLoader.load();
-            anchorPane.getChildren().add((VBox) c);
-            //RICONTROLLLARE MALAMENTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE centroX<centroY?(1/((176*12.5)/centroX)):(1/((227.3*68.2)/centroY));
-            Double scalaFactor = 0.01*((4 * Math.min(centroX, centroY)) / 50);
-            System.out.println("SCF: "+scalaFactor+"\nMATMIN: " + Math.min(centroX, centroY));
-            Scale scale = new Scale(scalaFactor, scalaFactor);
-            c.getTransforms().add(scale);
+            if (b) {
+                manoCorrente = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano();
+                FXMLLoader cardLoader;
+                //for (int i = 0; i< mano.size(); i++)
+                cardLoader = new FXMLLoader(getClass().getResource(manoCorrente.get(0).getFXML()));
+                c = cardLoader.load();
+                anchorPane.getChildren().add(c);
+                scalaESPOSTA(c);
+            } else {
+                for (int i : v) {
+                    c = (VBox) anchorPane.getChildren().get(i);
+                    c.getTransforms().clear();
+                    scalaESPOSTA(c);
+                }
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        anchorPane.requestLayout(); // Forza l'aggiornamento delle dimensioni
+        //anchorPane.requestLayout();
+    }
+    public void scalaESPOSTA(VBox c){
+        double scalaFactor = 0.01*((4 * Math.min(centroX, centroY)) / 50);
+        Scale scale = new Scale(scalaFactor, scalaFactor);
+        c.getTransforms().add(scale);
     }
     @FXML
     public void handleTurnButton() {
@@ -92,6 +103,7 @@ public class MainController {
         PauseTransition pause = new PauseTransition(Duration.seconds(1));
         pause.setOnFinished(event -> turnButton.setDisable(false));
         ovalPaneController.cambiaTurno();
+        mettiCarte(true);
         pause.play();
     }
     public void pescataInizialeGiocatore() {

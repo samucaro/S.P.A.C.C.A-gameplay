@@ -5,7 +5,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="227.0" prefWidth="176.0" style="-fx-background-radius: 15px; -fx-background-image: url(CartaScartaBang.jpg);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gioco.CartaScartaBang">
+<VBox alignment="TOP_CENTER" prefHeight="227.0" prefWidth="176.0" style="-fx-background-radius: 15px; -fx-background-image: url(CartaScartaBang.jpg); -fx-background-size: cover;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gioco.CartaScartaBang">
    <padding>
       <Insets top="25.0" />
    </padding>
