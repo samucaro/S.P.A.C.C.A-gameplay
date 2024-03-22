@@ -33,31 +33,39 @@ public class MainController {
     private ImageView immagineSfondo;
     @FXML
     public void initialize() {
-        impostaCose();
-        mettiCarte(true);
+        //impostaCose();
+        //mettiCarte(true);
         /*
         Image sfondo = new Image(getClass().getResource("SfondoGioco.png").toString());
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, false, true);
         BackgroundImage backgroundImage = new BackgroundImage(sfondo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
         borderPane.setBackground(new Background(backgroundImage));*/
     }
-    public void impostaCose(){
+    /*public void impostaCose(){
         anchorPane.prefWidthProperty().bind(stackPane.widthProperty());
         anchorPane.prefHeightProperty().bind(stackPane.heightProperty());
         anchorPane.widthProperty().addListener((observable, oldValue, newValue) -> {
-            centroX = (double) newValue;
-             turnButton.setLayoutX((50) - (88.7 / 2)); //prima il margine poi spazio oggetto
-            mazzoEScarti.setLayoutX((newValue.doubleValue() / 2) - 75);
+            AnchorPane.setTopAnchor(turnButton, 20.0);
+            AnchorPane.setLeftAnchor(turnButton, 20.0);
+            AnchorPane.setTopAnchor(mazzoEScarti, 0.5);
+            AnchorPane.setLeftAnchor(mazzoEScarti, 0.5);
+            //centroX = (double) newValue;
+            //turnButton.setLayoutX((50) - (88.7 / 2)); //prima il margine poi spazio oggetto
+            //mazzoEScarti.setLayoutX((newValue.doubleValue() / 2) - 75);
             mettiCarte(false);
         });
         anchorPane.heightProperty().addListener((observable, oldValue, newValue) -> {
-            centroY = (double) newValue;
-            turnButton.setLayoutY(newValue.doubleValue() - (20) - 25.3 / 2);
-            mazzoEScarti.setLayoutY((newValue.doubleValue() / 2) - (49));
+            AnchorPane.setTopAnchor(turnButton, 20.0);
+            AnchorPane.setLeftAnchor(turnButton, 20.0);
+            AnchorPane.setTopAnchor(mazzoEScarti, 0.5);
+            AnchorPane.setLeftAnchor(mazzoEScarti, 0.5);
+            //centroY = (double) newValue;
+            //turnButton.setLayoutY(newValue.doubleValue() - (20) - 25.3 / 2);
+            //mazzoEScarti.setLayoutY((newValue.doubleValue() / 2) - (49));
             mettiCarte(false);
         });
         mettiCarte(true);
-    }
+    }*/
     public void mettiCarte(boolean b) {
         ArrayList<Integer> v = new ArrayList<>();
             for (int i = 0; i < anchorPane.getChildren().size(); i++) {

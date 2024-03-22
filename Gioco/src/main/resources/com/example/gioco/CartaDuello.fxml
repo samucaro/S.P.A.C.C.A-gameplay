@@ -7,7 +7,7 @@
 
 <VBox alignment="TOP_CENTER" prefHeight="227.0" prefWidth="176.0" style="-fx-background-radius: 15px; -fx-background-image: url(CartaDuello.png); -fx-background-size: cover;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gioco.CartaDuello">
    <children>
-      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="F I G H T" VBox.vgrow="ALWAYS">
+      <Text fill="WHITE" stroke="BLACK" strokeType="OUTSIDE" text="F I G H T" VBox.vgrow="ALWAYS">
          <font>
             <Font name="Game of Thrones" size="30.0" />
          </font>

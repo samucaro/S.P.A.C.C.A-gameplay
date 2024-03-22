@@ -1,0 +1,38 @@
+/* Stile per i bottoni Game of Thrones e spazio */
+.custom-button {
+    -fx-background-color: #2E3141; /* Colore di sfondo (blu scuro) */
+    -fx-border-radius: 10;
+    -fx-border-color: #FFD700; /* Colore del bordo (giallo) */
+    -fx-border-width: 2;
+    -fx-text-fill: #FFFFFF; /* Colore del testo (bianco) */
+    -fx-font-family: "Game of Thrones"; /* Font di Game of Thrones */
+    -fx-font-size: 14px; /* Dimensione del carattere */
+}
+
+/* Pseudo-class :hover per i bottoni */
+.custom-button:hover {
+    -fx-background-color: #363A4F; /* Colore di sfondo al passaggio del mouse (blu medio) */
+}
+
+/* Pseudo-class :pressed per i bottoni */
+.custom-button:pressed {
+    -fx-background-color: #1F2130; /* Colore di sfondo al clic del mouse (blu scuro) */
+}
+
+.a {
+    -fx-text-fill: white;
+    -fx-text-transform: uppercase;
+    -fx-background-color: #010820;
+    -fx-background-radius: 0;
+    -fx-transition: background-color 0.5s;
+}
+
+.a:hover {
+    -fx-background-color: #FFD700;
+    -fx-text-fill: black;
+    -fx-effect: dropshadow(gaussian, #FFD700, 15, 0, 0, 0);
+}
+
+.a:pressed {
+    -fx-background-color: derive(#f00, 20%);
+}

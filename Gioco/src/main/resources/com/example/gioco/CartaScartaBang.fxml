@@ -10,9 +10,9 @@
       <Insets top="25.0" />
    </padding>
    <children>
-      <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="R E J E C T B A N G" VBox.vgrow="ALWAYS">
+      <Text fill="WHITE" stroke="BLACK" strokeType="OUTSIDE" text="L O S T B A N G" VBox.vgrow="ALWAYS">
          <font>
-            <Font name="Game of Thrones" size="15.0" />
+            <Font name="Game of Thrones" size="20.0" />
          </font>
       </Text>
    </children>

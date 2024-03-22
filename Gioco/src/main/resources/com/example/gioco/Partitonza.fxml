@@ -7,13 +7,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
 
 <StackPane fx:id="stackPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url(SfondoGioco.jpg);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gioco.MainController">
    <children>
       <fx:include fx:id="ovalPane" source="OvalPane.fxml" />
       <AnchorPane id="anchorPane" fx:id="anchorPane">
          <children>
-            <HBox fx:id="mazzoEScarti" alignment="CENTER" layoutX="225.0" layoutY="151.0" spacing="20.0">
+            <HBox fx:id="mazzoEScarti" alignment="CENTER" layoutX="225.0" layoutY="151.0" spacing="20.0" AnchorPane.bottomAnchor="151.0" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="151.0">
                <children>
                   <ImageView fx:id="mazzo" fitHeight="81.0" fitWidth="75.0" onMousePressed="#pescataInizialeGiocatore" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
                      <image>
@@ -30,8 +31,13 @@
                   </ImageView>
                </children>
             </HBox>
-            <Button fx:id="turnButton" alignment="CENTER" contentDisplay="CENTER" layoutX="255.0" layoutY="348.0" onAction="#handleTurnButton" text="Cambia turno" />
-            <Button layoutX="31.0" layoutY="25.0" mnemonicParsing="false" text="Save" />
+            <Button fx:id="turnButton" alignment="CENTER" contentDisplay="CENTER" layoutX="27.0" layoutY="348.0" onAction="#handleTurnButton" text="Cambia turno" AnchorPane.bottomAnchor="27.0" AnchorPane.leftAnchor="27.0" />
+            <Button layoutX="31.0" layoutY="25.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" styleClass="a" stylesheets="@StileBottoni.css" text="Save" AnchorPane.leftAnchor="27.0" AnchorPane.topAnchor="27.0" />
+            <Button layoutX="517.0" layoutY="27.0" mnemonicParsing="false" style="-fx-background-color: #010820; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #FFD700; -fx-border-width: 2;" text="Back" textFill="WHITE" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="27.0">
+               <font>
+                  <Font name="Game of Thrones" size="12.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
    </children>
