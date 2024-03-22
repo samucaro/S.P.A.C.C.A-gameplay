@@ -5,18 +5,21 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
 <StackPane fx:id="stackPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url(SfondoGioco.jpg);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gioco.MainController">
    <children>
       <fx:include fx:id="ovalPane" source="OvalPane.fxml" />
-      <AnchorPane id="anchorPane" fx:id="anchorPane">
+      <AnchorPane id="anchorPane" fx:id="anchorPane" StackPane.alignment="CENTER">
          <children>
             <HBox fx:id="mazzoEScarti" alignment="CENTER" layoutX="225.0" layoutY="151.0" spacing="20.0" AnchorPane.bottomAnchor="151.0" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="151.0">
                <children>
-                  <ImageView fx:id="mazzo" fitHeight="81.0" fitWidth="75.0" onMousePressed="#pescataInizialeGiocatore" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+                  <ImageView fx:id="mazzo" fitHeight="80.0" fitWidth="75.0" onMousePressed="#pescataInizialeGiocatore" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
                      <image>
                         <Image url="@../../../RetroCarta.png" />
                      </image>
@@ -31,13 +34,53 @@
                   </ImageView>
                </children>
             </HBox>
-            <Button fx:id="turnButton" alignment="CENTER" contentDisplay="CENTER" layoutX="27.0" layoutY="348.0" onAction="#handleTurnButton" text="Cambia turno" AnchorPane.bottomAnchor="27.0" AnchorPane.leftAnchor="27.0" />
-            <Button layoutX="31.0" layoutY="25.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" styleClass="a" stylesheets="@StileBottoni.css" text="Save" AnchorPane.leftAnchor="27.0" AnchorPane.topAnchor="27.0" />
-            <Button layoutX="517.0" layoutY="27.0" mnemonicParsing="false" style="-fx-background-color: #010820; -fx-background-radius: 10; -fx-border-radius: 10; -fx-border-color: #FFD700; -fx-border-width: 2;" text="Back" textFill="WHITE" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="27.0">
+            <Button fx:id="turnButton" alignment="CENTER" contentDisplay="CENTER" layoutX="27.0" layoutY="348.0" onAction="#handleTurnButton" styleClass="a" stylesheets="@StileBottoni.css" text="C A M B I A T U R N O" textFill="WHITE" AnchorPane.bottomAnchor="27.0" AnchorPane.leftAnchor="27.0" />
+            <Button layoutX="31.0" layoutY="25.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" styleClass="a" stylesheets="@StileBottoni.css" text="S A V E" textFill="WHITE" AnchorPane.leftAnchor="27.0" AnchorPane.topAnchor="27.0">
+               <font>
+                  <Font name="Game of Thrones" size="12.0" />
+               </font></Button>
+            <Button layoutX="517.0" layoutY="27.0" mnemonicParsing="false" styleClass="a" stylesheets="@StileBottoni.css" text="B A C K" textFill="WHITE" AnchorPane.rightAnchor="27.0" AnchorPane.topAnchor="27.0">
                <font>
                   <Font name="Game of Thrones" size="12.0" />
                </font>
             </Button>
+            <GridPane layoutX="275.0" layoutY="351.0" prefHeight="15.0" prefWidth="50.0" styleClass="grd" stylesheets="@StileBottoni.css" AnchorPane.bottomAnchor="33.0" AnchorPane.leftAnchor="275.0" AnchorPane.rightAnchor="275.0">
+              <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+            <ImageView fitHeight="80.0" fitWidth="75.0" layoutX="139.0" layoutY="321.0" pickOnBounds="true" preserveRatio="true" rotate="-69.4">
+               <image>
+                  <Image url="@../../../CartaBang.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="75.0" layoutX="192.0" layoutY="252.0" pickOnBounds="true" preserveRatio="true" rotate="-33.7">
+               <image>
+                  <Image url="@../../../CartaDuello.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="75.0" layoutX="271.0" layoutY="231.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../CartaMancato.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="75.0" layoutX="405.0" layoutY="323.0" pickOnBounds="true" preserveRatio="true" rotate="69.4">
+               <image>
+                  <Image url="@../../../CartaBang.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="80.0" fitWidth="75.0" layoutX="353.0" layoutY="252.0" pickOnBounds="true" preserveRatio="true" rotate="33.7">
+               <image>
+                  <Image url="@../../../CartaDuello.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </children>
