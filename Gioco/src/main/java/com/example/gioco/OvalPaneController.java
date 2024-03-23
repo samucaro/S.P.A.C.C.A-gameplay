@@ -37,7 +37,6 @@ public class OvalPaneController {
     private double anchorAngleY = 0;
     @FXML
     public void initialize() {
-
         spheres = new Group[n];
         for (int i = 0; i < n; i++) {
             spheres[i] = new Group();

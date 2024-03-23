@@ -4,9 +4,11 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.chart.ScatterChart;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -17,9 +19,9 @@ import java.util.ArrayList;
 public class MainController {
     @FXML
     private OvalPaneController ovalPaneController;
-    private double centroX = 300;
-    private double centroY = 200;
-    private ArrayList<Carta> manoCorrente;
+    private double centroX = 600;
+    private double centroY = 400;
+    private ArrayList<Integer> mano;
     private GameData gameData = GameData.getInstance();
     @FXML
     private Button turnButton;
@@ -28,13 +30,18 @@ public class MainController {
     @FXML
     private HBox mazzoEScarti;
     @FXML
+    private GridPane barraVita;
+    @FXML
     private AnchorPane anchorPane;
     @FXML
     private ImageView immagineSfondo;
+    private boolean checkInit = false;
+    int conta = 0;
+    int conto = 0;
     @FXML
     public void initialize() {
         impostaCose();
-        mettiCarte(true);
+        mettiCarte(false);
         /*
         Image sfondo = new Image(getClass().getResource("SfondoGioco.png").toString());
         BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, false, true);
@@ -44,74 +51,116 @@ public class MainController {
     public void impostaCose(){
         anchorPane.prefWidthProperty().bind(stackPane.widthProperty());
         anchorPane.prefHeightProperty().bind(stackPane.heightProperty());
-        anchorPane.widthProperty().addListener((observable, oldValue, newValue) -> {
+        stackPane.widthProperty().addListener((observable, oldValue, newValue) -> {
             /*AnchorPane.setTopAnchor(turnButton, 20.0);
             AnchorPane.setLeftAnchor(turnButton, 20.0);
             AnchorPane.setTopAnchor(mazzoEScarti, 0.5);
             AnchorPane.setLeftAnchor(mazzoEScarti, 0.5);
-            centroX = (double) newValue;
             turnButton.setLayoutX((50) - (88.7 / 2)); //prima il margine poi spazio oggetto
             mazzoEScarti.setLayoutX((newValue.doubleValue() / 2) - 75);*/
+            centroX = (double) newValue;
             mettiCarte(false);
         });
-        anchorPane.heightProperty().addListener((observable, oldValue, newValue) -> {
+
+        stackPane.heightProperty().addListener((observable, oldValue, newValue) -> {
             /*AnchorPane.setTopAnchor(turnButton, 20.0);
             AnchorPane.setLeftAnchor(turnButton, 20.0);
             AnchorPane.setTopAnchor(mazzoEScarti, 0.5);
             AnchorPane.setLeftAnchor(mazzoEScarti, 0.5);
-            centroY = (double) newValue;
             turnButton.setLayoutY(newValue.doubleValue() - (20) - 25.3 / 2);
             mazzoEScarti.setLayoutY((newValue.doubleValue() / 2) - (49));*/
+            centroY = (double) newValue;
             mettiCarte(false);
+            if(mazzoEScarti.getWidth()!=0)
+                checkInit = true;
+            conto++;
+            System.out.println("CONTO: " + conto);
         });
         mettiCarte(true);
     }
     public void mettiCarte(boolean b) {
-        ArrayList<Integer> v = new ArrayList<>();
+        mano = new ArrayList<>();
             for (int i = 0; i < anchorPane.getChildren().size(); i++) {
-                if (anchorPane.getChildren().get(i) instanceof VBox) {
+                if (anchorPane.getChildren().get(i) instanceof ImageView) {
                     if (b) {
                         anchorPane.getChildren().remove(i);
                         i--;
                     } else {
-                        v.add(i);
+                        mano.add(i);
                     }
                 }
             }
-        try {
-            VBox c;
-            if (b) {
-                manoCorrente = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano();
-                FXMLLoader cardLoader;
-                //for (int i = 0; i< mano.size(); i++)
-                cardLoader = new FXMLLoader(getClass().getResource(manoCorrente.get(0).getFXML()));
-                c = cardLoader.load();
+        ImageView c;
+        if (b) {
+            ArrayList<Carta> manoCorrente = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano();
+            for (int i = 0; i< manoCorrente.size(); i++) {
+                c = manoCorrente.get(i).getImage();
+                scala(c);
                 anchorPane.getChildren().add(c);
-                scalaESPOSTA(c);
-            } else {
-                for (int i : v) {
-                    c = (VBox) anchorPane.getChildren().get(i);
-                    c.getTransforms().clear();
-                    scalaESPOSTA(c);
-                }
+                mano.add(anchorPane.getChildren().indexOf(c));
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } else {
+            for (int i : mano) {
+                c = (ImageView) anchorPane.getChildren().get(i);
+                scala(c);
+            }
         }
+        spostaCarta();
         //anchorPane.requestLayout();
     }
-    public void scalaESPOSTA(VBox c){
-        double scalaFactor = 0.01*((4 * Math.min(centroX, centroY)) / 50);
-        Scale scale = new Scale(scalaFactor, scalaFactor);
-        c.getTransforms().add(scale);
+    public void scala(ImageView c){
+        double dim = 10 + (5 * Math.min(centroX, centroY)) / 35;
+        ((Rectangle) c.getClip()).setWidth(dim);
+        ((Rectangle) c.getClip()).setHeight(dim*1.29);
+        c.setFitWidth(dim);
     }
+    public void spostaCarta(){
+        double cX = centroX/2; // Coordinata x del centro dell'arco
+        System.out.println(cX);
+        double cY = centroY-10; // Coordinata y del centro dell'arco
+        System.out.println(cY);
+
+        double semilarghezza = 120; // Semilarghezza dell'arco (metà della larghezza)
+        double altezza = 70; // Altezza dell'arco
+        int numOggetti = mano.size(); // Numero di oggetti da posizionare
+        double[][] coordinate = calcolaCoordinateArco(cX, cY, semilarghezza, altezza, numOggetti);
+        double[] angoli = new double[numOggetti];
+        for (int i = 0; i < numOggetti; i++) {
+            angoli[i] = 30 - i * (60/(numOggetti));
+        }
+        for (int i = 0; i < mano.size(); i++) {
+            ImageView iv = (ImageView) anchorPane.getChildren().get(mano.get(i));
+            iv.setLayoutX(coordinate[i][0] - iv.getFitWidth()/2);
+            iv.setLayoutY(coordinate[i][1] - iv.getFitWidth()*1.29);
+            iv.setRotate(angoli[i]);
+            System.out.println(conta + "  Oggetto " + (i + 1) + ": x = " + ((coordinate[i][0])-iv.getFitWidth()/2) + ", y = " + ((coordinate[i][1])-iv.getFitHeight()));
+            conta++;
+        }
+    }
+    public double[][] calcolaCoordinateArco(double cX, double cY, double semilarghezza, double altezza, int numOggetti) {
+        double[][] coordinate = new double[numOggetti][2];
+        double angoloStep = Math.PI / (numOggetti - 1); // Angolo tra gli oggetti
+        for (int i = 0; i < numOggetti; i++) {
+            double angolo = i * angoloStep; // Inizia dall'angolo 0
+            double x = cX + semilarghezza * Math.cos(angolo);
+            double y = cY - altezza * Math.sin(angolo); // Sottrai altezza per ottenere la sezione di ellisse
+            System.out.println("x: "+x);
+            System.out.println("y: "+y);
+            coordinate[i][0] = x;
+            coordinate[i][1] = y;
+        }
+        return coordinate;
+    }
+
     @FXML
     public void handleTurnButton() {
         turnButton.setDisable(true);
         PauseTransition pause = new PauseTransition(Duration.seconds(1));
-        pause.setOnFinished(event -> turnButton.setDisable(false));
-        ovalPaneController.cambiaTurno();
-        mettiCarte(true);
+        pause.setOnFinished(event -> {
+            ovalPaneController.cambiaTurno();
+            turnButton.setDisable(false);
+            mettiCarte(true);
+        });
         pause.play();
     }
     public void pescataInizialeGiocatore() {

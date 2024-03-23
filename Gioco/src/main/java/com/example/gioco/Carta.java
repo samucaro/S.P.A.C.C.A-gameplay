@@ -6,7 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public interface Carta {
-    public String getFXML();
+    public ImageView getImage();
     public String getDesc();
     public void usaAbilita();
 

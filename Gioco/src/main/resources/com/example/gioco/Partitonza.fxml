@@ -56,31 +56,6 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
             </GridPane>
-            <ImageView fitHeight="80.0" fitWidth="75.0" layoutX="139.0" layoutY="321.0" pickOnBounds="true" preserveRatio="true" rotate="-69.4">
-               <image>
-                  <Image url="@../../../CartaBang.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="80.0" fitWidth="75.0" layoutX="192.0" layoutY="252.0" pickOnBounds="true" preserveRatio="true" rotate="-33.7">
-               <image>
-                  <Image url="@../../../CartaDuello.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="80.0" fitWidth="75.0" layoutX="271.0" layoutY="231.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../CartaMancato.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="80.0" fitWidth="75.0" layoutX="405.0" layoutY="323.0" pickOnBounds="true" preserveRatio="true" rotate="69.4">
-               <image>
-                  <Image url="@../../../CartaBang.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="80.0" fitWidth="75.0" layoutX="353.0" layoutY="252.0" pickOnBounds="true" preserveRatio="true" rotate="33.7">
-               <image>
-                  <Image url="@../../../CartaDuello.png" />
-               </image>
-            </ImageView>
          </children>
       </AnchorPane>
    </children>
