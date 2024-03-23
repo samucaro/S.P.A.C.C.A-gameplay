@@ -8,8 +8,7 @@ import javafx.scene.shape.Rectangle;
 public class CartaPerdiCarta implements Carta{
     private String desc = "Pesca la prima carta da un avversario a tua scelta";
     public ImageView getImage(){
-        Image cartaImage = new Image(getClass().getResource("CartaBang.png").toString());
-        ImageView imageView = new ImageView(cartaImage);
+        ImageView imageView = new ImageView(new Image("CartaPescaCarta.png"));
         imageView.setFitWidth(100);
         imageView.setPreserveRatio(true);
         Rectangle clip = new Rectangle(100, 150);

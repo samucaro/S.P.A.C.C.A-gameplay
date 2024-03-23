@@ -8,8 +8,7 @@ import javafx.scene.shape.Rectangle;
 public class CartaMancato implements Carta {
     private String desc = "Colpo schivato!";
     public ImageView getImage(){
-        Image cartaImage = new Image(getClass().getResource("CartaBang.png").toString());
-        ImageView imageView = new ImageView(cartaImage);
+        ImageView imageView = new ImageView(new Image("CartaMancato.png"));
         imageView.setFitWidth(100);
         imageView.setPreserveRatio(true);
         Rectangle clip = new Rectangle(100, 150);

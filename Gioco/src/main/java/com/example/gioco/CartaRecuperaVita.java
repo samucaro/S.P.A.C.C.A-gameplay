@@ -8,8 +8,7 @@ import javafx.scene.shape.Rectangle;
 public class CartaRecuperaVita implements Carta{
     private String desc = "Recuperi un punto vita";
     public ImageView getImage(){
-        Image cartaImage = new Image(getClass().getResource("CartaBang.png").toString());
-        ImageView imageView = new ImageView(cartaImage);
+        ImageView imageView = new ImageView(new Image("CartaRecuperaVita.jpg"));
         imageView.setFitWidth(100);
         imageView.setPreserveRatio(true);
         Rectangle clip = new Rectangle(100, 150);

@@ -6,10 +6,10 @@ import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
 public class CartaBang implements Carta{
-    private String desc = "Spara a un tuo avversario";
+    private final String desc = "Spara a un tuo avversario";
+
     public ImageView getImage(){
-        Image cartaImage = new Image(getClass().getResource("CartaBang.png").toString());
-        ImageView imageView = new ImageView(cartaImage);
+        ImageView imageView = new ImageView(new Image("CartaBang.png"));
         imageView.setFitWidth(100);
         imageView.setPreserveRatio(true);
         Rectangle clip = new Rectangle(100, 150);

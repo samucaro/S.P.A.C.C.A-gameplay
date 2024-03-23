@@ -9,8 +9,7 @@ public class CartaDuello implements Carta {
     private String desc = "A turno tu e il tuo avversario" +
             "scartate un Bang, il primo che rimane senza perde un punto vita. Parte l'avversario.";
     public ImageView getImage(){
-        Image cartaImage = new Image(getClass().getResource("CartaBang.png").toString());
-        ImageView imageView = new ImageView(cartaImage);
+        ImageView imageView = new ImageView(new Image("CartaDuello.png"));
         imageView.setFitWidth(100);
         imageView.setPreserveRatio(true);
         Rectangle clip = new Rectangle(100, 150);

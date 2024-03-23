@@ -8,8 +8,7 @@ import javafx.scene.shape.Rectangle;
 public class CartaScartaBang implements Carta{
     private String desc = "Tutti i tuoi avversari scartano una carta Bang";
     public ImageView getImage(){
-        Image cartaImage = new Image(getClass().getResource("CartaBang.png").toString());
-        ImageView imageView = new ImageView(cartaImage);
+        ImageView imageView = new ImageView(new Image("CartaScartaBang.jpg"));
         imageView.setFitWidth(100);
         imageView.setPreserveRatio(true);
         Rectangle clip = new Rectangle(100, 150);
