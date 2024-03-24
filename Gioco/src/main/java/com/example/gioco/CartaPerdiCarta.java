@@ -5,7 +5,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
-public class CartaPerdiCarta implements Carta{
+import java.util.ArrayList;
+
+public class CartaPerdiCarta extends Carta{
     private String desc = "Pesca la prima carta da un avversario a tua scelta";
     public ImageView getImage(){
         ImageView imageView = new ImageView(new Image("CartaPescaCarta.png"));
@@ -24,8 +26,9 @@ public class CartaPerdiCarta implements Carta{
         return desc;
     }
 
-    public void usaAbilita() {
-        //implementare
+    public void usaAbilita(ArrayList<Giocatore> g, int numGiocatore) {
+        int num = (int) (Math.random() * (4 + 1)) + 4;
+        g.get(numGiocatore).scarta(g.get(numGiocatore).getMano().get(num));
     }
 
     @Override

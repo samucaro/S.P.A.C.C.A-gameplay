@@ -5,7 +5,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
-public class CartaRecuperaVita implements Carta{
+import java.util.ArrayList;
+
+public class CartaRecuperaVita extends Carta{
     private String desc = "Recuperi un punto vita";
     public ImageView getImage(){
         ImageView imageView = new ImageView(new Image("CartaRecuperaVita.jpg"));
@@ -24,8 +26,8 @@ public class CartaRecuperaVita implements Carta{
         return desc;
     }
 
-    public void usaAbilita() {
-        //implementare
+    public void usaAbilita(ArrayList<Giocatore> g, int numGiocatore) {
+        g.get(numGiocatore).cura(1);
     }
     @Override
     public String toString() {

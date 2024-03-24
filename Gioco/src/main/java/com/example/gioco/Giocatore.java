@@ -4,6 +4,7 @@ public abstract class Giocatore {
     abstract public void addCarta(Carta carta);
     abstract void subisciDanno(int danno);
     abstract void cura(int cura);
+    abstract void scarta(Carta carta);
     abstract void setHpRimanente(int hp);
     abstract int getHpRimanente();
     abstract void setNome(String n);

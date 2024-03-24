@@ -20,6 +20,10 @@ public class GiocatorePersona extends Giocatore{
             mano.add(carta);
         }
     }
+    public void scarta(Carta carta) {
+        mano.remove(carta);
+
+    }
     public void subisciDanno(int danno){
         if(hpRimanente == 0) {
             System.out.println("Il giocatore è già eliminato");

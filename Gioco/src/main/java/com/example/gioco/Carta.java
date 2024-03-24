@@ -5,11 +5,13 @@ import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public interface Carta {
-    public ImageView getImage();
-    public String getDesc();
-    public void usaAbilita();
+import java.util.ArrayList;
 
-    public String toString();
-    public String toStringNome();
+public abstract class Carta {
+    public abstract ImageView getImage();
+    public abstract String getDesc();
+    public abstract void usaAbilita(ArrayList<Giocatore> g, int numGiocatore);
+
+    public abstract String toString();
+    public abstract String toStringNome();
 }

@@ -5,7 +5,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
-public class CartaMancato implements Carta {
+import java.util.ArrayList;
+
+public class CartaMancato extends Carta {
     private String desc = "Colpo schivato!";
     public ImageView getImage(){
         ImageView imageView = new ImageView(new Image("CartaMancato.png"));
@@ -24,7 +26,7 @@ public class CartaMancato implements Carta {
         return desc;
     }
 
-    public void usaAbilita() {
+    public void usaAbilita(ArrayList<Giocatore> g, int numGiocatore) {
         //implementare
     }
     @Override

@@ -5,7 +5,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
-public class CartaSparaTutti implements Carta{
+import java.util.ArrayList;
+
+public class CartaSparaTutti extends Carta{
     private String desc = "Spara a tutti gli avversari contemporaneamente";
     public ImageView getImage(){
         ImageView imageView = new ImageView(new Image("CartaSparaTutti.jpg"));
@@ -28,8 +30,24 @@ public class CartaSparaTutti implements Carta{
         this.desc = desc;
     }
 
-    public void usaAbilita() {
-        //implementare
+    public void usaAbilita(ArrayList<Giocatore> g, int numGiocatore) {
+        int cont = 0;
+        boolean var = false;
+        for(Giocatore p: g) {
+            if(cont != numGiocatore) {
+                for (Carta c : p.getMano()) {
+                    if (c instanceof CartaMancato) {
+                        var = true;
+                        p.scarta(c);
+                        break;
+                    }
+                }
+                if(!var) {
+                    p.subisciDanno(1);
+                }
+            }
+            cont++;
+        }
     }
 
     @Override

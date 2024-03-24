@@ -5,7 +5,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Rectangle;
 
-public class CartaDuello implements Carta {
+import java.util.ArrayList;
+
+public class CartaDuello extends Carta {
     private String desc = "A turno tu e il tuo avversario" +
             "scartate un Bang, il primo che rimane senza perde un punto vita. Parte l'avversario.";
     public ImageView getImage(){
@@ -26,7 +28,7 @@ public class CartaDuello implements Carta {
         return desc;
     }
 
-    public void usaAbilita() {
+    public void usaAbilita(ArrayList<Giocatore> g, int numGiocatore) {
         //implementare
     }
 
