@@ -1,0 +1,7 @@
+.text-area {
+    -fx-background-color: transparent;
+    -fx-border-color: cyan;
+    -fx-border-width: 1.5;
+    -fx-font-size: 13;
+    -fx-text-fill: black;
+}

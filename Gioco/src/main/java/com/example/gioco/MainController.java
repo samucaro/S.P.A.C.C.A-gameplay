@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
@@ -37,14 +38,14 @@ public class MainController {
     @FXML
     private AnchorPane anchorPane;
     @FXML
-    private ImageView immagineSfondo;
+    private TextArea abilitaCarte;
     int conta = 0;
     @FXML
     public void initialize() {
         impostaCose();
-        //mettiCarte(false);
         barraVita.toFront();
         mazzoEScarti.toFront();
+        abilitaCarte.setVisible(false);
     }
     public void impostaCose(){
         anchorPane.prefWidthProperty().bind(stackPane.widthProperty());
@@ -81,6 +82,7 @@ public class MainController {
                 c = manoCorrente.get(i).getImage();
                 scala(c);
                 anchorPane.getChildren().add(c);
+                listenerCarta(c, i);
                 mano.add(anchorPane.getChildren().indexOf(c));
             }
         } else {
@@ -112,21 +114,23 @@ public class MainController {
             iv.setLayoutX(coordinate[i][0] - iv.getFitWidth()/2);
             iv.setLayoutY(coordinate[i][1] - iv.getFitWidth()*1.29);
             iv.setRotate(angoli[i]);
-            listenerCarta(iv, i);
             System.out.println(conta + "  Oggetto " + (i + 1) + ": x = " + ((coordinate[i][0])-iv.getFitWidth()/2) + ", y = " + (coordinate[i][1] - iv.getFitWidth()*1.29));
             conta++;
         }
     }
     public void listenerCarta(ImageView iv, int i){
+        Carta cartaAttuale = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().get(i);
         iv.setOnMouseEntered((MouseEvent event) -> {
             iv.setScaleX(1.1);
             iv.setScaleY(1.1);
             iv.toFront();
+            abilitaCarte.setVisible(true);
+            abilitaCarte.setText(cartaAttuale.getDesc());
         });
         iv.setOnMouseExited((MouseEvent event) -> {
             iv.setScaleX(1.0);
             iv.setScaleY(1.0);
-            iv.toBack();
+            abilitaCarte.setVisible(false);
         });
         iv.setOnMousePressed((MouseEvent event) -> {
             xOffset = event.getSceneX() - iv.getTranslateX();
@@ -143,7 +147,7 @@ public class MainController {
             iv.setTranslateY(0);
             System.out.println("Coordinate di rilascio: X = " + finalX + ", Y = " + finalY);
             if (finalX<centroX/2+100&&finalX>centroX/2-100&&finalY<centroY/2+100&&finalY>centroY/2-100){
-                gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().get(i).usaAbilita(gameData.getGiocatoriPartita(), gameData.getTurnoCorrente());
+                cartaAttuale.usaAbilita(gameData.getGiocatoriPartita(), gameData.getTurnoCorrente());
             }
         });
     }
