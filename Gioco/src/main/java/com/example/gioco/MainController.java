@@ -22,6 +22,8 @@ public class MainController {
     private OvalPaneController ovalPaneController;
     private double centroX = 600;
     private double centroY = 400;
+    private double xOffset = 0;
+    private double yOffset = 0;
     private ArrayList<Integer> mano;
     private GameData gameData = GameData.getInstance();
     @FXML
@@ -127,20 +129,41 @@ public class MainController {
         for (int i = 0; i < mano.size(); i++) {
             angoli[i] = -(-30 + i * ((double) 60 /(numOggetti-1)));
             ImageView iv = (ImageView) anchorPane.getChildren().get(mano.get(i));
-            iv.setOnMouseEntered((MouseEvent event) -> {
-                iv.setScaleX(1.1);
-                iv.setScaleY(1.1);
-            });
-            iv.setOnMouseExited((MouseEvent event) -> {
-                iv.setScaleX(1.0);
-                iv.setScaleY(1.0);
-            });
+            listenerCarta(iv, i);
             iv.setLayoutX(coordinate[i][0] - iv.getFitWidth()/2);
             iv.setLayoutY(coordinate[i][1] - iv.getFitWidth()*1.29);
             iv.setRotate(angoli[i]);
             System.out.println(conta + "  Oggetto " + (i + 1) + ": x = " + ((coordinate[i][0])-iv.getFitWidth()/2) + ", y = " + (coordinate[i][1] - iv.getFitWidth()*1.29));
             conta++;
         }
+    }
+    public void listenerCarta(ImageView iv, int i){
+        iv.setOnMouseEntered((MouseEvent event) -> {
+            iv.setScaleX(1.1);
+            iv.setScaleY(1.1);
+        });
+        iv.setOnMouseExited((MouseEvent event) -> {
+            iv.setScaleX(1.0);
+            iv.setScaleY(1.0);
+        });
+        iv.setOnMousePressed((MouseEvent event) -> {
+            xOffset = event.getSceneX() - iv.getTranslateX();
+            yOffset = event.getSceneY() - iv.getTranslateY();
+        });
+        iv.setOnMouseDragged((MouseEvent event) -> {
+            iv.setTranslateX(event.getSceneX() - xOffset);
+            iv.setTranslateY(event.getSceneY() - yOffset);
+        });
+        iv.setOnMouseReleased((MouseEvent event) -> {
+            double finalX = event.getSceneX();
+            double finalY = event.getSceneY();
+            iv.setTranslateX(0);
+            iv.setTranslateY(0);
+            System.out.println("Coordinate di rilascio: X = " + finalX + ", Y = " + finalY);
+            if (finalX<centroX/2+100&&finalX>centroX/2-100&&finalY<centroY/2+100&&finalY>centroY/2-100){
+                gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().get(i).usaAbilita(gameData.getGiocatoriPartita(), gameData.getTurnoCorrente());
+            }
+        });
     }
     public double[][] calcolaCoordinateArco(double cX, double cY, double semilarghezza, double altezza, int numOggetti) {
         double[][] coordinate = new double[numOggetti][2];
