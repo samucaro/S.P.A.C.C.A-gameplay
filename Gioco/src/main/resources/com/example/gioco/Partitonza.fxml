@@ -19,15 +19,15 @@
          <children>
             <HBox fx:id="mazzoEScarti" alignment="CENTER" layoutX="225.0" layoutY="151.0" spacing="20.0" AnchorPane.bottomAnchor="151.0" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="151.0">
                <children>
-                  <ImageView fx:id="mazzo" fitHeight="80.0" fitWidth="75.0" onMousePressed="#pescataInizialeGiocatore" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+                  <ImageView fx:id="mazzo" fitHeight="90.0" fitWidth="60.0" onMousePressed="#pescataInizialeGiocatore" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
                      <image>
                         <Image url="@../../../RetroCarta.png" />
                      </image>
                      <HBox.margin>
-                        <Insets top="10.0" />
+                        <Insets />
                      </HBox.margin>
                   </ImageView>
-                  <ImageView fitHeight="98.0" fitWidth="104.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+                  <ImageView fitHeight="90.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
                      <image>
                         <Image url="@../../../CardPosition.png" />
                      </image>

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class CartaRecuperaVita extends Carta{
     private String desc = "Recuperi un punto vita";
     public ImageView getImage(){
-        ImageView imageView = new ImageView(new Image("CartaRecuperaVita.jpg"));
+        ImageView imageView = new ImageView(new Image("CartaRecuperaVita.png"));
         imageView.setFitWidth(100);
         imageView.setPreserveRatio(true);
         Rectangle clip = new Rectangle(100, 150);

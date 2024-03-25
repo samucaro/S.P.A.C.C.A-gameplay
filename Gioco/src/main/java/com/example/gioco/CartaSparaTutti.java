@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class CartaSparaTutti extends Carta{
     private String desc = "Spara a tutti gli avversari contemporaneamente";
     public ImageView getImage(){
-        ImageView imageView = new ImageView(new Image("CartaSparaTutti.jpg"));
+        ImageView imageView = new ImageView(new Image("CartaSparaTutti.png"));
         imageView.setFitWidth(100);
         imageView.setPreserveRatio(true);
         Rectangle clip = new Rectangle(100, 150);

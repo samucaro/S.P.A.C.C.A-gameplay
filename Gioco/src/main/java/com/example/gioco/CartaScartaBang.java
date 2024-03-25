@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public class CartaScartaBang extends Carta{
     private String desc = "Tutti i tuoi avversari scartano una carta Bang";
     public ImageView getImage(){
-        ImageView imageView = new ImageView(new Image("CartaScartaBang.jpg"));
+        ImageView imageView = new ImageView(new Image("CartaScartaBang.png"));
         imageView.setFitWidth(100);
         imageView.setPreserveRatio(true);
         Rectangle clip = new Rectangle(100, 150);
