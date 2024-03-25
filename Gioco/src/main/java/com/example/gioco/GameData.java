@@ -6,10 +6,11 @@ import java.util.*;
 
 public class GameData {
     private int turnoCorrente;
+    private int numeroPartita;
     private Stato stato;
     private String tipo;
     private static GameData instance = null;
-    private LinkedList<Partita> partiteTorneo;
+    private LinkedList<GameData> partiteTorneo;
     private final ArrayList<Giocatore> giocatoriPartita;
     private final DataSet DS;
     private Mazzo mazzo;
@@ -20,6 +21,15 @@ public class GameData {
         DS = new DataSet();
         giocatoriPartita = new ArrayList<>();
         mazzo = new Mazzo();
+    }
+    public GameData(int n, Stato stato, int turnoCorrente, Mazzo mazzo, ArrayList<Giocatore>giocatoriPartita) {
+        DS = new DataSet();
+        partiteTorneo = new LinkedList<>();
+        numeroPartita = n;
+        this.stato = stato;
+        this.turnoCorrente = turnoCorrente;
+        this.mazzo = mazzo;
+        this.giocatoriPartita = giocatoriPartita;
     }
     public static GameData getInstance() {
         try {
@@ -167,7 +177,7 @@ public class GameData {
                             giocatoriPartita.get(c).setHpRimanente(Integer.parseInt(line.split(":")[1].trim()));
                         }
                     }
-                    partiteTorneo.add(new Partita(n, stato, turnoCorrente, mazzo, giocatoriPartita));
+                    partiteTorneo.add(new GameData(n, stato, turnoCorrente, mazzo, giocatoriPartita));
                 }
             }
             System.out.println(partiteTorneo);

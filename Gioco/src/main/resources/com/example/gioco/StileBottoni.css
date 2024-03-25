@@ -31,7 +31,7 @@
 }
 
 .grd {
-    -fx-background-color: green;
+    -fx-background-color: none;
     -fx-background-radius: 20;
     -fx-border-color: black;
     -fx-border-radius: 20;

@@ -8,7 +8,7 @@ Giocatore: 1
 Tipo: Persona
 Nome: walt
 Mano: Bang Bang RecuperaVita Mancato Bang 
-HpRimanente: 5
+HpRimanente: 3
 ******************************
 Giocatore: 2
 Tipo: Bot

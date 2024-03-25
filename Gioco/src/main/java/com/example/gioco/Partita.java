@@ -1,5 +1,7 @@
 package com.example.gioco;
 
+import javax.swing.*;
+import java.io.*;
 import java.util.ArrayList;
 
 public class Partita {
@@ -10,6 +12,7 @@ public class Partita {
     private ArrayList<Giocatore> giocatori;
     private String codice;
     private Giocatore vincitore;
+    private final DataSet file = new DataSet();
      public Partita(String codice, int numero, Stato stato, int turno, Mazzo mazzo, ArrayList<Giocatore> giocatori) {
          this.codice = codice;
          this.numero = numero;

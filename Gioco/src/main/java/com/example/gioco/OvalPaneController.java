@@ -1,10 +1,13 @@
 package com.example.gioco;
+
 import javafx.animation.*;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
@@ -12,8 +15,12 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.*;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
+
+import javax.swing.*;
 
 public class OvalPaneController {
     @FXML
@@ -31,16 +38,13 @@ public class OvalPaneController {
     private static double iry = 130.0;
     private static Shape halfDonut;
     private static final int n = gameData.getNumero();
-    private double anchorX, anchorY;
     private static int turnoDi = 0;
-    private double anchorAngleX = 0;
-    private double anchorAngleY = 0;
     @FXML
     public void initialize() {
         spheres = new Group[n];
         for (int i = 0; i < n; i++) {
             spheres[i] = new Group();
-            spheres[i].getChildren().add(new Sphere(60));
+            spheres[i].getChildren().addFirst(new Sphere(60));
             PhongMaterial material = new PhongMaterial();
             Image texture = textures(i);
             material.setDiffuseMap(texture);
@@ -56,22 +60,27 @@ public class OvalPaneController {
                 ring.setRotate(75);
                 spheres[i].getChildren().add(ring);
             }
+            int indice = ((n - 1) - i) % n;
+            System.out.println(indice);
+            Text nome = new Text(gameData.getGiocatoriPartita().get(indice).getNome());
+            nome.setFont(Font.font("Game of Thrones", 17));
+            nome.setStyle("-fx-fill: white; -fx-stroke: black; -fx-stroke-width: 0.5");
+            double centerX = - nome.getBoundsInLocal().getWidth()/2;
+            double centerY = -5 -nome.getBoundsInLocal().getHeight()/2;
+            nome.setLayoutX(centerX);
+            nome.setLayoutY(centerY);
+            spheres[i].getChildren().add(nome);
             ovalPane.getChildren().add(spheres[i]);
         }
-        addSelectionMouse();
         iniziaHD();
     }
 
-    //INIZIO HALF DONUTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
+    //INIZIO HALF DONUT
     private void iniziaHD() {
-
         Arc outerArc = new Arc(100.0, 100.0, orx, ory, 0.0, 180.0);
         outerArc.setType(ArcType.ROUND);
-
         Arc innerArc = new Arc(100.0, 100.0, irx, iry, 0.0, 180.0);
         innerArc.setType(ArcType.ROUND);
-
-
         halfDonut = Shape.subtract(outerArc, innerArc);
         ovalPane.getChildren().add(halfDonut);
         halfDonut.fillProperty().addListener((observable, oldValue, newValue) -> {
@@ -87,19 +96,9 @@ public class OvalPaneController {
             innerArc.setRadiusY(iry);
             halfDonut = Shape.subtract(outerArc, innerArc);
             halfDonut.setFill(javafx.scene.paint.Color.rgb(0, 191, 255, 0.2));
-            halfDonut.setOnMouseEntered(event -> {
-                halfDonut.setFill(javafx.scene.paint.Color.rgb(0, 191, 255, 0.7));
-            });
-            halfDonut.setOnMouseExited(event -> {
-                halfDonut.setFill(javafx.scene.paint.Color.rgb(0, 191, 255, 0.2));
-            });
-            //halfDonut.setMouseTransparent(true);
             ovalPane.getChildren().add(halfDonut);
             resetHD.set(false);
         });
-    }
-    public static void setDisableHD(boolean b){
-        halfDonut.setVisible(b);
     }
     public static void reShape() {
         double h = (60 * Math.min(centroX, centroY)) / 300;
@@ -123,14 +122,6 @@ public class OvalPaneController {
             }
         };
         timer.start();
-    }
-
-    public void pauseAnimation() {
-        isPaused = true;
-    }
-
-    public void resumeAnimation() {
-        isPaused = false;
     }
 
     private Image textures(int i){
@@ -157,87 +148,6 @@ public class OvalPaneController {
             spheres[indice].setScaleX(i == n-1 ? 0.6 : 1);
             spheres[indice].setScaleY(i == n-1 ? 0.6 : 1);
         }
-    }
-    private void addSelectionMouse() {
-        for (int i = 0; i < n; i++) {
-            final Sphere currentSphere = ((Sphere) spheres[i].getChildren().getFirst());
-            final Group currentGroup = spheres[i];
-            currentSphere.setOnMousePressed(event -> {
-                setDisableHD(false);
-                double x = currentGroup.getTranslateX();
-                double y = currentGroup.getTranslateY();
-                double s = currentGroup.getScaleX();
-                double scala = (centroX%centroY)/100;
-                spostaSfere(currentGroup, scala, centroX, centroY);
-                Button bottone = new Button("<---");
-                bottone.setTranslateX(10);
-                bottone.setTranslateY(10);
-                PauseTransition pause = new PauseTransition(Duration.seconds(1));
-                pause.setOnFinished(mettibottone -> {
-                    ovalPane.getChildren().remove(currentGroup);
-                    ovalPane.getChildren().addAll(bottone, currentGroup);
-                    addMouseHandlers(currentSphere);
-                });
-                pause.play();
-                bottone.setOnAction(evento -> {
-                    setDisableHD(true);
-                    spostaSfere(currentGroup, s, x, y);
-                    ovalPane.getChildren().removeAll(bottone);
-                    resetMouseHandlers(currentSphere);
-                    posizionaSfere();
-                });
-            });
-        }
-    }
-    private void spostaSfere(Group currentGroup, double scala, double centroX, double centroY) {
-        Timeline timeline = new Timeline();
-        KeyValue kv1 = new KeyValue(currentGroup.translateXProperty(), centroX);
-        KeyValue kv2 = new KeyValue(currentGroup.translateYProperty(), centroY);
-        KeyValue scx = new KeyValue(currentGroup.scaleXProperty(), scala);
-        KeyValue scy = new KeyValue(currentGroup.scaleYProperty(), scala);
-        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv1, kv2, scx, scy);
-        timeline.getKeyFrames().add(kf);
-        timeline.play();
-    }
-    private void resetMouseHandlers(Sphere sfera) {
-        sfera.setOnMousePressed(null);
-        sfera.setOnMouseDragged(null);
-        sfera.setOnMouseReleased(null);
-        addSelectionMouse();
-    }
-    private void addMouseHandlers(Sphere sfera) {
-        final Sphere currentSphere = sfera;
-        currentSphere.setOnMousePressed(event -> {
-            if (event.getButton() == MouseButton.PRIMARY) {
-                anchorX = event.getSceneX();
-                anchorY = event.getSceneY();
-                anchorAngleX = currentSphere.getRotate();
-                anchorAngleY = currentSphere.getRotationAxis().getY();
-                pauseAnimation();
-            }
-        });
-        currentSphere.setOnMouseDragged(event -> {
-            if (event.getButton() == MouseButton.PRIMARY) {
-                double deltaX = event.getSceneX() - anchorX;
-                double deltaY = event.getSceneY() - anchorY;
-                currentSphere.setRotate(anchorAngleX - (deltaX * 0.2));
-                Rotate RX = new Rotate(deltaY * 0.2, Rotate.X_AXIS);
-                currentSphere.getTransforms().add(RX);
-                currentSphere.setRotate(anchorAngleY - (deltaY * 0.2));
-                Rotate RY = new Rotate(-deltaX * 0.2, Rotate.Y_AXIS);
-                currentSphere.getTransforms().add(RY);
-                anchorX = event.getSceneX();
-                anchorY = event.getSceneY();
-            }
-        });
-        currentSphere.setOnMouseReleased(event -> {
-            if (event.getButton() == MouseButton.PRIMARY) {
-                currentSphere.setRotate(0);
-                currentSphere.setRotationAxis(Rotate.Y_AXIS);
-                currentSphere.getTransforms().clear();
-                resumeAnimation();
-            }
-        });
     }
     //FINE SFEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
     public static void setScenaX(double x){
@@ -270,14 +180,6 @@ public class OvalPaneController {
         KeyFrame kf = new KeyFrame(Duration.seconds(1), kv1, kv2, kv3, kv4);
         timeline.getKeyFrames().add(kf);
         timeline.playFromStart();
-        timeline.setOnFinished(event -> {
-            posizionaSfere();
-        });
-    }
-    public static Double getCentroX(){
-        return centroX;
-    }
-    public static Double getCentroY(){
-        return centroY;
+        timeline.setOnFinished(event -> posizionaSfere());
     }
 }

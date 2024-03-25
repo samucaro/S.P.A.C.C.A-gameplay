@@ -6,10 +6,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.control.Button;
+import javafx.scene.control.Cell;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
@@ -26,6 +28,8 @@ public class MainController {
     private double xOffset = 0;
     private double yOffset = 0;
     private ArrayList<Integer> mano;
+    private boolean checkInit = false;
+    int conta = 0;
     private GameData gameData = GameData.getInstance();
     @FXML
     private Button turnButton;
@@ -38,28 +42,40 @@ public class MainController {
     @FXML
     private AnchorPane anchorPane;
     @FXML
-    private TextArea abilitaCarte;
-    int conta = 0;
-    @FXML
     public void initialize() {
         impostaCose();
         barraVita.toFront();
         mazzoEScarti.toFront();
-        abilitaCarte.setVisible(false);
+        mazzoEScarti.getChildren().getFirst().setOnMouseEntered((MouseEvent event) -> {
+            mazzoEScarti.getChildren().getFirst().setScaleX(1.1);
+            mazzoEScarti.getChildren().getFirst().setScaleY(1.1);
+        });
+        mazzoEScarti.getChildren().getFirst().setOnMouseExited((MouseEvent event) -> {
+            mazzoEScarti.getChildren().getFirst().setScaleX(1.0);
+            mazzoEScarti.getChildren().getFirst().setScaleY(1.0);
+        });
+        mettiVita();
     }
     public void impostaCose(){
         anchorPane.prefWidthProperty().bind(stackPane.widthProperty());
         anchorPane.prefHeightProperty().bind(stackPane.heightProperty());
         stackPane.widthProperty().addListener((observable, oldValue, newValue) -> {
             centroX = (double) newValue;
-            mazzoEScarti.setLayoutX(centroX/2 - mazzoEScarti.getWidth()/2);
+            mazzoEScarti.setLayoutX(centroX/2 - (checkInit?mazzoEScarti.getWidth():231)*getScala()/2);
+            System.out.println("LARGHEZZAMAZZO"+mazzoEScarti.getWidth());
             mettiCarte(false);
+            if (mazzoEScarti.getHeight()!=0)
+                checkInit=true;
+            scalaMazzo();
         });
-
         stackPane.heightProperty().addListener((observable, oldValue, newValue) -> {
             centroY = (double) newValue;
-            mazzoEScarti.setLayoutY(centroY/2 - mazzoEScarti.getHeight()/2);
+            mazzoEScarti.setLayoutY(centroY/2 - (checkInit?mazzoEScarti.getHeight():155)*getScala()/2);
+            System.out.println("ALTEZZAMAZZO"+mazzoEScarti.getHeight());
             mettiCarte(false);
+            if (mazzoEScarti.getHeight()!=0)
+                checkInit=true;
+            scalaMazzo();
         });
         mettiCarte(true);
     }
@@ -92,20 +108,14 @@ public class MainController {
             }
         }
         spostaCarta();
-    }
-    public void scala(ImageView c){
-        double dim = 10 + (5 * Math.min(centroX, centroY)) / 35;
-        ((Rectangle) c.getClip()).setWidth(dim);
-        ((Rectangle) c.getClip()).setHeight(dim*1.29);
-        c.setFitWidth(dim);
+        barraVita.toFront();
     }
     public void spostaCarta(){
-        double cX = centroX/2; // Coordinata x del centro dell'arco
-        double cY = centroY-10; // Coordinata y del centro dell'arco
-
-        double semilarghezza = centroX/5; // Semilarghezza dell'arco (metà della larghezza)
-        double altezza = 20 + centroY/6; // Altezza dell'arco
-        int numOggetti = mano.size(); // Numero di oggetti da posizionare
+        double cX = centroX/2;
+        double cY = centroY-20;
+        double semilarghezza = centroX/5;
+        double altezza = 10 + centroY/5;
+        int numOggetti = mano.size();
         double[][] coordinate = calcolaCoordinateArco(cX, cY, semilarghezza, altezza, numOggetti);
         double[] angoli = new double[numOggetti];
         for (int i = 0; i < mano.size(); i++) {
@@ -114,7 +124,6 @@ public class MainController {
             iv.setLayoutX(coordinate[i][0] - iv.getFitWidth()/2);
             iv.setLayoutY(coordinate[i][1] - iv.getFitWidth()*1.29);
             iv.setRotate(angoli[i]);
-            System.out.println(conta + "  Oggetto " + (i + 1) + ": x = " + ((coordinate[i][0])-iv.getFitWidth()/2) + ", y = " + (coordinate[i][1] - iv.getFitWidth()*1.29));
             conta++;
         }
     }
@@ -124,13 +133,11 @@ public class MainController {
             iv.setScaleX(1.1);
             iv.setScaleY(1.1);
             iv.toFront();
-            abilitaCarte.setVisible(true);
-            abilitaCarte.setText(cartaAttuale.getDesc());
         });
         iv.setOnMouseExited((MouseEvent event) -> {
             iv.setScaleX(1.0);
             iv.setScaleY(1.0);
-            abilitaCarte.setVisible(false);
+            iv.toBack();
         });
         iv.setOnMousePressed((MouseEvent event) -> {
             xOffset = event.getSceneX() - iv.getTranslateX();
@@ -151,13 +158,39 @@ public class MainController {
             }
         });
     }
+    public double getScala(){
+        return 0.01*(5 * Math.min(centroX, centroY)) / 30;
+    }
+    public void scalaMazzo(){
+        double scala = getScala();
+        mazzoEScarti.setScaleX(scala);
+        mazzoEScarti.setScaleY(scala);
+    }
+    public void scala(ImageView c){
+        double dim = (5 * Math.min(centroX, centroY)) / 37;
+        c.setFitWidth(dim);
+    }
+    public void mettiVita(){
+        int vita = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente();
+        for (int i = 0; i < barraVita.getColumnCount(); i++) {
+            Color color;
+            if (i < vita) {
+                color = Color.GREEN; // Vita rimanente (verde)
+            } else {
+                color = Color.BLACK; // Vita consumata (nero)
+            }
+            //ColumnConstraints c = barraVita.getColumnConstraints().get(i+1);
+            //c.setStyle("-fx-background-color: " + color.toString());
+            System.out.println("AAAAAAAA"+color.toString());
+        }
+    }
     public double[][] calcolaCoordinateArco(double cX, double cY, double semilarghezza, double altezza, int numOggetti) {
         double[][] coordinate = new double[numOggetti][2];
-        double angoloStep = Math.PI / (numOggetti - 1); // Angolo tra gli oggetti
+        double angoloStep = Math.PI / (numOggetti - 1);
         for (int i = 0; i < numOggetti; i++) {
-            double angolo = i * angoloStep; // Inizia dall'angolo 0
+            double angolo = i * angoloStep;
             double x = cX + semilarghezza * Math.cos(angolo);
-            double y = cY - altezza * Math.sin(angolo); // Sottrai altezza per ottenere la sezione di ellisse
+            double y = cY - altezza * Math.sin(angolo);
             coordinate[i][0] = x;
             coordinate[i][1] = y;
         }
@@ -172,6 +205,7 @@ public class MainController {
         pause.setOnFinished(event -> {
             turnButton.setDisable(false);
             mettiCarte(true);
+            mettiVita();
         });
         pause.play();
     }

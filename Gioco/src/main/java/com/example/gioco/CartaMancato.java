@@ -13,14 +13,7 @@ public class CartaMancato extends Carta {
         ImageView imageView = new ImageView(new Image("CartaMancato.png"));
         imageView.setFitWidth(100);
         imageView.setPreserveRatio(true);
-        Rectangle clip = new Rectangle(100, 150);
-        clip.setArcWidth(20);
-        clip.setArcHeight(20);
-        imageView.setClip(clip);
         return imageView;
-    }
-    @FXML
-    public void initialize() {
     }
     public String getDesc() {
         return desc;
