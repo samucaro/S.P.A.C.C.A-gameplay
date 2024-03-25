@@ -1,23 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<StackPane fx:id="stackPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url(SfondoGioco.jpg);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gioco.MainController">
+<StackPane fx:id="stackPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url('SfondoGioco.jpg'); -fx-background-size: cover;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gioco.MainController">
    <children>
       <fx:include fx:id="ovalPane" source="OvalPane.fxml" />
       <AnchorPane id="anchorPane" fx:id="anchorPane" StackPane.alignment="CENTER">
          <children>
-            <HBox fx:id="mazzoEScarti" alignment="CENTER" layoutX="225.0" layoutY="151.0" spacing="20.0" AnchorPane.bottomAnchor="151.0" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="151.0">
+            <HBox fx:id="mazzoEScarti" alignment="CENTER" layoutX="225.0" layoutY="151.0" spacing="20.0">
                <children>
                   <ImageView fx:id="mazzo" fitHeight="90.0" fitWidth="60.0" onMousePressed="#pescataInizialeGiocatore" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
                      <image>
@@ -44,7 +38,7 @@
                   <Font name="Game of Thrones" size="12.0" />
                </font>
             </Button>
-            <GridPane layoutX="275.0" layoutY="351.0" prefHeight="15.0" prefWidth="50.0" styleClass="grd" stylesheets="@StileBottoni.css" AnchorPane.bottomAnchor="33.0" AnchorPane.leftAnchor="275.0" AnchorPane.rightAnchor="275.0">
+            <GridPane fx:id="barraVita" layoutX="275.0" layoutY="351.0" prefHeight="15.0" prefWidth="50.0" styleClass="grd" stylesheets="@StileBottoni.css" AnchorPane.bottomAnchor="33.0" AnchorPane.leftAnchor="275.0" AnchorPane.rightAnchor="275.0">
               <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

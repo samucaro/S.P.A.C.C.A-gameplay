@@ -252,6 +252,8 @@ public class OvalPaneController {
     }
     public void cambiaTurno() {
         Timeline timeline = new Timeline();
+        turnoDi=(turnoDi==(n-1))?0:turnoDi+1;
+        gameData.setTurnoCorrente(turnoDi);
         for (int ind = 0; ind < n-1; ind++) {
             int i = ind % n;
             KeyValue kv1 = new KeyValue(spheres[i].translateXProperty(), spheres[i+1].getTranslateX());
@@ -269,15 +271,8 @@ public class OvalPaneController {
         timeline.getKeyFrames().add(kf);
         timeline.playFromStart();
         timeline.setOnFinished(event -> {
-            turnoDi=(turnoDi==(n-1))?0:turnoDi+1;
-            giocoIo(turnoDi);
             posizionaSfere();
         });
-    }
-    public void giocoIo(int turnoDi) {
-        Giocatore player = gameData.getGiocatoriPartita().get(turnoDi);
-        gameData.setTurnoCorrente(turnoDi);
-        player.getMano();
     }
     public static Double getCentroX(){
         return centroX;

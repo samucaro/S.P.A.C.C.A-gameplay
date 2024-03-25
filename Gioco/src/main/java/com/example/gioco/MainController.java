@@ -38,46 +38,27 @@ public class MainController {
     private AnchorPane anchorPane;
     @FXML
     private ImageView immagineSfondo;
-    private boolean checkInit = false;
     int conta = 0;
-    int conto = 0;
     @FXML
     public void initialize() {
         impostaCose();
-        mettiCarte(false);
-        /*
-        Image sfondo = new Image(getClass().getResource("SfondoGioco.png").toString());
-        BackgroundSize backgroundSize = new BackgroundSize(100, 100, true, true, false, true);
-        BackgroundImage backgroundImage = new BackgroundImage(sfondo, BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, backgroundSize);
-        borderPane.setBackground(new Background(backgroundImage));*/
+        //mettiCarte(false);
+        barraVita.toFront();
+        mazzoEScarti.toFront();
     }
     public void impostaCose(){
         anchorPane.prefWidthProperty().bind(stackPane.widthProperty());
         anchorPane.prefHeightProperty().bind(stackPane.heightProperty());
         stackPane.widthProperty().addListener((observable, oldValue, newValue) -> {
-            /*AnchorPane.setTopAnchor(turnButton, 20.0);
-            AnchorPane.setLeftAnchor(turnButton, 20.0);
-            AnchorPane.setTopAnchor(mazzoEScarti, 0.5);
-            AnchorPane.setLeftAnchor(mazzoEScarti, 0.5);
-            turnButton.setLayoutX((50) - (88.7 / 2)); //prima il margine poi spazio oggetto
-            mazzoEScarti.setLayoutX((newValue.doubleValue() / 2) - 75);*/
             centroX = (double) newValue;
+            mazzoEScarti.setLayoutX(centroX/2 - mazzoEScarti.getWidth()/2);
             mettiCarte(false);
         });
 
         stackPane.heightProperty().addListener((observable, oldValue, newValue) -> {
-            /*AnchorPane.setTopAnchor(turnButton, 20.0);
-            AnchorPane.setLeftAnchor(turnButton, 20.0);
-            AnchorPane.setTopAnchor(mazzoEScarti, 0.5);
-            AnchorPane.setLeftAnchor(mazzoEScarti, 0.5);
-            turnButton.setLayoutY(newValue.doubleValue() - (20) - 25.3 / 2);
-            mazzoEScarti.setLayoutY((newValue.doubleValue() / 2) - (49));*/
             centroY = (double) newValue;
+            mazzoEScarti.setLayoutY(centroY/2 - mazzoEScarti.getHeight()/2);
             mettiCarte(false);
-            if(mazzoEScarti.getWidth()!=0)
-                checkInit = true;
-            conto++;
-            System.out.println("CONTO: " + conto);
         });
         mettiCarte(true);
     }
@@ -109,7 +90,6 @@ public class MainController {
             }
         }
         spostaCarta();
-        //anchorPane.requestLayout();
     }
     public void scala(ImageView c){
         double dim = 10 + (5 * Math.min(centroX, centroY)) / 35;
@@ -122,17 +102,17 @@ public class MainController {
         double cY = centroY-10; // Coordinata y del centro dell'arco
 
         double semilarghezza = centroX/5; // Semilarghezza dell'arco (metà della larghezza)
-        double altezza = centroY/6; // Altezza dell'arco
+        double altezza = 20 + centroY/6; // Altezza dell'arco
         int numOggetti = mano.size(); // Numero di oggetti da posizionare
         double[][] coordinate = calcolaCoordinateArco(cX, cY, semilarghezza, altezza, numOggetti);
         double[] angoli = new double[numOggetti];
         for (int i = 0; i < mano.size(); i++) {
             angoli[i] = -(-30 + i * ((double) 60 /(numOggetti-1)));
             ImageView iv = (ImageView) anchorPane.getChildren().get(mano.get(i));
-            listenerCarta(iv, i);
             iv.setLayoutX(coordinate[i][0] - iv.getFitWidth()/2);
             iv.setLayoutY(coordinate[i][1] - iv.getFitWidth()*1.29);
             iv.setRotate(angoli[i]);
+            listenerCarta(iv, i);
             System.out.println(conta + "  Oggetto " + (i + 1) + ": x = " + ((coordinate[i][0])-iv.getFitWidth()/2) + ", y = " + (coordinate[i][1] - iv.getFitWidth()*1.29));
             conta++;
         }
@@ -141,10 +121,12 @@ public class MainController {
         iv.setOnMouseEntered((MouseEvent event) -> {
             iv.setScaleX(1.1);
             iv.setScaleY(1.1);
+            iv.toFront();
         });
         iv.setOnMouseExited((MouseEvent event) -> {
             iv.setScaleX(1.0);
             iv.setScaleY(1.0);
+            iv.toBack();
         });
         iv.setOnMousePressed((MouseEvent event) -> {
             xOffset = event.getSceneX() - iv.getTranslateX();
@@ -182,8 +164,8 @@ public class MainController {
     public void handleTurnButton() {
         turnButton.setDisable(true);
         PauseTransition pause = new PauseTransition(Duration.seconds(1));
+        ovalPaneController.cambiaTurno();
         pause.setOnFinished(event -> {
-            ovalPaneController.cambiaTurno();
             turnButton.setDisable(false);
             mettiCarte(true);
         });
