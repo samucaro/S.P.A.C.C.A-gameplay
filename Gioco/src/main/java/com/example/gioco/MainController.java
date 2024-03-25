@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.transform.Scale;
@@ -116,24 +117,28 @@ public class MainController {
     }
     public void spostaCarta(){
         double cX = centroX/2; // Coordinata x del centro dell'arco
-        System.out.println(cX);
         double cY = centroY-10; // Coordinata y del centro dell'arco
-        System.out.println(cY);
 
-        double semilarghezza = 120; // Semilarghezza dell'arco (metà della larghezza)
-        double altezza = 70; // Altezza dell'arco
+        double semilarghezza = centroX/5; // Semilarghezza dell'arco (metà della larghezza)
+        double altezza = centroY/6; // Altezza dell'arco
         int numOggetti = mano.size(); // Numero di oggetti da posizionare
         double[][] coordinate = calcolaCoordinateArco(cX, cY, semilarghezza, altezza, numOggetti);
         double[] angoli = new double[numOggetti];
-        for (int i = 0; i < numOggetti; i++) {
-            angoli[i] = 30 - i * (60/(numOggetti));
-        }
         for (int i = 0; i < mano.size(); i++) {
+            angoli[i] = -(-30 + i * ((double) 60 /(numOggetti-1)));
             ImageView iv = (ImageView) anchorPane.getChildren().get(mano.get(i));
+            iv.setOnMouseEntered((MouseEvent event) -> {
+                iv.setScaleX(1.1);
+                iv.setScaleY(1.1);
+            });
+            iv.setOnMouseExited((MouseEvent event) -> {
+                iv.setScaleX(1.0);
+                iv.setScaleY(1.0);
+            });
             iv.setLayoutX(coordinate[i][0] - iv.getFitWidth()/2);
             iv.setLayoutY(coordinate[i][1] - iv.getFitWidth()*1.29);
             iv.setRotate(angoli[i]);
-            System.out.println(conta + "  Oggetto " + (i + 1) + ": x = " + ((coordinate[i][0])-iv.getFitWidth()/2) + ", y = " + ((coordinate[i][1])-iv.getFitHeight()));
+            System.out.println(conta + "  Oggetto " + (i + 1) + ": x = " + ((coordinate[i][0])-iv.getFitWidth()/2) + ", y = " + (coordinate[i][1] - iv.getFitWidth()*1.29));
             conta++;
         }
     }
@@ -144,8 +149,6 @@ public class MainController {
             double angolo = i * angoloStep; // Inizia dall'angolo 0
             double x = cX + semilarghezza * Math.cos(angolo);
             double y = cY - altezza * Math.sin(angolo); // Sottrai altezza per ottenere la sezione di ellisse
-            System.out.println("x: "+x);
-            System.out.println("y: "+y);
             coordinate[i][0] = x;
             coordinate[i][1] = y;
         }
