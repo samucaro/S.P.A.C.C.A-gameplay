@@ -10,7 +10,7 @@ import java.util.ArrayList;
 public abstract class Carta {
     public abstract ImageView getImage();
     public abstract String getDesc();
-    public abstract void usaAbilita(ArrayList<Giocatore> g, int numGiocatore);
+    public abstract void usaAbilita(OvalPaneController ovalPaneController, MainController mainController);
 
     public abstract String toString();
     public abstract String toStringNome();

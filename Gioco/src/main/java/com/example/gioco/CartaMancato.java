@@ -18,8 +18,7 @@ public class CartaMancato extends Carta {
     public String getDesc() {
         return desc;
     }
-
-    public void usaAbilita(ArrayList<Giocatore> g, int numGiocatore) {
+    public void usaAbilita(OvalPaneController ovalPaneController, MainController mainController) {
         //implementare
     }
     @Override

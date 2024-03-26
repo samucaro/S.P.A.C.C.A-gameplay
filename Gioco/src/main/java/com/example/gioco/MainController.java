@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Cell;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -17,7 +18,6 @@ import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class MainController {
@@ -38,7 +38,7 @@ public class MainController {
     @FXML
     private HBox mazzoEScarti;
     @FXML
-    private GridPane barraVita;
+    private ProgressBar barraVita;
     @FXML
     private AnchorPane anchorPane;
     @FXML
@@ -54,30 +54,29 @@ public class MainController {
             mazzoEScarti.getChildren().getFirst().setScaleX(1.0);
             mazzoEScarti.getChildren().getFirst().setScaleY(1.0);
         });
-        mettiVita();
     }
     public void impostaCose(){
         anchorPane.prefWidthProperty().bind(stackPane.widthProperty());
         anchorPane.prefHeightProperty().bind(stackPane.heightProperty());
         stackPane.widthProperty().addListener((observable, oldValue, newValue) -> {
             centroX = (double) newValue;
-            mazzoEScarti.setLayoutX(centroX/2 - (checkInit?mazzoEScarti.getWidth():231)*getScala()/2);
-            System.out.println("LARGHEZZAMAZZO"+mazzoEScarti.getWidth());
+            scalaMazzo();
+            mazzoEScarti.setLayoutX(centroX/2 - (checkInit?mazzoEScarti.getWidth():140)/2);
             mettiCarte(false);
             if (mazzoEScarti.getHeight()!=0)
                 checkInit=true;
-            scalaMazzo();
         });
         stackPane.heightProperty().addListener((observable, oldValue, newValue) -> {
             centroY = (double) newValue;
-            mazzoEScarti.setLayoutY(centroY/2 - (checkInit?mazzoEScarti.getHeight():155)*getScala()/2);
-            System.out.println("ALTEZZAMAZZO"+mazzoEScarti.getHeight());
+            scalaMazzo();
+            mazzoEScarti.setLayoutY(centroY/2 - 15 - (checkInit?mazzoEScarti.getHeight():90)/2);
             mettiCarte(false);
             if (mazzoEScarti.getHeight()!=0)
                 checkInit=true;
-            scalaMazzo();
         });
         mettiCarte(true);
+        mettiVita();
+        ovalPaneController.getMc(this);
     }
     public void mettiCarte(boolean b) {
         mano = new ArrayList<>();
@@ -108,7 +107,6 @@ public class MainController {
             }
         }
         spostaCarta();
-        barraVita.toFront();
     }
     public void spostaCarta(){
         double cX = centroX/2;
@@ -125,6 +123,7 @@ public class MainController {
             iv.setLayoutY(coordinate[i][1] - iv.getFitWidth()*1.29);
             iv.setRotate(angoli[i]);
             conta++;
+            iv.toBack();
         }
     }
     public void listenerCarta(ImageView iv, int i){
@@ -154,12 +153,12 @@ public class MainController {
             iv.setTranslateY(0);
             System.out.println("Coordinate di rilascio: X = " + finalX + ", Y = " + finalY);
             if (finalX<centroX/2+100&&finalX>centroX/2-100&&finalY<centroY/2+100&&finalY>centroY/2-100){
-                cartaAttuale.usaAbilita(gameData.getGiocatoriPartita(), gameData.getTurnoCorrente());
+                cartaAttuale.usaAbilita(ovalPaneController, this);
             }
         });
     }
     public double getScala(){
-        return 0.01*(5 * Math.min(centroX, centroY)) / 30;
+        return 0.01*(10 * Math.min(centroX, centroY)) / 42;
     }
     public void scalaMazzo(){
         double scala = getScala();
@@ -172,17 +171,7 @@ public class MainController {
     }
     public void mettiVita(){
         int vita = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente();
-        for (int i = 0; i < barraVita.getColumnCount(); i++) {
-            Color color;
-            if (i < vita) {
-                color = Color.GREEN; // Vita rimanente (verde)
-            } else {
-                color = Color.BLACK; // Vita consumata (nero)
-            }
-            //ColumnConstraints c = barraVita.getColumnConstraints().get(i+1);
-            //c.setStyle("-fx-background-color: " + color.toString());
-            System.out.println("AAAAAAAA"+color.toString());
-        }
+        barraVita.setProgress((double) vita/5);
     }
     public double[][] calcolaCoordinateArco(double cX, double cY, double semilarghezza, double altezza, int numOggetti) {
         double[][] coordinate = new double[numOggetti][2];
@@ -224,5 +213,15 @@ public class MainController {
             player.addCarta(gameData.getMazzo().pesca());
             System.out.println("Ho pescato");
         }
+    }
+    public void startSelectionMC(){
+        anchorPane.setDisable(true);
+        anchorPane.setVisible(false);
+    }
+    public void stopSelectionMC(){
+        anchorPane.setDisable(false);
+        anchorPane.setVisible(true);
+        mettiCarte(false);
+        System.out.println("FINESeLEZIONEMC");
     }
 }

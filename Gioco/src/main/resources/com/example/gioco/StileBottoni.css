@@ -30,10 +30,8 @@
     -fx-background-color: none;
 }
 
-.grd {
-    -fx-background-color: none;
+.bar {
+    -fx-background-color: green;
     -fx-background-radius: 20;
-    -fx-border-color: black;
-    -fx-border-radius: 20;
     -fx-effect: dropshadow(gaussian, greenyellow, 10, 0, 0, 0);
 }

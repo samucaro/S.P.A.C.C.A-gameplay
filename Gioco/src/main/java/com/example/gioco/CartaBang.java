@@ -1,10 +1,10 @@
 package com.example.gioco;
-import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Rectangle;
 import java.util.ArrayList;
 public class CartaBang extends Carta{
+    private GameData gameData = GameData.getInstance();
+    private Giocatore selectedGG = null;
     private final String desc = "Spara a un tuo avversario";
     public ImageView getImage(){
         ImageView imageView = new ImageView(new Image("CartaBang.png"));
@@ -15,18 +15,24 @@ public class CartaBang extends Carta{
     public String getDesc() {
         return desc;
     }
-    public void usaAbilita(ArrayList<Giocatore> g, int numGiocatore) {
-        boolean var = false;
-        for(Carta c: g.get(numGiocatore).getMano()) {
-            if(c instanceof CartaMancato) {
-                var = true;
-                g.get(numGiocatore).scarta(c);
+    public void usaAbilita(OvalPaneController ovalPaneController, MainController mainController) {
+        for(Carta c: gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano()) {
+            if(c instanceof CartaBang) {
+                gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).scarta(c);
                 break;
             }
         }
-        if(!var) {
-            g.get(numGiocatore).subisciDanno(1);
-        }
+        ovalPaneController.startSelection().setOnSucceeded(event -> {
+            selectedGG = ovalPaneController.planetSelection();
+            ovalPaneController.fineSelezione();
+            mainController.stopSelectionMC();
+            for(Carta c: selectedGG.getMano()) {
+                if(c instanceof CartaMancato) {
+                    selectedGG.scarta(c);
+                    break;
+                }
+            }
+        });;
     }
     @Override
     public String toString() {

@@ -22,7 +22,6 @@ public class GiocatorePersona extends Giocatore{
     }
     public void scarta(Carta carta) {
         mano.remove(carta);
-
     }
     public void subisciDanno(int danno){
         if(hpRimanente == 0) {

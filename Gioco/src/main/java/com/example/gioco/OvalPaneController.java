@@ -3,10 +3,14 @@ package com.example.gioco;
 import javafx.animation.*;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.concurrent.Task;
+import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,17 +25,25 @@ import javafx.scene.transform.Rotate;
 import javafx.util.Duration;
 
 import javax.swing.*;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class OvalPaneController {
     @FXML
     private Pane ovalPane;
     private static GameData gameData = GameData.getInstance();
+    MainController mc;
     private static Group[] spheres;
+    private Giocatore ggs = null;
+    private ProgressBar pb = new ProgressBar();
+    private Task<Void> task;
+    private Label cmd = new Label("Scegli chi attaccare!");
     private Cylinder ring;
     private boolean isPaused = false;
     private static double centroX;
     private static double centroY;
     private static BooleanProperty resetHD = new SimpleBooleanProperty(false);
+    private boolean planetSelected = false;
     private static double orx = 230.0;
     private static double ory = 250.0;
     private static double irx = 90.0;
@@ -61,7 +73,6 @@ public class OvalPaneController {
                 spheres[i].getChildren().add(ring);
             }
             int indice = ((n - 1) - i) % n;
-            System.out.println(indice);
             Text nome = new Text(gameData.getGiocatoriPartita().get(indice).getNome());
             nome.setFont(Font.font("Game of Thrones", 17));
             nome.setStyle("-fx-fill: white; -fx-stroke: black; -fx-stroke-width: 0.5");
@@ -70,11 +81,69 @@ public class OvalPaneController {
             nome.setLayoutX(centerX);
             nome.setLayoutY(centerY);
             spheres[i].getChildren().add(nome);
+            final int ind = i;
+            spheres[ind].setOnMouseClicked(event -> {
+                ((Text) spheres[ind].getChildren().getLast()).getText();
+                for (int j = 0; j < gameData.getGiocatoriPartita().size(); j++){
+                    if (gameData.getGiocatoriPartita().get(j).getNome().equals(((Text) spheres[ind].getChildren().getLast()).getText())){
+                        ggs = gameData.getGiocatoriPartita().get(j);
+                        planetSelected = true;
+                        System.out.println("GGSGGSGGS");
+                    }
+                }
+            });
             ovalPane.getChildren().add(spheres[i]);
         }
         iniziaHD();
     }
-
+    public void getMc(MainController mainc){
+        mc=mainc;
+    }
+    public Giocatore planetSelection(){
+        Random rd = new Random();
+        int c = 0;
+        if (ggs==null) {
+            do {
+                c = rd.nextInt(n);
+            } while (c != gameData.getTurnoCorrente());
+            return gameData.getGiocatoriPartita().get(c);
+        } else
+            return ggs;
+    }
+    public Task startSelection(){
+        ggs = null;
+        halfDonut.setVisible(false);
+        mc.startSelectionMC();
+        pb.setStyle("-fx-background-color: cyan; -fx-background-radius: 20;");
+        cmd.setStyle("--body-font-size: 15; -fx-background-color: none; -fx-border-color: cyan; -fx-border-width: 1.5;");
+        cmd.setAlignment(Pos.CENTER);
+        ovalPane.getChildren().addAll(pb,cmd);
+        resetHD.set(true);
+        task = new Task<>() {
+            @Override
+            protected Void call() throws Exception {
+                for (int secondo = 1; secondo <= 10; secondo++) {
+                    if (planetSelected){
+                        succeeded();
+                        return null;
+                    }
+                    updateProgress(secondo, 10);
+                    Thread.sleep(1000);
+                }
+                return null;
+            }
+        };
+        planetSelected = false;
+        pb.progressProperty().bind(task.progressProperty());
+        new Thread(task).start();
+        return task;
+    }
+    public void fineSelezione(){
+        halfDonut.setVisible(true);
+        ovalPane.getChildren().removeAll(pb,cmd);
+        resetHD.set(true);
+        System.out.println("FINESeLEZIONEOP");
+    }
     //INIZIO HALF DONUT
     private void iniziaHD() {
         Arc outerArc = new Arc(100.0, 100.0, orx, ory, 0.0, 180.0);
@@ -89,14 +158,25 @@ public class OvalPaneController {
             ovalPane.getChildren().add(halfDonut);
         });
         resetHD.addListener((observable, oldValue, newValue) -> {
-            ovalPane.getChildren().remove(halfDonut);
-            outerArc.setRadiusX(orx);
-            outerArc.setRadiusY(ory);
-            innerArc.setRadiusX(irx);
-            innerArc.setRadiusY(iry);
-            halfDonut = Shape.subtract(outerArc, innerArc);
-            halfDonut.setFill(javafx.scene.paint.Color.rgb(0, 191, 255, 0.2));
-            ovalPane.getChildren().add(halfDonut);
+            if (ovalPane.getChildren().contains(pb)){
+                cmd.setPrefWidth(centroX/1.5);
+                pb.setPrefWidth(centroX/1.5);
+                pb.setLayoutX(centroX-centroX/3);
+                pb.setLayoutY(centroY+30);
+                cmd.setLayoutX(centroX-centroX/3);
+                cmd.setLayoutY(centroY);
+            } else {
+                ovalPane.getChildren().remove(halfDonut);
+                outerArc.setRadiusX(orx);
+                outerArc.setRadiusY(ory);
+                innerArc.setRadiusX(irx);
+                innerArc.setRadiusY(iry);
+                halfDonut = Shape.subtract(outerArc, innerArc);
+                halfDonut.setFill(javafx.scene.paint.Color.rgb(0, 191, 255, 0.2));
+                ovalPane.getChildren().add(halfDonut);
+                halfDonut.setTranslateX(centroX-100);
+                halfDonut.setTranslateY(centroY*2-100);
+            }
             resetHD.set(false);
         });
     }
@@ -107,8 +187,6 @@ public class OvalPaneController {
         irx=2*h;
         iry=centroY/5+h;
         resetHD.set(true);
-        halfDonut.setTranslateX(centroX-100);
-        halfDonut.setTranslateY(centroY*2-100);
     }
     //FINE HALF DONUTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
     //INIZIO ANIMAZIONE E ABBELLIMENTO SFEREEEEEEEEEEEEEEEEEEEEEEEEEEEEE

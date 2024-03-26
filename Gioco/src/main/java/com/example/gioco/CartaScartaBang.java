@@ -18,9 +18,8 @@ public class CartaScartaBang extends Carta{
     public String getDesc() {
         return desc;
     }
-
-    public void usaAbilita(ArrayList<Giocatore> g, int numGiocatore) {
-        int cont = 0;
+    public void usaAbilita(OvalPaneController ovalPaneController, MainController mainController) {
+        /*int cont = 0;
         boolean var = false;
         for(Giocatore p: g) {
             if(cont != numGiocatore) {
@@ -36,7 +35,7 @@ public class CartaScartaBang extends Carta{
                 }
             }
             cont++;
-        }
+        }*/
     }
 
     @Override

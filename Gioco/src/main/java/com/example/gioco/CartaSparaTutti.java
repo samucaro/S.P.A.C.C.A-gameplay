@@ -22,10 +22,10 @@ public class CartaSparaTutti extends Carta{
         this.desc = desc;
     }
 
-    public void usaAbilita(ArrayList<Giocatore> g, int numGiocatore) {
+    public void usaAbilita(OvalPaneController ovalPaneController, MainController mainController) {
         int cont = 0;
         boolean var = false;
-        for(Giocatore p: g) {
+        /*for(Giocatore p: g) {
             if(cont != numGiocatore) {
                 for (Carta c : p.getMano()) {
                     if (c instanceof CartaMancato) {
@@ -39,7 +39,7 @@ public class CartaSparaTutti extends Carta{
                 }
             }
             cont++;
-        }
+        }*/
     }
 
     @Override

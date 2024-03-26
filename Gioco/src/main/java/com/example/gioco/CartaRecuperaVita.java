@@ -18,9 +18,8 @@ public class CartaRecuperaVita extends Carta{
     public String getDesc() {
         return desc;
     }
-
-    public void usaAbilita(ArrayList<Giocatore> g, int numGiocatore) {
-        g.get(numGiocatore).cura(1);
+    public void usaAbilita(OvalPaneController ovalPaneController, MainController mainController) {
+        //g.get(numGiocatore).cura(1);
     }
     @Override
     public String toString() {

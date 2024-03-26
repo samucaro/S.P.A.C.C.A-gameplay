@@ -18,10 +18,9 @@ public class CartaPerdiCarta extends Carta{
     public String getDesc() {
         return desc;
     }
-
-    public void usaAbilita(ArrayList<Giocatore> g, int numGiocatore) {
+    public void usaAbilita(OvalPaneController ovalPaneController, MainController mainController) {
         int num = (int) (Math.random() * (4 + 1)) + 4;
-        g.get(numGiocatore).scarta(g.get(numGiocatore).getMano().get(num));
+        //g.get(numGiocatore).scarta(g.get(numGiocatore).getMano().get(num));
     }
 
     @Override
