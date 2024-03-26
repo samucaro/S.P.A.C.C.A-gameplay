@@ -221,7 +221,7 @@ public class MainController {
     public void stopSelectionMC(){
         anchorPane.setDisable(false);
         anchorPane.setVisible(true);
-        mettiCarte(false);
+        mettiCarte(true);
         System.out.println("FINESeLEZIONEMC");
     }
 }

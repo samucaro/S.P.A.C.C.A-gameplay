@@ -24,14 +24,14 @@ public class CartaBang extends Carta{
         }
         ovalPaneController.startSelection().setOnSucceeded(event -> {
             selectedGG = ovalPaneController.planetSelection();
-            ovalPaneController.fineSelezione();
-            mainController.stopSelectionMC();
             for(Carta c: selectedGG.getMano()) {
                 if(c instanceof CartaMancato) {
                     selectedGG.scarta(c);
                     break;
                 }
             }
+            ovalPaneController.fineSelezione();
+            mainController.stopSelectionMC();
         });;
     }
     @Override
