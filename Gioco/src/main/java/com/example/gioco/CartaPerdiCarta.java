@@ -8,6 +8,8 @@ import javafx.scene.shape.Rectangle;
 import java.util.ArrayList;
 
 public class CartaPerdiCarta extends Carta{
+    private final GameData gameData = GameData.getInstance();
+    private Giocatore selectedGG = null;
     private String desc = "Pesca la prima carta da un avversario a tua scelta";
     public ImageView getImage(){
         ImageView imageView = new ImageView(new Image("CartaPescaCarta.png"));
@@ -19,8 +21,19 @@ public class CartaPerdiCarta extends Carta{
         return desc;
     }
     public void usaAbilita(OvalPaneController ovalPaneController, MainController mainController) {
-        int num = (int) (Math.random() * (4 + 1)) + 4;
-        //g.get(numGiocatore).scarta(g.get(numGiocatore).getMano().get(num));
+        for(Carta c: gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano()) {
+            if(c instanceof CartaPerdiCarta) {
+                mainController.scartaCarte(c,gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
+                break;
+            }
+        }
+        ovalPaneController.startSelection().setOnSucceeded(event -> {
+            selectedGG = ovalPaneController.planetSelection();
+            mainController.scartaCarte(selectedGG.getMano().get((int) (Math.random() * (selectedGG.getMano().size()))),selectedGG);
+            ovalPaneController.dannoSfera(selectedGG);
+            ovalPaneController.fineSelezione();
+            mainController.stopSelectionMC();
+        });
     }
 
     @Override

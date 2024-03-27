@@ -3,7 +3,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import java.util.ArrayList;
 public class CartaBang extends Carta{
-    private GameData gameData = GameData.getInstance();
+    private final GameData gameData = GameData.getInstance();
     private Giocatore selectedGG = null;
     private final String desc = "Spara a un tuo avversario";
     public ImageView getImage(){
@@ -18,21 +18,27 @@ public class CartaBang extends Carta{
     public void usaAbilita(OvalPaneController ovalPaneController, MainController mainController) {
         for(Carta c: gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano()) {
             if(c instanceof CartaBang) {
-                gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).scarta(c);
+                mainController.scartaCarte(c,gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
                 break;
             }
         }
         ovalPaneController.startSelection().setOnSucceeded(event -> {
+            boolean var = false;
             selectedGG = ovalPaneController.planetSelection();
             for(Carta c: selectedGG.getMano()) {
                 if(c instanceof CartaMancato) {
-                    selectedGG.scarta(c);
+                    var = true;
+                    mainController.scartaCarte(c,selectedGG);
                     break;
                 }
             }
+            if (!var) {
+                selectedGG.subisciDanno(1);
+            }
+            ovalPaneController.dannoSfera(selectedGG);
             ovalPaneController.fineSelezione();
             mainController.stopSelectionMC();
-        });;
+        });
     }
     @Override
     public String toString() {

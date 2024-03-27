@@ -19,7 +19,6 @@ public class CartaMancato extends Carta {
         return desc;
     }
     public void usaAbilita(OvalPaneController ovalPaneController, MainController mainController) {
-        //implementare
     }
     @Override
     public String toString() {

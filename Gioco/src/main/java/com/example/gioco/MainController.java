@@ -1,42 +1,33 @@
 package com.example.gioco;
 import javafx.animation.*;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.chart.ScatterChart;
 import javafx.scene.control.Button;
-import javafx.scene.control.Cell;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.transform.Scale;
-import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.util.ArrayList;
 
 public class MainController {
-    @FXML
-    private OvalPaneController ovalPaneController;
     private double centroX = 600;
     private double centroY = 400;
     private double xOffset = 0;
     private double yOffset = 0;
-    private ArrayList<Integer> mano;
+    private ArrayList<Integer> numNodiMano;
     private boolean checkInit = false;
-    int conta = 0;
-    private GameData gameData = GameData.getInstance();
+    private final GameData gameData = GameData.getInstance();
+    @FXML
+    public OvalPaneController ovalPaneController;
+    @FXML
+    private Button saveButton;
     @FXML
     private Button turnButton;
     @FXML
     private StackPane stackPane;
     @FXML
     private HBox mazzoEScarti;
+    @FXML
+    private ImageView scarti;
     @FXML
     private ProgressBar barraVita;
     @FXML
@@ -46,11 +37,11 @@ public class MainController {
         impostaCose();
         barraVita.toFront();
         mazzoEScarti.toFront();
-        mazzoEScarti.getChildren().getFirst().setOnMouseEntered((MouseEvent event) -> {
+        mazzoEScarti.getChildren().getFirst().setOnMouseEntered(event -> {
             mazzoEScarti.getChildren().getFirst().setScaleX(1.1);
             mazzoEScarti.getChildren().getFirst().setScaleY(1.1);
         });
-        mazzoEScarti.getChildren().getFirst().setOnMouseExited((MouseEvent event) -> {
+        mazzoEScarti.getChildren().getFirst().setOnMouseExited(event -> {
             mazzoEScarti.getChildren().getFirst().setScaleX(1.0);
             mazzoEScarti.getChildren().getFirst().setScaleY(1.0);
         });
@@ -61,7 +52,7 @@ public class MainController {
         stackPane.widthProperty().addListener((observable, oldValue, newValue) -> {
             centroX = (double) newValue;
             scalaMazzo();
-            mazzoEScarti.setLayoutX(centroX/2 - (checkInit?mazzoEScarti.getWidth():140)/2);
+            mazzoEScarti.setLayoutX(centroX/2 - (checkInit ? mazzoEScarti.getWidth() : 140)/2);
             mettiCarte(false);
             if (mazzoEScarti.getHeight()!=0)
                 checkInit=true;
@@ -69,7 +60,7 @@ public class MainController {
         stackPane.heightProperty().addListener((observable, oldValue, newValue) -> {
             centroY = (double) newValue;
             scalaMazzo();
-            mazzoEScarti.setLayoutY(centroY/2 - 15 - (checkInit?mazzoEScarti.getHeight():90)/2);
+            mazzoEScarti.setLayoutY((centroY/2)-15 - (checkInit ? mazzoEScarti.getHeight() : 90)/2);
             mettiCarte(false);
             if (mazzoEScarti.getHeight()!=0)
                 checkInit=true;
@@ -78,32 +69,37 @@ public class MainController {
         mettiVita();
         ovalPaneController.getMc(this);
     }
-    public void mettiCarte(boolean b) {
-        mano = new ArrayList<>();
+    public void scartaCarte(Carta c, Giocatore g){
+        g.scarta(c);
+        gameData.getMazzo().scarta(c);
+        scarti.setImage(c.getImage().getImage());
+    }
+    public void mettiCarte(boolean var) {
+        numNodiMano = new ArrayList<>();
             for (int i = 0; i < anchorPane.getChildren().size(); i++) {
                 if (anchorPane.getChildren().get(i) instanceof ImageView) {
-                    if (b) {
+                    if (var) {
                         anchorPane.getChildren().remove(i);
                         i--;
                     } else {
-                        mano.add(i);
+                        numNodiMano.add(i);
                     }
                 }
             }
-        ImageView c;
-        if (b) {
+        ImageView imageView;
+        if (var) {
             ArrayList<Carta> manoCorrente = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano();
             for (int i = 0; i< manoCorrente.size(); i++) {
-                c = manoCorrente.get(i).getImage();
-                scala(c);
-                anchorPane.getChildren().add(c);
-                listenerCarta(c, i);
-                mano.add(anchorPane.getChildren().indexOf(c));
+                imageView = manoCorrente.get(i).getImage();
+                scala(imageView);
+                anchorPane.getChildren().add(imageView);
+                listenerCarta(imageView, i);
+                numNodiMano.add(anchorPane.getChildren().indexOf(imageView));
             }
         } else {
-            for (int i : mano) {
-                c = (ImageView) anchorPane.getChildren().get(i);
-                scala(c);
+            for (int i : numNodiMano) {
+                imageView = (ImageView) anchorPane.getChildren().get(i);
+                scala(imageView);
             }
         }
         spostaCarta();
@@ -111,54 +107,52 @@ public class MainController {
     public void spostaCarta(){
         double cX = centroX/2;
         double cY = centroY-20;
-        double semilarghezza = centroX/5;
+        double semiLarghezza = centroX/5;
         double altezza = 10 + centroY/5;
-        int numOggetti = mano.size();
-        double[][] coordinate = calcolaCoordinateArco(cX, cY, semilarghezza, altezza, numOggetti);
+        int numOggetti = numNodiMano.size();
+        double[][] coordinate = calcolaCoordinateArco(cX, cY, semiLarghezza, altezza, numOggetti);
         double[] angoli = new double[numOggetti];
-        for (int i = 0; i < mano.size(); i++) {
-            angoli[i] = -(-30 + i * ((double) 60 /(numOggetti-1)));
-            ImageView iv = (ImageView) anchorPane.getChildren().get(mano.get(i));
-            iv.setLayoutX(coordinate[i][0] - iv.getFitWidth()/2);
-            iv.setLayoutY(coordinate[i][1] - iv.getFitWidth()*1.29);
-            iv.setRotate(angoli[i]);
-            conta++;
-            iv.toBack();
+        for (int i = 0; i < numNodiMano.size(); i++) {
+            angoli[i] = -(-30 + i * ((double) 60/(numOggetti-1)));
+            ImageView imageView = (ImageView) anchorPane.getChildren().get(numNodiMano.get(i));
+            imageView.setLayoutX(coordinate[i][0] - imageView.getFitWidth()/2);
+            imageView.setLayoutY(coordinate[i][1] - imageView.getFitWidth()*1.29);
+            imageView.setRotate(angoli[i]);
+            imageView.toBack();
         }
     }
-    public void listenerCarta(ImageView iv, int i){
+    public void listenerCarta(ImageView imageView, int i){
         Carta cartaAttuale = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().get(i);
-        iv.setOnMouseEntered((MouseEvent event) -> {
-            iv.setScaleX(1.1);
-            iv.setScaleY(1.1);
-            iv.toFront();
+        imageView.setOnMouseEntered(event -> {
+            imageView.setScaleX(1.1);
+            imageView.setScaleY(1.1);
+            imageView.toFront();
         });
-        iv.setOnMouseExited((MouseEvent event) -> {
-            iv.setScaleX(1.0);
-            iv.setScaleY(1.0);
-            iv.toBack();
+        imageView.setOnMouseExited(event -> {
+            imageView.setScaleX(1.0);
+            imageView.setScaleY(1.0);
+            imageView.toBack();
         });
-        iv.setOnMousePressed((MouseEvent event) -> {
-            xOffset = event.getSceneX() - iv.getTranslateX();
-            yOffset = event.getSceneY() - iv.getTranslateY();
+        imageView.setOnMousePressed(event -> {
+            xOffset = event.getSceneX() - imageView.getTranslateX();
+            yOffset = event.getSceneY() - imageView.getTranslateY();
         });
-        iv.setOnMouseDragged((MouseEvent event) -> {
-            iv.setTranslateX(event.getSceneX() - xOffset);
-            iv.setTranslateY(event.getSceneY() - yOffset);
+        imageView.setOnMouseDragged(event -> {
+            imageView.setTranslateX(event.getSceneX() - xOffset);
+            imageView.setTranslateY(event.getSceneY() - yOffset);
         });
-        iv.setOnMouseReleased((MouseEvent event) -> {
+        imageView.setOnMouseReleased(event -> {
             double finalX = event.getSceneX();
             double finalY = event.getSceneY();
-            iv.setTranslateX(0);
-            iv.setTranslateY(0);
-            System.out.println("Coordinate di rilascio: X = " + finalX + ", Y = " + finalY);
-            if (finalX<centroX/2+100&&finalX>centroX/2-100&&finalY<centroY/2+100&&finalY>centroY/2-100){
+            imageView.setTranslateX(0);
+            imageView.setTranslateY(0);
+            if (finalX<centroX/2+100 && finalX>centroX/2-100 && finalY<centroY/2+100 && finalY>centroY/2-100){
                 cartaAttuale.usaAbilita(ovalPaneController, this);
             }
         });
     }
     public double getScala(){
-        return 0.01*(10 * Math.min(centroX, centroY)) / 42;
+        return 0.01 * (10 * Math.min(centroX, centroY)) / 42;
     }
     public void scalaMazzo(){
         double scala = getScala();
@@ -168,18 +162,22 @@ public class MainController {
     public void scala(ImageView c){
         double dim = (5 * Math.min(centroX, centroY)) / 37;
         c.setFitWidth(dim);
+
     }
     public void mettiVita(){
         int vita = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente();
         barraVita.setProgress((double) vita/5);
     }
-    public double[][] calcolaCoordinateArco(double cX, double cY, double semilarghezza, double altezza, int numOggetti) {
+    public double[][] calcolaCoordinateArco(double cX, double cY, double semiLarghezza, double altezza, int numOggetti) {
         double[][] coordinate = new double[numOggetti][2];
         double angoloStep = Math.PI / (numOggetti - 1);
+        double angolo;
+        double x;
+        double y;
         for (int i = 0; i < numOggetti; i++) {
-            double angolo = i * angoloStep;
-            double x = cX + semilarghezza * Math.cos(angolo);
-            double y = cY - altezza * Math.sin(angolo);
+            angolo = i * angoloStep;
+            x = cX + semiLarghezza * Math.cos(angolo);
+            y = cY - altezza * Math.sin(angolo);
             coordinate[i][0] = x;
             coordinate[i][1] = y;
         }
@@ -198,21 +196,17 @@ public class MainController {
         });
         pause.play();
     }
+    @FXML
+    public void salvaPartita() {
+        System.out.println(gameData.getGiocatoriPartita());
+    }
     public void pescataInizialeGiocatore() {
-        for (int i = 0; i < anchorPane.getChildren().size(); i++) {
-            if (anchorPane.getChildren().get(i) instanceof VBox) {
-                System.out.println("BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB");
-                double vboxHeight = ((VBox) anchorPane.getChildren().get(i)).getBoundsInLocal().getHeight();
-                double vboxWidth = ((VBox) anchorPane.getChildren().get(i)).getBoundsInLocal().getWidth();
-                System.out.println("Altezza effettiva del VBox: " + vboxHeight);
-                System.out.println("Larghezza effettiva del VBox: " + vboxWidth);
-            }
-        }
         Giocatore player = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente());
         for(int i = 1; i <= 2; i++) {
             player.addCarta(gameData.getMazzo().pesca());
             System.out.println("Ho pescato");
         }
+        mettiCarte(true);
     }
     public void startSelectionMC(){
         anchorPane.setDisable(true);
@@ -221,7 +215,10 @@ public class MainController {
     public void stopSelectionMC(){
         anchorPane.setDisable(false);
         anchorPane.setVisible(true);
+        aggiornaCosa();
+    }
+    public void aggiornaCosa(){
+        mettiVita();
         mettiCarte(true);
-        System.out.println("FINESeLEZIONEMC");
     }
 }

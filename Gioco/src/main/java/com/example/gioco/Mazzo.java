@@ -67,7 +67,6 @@ public class Mazzo {
     public void scarta(Carta scarto){
         scarti.add(scarto);
     }
-    // Metodi per mescolare il mazzo e distribuire le carte...
 
     @Override
     public String toString() {
@@ -83,5 +82,8 @@ public class Mazzo {
             str += c.toStringNome() + " ";
         }
         return str;
+    }
+    public Carta ultimoScarto(){
+        return scarti.get(scarti.size()-1);
     }
 }
