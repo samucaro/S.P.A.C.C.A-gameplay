@@ -9,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
@@ -33,32 +32,21 @@ public class LoginAdminPageController {
     public void initialize() {
         ut = "";
         psw = "";
-        cont=1;
-
-        password.setOnKeyPressed(keyEvent -> {
-            if (keyEvent.getCode() == KeyCode.ENTER) {
-                ActionEvent event = new ActionEvent(password, null);
-                try {
-                    verifyLogin(event);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        cont=0;
     }
 
     public void verifyLogin(ActionEvent event) throws IOException {
         if(username.getText().equals(ut) && password.getText().equals(psw)) {
-            cont=1;
             switchToLoginPage(event);
         }
         else {
             error.setVisible(true);
-            if(cont == 4) {
+            if(cont == 3) {
                 timeError.setVisible(true);
             }
-            else if(cont >= 5) {
+            else if(cont >= 4) {
                 switchToBlockPage(event);
+                cont -= 2;
             }
             cont++;
             username.deleteText(0, username.getLength());
@@ -88,13 +76,18 @@ public class LoginAdminPageController {
         stage.setScene(scene);
         stage.show();
     }
-
     /*
     private void setPassword(String psw) {
         this.psw = psw;
     }
     private void setUsername(String ut) {
         this.ut = ut;
+    }
+    private String getPassword() {
+        return psw;
+    }
+    private String setUsername() {
+        return ut;
     }
     */
 }

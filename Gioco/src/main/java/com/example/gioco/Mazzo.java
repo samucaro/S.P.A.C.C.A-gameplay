@@ -1,21 +1,20 @@
 package com.example.gioco;
 
-import javafx.scene.image.Image;
-
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Mazzo {
     private ArrayList<Carta> carte;
-    private ArrayList<Carta> scarti;
-    private Random random;
+    private final ArrayList<Carta> scarti;
+    private final Random random;
 
     public Mazzo() {
-        this.carte = new ArrayList<Carta>();
-        this.scarti = new ArrayList<Carta>();
+        this.carte = new ArrayList<>();
+        this.scarti = new ArrayList<>();
         this.random = new Random();
     }
 
+    //Realizza il mazzo con un numero preciso di carte
     public void componiMazzo() {
         for(int i = 1; i <= 30; i++) {
             carte.add(new CartaBang());
@@ -40,12 +39,6 @@ public class Mazzo {
         }
         mescola();
     }
-    public void addCarta(Carta c) {
-        carte.add(c);
-    }
-    public void addScarto(Carta c) {
-        scarti.add(c);
-    }
 
     public void mescola() {
         for (int i = carte.size()-1; i > 0; i--) {
@@ -55,6 +48,14 @@ public class Mazzo {
             carte.set(j, temp);
         }
     }
+
+    public void addCarta(Carta c) {
+        carte.add(c);
+    }
+    public void addScarto(Carta c) {
+        scarti.add(c);
+    }
+
     public Carta pesca(){
         if (carte.isEmpty()) {
             carte = scarti;
@@ -68,22 +69,23 @@ public class Mazzo {
         scarti.add(scarto);
     }
 
+    public Carta ultimoScarto(){
+        return scarti.getLast();
+    }
+
     @Override
     public String toString() {
-        String str = "";
+        StringBuilder str = new StringBuilder();
         for(Carta c: carte) {
-            str += c.toStringNome() + " ";
+            str.append(c.toStringNome()).append(" ");
         }
-        return str;
+        return str.toString();
     }
     public String toStringScarti() {
-        String str = "";
+        StringBuilder str = new StringBuilder();
         for(Carta c: scarti) {
-            str += c.toStringNome() + " ";
+            str.append(c.toStringNome()).append(" ");
         }
-        return str;
-    }
-    public Carta ultimoScarto(){
-        return scarti.get(scarti.size()-1);
+        return str.toString();
     }
 }

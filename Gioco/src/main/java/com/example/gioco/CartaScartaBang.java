@@ -1,24 +1,28 @@
 package com.example.gioco;
 
-import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.shape.Rectangle;
-
-import java.util.ArrayList;
 
 public class CartaScartaBang extends Carta{
-    private final GameData gameData = GameData.getInstance();
-    private String desc = "Tutti i tuoi avversari scartano una carta Bang";
+    private final GameData gameData;
+    private final String desc;
+
+    public CartaScartaBang() {
+        gameData = GameData.getInstance();
+        desc = "Tutti i tuoi avversari scartano una carta Bang";
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
     public ImageView getImage(){
         ImageView imageView = new ImageView(new Image("CartaScartaBang.png"));
         imageView.setFitWidth(100);
         imageView.setPreserveRatio(true);
         return imageView;
     }
-    public String getDesc() {
-        return desc;
-    }
+
     public void usaAbilita(OvalPaneController ovalPaneController, MainController mainController) {
         for(Carta c: gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano()) {
             if(c instanceof CartaScartaBang) {

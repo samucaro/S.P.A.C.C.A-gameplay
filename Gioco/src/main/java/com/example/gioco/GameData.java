@@ -3,7 +3,6 @@ package com.example.gioco;
 import java.io.*;
 import java.util.*;
 
-
 public class GameData {
     private int turnoCorrente;
     private int numeroPartita;
@@ -12,18 +11,18 @@ public class GameData {
     private static GameData instance = null;
     private LinkedList<GameData> partiteTorneo;
     private final ArrayList<Giocatore> giocatoriPartita;
-    private final DataSet DS;
+    private final DataSet dataSet;
     private Mazzo mazzo;
     private int numeroGG;
     private int code;
 
     public GameData() throws IOException {
-        DS = new DataSet();
+        dataSet = new DataSet();
         giocatoriPartita = new ArrayList<>();
         mazzo = new Mazzo();
     }
     public GameData(int n, Stato stato, int turnoCorrente, Mazzo mazzo, ArrayList<Giocatore>giocatoriPartita) {
-        DS = new DataSet();
+        dataSet = new DataSet();
         partiteTorneo = new LinkedList<>();
         numeroPartita = n;
         this.stato = stato;
@@ -45,7 +44,7 @@ public class GameData {
     public void leggiFilePartita(int code) {
         this.code = code;
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(DS.getProjectFolderPath() + File.separator + "/" + code + ".txt"));
+            BufferedReader reader = new BufferedReader(new FileReader(dataSet.getProjectFolderPath() + File.separator + "/" + code + ".txt"));
             int c = 0;
             String line;
             while ((line = reader.readLine()) != null) {
@@ -106,7 +105,7 @@ public class GameData {
     public void leggiFileTorneo(int code) {
         this.code = code;
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(DS.getProjectFolderPath() + File.separator + "/" + code + ".txt"));
+            BufferedReader reader = new BufferedReader(new FileReader(dataSet.getProjectFolderPath() + File.separator + "/" + code + ".txt"));
             int c = 0;
             String line;
             numeroGG = 16;
@@ -188,7 +187,7 @@ public class GameData {
     }
     public void aggiornaFile(){
         try {
-            FileWriter file = new FileWriter((DS.getProjectFolderPath() + File.separator + "/" + code + ".txt"), true);
+            FileWriter file = new FileWriter((dataSet.getProjectFolderPath() + File.separator + "/" + code + ".txt"), true);
             PrintWriter writer = new PrintWriter(file);
             writer.println("Dati Generali " + tipo + ":");
             writer.println("NumGiocatori: " + numeroGG);
@@ -210,24 +209,16 @@ public class GameData {
         }
     }
     public Carta stringaCarta(String c) {
-        switch (c) {
-            case "Bang":
-                return new CartaBang();
-            case "Mancato":
-                return new CartaMancato();
-            case "Duello":
-                return new CartaDuello();
-            case "PerdiCarta":
-                return new CartaPerdiCarta();
-            case "ScartaBang":
-                return new CartaScartaBang();
-            case "SparaTutti":
-                return new CartaSparaTutti();
-            case "RecuperaVita":
-                return new CartaRecuperaVita();
-            default:
-                return null;
-        }
+        return switch (c) {
+            case "Bang" -> new CartaBang();
+            case "Mancato" -> new CartaMancato();
+            case "Duello" -> new CartaDuello();
+            case "PerdiCarta" -> new CartaPerdiCarta();
+            case "ScartaBang" -> new CartaScartaBang();
+            case "SparaTutti" -> new CartaSparaTutti();
+            case "RecuperaVita" -> new CartaRecuperaVita();
+            default -> null;
+        };
     }
     //MODIFICA
     public void setNumero(int numeroGG) {

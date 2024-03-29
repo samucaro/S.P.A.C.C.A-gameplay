@@ -8,12 +8,8 @@ import java.io.PrintWriter;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -54,7 +50,13 @@ public class SetPlayerPageController {
 
     //Metodo che permette di gestire le opzioni dei choiceBox in base alle scelte dell'utente
     public void impostaGiocatori() {
-        numGiocatoriItem.getSelectionModel().selectedItemProperty().addListener(
+        gestisciGiocatori();
+        gestisciRobot();
+    }
+
+    //metodo che gestisce le possibili scelte sui giocatori
+    private void gestisciGiocatori() {
+        numGiocatoriItem.getSelectionModel().selectedItemProperty().addListener( //ogni volta che modifico il numero di giocatori resetta tutte le opzioni successive
                 (observable, oldValue, newValue) -> {
                     for (int i = 0; i < 8; i++ )
                         nomiGiocatori.getChildren().get(i).setVisible(false);
@@ -70,6 +72,10 @@ public class SetPlayerPageController {
                     nomi = new String[numGiocatori];
                 }
         );
+    }
+
+    //metodo che gestisce le possibili scelte sui robot
+    public void gestisciRobot() {
         numRobotItem.getSelectionModel().selectedItemProperty().addListener(
                 (obs, oldV, newV) -> {
                     saveLogout.setDisable(true);
@@ -78,6 +84,8 @@ public class SetPlayerPageController {
                             numPersone = numGiocatori;
                         } else {
                             numPersone = numGiocatori - Integer.parseInt(newV.split(" ")[0]);
+                            if(numPersone == 0)
+                                saveLogout.setDisable(false);
                         }
                         selezioneNomi();
                     }
@@ -86,7 +94,7 @@ public class SetPlayerPageController {
     }
 
     //metodo che abilita il salvataggio solo sotto determinate condizioni necessarie
-    public void verificaNomi(KeyEvent event) {
+    public void verificaNomi() {
         boolean check = true;
         for(int i = 0; i < numGiocatori; i++) {
             check = check && !((TextField) nomiGiocatori.getChildren().get(i)).getText().isEmpty();
@@ -95,11 +103,13 @@ public class SetPlayerPageController {
             saveLogout.setDisable(false);
             for(int i = 0; i < numGiocatori; i++)
                 nomi[i] = ((TextField) nomiGiocatori.getChildren().get(i)).getText();
-        } else
+        }
+        else {
             saveLogout.setDisable(true);
+        }
     }
 
-    //Metodo che gestisce l'insrimento del nome se e solo se il giocatore è una persona
+    //Metodo che gestisce l'inserimento del nome se e solo se il giocatore è una persona
     private void selezioneNomi(){
         tipoGiocatore = new String[numGiocatori];
         for (int i = 0; i < numGiocatori; i++){
@@ -131,13 +141,13 @@ public class SetPlayerPageController {
     //mazzo che assegna la mano a ogni giocatore e salva tutto su file
     private void assegnaMano() {
         mani = new String[numGiocatori];
-        String str = "";
+        StringBuilder str = new StringBuilder();
         for(int i = 0; i < numGiocatori; i++) {
             for (int j = 1; j <= 5; j++) {
-                str += m.pesca().toStringNome() + " ";
+                str.append(m.pesca().toStringNome()).append(" ");
             }
-            mani[i] = str;
-            str = "";
+            mani[i] = str.toString();
+            str = new StringBuilder();
         }
     }
 

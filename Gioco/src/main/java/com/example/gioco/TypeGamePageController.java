@@ -10,7 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
@@ -18,8 +17,8 @@ import java.util.Objects;
 public class TypeGamePageController {
     private Scene scene;
     private Parent root;
-    private GameData gameData = GameData.getInstance();
-    private DataSet DataS = new DataSet();
+    private GameData gameData;
+    private DataSet dataSet;
     @FXML
     private ChoiceBox<String> partite;
     @FXML
@@ -30,8 +29,10 @@ public class TypeGamePageController {
     private String percorsoCartellaProgetto;
     @FXML
     public void initialize() {
-        percorsoCartellaProgetto = DataS.getProjectFolderPath();
-        mostraPartite();
+        dataSet = new DataSet();
+        gameData = GameData.getInstance();
+        percorsoCartellaProgetto = dataSet.getProjectFolderPath();
+        mostraPartite(percorsoCartellaProgetto);
         partite.getSelectionModel().selectedItemProperty().addListener(
                 (obs, oldV, newV) -> {
                     if(newV != null) {
@@ -42,28 +43,6 @@ public class TypeGamePageController {
         );
     }
 
-    public void mostraPartite() {
-        partite.getItems().clear();
-        String percorsoCartellaProgetto = DataS.getProjectFolderPath();
-        File directory = new File(percorsoCartellaProgetto);
-        if (directory.exists() && directory.isDirectory()) {
-            String[] files = directory.list();
-            if (files != null) {
-                for (String fileName : files) {
-                    partite.getItems().add(fileName.substring(0, 4));
-
-                }
-            }
-        } else {
-            System.err.println("La cartella specificata non esiste o non è una cartella valida.");
-        }
-    }
-
-    public void eliminaPartita() {
-        DataS.eliminaFile(percorsoCartellaProgetto + File.separator + newValue + ".txt");
-        testo.setVisible(true);
-        mostraPartite();
-    }
     public void switchToSetPlayerPage(ActionEvent event) throws IOException {
         gameData.setTipo("Partita");
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("SetPlayerPage.fxml")));
@@ -79,6 +58,32 @@ public class TypeGamePageController {
         scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    //Mostra tutte le partite disponibili
+    public void mostraPartite(String percorsoCartellaProgetto) {
+        partite.getItems().clear();
+        File directory = new File(percorsoCartellaProgetto);
+        if (directory.exists() && directory.isDirectory()) {
+            String[] files = directory.list();
+            if (files != null) {
+                for (String fileName : files) {
+                    if(fileName.length() > 7)
+                        partite.getItems().add(fileName.substring(0, 4));
+                    else
+                        partite.getItems().add(fileName.substring(0, 3));
+                }
+            }
+        } else {
+            System.err.println("La cartella specificata non esiste o non è una cartella valida.");
+        }
+    }
+
+    //Elimina la partita selezionata
+    public void eliminaPartita() {
+        dataSet.eliminaFile(percorsoCartellaProgetto + File.separator + newValue + ".txt");
+        testo.setVisible(true);
+        mostraPartite(percorsoCartellaProgetto);
     }
 
     public void switchToAdminPlayerPage(ActionEvent event) throws IOException {

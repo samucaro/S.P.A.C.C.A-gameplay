@@ -17,14 +17,16 @@ import java.util.Objects;
 public class SetGamePageController {
     private Scene scene;
     private Parent root;
-    private GameData gameData = GameData.getInstance();
+    private GameData gameData;
     @FXML
     private ChoiceBox<String> list;
     @FXML
     private Button start;
-    private DataSet DataS = new DataSet();
+    private DataSet dataSet;
     @FXML
     public void initialize() {
+        dataSet = new DataSet();
+        gameData = GameData.getInstance();
         mostraPartite();
         list.getSelectionModel().selectedItemProperty().addListener(
                 (obs, oldV, newV) -> {
@@ -34,9 +36,9 @@ public class SetGamePageController {
         );
     }
 
-    public void mostraPartite() {
-        String percorsoCartellaProgetto = DataS.getProjectFolderPath();
-        File directory = new File(percorsoCartellaProgetto);
+    //mostra le partite e i tornei disponibili
+    private void mostraPartite() {
+        File directory = new File(dataSet.getProjectFolderPath());
         if (directory.exists() && directory.isDirectory()) {
             String[] files = directory.list();
             if (files != null) {
@@ -60,18 +62,10 @@ public class SetGamePageController {
         stage.show();
     }
 
-    public void impostaListener(Scene scene){
-        scene.widthProperty().addListener((obs, oldVal, newVal) -> {
-            OvalPaneController.setScenaX((Double) newVal);
-        });
-        scene.heightProperty().addListener((obs, oldVal, newVal) -> {
-            OvalPaneController.setScenaY((Double) newVal);
-        });
-    }
-
     public void switchToGamePage(ActionEvent event) throws IOException {
         gameData.leggiFilePartita(Integer.parseInt(list.getValue()));
-        root = FXMLLoader.load(getClass().getResource("Partitonza.fxml"));
+        //aggiungere il metodo di gameData per leggere il torneo
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("TabelloneGioco.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         impostaListener(scene);
@@ -81,5 +75,14 @@ public class SetGamePageController {
         scene.setCamera(cam);
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void impostaListener(Scene scene){
+        scene.widthProperty().addListener((obs, oldVal, newVal) -> {
+            OvalPaneController.setScenaX((Double) newVal);
+        });
+        scene.heightProperty().addListener((obs, oldVal, newVal) -> {
+            OvalPaneController.setScenaY((Double) newVal);
+        });
     }
 }

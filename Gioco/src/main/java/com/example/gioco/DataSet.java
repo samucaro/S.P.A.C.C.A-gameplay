@@ -9,6 +9,17 @@ public class DataSet {
     public DataSet() {
     }
 
+    //Da la directory di lavoro corrente dell'utente che lancia il programma
+    public String getProjectFolderPath() {
+        String currentDirectory = System.getProperty("user.dir");
+        String projectFolderPath = currentDirectory + File.separator + "src/main/resources/FileGioco";
+        File folder = new File(projectFolderPath);
+        if (!folder.exists()) {
+            System.err.println("La cartella non esiste!");
+        }
+        return projectFolderPath;
+    }
+
     public void creaFile(int codice) {
         String percorsoCartellaProgetto = getProjectFolderPath();
         try {
@@ -24,6 +35,16 @@ public class DataSet {
             e.printStackTrace();
         }
     }
+
+    public void eliminaFile(String percorsoFile) {
+        File file = new File(percorsoFile);
+        if (file.delete()) {
+            System.out.println("Il file è stato eliminato con successo.");
+        } else {
+            System.out.println("File non presente");
+        }
+    }
+
     public boolean checkCode(int codice) {
         String percorsoCartellaProgetto = getProjectFolderPath();
         List<Integer> numbers = new ArrayList<>();
@@ -39,23 +60,5 @@ public class DataSet {
             }
         }
         return numbers.contains(codice);
-    }
-    public String getProjectFolderPath() {
-        String currentDirectory = System.getProperty("user.dir");
-        String projectFolderPath = currentDirectory + File.separator + "src/main/resources/FileGioco";
-        File folder = new File(projectFolderPath);
-        if (!folder.exists()) {
-            System.err.println("La cartella non esiste!");
-        }
-        return projectFolderPath;
-    }
-
-    public void eliminaFile(String percorsoFile) {
-        File file = new File(percorsoFile);
-        if (file.delete()) {
-            System.out.println("Il file è stato eliminato con successo.");
-        } else {
-            System.out.println("File non presente");
-        }
     }
 }

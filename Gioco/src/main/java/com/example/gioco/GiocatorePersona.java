@@ -4,16 +4,17 @@ import java.util.ArrayList;
 
 public class GiocatorePersona extends Giocatore{
     private  String nome;
-    private final int HP = 5;
+    private final int HP;
     private int hpRimanente;
     private ArrayList<Carta> mano;
     private boolean turno;
     public GiocatorePersona(){
+        HP = 5;
         hpRimanente = HP;
-        mano = new ArrayList<Carta>();
+        mano = new ArrayList<>();
     }
     public void addCarta(Carta carta){
-        if(mano.size() == 6) { //modificare con il numero massimo di carte in mano
+        if(mano.size() == 5) {
             System.out.println("Hai già il numero massimo di carte in mano");
         }
         else {
@@ -27,14 +28,14 @@ public class GiocatorePersona extends Giocatore{
         if(hpRimanente == 0) {
             System.out.println("Il giocatore è già eliminato");
         }
-        hpRimanente-=danno;
+        hpRimanente -= danno;
     }
     public void cura(int vita){
-        if(hpRimanente == HP) { //l'hp del personaggio è final e non può cambiare
+        if(hpRimanente == HP) {
             System.out.println("Il personaggio ha già la vita massima, non verrà aggiunto nessun punto vita");
         }
         else {
-            hpRimanente+=vita; //se si vuole aggiungere più fi una vita fare un ciclo for, meglio lasciare che si può aggiungere solo una vita per volta
+            hpRimanente += vita;
         }
     }
     public void setHpRimanente(int hp) {
@@ -70,10 +71,10 @@ public class GiocatorePersona extends Giocatore{
                 "**********************************************************";
     }
     public String toStringMano() {
-        String str = "";
+        StringBuilder str = new StringBuilder();
         for(Carta c: mano) {
-            str += c.toStringNome() + " ";
+            str.append(c.toStringNome()).append(" ");
         }
-        return str;
+        return str.toString();
     }
 }

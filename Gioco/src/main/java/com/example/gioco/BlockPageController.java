@@ -15,26 +15,30 @@ import java.util.Objects;
 
 public class BlockPageController {
     private int seconds;
+    private Timeline timeline;
     @FXML
     private Label timer;
 
     @FXML
     public void initialize() {
         seconds=1;
-        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), this::updateTimer));
+        timeline = new Timeline(new KeyFrame(Duration.seconds(1), this::updateTimer));
         timeline.setCycleCount(Timeline.INDEFINITE);
         timeline.play();
     }
 
     private void updateTimer(ActionEvent event) {
         timer.setText("" + seconds);
-        seconds++;
-        if(seconds == 32) {
+        if(seconds == 31) {
             try {
                 switchToHomePage();
+                timeline.stop();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+        }
+        else {
+            seconds++;
         }
     }
 
