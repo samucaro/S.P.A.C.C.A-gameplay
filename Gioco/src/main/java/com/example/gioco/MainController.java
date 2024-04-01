@@ -9,13 +9,13 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 public class MainController {
-    private double centroX = 600;
-    private double centroY = 400;
-    private double xOffset = 0;
-    private double yOffset = 0;
+    private static double centroX = 600;
+    private static double centroY = 400;
+    private static double xOffset = 0;
+    private static double yOffset = 0;
     private ArrayList<Integer> numNodiMano;
-    private boolean checkInit = false;
-    private final GameData gameData = GameData.getInstance();
+    private boolean checkInit;
+    private GameData gameData;
     @FXML
     public OvalPaneController ovalPaneController;
     @FXML
@@ -34,6 +34,8 @@ public class MainController {
     private AnchorPane anchorPane;
     @FXML
     public void initialize() {
+        gameData = GameData.getInstance();
+        checkInit = false;
         impostaCose();
         barraVita.toFront();
         mazzoEScarti.toFront();
@@ -54,7 +56,7 @@ public class MainController {
             scalaMazzo();
             mazzoEScarti.setLayoutX(centroX/2 - (checkInit ? mazzoEScarti.getWidth() : 140)/2);
             mettiCarte(false);
-            if (mazzoEScarti.getHeight()!=0)
+            if (mazzoEScarti.getHeight() != 0)
                 checkInit=true;
         });
         stackPane.heightProperty().addListener((observable, oldValue, newValue) -> {
@@ -76,10 +78,10 @@ public class MainController {
     }
     public void mettiCarte(boolean var) {
         numNodiMano = new ArrayList<>();
-            for (int i = 0; i < anchorPane.getChildren().size(); i++) {
+            for(int i = 0; i < anchorPane.getChildren().size(); i++) {
                 if (anchorPane.getChildren().get(i) instanceof ImageView) {
                     if (var) {
-                        anchorPane.getChildren().remove(i);
+                        anchorPane.getChildren().remove(i); //
                         i--;
                     } else {
                         numNodiMano.add(i);
@@ -91,15 +93,14 @@ public class MainController {
             ArrayList<Carta> manoCorrente = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano();
             for (int i = 0; i< manoCorrente.size(); i++) {
                 imageView = manoCorrente.get(i).getImage();
-                scala(imageView);
                 anchorPane.getChildren().add(imageView);
+                scala(imageView);
                 listenerCarta(imageView, i);
                 numNodiMano.add(anchorPane.getChildren().indexOf(imageView));
             }
         } else {
             for (int i : numNodiMano) {
-                imageView = (ImageView) anchorPane.getChildren().get(i);
-                scala(imageView);
+                scala((ImageView) anchorPane.getChildren().get(i));
             }
         }
         spostaCarta();
@@ -124,24 +125,29 @@ public class MainController {
     public void listenerCarta(ImageView imageView, int i){
         Carta cartaAttuale = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().get(i);
         imageView.setOnMouseEntered(event -> {
+            System.out.println("SONO QUI 1");
             imageView.setScaleX(1.1);
             imageView.setScaleY(1.1);
             imageView.toFront();
         });
         imageView.setOnMouseExited(event -> {
+            System.out.println("SONO QUI 2");
             imageView.setScaleX(1.0);
             imageView.setScaleY(1.0);
             imageView.toBack();
         });
         imageView.setOnMousePressed(event -> {
+            System.out.println("SONO QUI 3");
             xOffset = event.getSceneX() - imageView.getTranslateX();
             yOffset = event.getSceneY() - imageView.getTranslateY();
         });
         imageView.setOnMouseDragged(event -> {
+            System.out.println("SONO QUI 4");
             imageView.setTranslateX(event.getSceneX() - xOffset);
             imageView.setTranslateY(event.getSceneY() - yOffset);
         });
         imageView.setOnMouseReleased(event -> {
+            System.out.println("SONO QUI 5");
             double finalX = event.getSceneX();
             double finalY = event.getSceneY();
             imageView.setTranslateX(0);
@@ -149,6 +155,7 @@ public class MainController {
             if (finalX<centroX/2+100 && finalX>centroX/2-100 && finalY<centroY/2+100 && finalY>centroY/2-100){
                 cartaAttuale.usaAbilita(ovalPaneController, this);
             }
+            System.out.println("tutto ok");
         });
     }
     public double getScala(){
@@ -217,7 +224,7 @@ public class MainController {
         anchorPane.setVisible(true);
         aggiornaCosa();
     }
-    public void aggiornaCosa(){
+    public void aggiornaCosa() {
         mettiVita();
         mettiCarte(true);
     }

@@ -21,20 +21,20 @@ import javafx.util.Duration;
 import java.util.Objects;
 
 public class OvalPaneController {
-    private static final GameData gameData = GameData.getInstance();
+    private static GameData gameData;
     @FXML
     private Pane ovalPane;
     private MainController mc;
     private static Group[] pianeti;
 
-    PhongMaterial redMaterial = new PhongMaterial(Color.RED);
-    private Giocatore giocatoreSelezionato = null;
-    private final ProgressBar progressBar = new ProgressBar();
-    private final Text scegliAvversario = new Text("Scegli chi vuoi attaccare");
+    private PhongMaterial redMaterial;
+    private Giocatore giocatoreSelezionato;
+    private ProgressBar progressBar;
+    private Text scegliAvversario;
     private static double centroX;
     private static double centroY;
     private static final BooleanProperty resetHD = new SimpleBooleanProperty(false);
-    private boolean planetSelected = false;
+    private boolean planetSelected;
     private static double orx = 230.0;
     private static double ory = 250.0;
     private static double irx = 90.0;
@@ -43,7 +43,13 @@ public class OvalPaneController {
     private static int turnoDi = 0;
     @FXML
     public void initialize() {
+        gameData = GameData.getInstance();
         pianeti = new Group[gameData.getNumero()]; //La classe Group permette di raggruppare più nodi insieme e gestirli in contemporanea
+        redMaterial = new PhongMaterial(Color.RED);
+        scegliAvversario = new Text("Scegli chi vuoi attaccare");
+        progressBar = new ProgressBar();
+        giocatoreSelezionato = null;
+        planetSelected = false;
         creaGruppoPianeti();
         impostaStile();
         iniziaHD();
