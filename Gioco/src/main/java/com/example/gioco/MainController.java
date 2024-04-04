@@ -9,10 +9,10 @@ import javafx.util.Duration;
 import java.util.ArrayList;
 
 public class MainController {
-    private static double centroX = 600;
-    private static double centroY = 400;
-    private static double xOffset = 0;
-    private static double yOffset = 0;
+    private double centroX;
+    private double centroY;
+    private double xOffset;
+    private double yOffset;
     private ArrayList<Integer> numNodiMano;
     private boolean checkInit;
     private GameData gameData;
@@ -37,24 +37,23 @@ public class MainController {
         gameData = GameData.getInstance();
         checkInit = false;
         impostaCose();
-        barraVita.toFront();
-        mazzoEScarti.toFront();
-        mazzoEScarti.getChildren().getFirst().setOnMouseEntered(event -> {
+        mazzoEScarti.getChildren().getFirst().setOnMouseEntered(event1 -> {
             mazzoEScarti.getChildren().getFirst().setScaleX(1.1);
             mazzoEScarti.getChildren().getFirst().setScaleY(1.1);
         });
-        mazzoEScarti.getChildren().getFirst().setOnMouseExited(event -> {
+        mazzoEScarti.getChildren().getFirst().setOnMouseExited(event2 -> {
             mazzoEScarti.getChildren().getFirst().setScaleX(1.0);
             mazzoEScarti.getChildren().getFirst().setScaleY(1.0);
         });
     }
     public void impostaCose(){
-        anchorPane.prefWidthProperty().bind(stackPane.widthProperty());
+        anchorPane.prefWidthProperty().bind(stackPane.widthProperty()); //permette di legare l'AnchorPane alle dimensioni dello StackPane
         anchorPane.prefHeightProperty().bind(stackPane.heightProperty());
         stackPane.widthProperty().addListener((observable, oldValue, newValue) -> {
             centroX = (double) newValue;
             scalaMazzo();
-            mazzoEScarti.setLayoutX(centroX/2 - (checkInit ? mazzoEScarti.getWidth() : 140)/2);
+            mazzoEScarti.setLayoutX(centroX/2 - (checkInit ? mazzoEScarti.getWidth()*getScala() : 140)/2);
+            System.out.println("SPESSOREMAZZO"+mazzoEScarti.getWidth()*getScala());
             mettiCarte(false);
             if (mazzoEScarti.getHeight() != 0)
                 checkInit=true;
@@ -62,7 +61,8 @@ public class MainController {
         stackPane.heightProperty().addListener((observable, oldValue, newValue) -> {
             centroY = (double) newValue;
             scalaMazzo();
-            mazzoEScarti.setLayoutY((centroY/2)-15 - (checkInit ? mazzoEScarti.getHeight() : 90)/2);
+            mazzoEScarti.setLayoutY((centroY/2) - (checkInit ? mazzoEScarti.getHeight()*getScala() : 90)/2);
+            System.out.println("ALTEZZAMAZZO"+mazzoEScarti.getHeight()*getScala());
             mettiCarte(false);
             if (mazzoEScarti.getHeight()!=0)
                 checkInit=true;
@@ -71,39 +71,58 @@ public class MainController {
         mettiVita();
         ovalPaneController.getMc(this);
     }
+
+    public void scalaMazzo(){
+        double scala = getScala();
+        mazzoEScarti.setScaleX(scala);
+        mazzoEScarti.setScaleY(scala);
+    }
+
+    public double getScala(){
+        return 0.01 * (10 * Math.min(centroX, centroY)) / 50;
+    }
     public void scartaCarte(Carta c, Giocatore g){
         g.scarta(c);
         gameData.getMazzo().scarta(c);
         scarti.setImage(c.getImage().getImage());
+        System.out.println("SCARTATA");
     }
     public void mettiCarte(boolean var) {
+        int cont = 0;
         numNodiMano = new ArrayList<>();
             for(int i = 0; i < anchorPane.getChildren().size(); i++) {
                 if (anchorPane.getChildren().get(i) instanceof ImageView) {
                     if (var) {
-                        anchorPane.getChildren().remove(i); //
+                        anchorPane.getChildren().remove(i);
                         i--;
+                        cont++;
+                        System.out.println("" + cont);
                     } else {
                         numNodiMano.add(i);
                     }
                 }
             }
-        ImageView imageView;
         if (var) {
-            ArrayList<Carta> manoCorrente = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano();
-            for (int i = 0; i< manoCorrente.size(); i++) {
-                imageView = manoCorrente.get(i).getImage();
-                anchorPane.getChildren().add(imageView);
-                scala(imageView);
-                listenerCarta(imageView, i);
-                numNodiMano.add(anchorPane.getChildren().indexOf(imageView));
-            }
+            PauseTransition pause = new PauseTransition(Duration.seconds(1));
+            pause.play();
+            pause.setOnFinished(event -> {
+                ImageView imageView;
+                ArrayList<Carta> manoCorrente = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano();
+                for (int i = 0; i< manoCorrente.size(); i++) {
+                    imageView = manoCorrente.get(i).getImage();
+                    anchorPane.getChildren().add(imageView);
+                    scala(imageView);
+                    listenerCarta(imageView, i);
+                    numNodiMano.add(anchorPane.getChildren().indexOf(imageView));
+                }
+                    spostaCarta();
+            });
         } else {
             for (int i : numNodiMano) {
                 scala((ImageView) anchorPane.getChildren().get(i));
             }
+            spostaCarta();
         }
-        spostaCarta();
     }
     public void spostaCarta(){
         double cX = centroX/2;
@@ -124,27 +143,26 @@ public class MainController {
     }
     public void listenerCarta(ImageView imageView, int i){
         Carta cartaAttuale = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().get(i);
-        imageView.setOnMouseEntered(event -> {
+        imageView.setOnMouseEntered(event1 -> {
             System.out.println("SONO QUI 1");
             imageView.setScaleX(1.1);
             imageView.setScaleY(1.1);
-            imageView.toFront();
         });
-        imageView.setOnMouseExited(event -> {
+        imageView.setOnMouseExited(event2 -> {
             System.out.println("SONO QUI 2");
             imageView.setScaleX(1.0);
             imageView.setScaleY(1.0);
-            imageView.toBack();
         });
-        imageView.setOnMousePressed(event -> {
+        imageView.setOnMousePressed(event1 -> {
             System.out.println("SONO QUI 3");
-            xOffset = event.getSceneX() - imageView.getTranslateX();
-            yOffset = event.getSceneY() - imageView.getTranslateY();
+            xOffset = event1.getSceneX() - imageView.getTranslateX();
+            yOffset = event1.getSceneY() - imageView.getTranslateY();
         });
-        imageView.setOnMouseDragged(event -> {
+        imageView.setOnMouseDragged(event2 -> {
             System.out.println("SONO QUI 4");
-            imageView.setTranslateX(event.getSceneX() - xOffset);
-            imageView.setTranslateY(event.getSceneY() - yOffset);
+            imageView.setTranslateX(event2.getSceneX() - xOffset);
+            imageView.setTranslateY(event2.getSceneY() - yOffset);
+            imageView.toFront();
         });
         imageView.setOnMouseReleased(event -> {
             System.out.println("SONO QUI 5");
@@ -158,14 +176,7 @@ public class MainController {
             System.out.println("tutto ok");
         });
     }
-    public double getScala(){
-        return 0.01 * (10 * Math.min(centroX, centroY)) / 42;
-    }
-    public void scalaMazzo(){
-        double scala = getScala();
-        mazzoEScarti.setScaleX(scala);
-        mazzoEScarti.setScaleY(scala);
-    }
+
     public void scala(ImageView c){
         double dim = (5 * Math.min(centroX, centroY)) / 37;
         c.setFitWidth(dim);
@@ -196,12 +207,12 @@ public class MainController {
         turnButton.setDisable(true);
         PauseTransition pause = new PauseTransition(Duration.seconds(1));
         ovalPaneController.cambiaTurno();
+        pause.play();
+        mettiCarte(true);
         pause.setOnFinished(event -> {
             turnButton.setDisable(false);
-            mettiCarte(true);
             mettiVita();
         });
-        pause.play();
     }
     @FXML
     public void salvaPartita() {

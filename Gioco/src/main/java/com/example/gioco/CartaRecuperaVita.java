@@ -22,7 +22,6 @@ public class CartaRecuperaVita extends Carta{
         imageView.setPreserveRatio(true);
         return imageView;
     }
-
     public void usaAbilita(OvalPaneController ovalPaneController, MainController mainController) {
         for(Carta carta: gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano()) {
             if(carta instanceof CartaRecuperaVita) {
