@@ -26,30 +26,34 @@ public class CartaSparaTutti extends Carta{
     }
 
     public void usaAbilita(OvalPaneController ovalPaneController, MainController mainController) {
-        int cont = 0;
-        boolean var;
-        for(Carta carta1: gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano()) {
-            if(carta1 instanceof CartaSparaTutti) {
-                mainController.scartaCarte(carta1, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
+        for(Carta c: gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano()) {
+            if(c instanceof CartaSparaTutti) {
+                mainController.scartaCarte(c, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
                 break;
             }
         }
-        int io = gameData.getTurnoCorrente();
-        for(Giocatore giocatore: gameData.getGiocatoriPartita()) {
-            cont++;
-            if(cont != io) {
-                var = false;
-                for(Carta carta2: giocatoreSelezionato.getMano()) {
-                    if(carta2 instanceof CartaMancato) {
-                        var = true;
-                        mainController.scartaCarte(carta2, giocatoreSelezionato);
+        gestisciEventiAttacco(ovalPaneController, mainController);
+    }
+
+    public void gestisciEventiAttacco(OvalPaneController ovalPaneController,  MainController mainController) {
+        boolean checkCartaB = false;
+        for (int i = 0; i < gameData.getGiocatoriPartita().size(); i++){
+            if (i != gameData.getTurnoCorrente()) {
+                for (int j = 0; j < gameData.getGiocatoriPartita().get(i).getMano().size(); j++){
+                    System.out.println(gameData.getGiocatoriPartita().get(i).getNome() + " " + j);
+                    if (gameData.getGiocatoriPartita().get(i).getMano().get(j) instanceof CartaMancato){
+                        checkCartaB = true;
+                        mainController.scartaCarte(gameData.getGiocatoriPartita().get(i).getMano().get(j),gameData.getGiocatoriPartita().get(i));
                         break;
                     }
                 }
-                if (!var) {
-                    giocatore.subisciDanno(1);
+                if (!checkCartaB){
+                    System.out.println("SONO QUI");
+                    gameData.getGiocatoriPartita().get(i).subisciDanno(1);
+                    ovalPaneController.dannoSfera(gameData.getGiocatoriPartita().get(i));
                 }
             }
+            checkCartaB = false;
         }
     }
 

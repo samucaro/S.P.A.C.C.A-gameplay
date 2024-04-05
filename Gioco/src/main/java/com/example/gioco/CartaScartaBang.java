@@ -26,18 +26,22 @@ public class CartaScartaBang extends Carta{
     public void usaAbilita(OvalPaneController ovalPaneController, MainController mainController) {
         for(Carta c: gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano()) {
             if(c instanceof CartaScartaBang) {
-                mainController.scartaCarte(c,gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
+                mainController.scartaCarte(c, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
                 break;
             }
         }
-        boolean checkCartaB;
+        gestisciEventiAttacco(ovalPaneController, mainController);
+    }
+
+    public void gestisciEventiAttacco(OvalPaneController ovalPaneController,  MainController mainController) {
+        boolean checkCartaB = false;
         for (int i = 0; i < gameData.getGiocatoriPartita().size(); i++){
-            if (i!=gameData.getTurnoCorrente()) {
-                checkCartaB = false;
+            if (i != gameData.getTurnoCorrente()) {
                 for (int j = 0; j < gameData.getGiocatoriPartita().get(i).getMano().size(); j++){
                     if (gameData.getGiocatoriPartita().get(i).getMano().get(j) instanceof CartaBang){
                         checkCartaB = true;
                         mainController.scartaCarte(gameData.getGiocatoriPartita().get(i).getMano().get(j),gameData.getGiocatoriPartita().get(i));
+                        break;
                     }
                 }
                 if (!checkCartaB){

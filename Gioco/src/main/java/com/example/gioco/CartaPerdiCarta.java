@@ -28,10 +28,14 @@ public class CartaPerdiCarta extends Carta{
     public void usaAbilita(OvalPaneController ovalPaneController, MainController mainController) {
         for(Carta c: gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano()) {
             if(c instanceof CartaPerdiCarta) {
-                mainController.scartaCarte(c,gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
+                mainController.scartaCarte(c, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
                 break;
             }
         }
+        gestisciEventiAttacco(ovalPaneController, mainController);
+    }
+
+    public void gestisciEventiAttacco(OvalPaneController ovalPaneController,  MainController mainController) {
         ovalPaneController.startSelection().setOnSucceeded(event -> {
             giocatoreSelezionato = ovalPaneController.planetSelection();
             mainController.scartaCarte(giocatoreSelezionato.getMano().get((int) (Math.random() * (giocatoreSelezionato.getMano().size()))), giocatoreSelezionato);

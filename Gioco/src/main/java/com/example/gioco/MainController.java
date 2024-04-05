@@ -101,7 +101,7 @@ public class MainController {
                 }
             }
         if (var) {
-            PauseTransition pause = new PauseTransition(Duration.seconds(1));
+            PauseTransition pause = new PauseTransition(Duration.seconds(0.1));
             pause.play();
             pause.setOnFinished(event -> {
                 ImageView imageView;
@@ -118,13 +118,13 @@ public class MainController {
                 }
                 spostaCarta();
             });
-        } else {
+        }
+        else {
             for (int i : numNodiMano) {
                 scala((ImageView) anchorPane.getChildren().get(i));
             }
             spostaCarta();
         }
-        System.out.println("DIO BOIA NON STAMA LA CARTA");
     }
     public void spostaCarta(){
         double cX = centroX/2;
@@ -141,7 +141,7 @@ public class MainController {
             imageView.setLayoutX(coordinate[i][0] - imageView.getFitWidth()/2);
             imageView.setLayoutY(coordinate[i][1] - imageView.getFitWidth()*1.29);
             imageView.setRotate(angoli[i]);
-            //imageView.toBack();
+            imageView.toBack();
         }
     }
     public void listenerCarta(ImageView imageView, int i){
@@ -177,7 +177,6 @@ public class MainController {
     public void scala(ImageView c){
         double dim = (5 * Math.min(centroX, centroY)) / 37;
         c.setFitWidth(dim);
-
     }
     public void mettiVita(){
         int vita = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente();
