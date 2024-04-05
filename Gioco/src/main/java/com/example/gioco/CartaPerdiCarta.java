@@ -38,7 +38,9 @@ public class CartaPerdiCarta extends Carta{
     public void gestisciEventiAttacco(OvalPaneController ovalPaneController,  MainController mainController) {
         ovalPaneController.startSelection().setOnSucceeded(event -> {
             giocatoreSelezionato = ovalPaneController.planetSelection();
-            mainController.scartaCarte(giocatoreSelezionato.getMano().get((int) (Math.random() * (giocatoreSelezionato.getMano().size()))), giocatoreSelezionato);
+            int val = (int) (Math.random() * (giocatoreSelezionato.getMano().size()));
+            mainController.prendiCarta(giocatoreSelezionato.getMano().get(val-1), giocatoreSelezionato);
+            gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).addCarta(giocatoreSelezionato.getMano().get(val));
             ovalPaneController.dannoSfera(giocatoreSelezionato);
             ovalPaneController.fineSelezione();
             mainController.stopSelectionMC();

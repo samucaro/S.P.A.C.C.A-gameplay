@@ -41,6 +41,7 @@ public class OvalPaneController {
     private static double iry = 130.0;
     private static Shape halfDonut;
     private static int turnoDi = 0;
+
     @FXML
     public void initialize() {
         gameData = GameData.getInstance();

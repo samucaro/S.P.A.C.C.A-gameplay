@@ -87,6 +87,12 @@ public class MainController {
         scarti.setImage(c.getImage().getImage());
         //System.out.println("SCARTATA");
     }
+
+    public void prendiCarta(Carta c, Giocatore g){
+        g.scarta(c);
+        //System.out.println("SCARTATA");
+    }
+
     public void mettiCarte(boolean var) {
         numNodiMano = new ArrayList<>();
             for(int i = 0; i < anchorPane.getChildren().size(); i++) {
