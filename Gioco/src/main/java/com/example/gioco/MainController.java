@@ -85,18 +85,16 @@ public class MainController {
         g.scarta(c);
         gameData.getMazzo().scarta(c);
         scarti.setImage(c.getImage().getImage());
-        System.out.println("SCARTATA");
+        //System.out.println("SCARTATA");
     }
     public void mettiCarte(boolean var) {
-        int cont = 0;
         numNodiMano = new ArrayList<>();
             for(int i = 0; i < anchorPane.getChildren().size(); i++) {
                 if (anchorPane.getChildren().get(i) instanceof ImageView) {
+                    //System.out.println("Carte: " + ((ImageView) anchorPane.getChildren().get(i)).getImage().getUrl());
                     if (var) {
                         anchorPane.getChildren().remove(i);
                         i--;
-                        cont++;
-                        System.out.println("" + cont);
                     } else {
                         numNodiMano.add(i);
                     }
@@ -108,14 +106,17 @@ public class MainController {
             pause.setOnFinished(event -> {
                 ImageView imageView;
                 ArrayList<Carta> manoCorrente = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano();
+                //System.out.println(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size());
                 for (int i = 0; i< manoCorrente.size(); i++) {
                     imageView = manoCorrente.get(i).getImage();
+                    //System.out.println(imageView.getImage().getUrl());
                     anchorPane.getChildren().add(imageView);
                     scala(imageView);
                     listenerCarta(imageView, i);
                     numNodiMano.add(anchorPane.getChildren().indexOf(imageView));
+                    //System.out.println(numNodiMano.size());
                 }
-                    spostaCarta();
+                spostaCarta();
             });
         } else {
             for (int i : numNodiMano) {
@@ -123,6 +124,7 @@ public class MainController {
             }
             spostaCarta();
         }
+        System.out.println("DIO BOIA NON STAMA LA CARTA");
     }
     public void spostaCarta(){
         double cX = centroX/2;
@@ -135,37 +137,33 @@ public class MainController {
         for (int i = 0; i < numNodiMano.size(); i++) {
             angoli[i] = -(-30 + i * ((double) 60/(numOggetti-1)));
             ImageView imageView = (ImageView) anchorPane.getChildren().get(numNodiMano.get(i));
+            //System.out.println(imageView.getImage().getUrl());
             imageView.setLayoutX(coordinate[i][0] - imageView.getFitWidth()/2);
             imageView.setLayoutY(coordinate[i][1] - imageView.getFitWidth()*1.29);
             imageView.setRotate(angoli[i]);
-            imageView.toBack();
+            //imageView.toBack();
         }
     }
     public void listenerCarta(ImageView imageView, int i){
         Carta cartaAttuale = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().get(i);
         imageView.setOnMouseEntered(event1 -> {
-            System.out.println("SONO QUI 1");
             imageView.setScaleX(1.1);
             imageView.setScaleY(1.1);
         });
         imageView.setOnMouseExited(event2 -> {
-            System.out.println("SONO QUI 2");
             imageView.setScaleX(1.0);
             imageView.setScaleY(1.0);
         });
         imageView.setOnMousePressed(event1 -> {
-            System.out.println("SONO QUI 3");
             xOffset = event1.getSceneX() - imageView.getTranslateX();
             yOffset = event1.getSceneY() - imageView.getTranslateY();
         });
         imageView.setOnMouseDragged(event2 -> {
-            System.out.println("SONO QUI 4");
             imageView.setTranslateX(event2.getSceneX() - xOffset);
             imageView.setTranslateY(event2.getSceneY() - yOffset);
             imageView.toFront();
         });
         imageView.setOnMouseReleased(event -> {
-            System.out.println("SONO QUI 5");
             double finalX = event.getSceneX();
             double finalY = event.getSceneY();
             imageView.setTranslateX(0);
@@ -173,7 +171,6 @@ public class MainController {
             if (finalX<centroX/2+100 && finalX>centroX/2-100 && finalY<centroY/2+100 && finalY>centroY/2-100){
                 cartaAttuale.usaAbilita(ovalPaneController, this);
             }
-            System.out.println("tutto ok");
         });
     }
 

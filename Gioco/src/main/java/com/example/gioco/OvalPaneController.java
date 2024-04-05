@@ -246,6 +246,8 @@ public class OvalPaneController {
     public void getMc(MainController mainController){
         mc = mainController;
     }
+
+    //Da il giocatore associato al pianeta selezionato per essere attaccato
     public Giocatore planetSelection(){
         if (giocatoreSelezionato == null) {
             int index;
