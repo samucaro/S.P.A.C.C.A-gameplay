@@ -42,7 +42,7 @@ public class CartaPerdiCarta extends Carta{
                 System.out.println((int) (Math.random() * (giocatoreSelezionato.getMano().size())));
             int val = (int) (Math.random() * (giocatoreSelezionato.getMano().size()));
             gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).addCarta(giocatoreSelezionato.getMano().get(val));
-            mainController.scartaCarte(giocatoreSelezionato.getMano().get(val), giocatoreSelezionato);
+            giocatoreSelezionato.scarta(giocatoreSelezionato.getMano().get(val));
             ovalPaneController.dannoSfera(giocatoreSelezionato);
             ovalPaneController.fineSelezione();
             mainController.stopSelectionMC();

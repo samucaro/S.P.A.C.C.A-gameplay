@@ -84,7 +84,6 @@ public class MainController {
         g.scarta(c);
         gameData.getMazzo().scarta(c);
         scarti.setImage(c.getImage().getImage());
-        //System.out.println("SCARTATA");
     }
 
     public void mettiCarte(boolean var) {
@@ -93,7 +92,6 @@ public class MainController {
                 if (anchorPane.getChildren().get(i) instanceof ImageView) {
                     //System.out.println("Carte: " + ((ImageView) anchorPane.getChildren().get(i)).getImage().getUrl());
                     if (var) {
-                        azzeraListener((ImageView) anchorPane.getChildren().get(i));
                         anchorPane.getChildren().remove(i);
                         i--;
                     } else {
@@ -109,15 +107,13 @@ public class MainController {
                 ArrayList<Carta> manoCorrente = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano();
                 for (int i = 0; i< manoCorrente.size(); i++) {
                     imageView = manoCorrente.get(i).getImage();
-                    //azzeraListener(imageView);
-                    //System.out.println(imageView.getImage().getUrl());
                     anchorPane.getChildren().add(imageView);
                     scala(imageView);
                     listenerCarta(imageView, i);
                     numNodiMano.add(anchorPane.getChildren().indexOf(imageView));
-                    //System.out.println(numNodiMano.size());
                 }
                 spostaCarta();
+
             });
         } else {
             for (int i : numNodiMano) {
@@ -140,27 +136,17 @@ public class MainController {
             imageView.setLayoutX(coordinate[i][0] - imageView.getFitWidth()/2);
             imageView.setLayoutY(coordinate[i][1] - imageView.getFitWidth()*1.29);
             imageView.setRotate(angoli[i]);
-            imageView.toBack();
         }
-    }
-    public void azzeraListener(ImageView imageView){
-        imageView.setOnMouseEntered(null);
-        imageView.setOnMouseExited(null);
-        imageView.setOnMousePressed(null);
-        imageView.setOnMouseDragged(null);
-        imageView.setOnMouseReleased(null);
     }
     public void listenerCarta(ImageView imageView, int i){
         Carta cartaAttuale = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().get(i);
         imageView.setOnMouseEntered(event1 -> {
             imageView.setScaleX(1.1);
             imageView.setScaleY(1.1);
-            imageView.toFront();
-        });
-        imageView.setOnMouseExited(event2 -> {
-            imageView.setScaleX(1.0);
-            imageView.setScaleY(1.0);
-            imageView.toBack();
+            imageView.setOnMouseExited(event2 -> {
+                imageView.setScaleX(1.0);
+                imageView.setScaleY(1.0);
+            });
         });
         imageView.setOnMousePressed(event1 -> {
             xOffset = event1.getSceneX() - imageView.getTranslateX();
@@ -169,7 +155,6 @@ public class MainController {
         imageView.setOnMouseDragged(event2 -> {
             imageView.setTranslateX(event2.getSceneX() - xOffset);
             imageView.setTranslateY(event2.getSceneY() - yOffset);
-            imageView.toFront();
         });
         imageView.setOnMouseReleased(event -> {
             double finalX = event.getSceneX();

@@ -14,7 +14,7 @@ public class GiocatorePersona extends Giocatore{
         mano = new ArrayList<>();
     }
     public void addCarta(Carta carta){
-        if(mano.size() == 5) {
+        if(mano.size() == 10) {
             System.out.println("Hai già il numero massimo di carte in mano");
         }
         else {
