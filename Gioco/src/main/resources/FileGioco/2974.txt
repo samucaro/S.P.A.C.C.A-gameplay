@@ -7,7 +7,7 @@ Scarti:
 Giocatore: 1
 Tipo: Persona
 Nome: walt
-Mano: Bang Bang Duello Mancato Bang
+Mano: Bang PerdiCarta PerdiCarta Mancato Bang
 HpRimanente: 5
 ******************************
 Giocatore: 2
@@ -19,7 +19,7 @@ HpRimanente: 5
 Giocatore: 3
 Tipo: Persona
 Nome: anto
-Mano: Mancato Bang RecuperaVita Bang SparaTutti 
+Mano: Mancato PerdiCarta PerdiCarta Bang SparaTutti
 HpRimanente: 5
 ******************************
 Giocatore: 4

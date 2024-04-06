@@ -53,8 +53,7 @@ public class MainController {
         stackPane.widthProperty().addListener((observable, oldValue, newValue) -> {
             centroX = (double) newValue;
             scalaMazzo();
-            mazzoEScarti.setLayoutX(centroX/2 - (checkInit ? mazzoEScarti.getWidth()*getScala() : 140)/2);
-            System.out.println("SPESSOREMAZZO"+mazzoEScarti.getWidth()*getScala());
+            mazzoEScarti.setLayoutX(centroX/2 - (checkInit ? mazzoEScarti.getWidth() : 140)/2);
             mettiCarte(false);
             if (mazzoEScarti.getHeight() != 0)
                 checkInit=true;
@@ -62,8 +61,7 @@ public class MainController {
         stackPane.heightProperty().addListener((observable, oldValue, newValue) -> {
             centroY = (double) newValue;
             scalaMazzo();
-            mazzoEScarti.setLayoutY((centroY/2) - (checkInit ? mazzoEScarti.getHeight()*getScala() : 90)/2);
-            System.out.println("ALTEZZAMAZZO"+mazzoEScarti.getHeight()*getScala());
+            mazzoEScarti.setLayoutY(centroY/2 - (checkInit ? mazzoEScarti.getHeight() : 90)/2);
             mettiCarte(false);
             if (mazzoEScarti.getHeight()!=0)
                 checkInit=true;
@@ -86,11 +84,6 @@ public class MainController {
         g.scarta(c);
         gameData.getMazzo().scarta(c);
         scarti.setImage(c.getImage().getImage());
-        //System.out.println("SCARTATA");
-    }
-
-    public void prendiCarta(Carta c, Giocatore g){
-        g.scarta(c);
         //System.out.println("SCARTATA");
     }
 

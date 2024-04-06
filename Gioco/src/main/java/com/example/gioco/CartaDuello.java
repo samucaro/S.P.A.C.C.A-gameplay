@@ -47,7 +47,6 @@ public class CartaDuello extends Carta {
                 cartaAvversario = selectedGG.getMano().get(i);
                 if (cartaAvversario instanceof CartaBang) {
                     contAvversario++;
-                    //System.out.println("contAvversario: " + contAvversario);
                     mainController.scartaCarte(cartaAvversario, selectedGG);
                     i--;
                     if (!controlloBang(mainController)) {
@@ -63,10 +62,7 @@ public class CartaDuello extends Carta {
             }
             ovalPaneController.fineSelezione();
             mainController.stopSelectionMC();
-            //System.out.println(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size());
         });
-        /*contAvversario = 0;
-        contTuo = 0;*/
     }
 
     private boolean controlloBang(MainController mainController) {
