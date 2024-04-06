@@ -45,19 +45,15 @@ public class CartaDuello extends Carta {
             selectedGG = ovalPaneController.planetSelection();
             for (int i = 0; i < selectedGG.getMano().size(); i++) {
                 cartaAvversario = selectedGG.getMano().get(i);
-                System.out.println("lunghezza mano avv: " + selectedGG.getMano().size());
-                System.out.println("carta avv: " + cartaAvversario.toStringNome());
-                System.out.println("indice avv: " + i);
                 if (cartaAvversario instanceof CartaBang) {
                     contAvversario++;
                     //System.out.println("contAvversario: " + contAvversario);
                     mainController.scartaCarte(cartaAvversario, selectedGG);
                     i--;
-                    System.out.println("Scarto avv");
-                    if(!controlloBang(mainController)) {
+                    if (!controlloBang(mainController)) {
                         gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).subisciDanno(2);
                         ovalPaneController.dannoSfera(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
-                        //break;
+                        break;
                     }
                 }
             }
@@ -69,8 +65,8 @@ public class CartaDuello extends Carta {
             mainController.stopSelectionMC();
             //System.out.println(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size());
         });
-        contAvversario = 0;
-        contTuo = 0;
+        /*contAvversario = 0;
+        contTuo = 0;*/
     }
 
     private boolean controlloBang(MainController mainController) {

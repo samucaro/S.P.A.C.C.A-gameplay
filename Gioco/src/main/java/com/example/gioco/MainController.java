@@ -1,6 +1,7 @@
 package com.example.gioco;
 import javafx.animation.*;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
@@ -99,6 +100,7 @@ public class MainController {
                 if (anchorPane.getChildren().get(i) instanceof ImageView) {
                     //System.out.println("Carte: " + ((ImageView) anchorPane.getChildren().get(i)).getImage().getUrl());
                     if (var) {
+                        azzeraListener((ImageView) anchorPane.getChildren().get(i));
                         anchorPane.getChildren().remove(i);
                         i--;
                     } else {
@@ -112,9 +114,9 @@ public class MainController {
             pause.setOnFinished(event -> {
                 ImageView imageView;
                 ArrayList<Carta> manoCorrente = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano();
-                //System.out.println(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size());
                 for (int i = 0; i< manoCorrente.size(); i++) {
                     imageView = manoCorrente.get(i).getImage();
+                    //azzeraListener(imageView);
                     //System.out.println(imageView.getImage().getUrl());
                     anchorPane.getChildren().add(imageView);
                     scala(imageView);
@@ -124,8 +126,7 @@ public class MainController {
                 }
                 spostaCarta();
             });
-        }
-        else {
+        } else {
             for (int i : numNodiMano) {
                 scala((ImageView) anchorPane.getChildren().get(i));
             }
@@ -141,24 +142,32 @@ public class MainController {
         double[][] coordinate = calcolaCoordinateArco(cX, cY, semiLarghezza, altezza, numOggetti);
         double[] angoli = new double[numOggetti];
         for (int i = 0; i < numNodiMano.size(); i++) {
-            angoli[i] = -(-30 + i * ((double) 60/(numOggetti-1)));
+            angoli[i] = numOggetti <= 1 ? 0 : -(-30 + i * ((double) 60/(numOggetti-1)));
             ImageView imageView = (ImageView) anchorPane.getChildren().get(numNodiMano.get(i));
-            //System.out.println(imageView.getImage().getUrl());
             imageView.setLayoutX(coordinate[i][0] - imageView.getFitWidth()/2);
             imageView.setLayoutY(coordinate[i][1] - imageView.getFitWidth()*1.29);
             imageView.setRotate(angoli[i]);
             imageView.toBack();
         }
     }
+    public void azzeraListener(ImageView imageView){
+        imageView.setOnMouseEntered(null);
+        imageView.setOnMouseExited(null);
+        imageView.setOnMousePressed(null);
+        imageView.setOnMouseDragged(null);
+        imageView.setOnMouseReleased(null);
+    }
     public void listenerCarta(ImageView imageView, int i){
         Carta cartaAttuale = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().get(i);
         imageView.setOnMouseEntered(event1 -> {
             imageView.setScaleX(1.1);
             imageView.setScaleY(1.1);
+            imageView.toFront();
         });
         imageView.setOnMouseExited(event2 -> {
             imageView.setScaleX(1.0);
             imageView.setScaleY(1.0);
+            imageView.toBack();
         });
         imageView.setOnMousePressed(event1 -> {
             xOffset = event1.getSceneX() - imageView.getTranslateX();
@@ -200,6 +209,10 @@ public class MainController {
             y = cY - altezza * Math.sin(angolo);
             coordinate[i][0] = x;
             coordinate[i][1] = y;
+        }
+        if (numOggetti == 1) {
+            coordinate[0][0] = cX;
+            coordinate[0][1] = cY - altezza;
         }
         return coordinate;
     }
