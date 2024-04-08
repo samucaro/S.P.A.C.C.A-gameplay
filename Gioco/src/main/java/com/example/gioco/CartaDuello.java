@@ -51,14 +51,14 @@ public class CartaDuello extends Carta {
                     i--;
                     if (!controlloBang(mainController)) {
                         gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).subisciDanno(2);
-                        ovalPaneController.dannoSfera(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
+                        ovalPaneController.dannoSfera(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()), true);
                         break;
                     }
                 }
             }
             if (contTuo == contAvversario) {
                 selectedGG.subisciDanno(2);
-                ovalPaneController.dannoSfera(selectedGG);
+                ovalPaneController.dannoSfera(selectedGG, true);
             }
             ovalPaneController.fineSelezione();
             mainController.stopSelectionMC();
@@ -69,20 +69,14 @@ public class CartaDuello extends Carta {
         Carta cartaTua;
         boolean var = false;
         for (int i = 0; i < gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size(); i++) {
-            System.out.println("lunghezza mano tuo: " + gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size());
             cartaTua = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().get(i);
-            System.out.println("carta tua: " + cartaTua.toStringNome());
-            System.out.println("indice tuo: " + i);
             if (cartaTua instanceof CartaBang) {
                 contTuo++;
-                //System.out.println("contTuo: " + contTuo);
                 mainController.scartaCarte(cartaTua, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
-                System.out.println("Scarto tuo");
                 var = true;
                 break;
             }
         }
-        System.out.println("booleano tuo: " + var);
         return var;
     }
 

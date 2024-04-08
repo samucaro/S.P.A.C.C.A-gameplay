@@ -25,10 +25,11 @@ public class GiocatorePersona extends Giocatore{
         mano.remove(carta);
     }
     public void subisciDanno(int danno){
-        if(hpRimanente == 0) {
+        hpRimanente -= danno;
+        if(hpRimanente <= 0) {
+            hpRimanente = 0;
             System.out.println("Il giocatore è già eliminato");
         }
-        hpRimanente -= danno;
     }
     public void cura(int vita){
         if(hpRimanente == HP) {

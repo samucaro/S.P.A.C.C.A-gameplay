@@ -35,7 +35,6 @@ public class CartaSparaTutti extends Carta{
         gestisciEventiAttacco(ovalPaneController, mainController);
         mainController.aggiornaCosa();
     }
-
     public void gestisciEventiAttacco(OvalPaneController ovalPaneController,  MainController mainController) {
         boolean checkCartaM;
         for (int i = 0; i < gameData.getGiocatoriPartita().size(); i++){
@@ -46,12 +45,13 @@ public class CartaSparaTutti extends Carta{
                     if (gameData.getGiocatoriPartita().get(i).getMano().get(j) instanceof CartaMancato){
                         checkCartaM = true;
                         mainController.scartaCarte(gameData.getGiocatoriPartita().get(i).getMano().get(j),gameData.getGiocatoriPartita().get(i));
+                        ovalPaneController.dannoSfera(gameData.getGiocatoriPartita().get(i), false);
                         break;
                     }
                 }
                 if (!checkCartaM){
                     gameData.getGiocatoriPartita().get(i).subisciDanno(1);
-                    ovalPaneController.dannoSfera(gameData.getGiocatoriPartita().get(i));
+                    ovalPaneController.dannoSfera(gameData.getGiocatoriPartita().get(i), true);
                 }
             }
         }

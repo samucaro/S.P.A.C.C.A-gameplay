@@ -79,7 +79,8 @@ public class MainController {
         stackPane.heightProperty().addListener((observable, oldValue, newValue) -> {
             centroY = (double) newValue;
             scalaMazzo();
-            mazzoEScarti.setLayoutY(centroY/2 - (checkInit ? mazzoEScarti.getHeight()+35 : 125)/2);
+            mazzoEScarti.setLayoutY(centroY/2 - (checkInit ? mazzoEScarti.getHeight() + mazzoEScarti.getHeight()*getScala()/2 : 171) / 2);
+            System.out.println(mazzoEScarti.getHeight() + mazzoEScarti.getHeight()*getScala()/2 + "MAZZOOOOOOOOOOOOOOOO");
             mettiCarte(false);
             if (mazzoEScarti.getHeight() != 0)
                 checkInit=true;
@@ -87,13 +88,11 @@ public class MainController {
         mettiCarte(true);
         mettiVita();
     }
-
     public void scalaMazzo(){
         double scala = getScala();
         mazzoEScarti.setScaleX(scala);
         mazzoEScarti.setScaleY(scala);
     }
-
     public double getScala(){
         return 0.01 * (10 * Math.min(centroX, centroY)) / 50;
     }
@@ -141,9 +140,9 @@ public class MainController {
     }
     public void spostaCarta(){
         double cX = centroX/2;
-        double cY = centroY-20;
+        double cY = centroY-centroY/11;
         double semiLarghezza = centroX/5;
-        double altezza = 10 + centroY/5;
+        double altezza = centroY/6.8;
         int numOggetti = numNodiMano.size();
         double[][] coordinate = calcolaCoordinateArco(cX, cY, semiLarghezza, altezza, numOggetti);
         double[] angoli = new double[numOggetti];
@@ -183,7 +182,6 @@ public class MainController {
             }
         });
     }
-
     public void scala(ImageView c){
         double dim = (5 * Math.min(centroX, centroY)) / 37;
         c.setFitWidth(dim);
@@ -243,12 +241,9 @@ public class MainController {
             gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).scarta(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().get((int) (Math.random() * (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size()))));
         }
     }
-
-
     public void salvaPartita() {
         System.out.println(gameData.getGiocatoriPartita());
     }
-
     public void switchToAdminPlayerPage(ActionEvent event) throws IOException {
         salvaPartita();
         gameData.resetInstance();
@@ -258,7 +253,6 @@ public class MainController {
         stage.setScene(scene);
         stage.show();
     }
-
     public void pescataInizialeGiocatore() {
         pesca.setVisible(false);
         turnButton.setDisable(false);

@@ -27,6 +27,7 @@ public class OvalPaneController {
     private MainController mc;
     private static Group[] pianeti;
     private PhongMaterial redMaterial;
+    private PhongMaterial orangeMaterial;
     private Giocatore giocatoreSelezionato;
     private ProgressBar progressBar;
     private AnimationTimer timer;
@@ -48,6 +49,7 @@ public class OvalPaneController {
         turnoDi = gameData.getTurnoCorrente();
         pianeti = new Group[gameData.getNumero()];
         redMaterial = new PhongMaterial(Color.RED);
+        orangeMaterial = new PhongMaterial(Color.ORANGE);
         scegliAvversario = new Text("Scegli chi vuoi attaccare");
         progressBar = new ProgressBar();
         giocatoreSelezionato = null;
@@ -139,7 +141,7 @@ public class OvalPaneController {
         arcoInterno = new Arc(100.0, 100.0, irx, iry, 0.0, 180.0);
         arcoEsterno.setType(ArcType.ROUND);
         arcoInterno.setType(ArcType.ROUND);
-        halfDonut = Shape.subtract(arcoEsterno, arcoInterno); //permette di creare l'arco facendo la sottrazione tra quello esterno e quello interno
+        halfDonut = Shape.subtract(arcoEsterno, arcoInterno);
         ovalPane.getChildren().add(halfDonut);
     }
     public void setScenaX(double x){
@@ -237,7 +239,6 @@ public class OvalPaneController {
             setScenaY((Double) newValue);
         });
     }
-    //Da il giocatore associato al pianeta selezionato per essere attaccato
     public Giocatore planetSelection(){
         if (giocatoreSelezionato == null) {
             int index;
@@ -274,14 +275,14 @@ public class OvalPaneController {
         new Thread(task).start();
         return task;
     }
-    public void dannoSfera(Giocatore ggAttaccato){
+    public void dannoSfera(Giocatore ggAttaccato, boolean c){
         Timeline animation;
         Material matOriginale;
         for (int j = 0; j < gameData.getNumero(); j++){
             if (ggAttaccato.getNome().equals(((Text) pianeti[j].getChildren().getLast()).getText())) {
                 matOriginale = ((Sphere) pianeti[j].getChildren().getFirst()).getMaterial();
                 animation = new Timeline(
-                        new KeyFrame(Duration.ZERO, new KeyValue(((Sphere) pianeti[j].getChildren().getFirst()).materialProperty(), redMaterial)),
+                        new KeyFrame(Duration.ZERO, new KeyValue(((Sphere) pianeti[j].getChildren().getFirst()).materialProperty(), c ? redMaterial : orangeMaterial)),
                         new KeyFrame(Duration.seconds(1), new KeyValue(((Sphere) pianeti[j].getChildren().getFirst()).materialProperty(), matOriginale))
                 );
                 animation.playFromStart();

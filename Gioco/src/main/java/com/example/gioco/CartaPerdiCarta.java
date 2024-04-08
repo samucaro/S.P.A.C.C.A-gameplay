@@ -11,7 +11,7 @@ public class CartaPerdiCarta extends Carta{
     public CartaPerdiCarta() {
         gameData = GameData.getInstance();
         giocatoreSelezionato = null;
-        desc = "Pesca la prima carta da un avversario a tua scelta";
+        desc = "Pesca carta casuale da un avversario a tua scelta";
     }
 
     public String getDesc() {
@@ -34,7 +34,7 @@ public class CartaPerdiCarta extends Carta{
         }
         gestisciEventiAttacco(ovalPaneController, mainController);
     }
-
+ //GESTIRE SE IL SELEZIONATO HA 0 CARTE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     public void gestisciEventiAttacco(OvalPaneController ovalPaneController,  MainController mainController) {
         ovalPaneController.startSelection().setOnSucceeded(event -> {
             giocatoreSelezionato = ovalPaneController.planetSelection();
@@ -43,7 +43,7 @@ public class CartaPerdiCarta extends Carta{
             int val = (int) (Math.random() * (giocatoreSelezionato.getMano().size()));
             gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).addCarta(giocatoreSelezionato.getMano().get(val));
             giocatoreSelezionato.scarta(giocatoreSelezionato.getMano().get(val));
-            ovalPaneController.dannoSfera(giocatoreSelezionato);
+            ovalPaneController.dannoSfera(giocatoreSelezionato,true);
             ovalPaneController.fineSelezione();
             mainController.stopSelectionMC();
         });

@@ -43,13 +43,14 @@ public class CartaBang extends Carta{
                 if(c instanceof CartaMancato) {
                     var = true;
                     mainController.scartaCarte(c,selectedGG);
+                    ovalPaneController.dannoSfera(selectedGG, false);
                     break;
                 }
             }
             if (!var) {
                 selectedGG.subisciDanno(1);
+                ovalPaneController.dannoSfera(selectedGG, true);
             }
-            ovalPaneController.dannoSfera(selectedGG);
             ovalPaneController.fineSelezione();
             mainController.stopSelectionMC();
         });
