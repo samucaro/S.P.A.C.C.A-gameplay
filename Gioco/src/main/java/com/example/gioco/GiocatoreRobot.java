@@ -1,6 +1,11 @@
 package com.example.gioco;
 
+import javafx.event.ActionEvent;
+import javafx.scene.control.Button;
+
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Objects;
 
 public class GiocatoreRobot extends Giocatore {
     private  String nome;
@@ -40,6 +45,30 @@ public class GiocatoreRobot extends Giocatore {
             hpRimanente += vita;
         }
     }
+
+    public void giocaTurno(MainController mainController, OvalPaneController ovalPaneController, Button button) {
+        int cont = 0;
+        Iterator<Carta> iteratore = mano.iterator();
+        //Il fatto di levare carte durante un ciclo for crea problemi...capire come risolvere
+        while(iteratore.hasNext()) {
+            Carta carta = iteratore.next();
+            if(cont != 1 && carta instanceof CartaBang) {
+                cont = 1;
+                carta.usaAbilita(ovalPaneController, mainController);
+            }
+            else if(!(carta instanceof CartaMancato)) {
+                carta.usaAbilita(ovalPaneController, mainController);
+            }
+        }
+        cliccaBottone(button);
+    }
+
+    //Non funziona
+    private void cliccaBottone(Button button) {
+        ActionEvent event = new ActionEvent(null, null);
+        button.fireEvent(event);
+    }
+
     public void setHpRimanente(int hp) {
         this.hpRimanente=hp;
     }

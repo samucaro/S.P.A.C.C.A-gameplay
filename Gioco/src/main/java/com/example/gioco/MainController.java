@@ -1,13 +1,22 @@
 package com.example.gioco;
 import javafx.animation.*;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MainController {
     private double centroX;
@@ -19,8 +28,6 @@ public class MainController {
     private GameData gameData;
     @FXML
     public OvalPaneController ovalPaneController;
-    @FXML
-    private Button saveButton;
     @FXML
     private Button turnButton;
     @FXML
@@ -34,6 +41,9 @@ public class MainController {
     @FXML
     private AnchorPane anchorPane;
     @FXML
+    private Text pesca;
+
+    @FXML
     public void initialize() {
         gameData = GameData.getInstance();
         checkInit = false;
@@ -46,6 +56,7 @@ public class MainController {
             mazzoEScarti.getChildren().getFirst().setScaleX(1.0);
             mazzoEScarti.getChildren().getFirst().setScaleY(1.0);
         });
+        pesca.setVisible(true);
     }
     public void impostaCose(){
         anchorPane.prefWidthProperty().bind(stackPane.widthProperty()); //permette di legare l'AnchorPane alle dimensioni dello StackPane
@@ -197,6 +208,7 @@ public class MainController {
 
     @FXML
     public void handleTurnButton() {
+        verificaMano();
         turnButton.setDisable(true);
         PauseTransition pause = new PauseTransition(Duration.seconds(1));
         ovalPaneController.cambiaTurno();
@@ -206,12 +218,37 @@ public class MainController {
             turnButton.setDisable(false);
             mettiVita();
         });
+        pesca.setVisible(true);
+        if(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
+            ((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController, turnButton);
+        }
     }
-    @FXML
+
+    private void verificaMano() {
+        while(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size() < 5) {
+            gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).addCarta(gameData.getMazzo().pesca());
+        }
+        while(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size() > 5) {
+            gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).scarta(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().get((int) (Math.random() * ((gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size()-1) + 1))));
+        }
+    }
+
+
     public void salvaPartita() {
         System.out.println(gameData.getGiocatoriPartita());
     }
+
+    public void switchToAdminPlayerPage(ActionEvent event) throws IOException {
+        salvaPartita();
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AdminPlayerPage.fxml")));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
     public void pescataInizialeGiocatore() {
+        pesca.setVisible(false);
         Giocatore player = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente());
         for(int i = 1; i <= 2; i++) {
             player.addCarta(gameData.getMazzo().pesca());
