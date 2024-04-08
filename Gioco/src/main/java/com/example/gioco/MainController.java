@@ -1,5 +1,7 @@
 package com.example.gioco;
 import javafx.animation.*;
+import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.beans.property.ReadOnlyDoublePropertyBase;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,7 +35,7 @@ public class MainController {
     @FXML
     private Button turnButton;
     @FXML
-    private StackPane stackPane;
+    public StackPane stackPane;
     @FXML
     private VBox mazzoEScarti;
     @FXML
@@ -44,9 +46,9 @@ public class MainController {
     private AnchorPane anchorPane;
     @FXML
     private Label pesca;
-
     @FXML
     public void initialize() {
+        ovalPaneController.getMc(this);
         gameData = GameData.getInstance();
         checkInit = false;
         impostaCose();
@@ -64,7 +66,7 @@ public class MainController {
         }
     }
     public void impostaCose(){
-        anchorPane.prefWidthProperty().bind(stackPane.widthProperty()); //permette di legare l'AnchorPane alle dimensioni dello StackPane
+        anchorPane.prefWidthProperty().bind(stackPane.widthProperty());
         anchorPane.prefHeightProperty().bind(stackPane.heightProperty());
         stackPane.widthProperty().addListener((observable, oldValue, newValue) -> {
             centroX = (double) newValue;
@@ -84,7 +86,6 @@ public class MainController {
         });
         mettiCarte(true);
         mettiVita();
-        ovalPaneController.getMc(this);
     }
 
     public void scalaMazzo(){
@@ -140,7 +141,7 @@ public class MainController {
     }
     public void spostaCarta(){
         double cX = centroX/2;
-        double cY = centroY-27;
+        double cY = centroY-20;
         double semiLarghezza = centroX/5;
         double altezza = 10 + centroY/5;
         int numOggetti = numNodiMano.size();
@@ -210,10 +211,10 @@ public class MainController {
         }
         return coordinate;
     }
-
     @FXML
     public void handleTurnButton() {
         checkFattaPI = false;
+        turnButton.setDisable(true);
         verificaMano();
         PauseTransition pause = new PauseTransition(Duration.seconds(1));
         ovalPaneController.cambiaTurno();

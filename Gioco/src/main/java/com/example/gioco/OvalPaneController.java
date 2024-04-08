@@ -26,11 +26,12 @@ public class OvalPaneController {
     private Pane ovalPane;
     private MainController mc;
     private static Group[] pianeti;
-
     private PhongMaterial redMaterial;
     private Giocatore giocatoreSelezionato;
     private ProgressBar progressBar;
     private Text scegliAvversario;
+    private Arc arcoInterno = new Arc(100.0, 100.0, irx, iry, 0.0, 180.0);
+    private Arc arcoEsterno = new Arc(100.0, 100.0, orx, ory, 0.0, 180.0);
     private static double centroX;
     private static double centroY;
     private static final BooleanProperty resetHD = new SimpleBooleanProperty(false);
@@ -41,11 +42,10 @@ public class OvalPaneController {
     private static double iry = 130.0;
     private static Shape halfDonut;
     private static int turnoDi = 0;
-
     @FXML
     public void initialize() {
         gameData = GameData.getInstance();
-        pianeti = new Group[gameData.getNumero()]; //La classe Group permette di raggruppare più nodi insieme e gestirli in contemporanea
+        pianeti = new Group[gameData.getNumero()];
         redMaterial = new PhongMaterial(Color.RED);
         scegliAvversario = new Text("Scegli chi vuoi attaccare");
         progressBar = new ProgressBar();
@@ -60,7 +60,7 @@ public class OvalPaneController {
     private void creaGruppoPianeti() {
         for (int i = 0; i < gameData.getNumero(); i++) {
             pianeti[i] = new Group();
-            pianeti[i].getChildren().addFirst(new Sphere(60)); //la classe Sphere crea sfere tridimensionali
+            pianeti[i].getChildren().addFirst(new Sphere(60));
             Image texture = textures(i);
             PhongMaterial material1 = new PhongMaterial();
             material1.setDiffuseMap(texture);
@@ -89,7 +89,6 @@ public class OvalPaneController {
             ovalPane.getChildren().add(pianeti[i]);
         }
     }
-
     //Carica le immagini dei pianeti
     private Image textures(int i){
         return switch (i) {
@@ -104,7 +103,6 @@ public class OvalPaneController {
             default -> new Image("null");
         };
     }
-
     //Imposta lo stile del testo mostrato nella scelta del giocatore
     private void impostaStile() {
         progressBar.setStyle("-fx-background-color: cyan; -fx-background-radius: 20;");
@@ -114,7 +112,6 @@ public class OvalPaneController {
         scegliAvversario.setStroke(Color.BLACK);
         scegliAvversario.setStrokeWidth(0.7);
     }
-
     //gestisce i possibili eventi sui pianeti
     public void gestoreEventiPianeti(int ind) {
         pianeti[ind].setOnMouseEntered(event -> {
@@ -135,63 +132,49 @@ public class OvalPaneController {
             }
         });
     }
-
     //Creazione Donut e gestione ridimensionamento
     private void iniziaHD() {
-        Arc arcoEsterno = new Arc(100.0, 100.0, orx, ory, 0.0, 180.0);
         arcoEsterno.setType(ArcType.ROUND);
-        Arc arcoInterno = new Arc(100.0, 100.0, irx, iry, 0.0, 180.0);
         arcoInterno.setType(ArcType.ROUND);
         halfDonut = Shape.subtract(arcoEsterno, arcoInterno); //permette di creare l'arco facendo la sottrazione tra quello esterno e quello interno
         ovalPane.getChildren().add(halfDonut);
-        halfDonut.fillProperty().addListener((observable, oldValue, newValue) -> {
-            ovalPane.getChildren().remove(halfDonut);
-            halfDonut.setFill(newValue);
-            ovalPane.getChildren().add(halfDonut);
-        });
-        resetHD.addListener((observable, oldValue, newValue) -> {
-            if (ovalPane.getChildren().contains(progressBar)){
-                scegliAvversario.setWrappingWidth(centroX/1.5);
-                progressBar.setPrefWidth(centroX/1.5);
-                progressBar.setLayoutX(centroX-centroX/3);
-                progressBar.setLayoutY(centroY+30);
-                scegliAvversario.setLayoutX(centroX-centroX/3);
-                scegliAvversario.setLayoutY(centroY);
-            } else {
-                ovalPane.getChildren().remove(halfDonut);
-                arcoEsterno.setRadiusX(orx);
-                arcoEsterno.setRadiusY(ory);
-                arcoInterno.setRadiusX(irx);
-                arcoInterno.setRadiusY(iry);
-                halfDonut = Shape.subtract(arcoEsterno, arcoInterno);
-                halfDonut.setFill(Color.rgb(0, 191, 255, 0.2));
-                ovalPane.getChildren().add(halfDonut);
-                halfDonut.setTranslateX(centroX-100);
-                halfDonut.setTranslateY(centroY*2-100);
-            }
-            resetHD.set(false);
-        });
     }
-
-    public static void setScenaX(double x){
+    public void setScenaX(double x){
         centroX=x/2;
         posizionaSfere();
         reShape();
     }
-    public static void setScenaY(double y){
+    public void setScenaY(double y){
         centroY=y/2;
         posizionaSfere();
         reShape();
     }
-
-
-    public static void reShape() {
+    public void reShape() {
         double h = (60 * Math.min(centroX, centroY)) / 300;
         orx=h + centroX*1/2;
         ory=h + centroY*1/1.5;
         irx=2*h;
         iry=centroY/5+h;
-        resetHD.set(true);
+        if (ovalPane.getChildren().contains(progressBar)){
+            ovalPane.getChildren().remove(halfDonut);
+            scegliAvversario.setWrappingWidth(centroX/1.5);
+            progressBar.setPrefWidth(centroX/1.5);
+            progressBar.setLayoutX(centroX-centroX/3);
+            progressBar.setLayoutY(centroY+30);
+            scegliAvversario.setLayoutX(centroX-centroX/3);
+            scegliAvversario.setLayoutY(centroY);
+        } else {
+            ovalPane.getChildren().remove(halfDonut);
+            arcoEsterno.setRadiusX(orx);
+            arcoEsterno.setRadiusY(ory);
+            arcoInterno.setRadiusX(irx);
+            arcoInterno.setRadiusY(iry);
+            halfDonut = Shape.subtract(arcoEsterno, arcoInterno);
+            halfDonut.setFill(Color.rgb(0, 191, 255, 0.2));
+            ovalPane.getChildren().add(halfDonut);
+            halfDonut.setTranslateX(centroX-100);
+            halfDonut.setTranslateY(centroY*2-100);
+        }
     }
     private void rotazionePianeti(int i) {
         AnimationTimer timer = new AnimationTimer() {
@@ -202,8 +185,6 @@ public class OvalPaneController {
         };
         timer.start();
     }
-
-
     private static void posizionaSfere() {
         for (int i = 0; i < gameData.getNumero(); i++) {
             int indice = ((gameData.getNumero() - turnoDi) + i) % gameData.getNumero();
@@ -217,8 +198,6 @@ public class OvalPaneController {
             pianeti[indice].setScaleY(i == gameData.getNumero()-1 ? 0.6 : 1);
         }
     }
-
-
     public void cambiaTurno() {
         KeyValue kv1, kv2, kv3, kv4;
         KeyFrame kf;
@@ -246,8 +225,15 @@ public class OvalPaneController {
     }
     public void getMc(MainController mainController){
         mc = mainController;
+        ovalPane.prefWidthProperty().bind(mc.stackPane.widthProperty());
+        ovalPane.prefHeightProperty().bind(mc.stackPane.heightProperty());
+        mc.stackPane.widthProperty().addListener((observable, oldValue, newValue) -> {
+            setScenaX((Double) newValue);
+        });
+        mc.stackPane.heightProperty().addListener((observable, oldValue, newValue) -> {
+            setScenaY((Double) newValue);
+        });
     }
-
     //Da il giocatore associato al pianeta selezionato per essere attaccato
     public Giocatore planetSelection(){
         if (giocatoreSelezionato == null) {
@@ -260,13 +246,12 @@ public class OvalPaneController {
             return giocatoreSelezionato;
         }
     }
-
     public Task<Void> startSelection(){
         giocatoreSelezionato = null;
         halfDonut.setVisible(false);
         mc.startSelectionMC();
         ovalPane.getChildren().addAll(progressBar, scegliAvversario);
-        resetHD.set(true);
+        reShape();
         Task<Void> task = new Task<>() {
             @Override
             protected Void call() throws Exception {
@@ -286,7 +271,6 @@ public class OvalPaneController {
         new Thread(task).start();
         return task;
     }
-
     public void dannoSfera(Giocatore ggAttaccato){
         Timeline animation;
         Material matOriginale;
@@ -305,6 +289,6 @@ public class OvalPaneController {
     public void fineSelezione(){
         halfDonut.setVisible(true);
         ovalPane.getChildren().removeAll(progressBar, scegliAvversario);
-        resetHD.set(true);
+        reShape();
     }
 }

@@ -68,21 +68,11 @@ public class SetGamePageController {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("TabelloneGioco.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
-        impostaListener(scene);
         ParallelCamera cam = new ParallelCamera();
         cam.setFarClip(2000);
         cam.setNearClip(0.5);
         scene.setCamera(cam);
         stage.setScene(scene);
         stage.show();
-    }
-
-    private void impostaListener(Scene scene){
-        scene.widthProperty().addListener((obs, oldVal, newVal) -> {
-            OvalPaneController.setScenaX((Double) newVal);
-        });
-        scene.heightProperty().addListener((obs, oldVal, newVal) -> {
-            OvalPaneController.setScenaY((Double) newVal);
-        });
     }
 }

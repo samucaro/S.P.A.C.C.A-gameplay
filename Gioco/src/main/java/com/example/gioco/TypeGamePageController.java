@@ -42,7 +42,6 @@ public class TypeGamePageController {
                 }
         );
     }
-
     public void switchToSetPlayerPage(ActionEvent event) throws IOException {
         gameData.setTipo("Partita");
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("SetPlayerPage.fxml")));
@@ -59,7 +58,6 @@ public class TypeGamePageController {
         stage.setScene(scene);
         stage.show();
     }
-
     //Mostra tutte le partite disponibili
     public void mostraPartite(String percorsoCartellaProgetto) {
         partite.getItems().clear();
@@ -78,7 +76,6 @@ public class TypeGamePageController {
             System.err.println("La cartella specificata non esiste o non è una cartella valida.");
         }
     }
-
     //Elimina la partita selezionata
     public void eliminaPartita() {
         dataSet.eliminaFile(percorsoCartellaProgetto + File.separator + newValue + ".txt");
