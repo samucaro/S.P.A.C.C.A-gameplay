@@ -63,6 +63,8 @@ public class SetGamePageController {
     }
 
     public void switchToGamePage(ActionEvent event) throws IOException {
+        /*GameData.resetInstance();
+        gameData=GameData.getInstance();*/
         gameData.leggiFilePartita(Integer.parseInt(list.getValue()));
         //aggiungere il metodo di gameData per leggere il torneo
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("TabelloneGioco.fxml")));

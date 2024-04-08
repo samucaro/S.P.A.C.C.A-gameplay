@@ -30,6 +30,9 @@ public class GameData {
         this.mazzo = mazzo;
         this.giocatoriPartita = giocatoriPartita;
     }
+    public static void resetInstance() {
+        instance=null;
+    }
     public static GameData getInstance() {
         try {
             if (instance == null) {

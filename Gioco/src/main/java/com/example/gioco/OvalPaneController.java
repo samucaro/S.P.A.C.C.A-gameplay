@@ -29,22 +29,23 @@ public class OvalPaneController {
     private PhongMaterial redMaterial;
     private Giocatore giocatoreSelezionato;
     private ProgressBar progressBar;
+    private AnimationTimer timer;
     private Text scegliAvversario;
-    private Arc arcoInterno = new Arc(100.0, 100.0, irx, iry, 0.0, 180.0);
-    private Arc arcoEsterno = new Arc(100.0, 100.0, orx, ory, 0.0, 180.0);
+    private Arc arcoInterno;
+    private Arc arcoEsterno;
     private static double centroX;
     private static double centroY;
-    private static final BooleanProperty resetHD = new SimpleBooleanProperty(false);
     private boolean planetSelected;
     private static double orx = 230.0;
     private static double ory = 250.0;
     private static double irx = 90.0;
     private static double iry = 130.0;
     private static Shape halfDonut;
-    private static int turnoDi = 0;
+    private static int turnoDi;
     @FXML
     public void initialize() {
         gameData = GameData.getInstance();
+        turnoDi = gameData.getTurnoCorrente();
         pianeti = new Group[gameData.getNumero()];
         redMaterial = new PhongMaterial(Color.RED);
         scegliAvversario = new Text("Scegli chi vuoi attaccare");
@@ -134,6 +135,8 @@ public class OvalPaneController {
     }
     //Creazione Donut e gestione ridimensionamento
     private void iniziaHD() {
+        arcoEsterno = new Arc(100.0, 100.0, orx, ory, 0.0, 180.0);
+        arcoInterno = new Arc(100.0, 100.0, irx, iry, 0.0, 180.0);
         arcoEsterno.setType(ArcType.ROUND);
         arcoInterno.setType(ArcType.ROUND);
         halfDonut = Shape.subtract(arcoEsterno, arcoInterno); //permette di creare l'arco facendo la sottrazione tra quello esterno e quello interno
@@ -177,7 +180,7 @@ public class OvalPaneController {
         }
     }
     private void rotazionePianeti(int i) {
-        AnimationTimer timer = new AnimationTimer() {
+        timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
                 pianeti[i].getChildren().getFirst().rotateProperty().set(pianeti[i].getChildren().getFirst().getRotate() + 0.2);

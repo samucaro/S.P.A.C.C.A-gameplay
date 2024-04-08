@@ -251,6 +251,7 @@ public class MainController {
 
     public void switchToAdminPlayerPage(ActionEvent event) throws IOException {
         salvaPartita();
+        gameData.resetInstance();
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AdminPlayerPage.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
