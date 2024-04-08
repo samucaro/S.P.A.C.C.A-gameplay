@@ -1,7 +1,9 @@
 package com.example.gioco;
 
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -48,18 +50,16 @@ public class GiocatoreRobot extends Giocatore {
 
     public void giocaTurno(MainController mainController, OvalPaneController ovalPaneController, Button button) {
         int cont = 0;
-        Iterator<Carta> iteratore = mano.iterator();
         //Il fatto di levare carte durante un ciclo for crea problemi...capire come risolvere
-        while(iteratore.hasNext()) {
-            Carta carta = iteratore.next();
-            if(cont != 1 && carta instanceof CartaBang) {
+        /*for (Carta carta : mano) {
+            if (cont != 1 && carta instanceof CartaBang) {
                 cont = 1;
                 carta.usaAbilita(ovalPaneController, mainController);
-            }
-            else if(!(carta instanceof CartaMancato)) {
+            } else if (!(carta instanceof CartaMancato)) {
                 carta.usaAbilita(ovalPaneController, mainController);
             }
-        }
+        }*/
+        //ovalPaneController.cambiaTurno();
         cliccaBottone(button);
     }
 

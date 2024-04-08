@@ -57,6 +57,9 @@ public class MainController {
             mazzoEScarti.getChildren().getFirst().setScaleY(1.0);
         });
         pesca.setVisible(true);
+        if(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
+            ((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController, turnButton);
+        }
     }
     public void impostaCose(){
         anchorPane.prefWidthProperty().bind(stackPane.widthProperty()); //permette di legare l'AnchorPane alle dimensioni dello StackPane
@@ -215,13 +218,13 @@ public class MainController {
         pause.play();
         mettiCarte(true);
         pause.setOnFinished(event -> {
+            if(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
+                ((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController, turnButton);
+            }
             turnButton.setDisable(false);
             mettiVita();
         });
         pesca.setVisible(true);
-        if(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
-            ((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController, turnButton);
-        }
     }
 
     private void verificaMano() {
