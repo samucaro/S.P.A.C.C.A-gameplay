@@ -7,13 +7,13 @@ Scarti:
 Giocatore: 1
 Tipo: Persona
 Nome: walt
-Mano: Bang SparaTutti Bang Mancato Bang
+Mano: Mancato Bang
 HpRimanente: 5
 ******************************
 Giocatore: 2
 Tipo: Bot
 Nome: Bot 1
-Mano: Bang Bang Bang RecuperaVita
+Mano: Bang RecuperaVita Mancato
 HpRimanente: 5
 ******************************
 Giocatore: 3

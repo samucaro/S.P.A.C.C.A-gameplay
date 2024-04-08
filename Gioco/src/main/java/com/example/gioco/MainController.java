@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -25,6 +26,7 @@ public class MainController {
     private double yOffset;
     private ArrayList<Integer> numNodiMano;
     private boolean checkInit;
+    private boolean checkFattaPI = false;
     private GameData gameData;
     @FXML
     public OvalPaneController ovalPaneController;
@@ -33,7 +35,7 @@ public class MainController {
     @FXML
     private StackPane stackPane;
     @FXML
-    private HBox mazzoEScarti;
+    private VBox mazzoEScarti;
     @FXML
     private ImageView scarti;
     @FXML
@@ -41,24 +43,24 @@ public class MainController {
     @FXML
     private AnchorPane anchorPane;
     @FXML
-    private Text pesca;
+    private Label pesca;
 
     @FXML
     public void initialize() {
         gameData = GameData.getInstance();
         checkInit = false;
         impostaCose();
-        mazzoEScarti.getChildren().getFirst().setOnMouseEntered(event1 -> {
-            mazzoEScarti.getChildren().getFirst().setScaleX(1.1);
-            mazzoEScarti.getChildren().getFirst().setScaleY(1.1);
+        ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setOnMouseEntered(event1 -> {
+            ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setScaleX(1.1);
+            ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setScaleY(1.1);
         });
-        mazzoEScarti.getChildren().getFirst().setOnMouseExited(event2 -> {
-            mazzoEScarti.getChildren().getFirst().setScaleX(1.0);
-            mazzoEScarti.getChildren().getFirst().setScaleY(1.0);
+        ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setOnMouseExited(event2 -> {
+            ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setScaleX(1.0);
+            ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setScaleY(1.0);
         });
-        pesca.setVisible(true);
-        if(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
-            ((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController, turnButton);
+        checkPI();
+        if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
+            //((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController, turnButton);
         }
     }
     public void impostaCose(){
@@ -75,9 +77,9 @@ public class MainController {
         stackPane.heightProperty().addListener((observable, oldValue, newValue) -> {
             centroY = (double) newValue;
             scalaMazzo();
-            mazzoEScarti.setLayoutY(centroY/2 - (checkInit ? mazzoEScarti.getHeight() : 90)/2);
+            mazzoEScarti.setLayoutY(centroY/2 - (checkInit ? mazzoEScarti.getHeight()+35 : 125)/2);
             mettiCarte(false);
-            if (mazzoEScarti.getHeight()!=0)
+            if (mazzoEScarti.getHeight() != 0)
                 checkInit=true;
         });
         mettiCarte(true);
@@ -138,7 +140,7 @@ public class MainController {
     }
     public void spostaCarta(){
         double cX = centroX/2;
-        double cY = centroY-20;
+        double cY = centroY-27;
         double semiLarghezza = centroX/5;
         double altezza = 10 + centroY/5;
         int numOggetti = numNodiMano.size();
@@ -211,28 +213,33 @@ public class MainController {
 
     @FXML
     public void handleTurnButton() {
+        checkFattaPI = false;
         verificaMano();
-        turnButton.setDisable(true);
         PauseTransition pause = new PauseTransition(Duration.seconds(1));
         ovalPaneController.cambiaTurno();
-        mettiVita();
         pause.play();
-        mettiCarte(true);
         pause.setOnFinished(event -> {
             if(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
-                ((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController, turnButton);
+                //((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController, turnButton);
             }
-            turnButton.setDisable(false);
+            aggiornaCosa();
+            checkPI();
         });
-        pesca.setVisible(true);
     }
-
-    private void verificaMano() {
-        while(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size() < 5) {
-            gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).addCarta(gameData.getMazzo().pesca());
+    private void checkPI(){
+        if (!checkFattaPI&&gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size()<5) {
+            turnButton.setDisable(true);
+            pesca.setVisible(true);
+            ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setMouseTransparent(false);
+        } else {
+            turnButton.setDisable(false);
+            pesca.setVisible(false);
+            ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setMouseTransparent(true);
         }
+    }
+    private void verificaMano() {
         while(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size() > 5) {
-            gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).scarta(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().get((int) (Math.random() * ((gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size()-1) + 1))));
+            gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).scarta(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().get((int) (Math.random() * (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size()))));
         }
     }
 
@@ -252,11 +259,14 @@ public class MainController {
 
     public void pescataInizialeGiocatore() {
         pesca.setVisible(false);
+        turnButton.setDisable(false);
         Giocatore player = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente());
         for(int i = 1; i <= 2; i++) {
             player.addCarta(gameData.getMazzo().pesca());
             System.out.println("Ho pescato");
         }
+        checkFattaPI = true;
+        checkPI();
         mettiCarte(true);
     }
     public void startSelectionMC(){

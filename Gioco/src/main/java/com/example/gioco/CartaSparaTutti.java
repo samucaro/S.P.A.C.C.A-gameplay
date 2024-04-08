@@ -33,6 +33,7 @@ public class CartaSparaTutti extends Carta{
             }
         }
         gestisciEventiAttacco(ovalPaneController, mainController);
+        mainController.aggiornaCosa();
     }
 
     public void gestisciEventiAttacco(OvalPaneController ovalPaneController,  MainController mainController) {

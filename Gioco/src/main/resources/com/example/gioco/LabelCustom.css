@@ -1,0 +1,7 @@
+.custom-label {
+    -fx-font-family: "Game Of Thrones"; /* Imposta il font specifico */
+    -fx-font-size: 12px; /* Imposta la dimensione del font a 12 */
+    -fx-font-border-width: 2px; /* Imposta la larghezza del bordino a 1 pixel */
+    -fx-font-border-color: black; /* Imposta la larghezza del bordino a 1 pixel */
+    -fx-padding: 2px;
+}
