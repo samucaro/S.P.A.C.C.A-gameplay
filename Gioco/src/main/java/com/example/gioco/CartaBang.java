@@ -3,6 +3,8 @@ package com.example.gioco;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
+import java.util.Iterator;
+
 public class CartaBang extends Carta{
     private final GameData gameData;
     private Giocatore selectedGG;
