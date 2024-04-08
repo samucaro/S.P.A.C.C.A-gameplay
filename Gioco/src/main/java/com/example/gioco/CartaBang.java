@@ -33,7 +33,6 @@ public class CartaBang extends Carta{
         }
         gestisciEventiAttacco(ovalPaneController, mainController);
     }
-
     public void gestisciEventiAttacco(OvalPaneController ovalPaneController,  MainController mainController) {
         ovalPaneController.startSelection().setOnSucceeded(event -> {
             boolean var = false;

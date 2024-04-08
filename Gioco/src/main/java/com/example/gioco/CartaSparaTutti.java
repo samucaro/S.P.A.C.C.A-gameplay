@@ -36,24 +36,23 @@ public class CartaSparaTutti extends Carta{
     }
 
     public void gestisciEventiAttacco(OvalPaneController ovalPaneController,  MainController mainController) {
-        boolean checkCartaB = false;
+        boolean checkCartaM;
         for (int i = 0; i < gameData.getGiocatoriPartita().size(); i++){
+            checkCartaM = false;
             if (i != gameData.getTurnoCorrente()) {
                 for (int j = 0; j < gameData.getGiocatoriPartita().get(i).getMano().size(); j++){
                     System.out.println(gameData.getGiocatoriPartita().get(i).getNome() + " " + j);
                     if (gameData.getGiocatoriPartita().get(i).getMano().get(j) instanceof CartaMancato){
-                        checkCartaB = true;
+                        checkCartaM = true;
                         mainController.scartaCarte(gameData.getGiocatoriPartita().get(i).getMano().get(j),gameData.getGiocatoriPartita().get(i));
                         break;
                     }
                 }
-                if (!checkCartaB){
-                    System.out.println("SONO QUI");
+                if (!checkCartaM){
                     gameData.getGiocatoriPartita().get(i).subisciDanno(1);
                     ovalPaneController.dannoSfera(gameData.getGiocatoriPartita().get(i));
                 }
             }
-            checkCartaB = false;
         }
     }
 

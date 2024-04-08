@@ -200,11 +200,11 @@ public class MainController {
         turnButton.setDisable(true);
         PauseTransition pause = new PauseTransition(Duration.seconds(1));
         ovalPaneController.cambiaTurno();
+        mettiVita();
         pause.play();
         mettiCarte(true);
         pause.setOnFinished(event -> {
             turnButton.setDisable(false);
-            mettiVita();
         });
     }
     @FXML

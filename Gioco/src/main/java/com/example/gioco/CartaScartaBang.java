@@ -31,11 +31,13 @@ public class CartaScartaBang extends Carta{
             }
         }
         gestisciEventiAttacco(ovalPaneController, mainController);
+        mainController.aggiornaCosa();
     }
 
     public void gestisciEventiAttacco(OvalPaneController ovalPaneController,  MainController mainController) {
-        boolean checkCartaB = false;
+        boolean checkCartaB;
         for (int i = 0; i < gameData.getGiocatoriPartita().size(); i++){
+            checkCartaB = false;
             if (i != gameData.getTurnoCorrente()) {
                 for (int j = 0; j < gameData.getGiocatoriPartita().get(i).getMano().size(); j++){
                     if (gameData.getGiocatoriPartita().get(i).getMano().get(j) instanceof CartaBang){
