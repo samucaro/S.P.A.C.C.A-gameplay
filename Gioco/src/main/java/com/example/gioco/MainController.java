@@ -102,7 +102,7 @@ public class MainController {
     public void scartaCarte(Carta c, Giocatore g){
         g.scarta(c);
         gameData.getMazzo().scarta(c);
-        scarti.setImage(c.getImage().getImage());
+        scarti.setImage(gameData.getMazzo().ultimoScarto().getImage().getImage());
     }
 
     public void mettiCarte(boolean var) {
@@ -216,7 +216,6 @@ public class MainController {
     public void handleTurnButton() {
         checkFattaPI = false;
         turnButton.setDisable(true);
-        pesca.setVisible(true);
         verificaMano();
         PauseTransition pause = new PauseTransition(Duration.seconds(1));
         ovalPaneController.cambiaTurno();
@@ -226,11 +225,11 @@ public class MainController {
                 //((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController, turnButton);
             }
             aggiornaCosa();
-            //checkPI();
+            checkPI();
         });
     }
-    /*private void checkPI(){
-        if (!checkFattaPI && gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size()<5) {
+    private void checkPI(){
+        if (!checkFattaPI) {
             turnButton.setDisable(true);
             pesca.setVisible(true);
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setMouseTransparent(false);
@@ -239,10 +238,12 @@ public class MainController {
             pesca.setVisible(false);
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setMouseTransparent(true);
         }
-    }*/
+    }
     private void verificaMano() {
+        Carta c;
         while(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size() > 5) {
-            gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).scarta(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().get((int) (Math.random() * (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size()))));
+            c=gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().get((int) (Math.random() * (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size())));
+            scartaCarte(c, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
         }
         while(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size() < 5) {
             gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).addCarta(gameData.getMazzo().pesca());
@@ -269,7 +270,7 @@ public class MainController {
             System.out.println("Ho pescato");
         }
         checkFattaPI = true;
-        //checkPI();
+        checkPI();
         mettiCarte(true);
     }
     public void startSelectionMC(){

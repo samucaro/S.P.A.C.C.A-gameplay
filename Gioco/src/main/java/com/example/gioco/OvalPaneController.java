@@ -34,6 +34,7 @@ public class OvalPaneController {
     private Text scegliAvversario;
     private Arc arcoInterno;
     private Arc arcoEsterno;
+    private static int currentSphere;
     private static double centroX;
     private static double centroY;
     private boolean planetSelected;
@@ -63,7 +64,7 @@ public class OvalPaneController {
     private void creaGruppoPianeti() {
         for (int i = 0; i < gameData.getNumero(); i++) {
             pianeti[i] = new Group();
-            pianeti[i].getChildren().addFirst(new Sphere(60));
+            pianeti[i].getChildren().add(new Sphere(60));
             Image texture = textures(i);
             PhongMaterial material1 = new PhongMaterial();
             material1.setDiffuseMap(texture);
@@ -126,7 +127,6 @@ public class OvalPaneController {
             pianeti[ind].setScaleY(pianeti[ind].getScaleY()-0.1);
         });
         pianeti[ind].setOnMouseClicked(event -> {
-            ((Text) pianeti[ind].getChildren().getLast()).getText();
             for (int j = 0; j < gameData.getGiocatoriPartita().size(); j++){
                 if (gameData.getGiocatoriPartita().get(j).getNome().equals(((Text) pianeti[ind].getChildren().getLast()).getText())){
                     giocatoreSelezionato = gameData.getGiocatoriPartita().get(j);
@@ -191,6 +191,7 @@ public class OvalPaneController {
         timer.start();
     }
     private static void posizionaSfere() {
+        double scale = 1;
         for (int i = 0; i < gameData.getNumero(); i++) {
             int indice = ((gameData.getNumero() - turnoDi) + i) % gameData.getNumero();
             if (indice == 2) {
@@ -199,8 +200,13 @@ public class OvalPaneController {
             ((Sphere) pianeti[indice].getChildren().get(0)).setRadius((60 * Math.min(centroX, centroY)) / 300);
             pianeti[indice].setTranslateX((centroX - ((Sphere) pianeti[indice].getChildren().getFirst()).getRadius() * 2 + 50) * Math.cos((2 * Math.PI * (i + 1) / gameData.getNumero())+(Math.PI/2)) + centroX);
             pianeti[indice].setTranslateY((centroY - ((Sphere) pianeti[indice].getChildren().getFirst()).getRadius() * 2 + 40) * Math.sin((2 * Math.PI * (i + 1) / gameData.getNumero())+(Math.PI/2)) + centroY);
-            pianeti[indice].setScaleX(i == gameData.getNumero()-1 ? 0.6 : 1);
-            pianeti[indice].setScaleY(i == gameData.getNumero()-1 ? 0.6 : 1);
+            if (i == gameData.getNumero()-1) {
+                currentSphere = indice;
+                scale = 0.6;
+            } else
+                scale = 1;
+            pianeti[indice].setScaleX(scale);
+            pianeti[indice].setScaleY(scale);
         }
     }
     public void cambiaTurno() {
@@ -259,6 +265,7 @@ public class OvalPaneController {
         Task<Void> task = new Task<>() {
             @Override
             protected Void call() throws Exception {
+                pianeti[currentSphere].setMouseTransparent(true);
                 for (int secondo = 1; secondo <= 20; secondo++) {
                     if (planetSelected) {
                         succeeded();
@@ -293,6 +300,7 @@ public class OvalPaneController {
     public void fineSelezione(){
         halfDonut.setVisible(true);
         ovalPane.getChildren().removeAll(progressBar, scegliAvversario);
+        pianeti[currentSphere].setMouseTransparent(false);
         reShape();
     }
 }

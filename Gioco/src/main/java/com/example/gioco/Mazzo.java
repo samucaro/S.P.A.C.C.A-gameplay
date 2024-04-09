@@ -58,7 +58,8 @@ public class Mazzo {
 
     public Carta pesca(){
         if (carte.isEmpty()) {
-            carte = scarti;
+            carte.addAll(scarti);
+            scarti.clear();
             mescola();
         }
         Carta ct = carte.getLast();

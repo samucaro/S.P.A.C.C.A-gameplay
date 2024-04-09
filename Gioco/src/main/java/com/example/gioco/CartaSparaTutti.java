@@ -41,7 +41,6 @@ public class CartaSparaTutti extends Carta{
             checkCartaM = false;
             if (i != gameData.getTurnoCorrente()) {
                 for (int j = 0; j < gameData.getGiocatoriPartita().get(i).getMano().size(); j++){
-                    System.out.println(gameData.getGiocatoriPartita().get(i).getNome() + " " + j);
                     if (gameData.getGiocatoriPartita().get(i).getMano().get(j) instanceof CartaMancato){
                         checkCartaM = true;
                         mainController.scartaCarte(gameData.getGiocatoriPartita().get(i).getMano().get(j),gameData.getGiocatoriPartita().get(i));

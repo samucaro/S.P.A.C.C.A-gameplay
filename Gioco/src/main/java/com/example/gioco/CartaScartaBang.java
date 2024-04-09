@@ -42,6 +42,7 @@ public class CartaScartaBang extends Carta{
                 for (int j = 0; j < gameData.getGiocatoriPartita().get(i).getMano().size(); j++){
                     if (gameData.getGiocatoriPartita().get(i).getMano().get(j) instanceof CartaBang){
                         checkCartaB = true;
+                        ovalPaneController.dannoSfera(gameData.getGiocatoriPartita().get(i), false);
                         mainController.scartaCarte(gameData.getGiocatoriPartita().get(i).getMano().get(j),gameData.getGiocatoriPartita().get(i));
                         break;
                     }
