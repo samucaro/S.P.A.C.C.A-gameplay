@@ -28,7 +28,7 @@ public class MainController {
     private double yOffset;
     private ArrayList<Integer> numNodiMano;
     private boolean checkInit;
-    private boolean checkFattaPI = false;
+    private boolean checkFattaPI;
     private GameData gameData;
     @FXML
     public OvalPaneController ovalPaneController;
@@ -51,7 +51,9 @@ public class MainController {
         ovalPaneController.getMc(this);
         gameData = GameData.getInstance();
         checkInit = false;
+        checkFattaPI = false;
         impostaCose();
+        //pesca.setVisible(true);
         ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setOnMouseEntered(event1 -> {
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setScaleX(1.1);
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setScaleY(1.1);
@@ -60,7 +62,8 @@ public class MainController {
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setScaleX(1.0);
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setScaleY(1.0);
         });
-        checkPI();
+        turnButton.setDisable(true);
+        //checkPI();
         if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
             //((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController, turnButton);
         }
@@ -213,6 +216,7 @@ public class MainController {
     public void handleTurnButton() {
         checkFattaPI = false;
         turnButton.setDisable(true);
+        pesca.setVisible(true);
         verificaMano();
         PauseTransition pause = new PauseTransition(Duration.seconds(1));
         ovalPaneController.cambiaTurno();
@@ -222,11 +226,11 @@ public class MainController {
                 //((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController, turnButton);
             }
             aggiornaCosa();
-            checkPI();
+            //checkPI();
         });
     }
-    private void checkPI(){
-        if (!checkFattaPI&&gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size()<5) {
+    /*private void checkPI(){
+        if (!checkFattaPI && gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size()<5) {
             turnButton.setDisable(true);
             pesca.setVisible(true);
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setMouseTransparent(false);
@@ -235,10 +239,13 @@ public class MainController {
             pesca.setVisible(false);
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setMouseTransparent(true);
         }
-    }
+    }*/
     private void verificaMano() {
         while(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size() > 5) {
             gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).scarta(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().get((int) (Math.random() * (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size()))));
+        }
+        while(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size() < 5) {
+            gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).addCarta(gameData.getMazzo().pesca());
         }
     }
     public void salvaPartita() {
@@ -246,7 +253,7 @@ public class MainController {
     }
     public void switchToAdminPlayerPage(ActionEvent event) throws IOException {
         salvaPartita();
-        gameData.resetInstance();
+        GameData.resetInstance();
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AdminPlayerPage.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
@@ -262,7 +269,7 @@ public class MainController {
             System.out.println("Ho pescato");
         }
         checkFattaPI = true;
-        checkPI();
+        //checkPI();
         mettiCarte(true);
     }
     public void startSelectionMC(){

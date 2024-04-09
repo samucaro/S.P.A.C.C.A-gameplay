@@ -22,12 +22,13 @@ public class GiocatoreRobot extends Giocatore {
     }
 
     public void addCarta(Carta carta){
-        if(mano.size() == 6) {
+        /*if(mano.size() == 6) {
             System.out.println("Hai già il numero massimo di carte in mano");
         }
         else {
             mano.add(carta);
-        }
+        }*/
+        mano.add(carta);
     }
     public void scarta(Carta carta) {
         mano.remove(carta);
