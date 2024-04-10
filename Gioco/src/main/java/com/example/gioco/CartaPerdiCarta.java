@@ -34,19 +34,23 @@ public class CartaPerdiCarta extends Carta{
         }
         gestisciEventiAttacco(ovalPaneController, mainController);
     }
- //GESTIRE SE IL SELEZIONATO HA 0 CARTE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    public void gestisciEventiAttacco(OvalPaneController ovalPaneController,  MainController mainController) {
-        ovalPaneController.startSelection().setOnSucceeded(event -> {
+
+    public EventHandler<ActionEvent> gestisciEventiAttacco(OvalPaneController ovalPaneController, MainController mainController) {
+        return event -> {
             giocatoreSelezionato = ovalPaneController.planetSelection();
-            for (int i = 1 ; i<=30; i++)
-                System.out.println((int) (Math.random() * (giocatoreSelezionato.getMano().size())));
-            int val = (int) (Math.random() * (giocatoreSelezionato.getMano().size()));
-            gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).addCarta(giocatoreSelezionato.getMano().get(val));
-            giocatoreSelezionato.scarta(giocatoreSelezionato.getMano().get(val));
-            ovalPaneController.dannoSfera(giocatoreSelezionato,true);
-            ovalPaneController.fineSelezione();
-            mainController.stopSelectionMC();
-        });
+            if(giocatoreSelezionato.getMano().isEmpty()) {
+                System.out.println("VUOTAMANOGIOCATORESELEZIONATOOOOOOOOOOOOOO");
+                gestisciEventiAttacco(ovalPaneController, mainController).handle(new ActionEvent());
+            }
+            else {
+                int val = (int) (Math.random() * (giocatoreSelezionato.getMano().size()));
+                gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).addCarta(giocatoreSelezionato.getMano().get(val));
+                giocatoreSelezionato.scarta(giocatoreSelezionato.getMano().get(val));
+                ovalPaneController.dannoSfera(giocatoreSelezionato, true);
+                ovalPaneController.fineSelezione();
+                mainController.stopSelectionMC();
+            }
+        };
     }
 
     @Override

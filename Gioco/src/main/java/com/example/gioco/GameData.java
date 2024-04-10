@@ -75,7 +75,7 @@ public class GameData {
                     }
                 }
                 else if (line.startsWith("Giocatore:")) {
-                    c = (Integer.parseInt(line.split(" ")[1].trim()))-1;
+                    c = (Integer.parseInt(line.split(" ")[1].trim()));
                 }
                 else if (line.startsWith("Tipo:")) {
                     if (line.split(":")[1].trim().equals("Persona")) {
@@ -192,15 +192,15 @@ public class GameData {
         try {
             FileWriter file = new FileWriter((dataSet.getProjectFolderPath() + File.separator + "/" + code + ".txt"), true);
             PrintWriter writer = new PrintWriter(file);
-            writer.println("Dati Generali " + tipo + ":");
+            writer.println("Dati Generali " + tipo);
             writer.println("NumGiocatori: " + numeroGG);
             writer.println("Turno: " + turnoCorrente);
             writer.println("Mazzo: " + mazzo.toString());
             writer.println("Scarti: " + mazzo.toStringScarti());
             writer.println("******************************");
             for (int i = 0; i < numeroGG; i++) {
-                writer.println("Giocatore " + (i + 1) + ":");
-                writer.println("Tipo: " + (giocatoriPartita.get(i).getClass().getSimpleName().equals("giocatorePersona")?"Persona":"Bot"));
+                writer.println("Giocatore: " + i);
+                writer.println("Tipo: " + ((giocatoriPartita.get(i) instanceof GiocatorePersona) ? "Persona" : "Bot"));
                 writer.println("Nome: " + giocatoriPartita.get(i).getNome());
                 writer.println("Mano: " + giocatoriPartita.get(i).toStringMano());
                 writer.println("HpRimanente: " + giocatoriPartita.get(i).getHpRimanente());

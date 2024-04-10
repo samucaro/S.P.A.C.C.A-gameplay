@@ -15,19 +15,16 @@ public class GiocatoreRobot extends Giocatore {
     private int hpRimanente;
     private ArrayList<Carta> mano;
     private boolean turno;
+    private GameData gameData;
+
     public GiocatoreRobot(){
         HP = 5;
         hpRimanente = HP;
         mano = new ArrayList<>();
+        gameData = GameData.getInstance();
     }
 
     public void addCarta(Carta carta){
-        /*if(mano.size() == 6) {
-            System.out.println("Hai già il numero massimo di carte in mano");
-        }
-        else {
-            mano.add(carta);
-        }*/
         mano.add(carta);
     }
     public void scarta(Carta carta) {
@@ -50,21 +47,27 @@ public class GiocatoreRobot extends Giocatore {
     }
 
     public void giocaTurno(MainController mainController, OvalPaneController ovalPaneController, Button button) {
+        mainController.pescataInizialeGiocatore();
+        System.out.println("mano:" + mano.size());
         int cont = 0;
-        //Il fatto di levare carte durante un ciclo for crea problemi...capire come risolvere
-        /*for (Carta carta : mano) {
-            if (cont != 1 && carta instanceof CartaBang) {
-                cont = 1;
-                carta.usaAbilita(ovalPaneController, mainController);
-            } else if (!(carta instanceof CartaMancato)) {
-                carta.usaAbilita(ovalPaneController, mainController);
+        Carta cc;
+        for (int i = 0; i < mano.size(); i++) {
+            cc = mano.get(i);
+            if (cont < 1 && cc instanceof CartaBang) {
+                System.out.println("SONO QUI 1");
+                cc.usaAbilita(ovalPaneController, mainController);
+                i--;
+                cont++;
             }
-        }*/
-        //ovalPaneController.cambiaTurno();
+            else if (!(cc instanceof CartaBang)){
+                cc.usaAbilita(ovalPaneController, mainController);
+                if (!(cc instanceof CartaMancato || cc instanceof CartaPerdiCarta || (cc instanceof CartaRecuperaVita && hpRimanente == 5)))
+                    i--;
+            }
+        }
         cliccaBottone(button);
     }
 
-    //Non funziona
     private void cliccaBottone(Button button) {
         ActionEvent event = new ActionEvent(null, null);
         button.fireEvent(event);

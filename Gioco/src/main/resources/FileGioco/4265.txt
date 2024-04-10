@@ -7,7 +7,7 @@ Scarti:
 Giocatore: 1
 Tipo: Persona
 Nome: anto
-Mano: Mancato Bang Bang Mancato RecuperaVita 
+Mano: Bang Mancato Bang Mancato SparaTutti
 HpRimanente: 5
 ******************************
 Giocatore: 2

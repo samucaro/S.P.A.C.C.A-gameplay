@@ -166,7 +166,7 @@ public class SetPlayerPageController {
             writer.println("Mazzo: " + m.toString());
             writer.println("Scarti: ");
             writer.println("******************************");
-            int j = 1;
+            int j = 0;
             for (int i : vector) {
                 writer.println("Giocatore: " + j);
                 writer.println("Tipo: " + tipoGiocatore[i]);

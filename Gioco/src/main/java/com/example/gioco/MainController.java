@@ -1,7 +1,5 @@
 package com.example.gioco;
 import javafx.animation.*;
-import javafx.beans.property.ReadOnlyDoubleProperty;
-import javafx.beans.property.ReadOnlyDoublePropertyBase;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,7 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -46,9 +43,10 @@ public class MainController {
     private AnchorPane anchorPane;
     @FXML
     private Label pesca;
+
     @FXML
     public void initialize() {
-        ovalPaneController.getMc(this);
+        ovalPaneController.getMainController(this);
         gameData = GameData.getInstance();
         checkInit = false;
         checkFattaPI = false;
@@ -65,10 +63,12 @@ public class MainController {
         turnButton.setDisable(true);
         //checkPI();
         if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
-            //((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController, turnButton);
+            ((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController, turnButton);
         }
     }
-    public void impostaCose(){
+
+    //Imposta il layout del tabellone di gioco con tutte le carte, la vita e il mazzo
+    private void impostaCose(){
         anchorPane.prefWidthProperty().bind(stackPane.widthProperty());
         anchorPane.prefHeightProperty().bind(stackPane.heightProperty());
         stackPane.widthProperty().addListener((observable, oldValue, newValue) -> {
@@ -91,73 +91,59 @@ public class MainController {
         mettiCarte(true);
         mettiVita();
     }
-    public void scalaMazzo(){
+
+    //Impone una valore di scala per il mazzo valido ogni qualvolta si ridimensiona la scena
+    private void scalaMazzo(){
         double scala = getScala();
         mazzoEScarti.setScaleX(scala);
         mazzoEScarti.setScaleY(scala);
     }
-    public double getScala(){
+    //Da il fattore di scala
+    private double getScala(){
         return 0.01 * (10 * Math.min(centroX, centroY)) / 50;
     }
-    public void scartaCarte(Carta c, Giocatore g){
-        g.scarta(c);
-        gameData.getMazzo().scarta(c);
-        scarti.setImage(gameData.getMazzo().ultimoScarto().getImage().getImage());
-    }
 
+    //Aggiorna la disposizione delle carte del giocatore corrente levandole prima tutte e rimettendo quelle esatte
     public void mettiCarte(boolean var) {
         numNodiMano = new ArrayList<>();
-            for(int i = 0; i < anchorPane.getChildren().size(); i++) {
-                if (anchorPane.getChildren().get(i) instanceof ImageView) {
-                    //System.out.println("Carte: " + ((ImageView) anchorPane.getChildren().get(i)).getImage().getUrl());
-                    if (var) {
-                        anchorPane.getChildren().remove(i);
-                        i--;
-                    } else {
-                        numNodiMano.add(i);
-                    }
+        for(int i = 0; i < anchorPane.getChildren().size(); i++) {
+            if (anchorPane.getChildren().get(i) instanceof ImageView) {
+                if (var) {
+                    anchorPane.getChildren().remove(i);
+                    i--;
+                } else {
+                    numNodiMano.add(i);
                 }
             }
+        }
         if (var) {
-            PauseTransition pause = new PauseTransition(Duration.seconds(0.1));
-            pause.play();
-            pause.setOnFinished(event -> {
                 ImageView imageView;
                 ArrayList<Carta> manoCorrente = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano();
+                System.out.println(manoCorrente.size() + " MANOOOOODIMENSIONE");
                 for (int i = 0; i< manoCorrente.size(); i++) {
                     imageView = manoCorrente.get(i).getImage();
                     anchorPane.getChildren().add(imageView);
-                    scala(imageView);
-                    listenerCarta(imageView, i);
+                    scalaImageView(imageView);
+                    impostaListenerCarta(imageView, i);
                     numNodiMano.add(anchorPane.getChildren().indexOf(imageView));
                 }
                 spostaCarta();
-
-            });
         } else {
             for (int i : numNodiMano) {
-                scala((ImageView) anchorPane.getChildren().get(i));
+                scalaImageView((ImageView) anchorPane.getChildren().get(i));
             }
             spostaCarta();
         }
     }
-    public void spostaCarta(){
-        double cX = centroX/2;
-        double cY = centroY-centroY/11;
-        double semiLarghezza = centroX/5;
-        double altezza = centroY/6.8;
-        int numOggetti = numNodiMano.size();
-        double[][] coordinate = calcolaCoordinateArco(cX, cY, semiLarghezza, altezza, numOggetti);
-        double[] angoli = new double[numOggetti];
-        for (int i = 0; i < numNodiMano.size(); i++) {
-            angoli[i] = numOggetti <= 1 ? 0 : -(-30 + i * ((double) 60/(numOggetti-1)));
-            ImageView imageView = (ImageView) anchorPane.getChildren().get(numNodiMano.get(i));
-            imageView.setLayoutX(coordinate[i][0] - imageView.getFitWidth()/2);
-            imageView.setLayoutY(coordinate[i][1] - imageView.getFitWidth()*1.29);
-            imageView.setRotate(angoli[i]);
-        }
+
+    //Imposta il fattore di scala per le ImageView
+    public void scalaImageView(ImageView c){
+        double dim = (5 * Math.min(centroX, centroY)) / 37;
+        c.setFitWidth(dim);
     }
-    public void listenerCarta(ImageView imageView, int i){
+
+    //Setta tutti i listener necessari alle carte per garantirne l'animazione
+    private void impostaListenerCarta(ImageView imageView, int i){
         Carta cartaAttuale = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().get(i);
         imageView.setOnMouseEntered(event1 -> {
             imageView.setScaleX(1.1);
@@ -185,14 +171,38 @@ public class MainController {
             }
         });
     }
-    public void scala(ImageView c){
-        double dim = (5 * Math.min(centroX, centroY)) / 37;
-        c.setFitWidth(dim);
+
+    //posiziona le carte nel modo corretto all'interno dell'anello azzurro
+    public void spostaCarta(){
+        double cX = centroX/2;
+        double cY = centroY-centroY/11;
+        double semiLarghezza = centroX/5;
+        double altezza = centroY/6.8;
+        int numOggetti = numNodiMano.size();
+        double[][] coordinate = calcolaCoordinateArco(cX, cY, semiLarghezza, altezza, numOggetti);
+        double[] angoli = new double[numOggetti];
+        for (int i = 0; i < numNodiMano.size(); i++) {
+            angoli[i] = numOggetti <= 1 ? 0 : -(-30 + i * ((double) 60/(numOggetti-1)));
+            ImageView imageView = (ImageView) anchorPane.getChildren().get(numNodiMano.get(i));
+            imageView.setLayoutX(coordinate[i][0] - imageView.getFitWidth()/2);
+            imageView.setLayoutY(coordinate[i][1] - imageView.getFitWidth()*1.29);
+            imageView.setRotate(angoli[i]);
+        }
     }
+
+    //Aggiorna la vita del giocatore corrente
     public void mettiVita(){
         int vita = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente();
         barraVita.setProgress((double) vita/5);
     }
+
+    public void scartaCarte(Carta c, Giocatore g){
+        g.scarta(c);
+        gameData.getMazzo().scarta(c);
+        scarti.setImage(gameData.getMazzo().ultimoScarto().getImage().getImage());
+    }
+
+
     public double[][] calcolaCoordinateArco(double cX, double cY, double semiLarghezza, double altezza, int numOggetti) {
         double[][] coordinate = new double[numOggetti][2];
         double angoloStep = Math.PI / (numOggetti - 1);
@@ -250,7 +260,9 @@ public class MainController {
         }
     }
     public void salvaPartita() {
+        gameData.aggiornaFile();
         System.out.println(gameData.getGiocatoriPartita());
+        System.out.println(gameData.getMazzo().toStringScarti());
     }
     public void switchToAdminPlayerPage(ActionEvent event) throws IOException {
         salvaPartita();

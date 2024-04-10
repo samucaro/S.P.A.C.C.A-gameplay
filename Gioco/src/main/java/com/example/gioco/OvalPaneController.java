@@ -1,8 +1,6 @@
 package com.example.gioco;
 
 import javafx.animation.*;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
@@ -44,6 +42,7 @@ public class OvalPaneController {
     private static double iry = 130.0;
     private static Shape halfDonut;
     private static int turnoDi;
+
     @FXML
     public void initialize() {
         gameData = GameData.getInstance();
@@ -93,6 +92,7 @@ public class OvalPaneController {
             ovalPane.getChildren().add(pianeti[i]);
         }
     }
+
     //Carica le immagini dei pianeti
     private Image textures(int i){
         return switch (i) {
@@ -107,6 +107,7 @@ public class OvalPaneController {
             default -> new Image("null");
         };
     }
+
     //Imposta lo stile del testo mostrato nella scelta del giocatore
     private void impostaStile() {
         progressBar.setStyle("-fx-background-color: cyan; -fx-background-radius: 20;");
@@ -116,8 +117,9 @@ public class OvalPaneController {
         scegliAvversario.setStroke(Color.BLACK);
         scegliAvversario.setStrokeWidth(0.7);
     }
+
     //gestisce i possibili eventi sui pianeti
-    public void gestoreEventiPianeti(int ind) {
+    private void gestoreEventiPianeti(int ind) {
         pianeti[ind].setOnMouseEntered(event -> {
             pianeti[ind].setScaleX(pianeti[ind].getScaleX()+0.1);
             pianeti[ind].setScaleY(pianeti[ind].getScaleY()+0.1);
@@ -135,6 +137,7 @@ public class OvalPaneController {
             }
         });
     }
+
     //Creazione Donut e gestione ridimensionamento
     private void iniziaHD() {
         arcoEsterno = new Arc(100.0, 100.0, orx, ory, 0.0, 180.0);
@@ -144,17 +147,19 @@ public class OvalPaneController {
         halfDonut = Shape.subtract(arcoEsterno, arcoInterno);
         ovalPane.getChildren().add(halfDonut);
     }
-    public void setScenaX(double x){
+
+    //Metodi per ridimensionamento
+    private void setScenaX(double x){
         centroX=x/2;
-        posizionaSfere();
+        posizionaPianeti();
         reShape();
     }
-    public void setScenaY(double y){
+    private void setScenaY(double y){
         centroY=y/2;
-        posizionaSfere();
+        posizionaPianeti();
         reShape();
     }
-    public void reShape() {
+    private void reShape() {
         double h = (60 * Math.min(centroX, centroY)) / 300;
         orx=h + centroX*1/2;
         ory=h + centroY*1/1.5;
@@ -181,6 +186,8 @@ public class OvalPaneController {
             halfDonut.setTranslateY(centroY*2-100);
         }
     }
+
+    //Imposta la rotazione 3D dei pianeti
     private void rotazionePianeti(int i) {
         timer = new AnimationTimer() {
             @Override
@@ -190,7 +197,9 @@ public class OvalPaneController {
         };
         timer.start();
     }
-    private static void posizionaSfere() {
+
+    //Posiziona i pianeti nel modo corretto
+    private static void posizionaPianeti() {
         double scale = 1;
         for (int i = 0; i < gameData.getNumero(); i++) {
             int indice = ((gameData.getNumero() - turnoDi) + i) % gameData.getNumero();
@@ -209,6 +218,8 @@ public class OvalPaneController {
             pianeti[indice].setScaleY(scale);
         }
     }
+
+    //Gestisce l'evento del cambio turno
     public void cambiaTurno() {
         KeyValue kv1, kv2, kv3, kv4;
         KeyFrame kf;
@@ -232,9 +243,10 @@ public class OvalPaneController {
         kf = new KeyFrame(Duration.seconds(1), kv1, kv2, kv3, kv4);
         timeline.getKeyFrames().add(kf);
         timeline.playFromStart();
-        timeline.setOnFinished(event -> posizionaSfere());
+        timeline.setOnFinished(event -> posizionaPianeti());
     }
-    public void getMc(MainController mainController){
+
+    public void getMainController(MainController mainController){
         mc = mainController;
         ovalPane.prefWidthProperty().bind(mc.stackPane.widthProperty());
         ovalPane.prefHeightProperty().bind(mc.stackPane.heightProperty());

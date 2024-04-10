@@ -1,5 +1,7 @@
 package com.example.gioco;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -27,16 +29,25 @@ public class CartaBang extends Carta{
         return imageView;
     }
     public void usaAbilita(OvalPaneController ovalPaneController, MainController mainController) {
-        for(Carta c: gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano()) {
-            if(c instanceof CartaBang) {
-                mainController.scartaCarte(c,gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
+        for (Carta c : gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano()) {
+            if (c instanceof CartaBang) {
+                mainController.scartaCarte(c, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
                 break;
             }
         }
-        gestisciEventiAttacco(ovalPaneController, mainController);
+        if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot){
+            ovalPaneController.giocatoreSelezionato = null;
+            gestisciEventiAttacco(ovalPaneController, mainController).handle(new ActionEvent());
+        } else {
+            ovalPaneController.startSelection().setOnSucceeded(event -> {
+                gestisciEventiAttacco(ovalPaneController, mainController).handle(new ActionEvent());
+                ovalPaneController.fineSelezione();
+                mainController.stopSelectionMC();
+            });
+        }
     }
-    public void gestisciEventiAttacco(OvalPaneController ovalPaneController,  MainController mainController) {
-        ovalPaneController.startSelection().setOnSucceeded(event -> {
+    public EventHandler<ActionEvent> gestisciEventiAttacco(OvalPaneController ovalPaneController,  MainController mainController) {
+        return event -> {
             boolean var = false;
             selectedGG = ovalPaneController.planetSelection();
             for(Carta c: selectedGG.getMano()) {
@@ -51,10 +62,9 @@ public class CartaBang extends Carta{
                 selectedGG.subisciDanno(1);
                 ovalPaneController.dannoSfera(selectedGG, true);
             }
-            ovalPaneController.fineSelezione();
-            mainController.stopSelectionMC();
-        });
+        };
     }
+
     @Override
     public String toString() {
         return "-" + desc + ";\n";

@@ -7,7 +7,7 @@ Scarti:
 Giocatore: 1
 Tipo: Persona
 Nome: walt
-Mano: Mancato Bang
+Mano: Bang Mancato Bang Mancato SparaTutti
 HpRimanente: 5
 ******************************
 Giocatore: 2
