@@ -68,7 +68,7 @@ public class GameData {
                     }
                 }
                 else if (line.startsWith("Scarti:")) {
-                    String carteScarti = line.split(": ")[1];
+                    String carteScarti = line.split(":")[1];
                     String[] carteS = carteScarti.split(" ");
                     for (String nomeCarta: carteS) {
                         mazzo.addScarto(stringaCarta(nomeCarta));
