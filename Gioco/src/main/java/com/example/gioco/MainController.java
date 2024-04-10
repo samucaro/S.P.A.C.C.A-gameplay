@@ -61,7 +61,6 @@ public class MainController {
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setScaleY(1.0);
         });
         turnButton.setDisable(true);
-        //checkPI();
         if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
             ((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController, turnButton);
         }
@@ -83,7 +82,6 @@ public class MainController {
             centroY = (double) newValue;
             scalaMazzo();
             mazzoEScarti.setLayoutY(centroY/2 - (checkInit ? mazzoEScarti.getHeight() + mazzoEScarti.getHeight()*getScala()/2 : 171) / 2);
-            System.out.println(mazzoEScarti.getHeight() + mazzoEScarti.getHeight()*getScala()/2 + "MAZZOOOOOOOOOOOOOOOO");
             mettiCarte(false);
             if (mazzoEScarti.getHeight() != 0)
                 checkInit=true;
@@ -231,11 +229,15 @@ public class MainController {
         ovalPaneController.cambiaTurno();
         pause.play();
         pause.setOnFinished(event -> {
-            if(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
-                //((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController, turnButton);
+            if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente() > 0) {
+                if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
+                    ((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController, turnButton);
+                }
+                aggiornaCosa();
+                checkPI();
+            } else {
+                handleTurnButton();
             }
-            aggiornaCosa();
-            checkPI();
         });
     }
     private void checkPI(){

@@ -13,7 +13,7 @@ HpRimanente: 5
 Giocatore: 2
 Tipo: Bot
 Nome: Bot 1
-Mano: Bang RecuperaVita Mancato
+Mano: Bang Mancato Bang Mancato SparaTutti
 HpRimanente: 5
 ******************************
 Giocatore: 3
@@ -25,12 +25,12 @@ HpRimanente: 5
 Giocatore: 4
 Tipo: Persona
 Nome: samu
-Mano: Bang Bang Bang PerdiCarta Bang 
+Mano: Bang Bang Bang PerdiCarta Bang
 HpRimanente: 5
 ******************************
 Giocatore: 5
 Tipo: Persona
 Nome: lore
-Mano: Mancato ScartaBang SparaTutti Mancato Mancato 
+Mano: Mancato ScartaBang SparaTutti Mancato Mancato
 HpRimanente: 5
 ******************************

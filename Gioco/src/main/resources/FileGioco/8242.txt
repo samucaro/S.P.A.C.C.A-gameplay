@@ -1,0 +1,36 @@
+Dati Generali Partita:
+NumGiocatori: 5
+Turno: 2
+Mazzo: Bang Mancato Mancato Bang Bang PerdiCarta Bang Bang Mancato Mancato Mancato Mancato Bang Bang Mancato Bang RecuperaVita Bang Bang Mancato RecuperaVita Bang SparaTutti RecuperaVita Mancato Bang Duello Mancato Bang Bang Mancato Bang Bang RecuperaVita Bang Bang ScartaBang Bang Bang Bang SparaTutti PerdiCarta Mancato 
+Scarti: 
+******************************
+Giocatore: 0
+Tipo: Bot
+Nome: Bot 1
+Mano: Mancato Mancato Duello Bang 
+HpRimanente: 5
+******************************
+Giocatore: 1
+Tipo: Persona
+Nome: anto
+Mano: RecuperaVita RecuperaVita RecuperaVita Bang Mancato 
+HpRimanente: 5
+******************************
+Giocatore: 2
+Tipo: Persona
+Nome: nic
+Mano: Bang Bang Mancato Mancato Mancato 
+HpRimanente: 4
+******************************
+Giocatore: 3
+Tipo: Persona
+Nome: samu
+Mano: RecuperaVita Bang Bang 
+HpRimanente: 5
+******************************
+Giocatore: 4
+Tipo: Persona
+Nome: walt
+Mano: ScartaBang Bang Bang Bang 
+HpRimanente: 0
+******************************

@@ -1,5 +1,7 @@
 package com.example.gioco;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -32,7 +34,17 @@ public class CartaPerdiCarta extends Carta{
                 break;
             }
         }
-        gestisciEventiAttacco(ovalPaneController, mainController);
+        if(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
+            ovalPaneController.giocatoreSelezionato = null;
+            gestisciEventiAttacco(ovalPaneController, mainController).handle(new ActionEvent());
+        }
+        else {
+            ovalPaneController.startSelection().setOnSucceeded(event -> {
+                gestisciEventiAttacco(ovalPaneController, mainController).handle(new ActionEvent());
+                ovalPaneController.fineSelezione();
+                mainController.stopSelectionMC();
+            });
+        }
     }
 
     public EventHandler<ActionEvent> gestisciEventiAttacco(OvalPaneController ovalPaneController, MainController mainController) {

@@ -61,17 +61,21 @@ public class GameData {
                     turnoCorrente = Integer.parseInt(line.split(":")[1].trim());
                 }
                 else if (line.startsWith("Mazzo:")) {
-                    String carteMazzo = line.split(": ")[1];
-                    String[] carteM = carteMazzo.split(" ");
+                    String[] carteMazzo = line.split(": ");
+                    String cma = carteMazzo[carteMazzo.length-1];
+                    String[] carteM = cma.trim().split(" ");
                     for (String nomeCarta: carteM) {
-                        mazzo.addCarta(stringaCarta(nomeCarta));
+                        if (stringaCarta(nomeCarta) != null)
+                            mazzo.addCarta(stringaCarta(nomeCarta));
                     }
                 }
                 else if (line.startsWith("Scarti:")) {
-                    String carteScarti = line.split(":")[1];
-                    String[] carteS = carteScarti.split(" ");
+                    String[] carteScarti = line.split(":");
+                    String cs = carteScarti[carteScarti.length-1];
+                    String[] carteS = cs.trim().split(" ");
                     for (String nomeCarta: carteS) {
-                        mazzo.addScarto(stringaCarta(nomeCarta));
+                        if (stringaCarta(nomeCarta) != null)
+                            mazzo.addScarto(stringaCarta(nomeCarta));
                     }
                 }
                 else if (line.startsWith("Giocatore:")) {
@@ -88,10 +92,12 @@ public class GameData {
                     giocatoriPartita.get(c).setNome(line.split(":")[1].trim());
                 }
                 else if (line.startsWith("Mano:")) {
-                    String carteMano = line.split(": ")[1];
-                    String[] carteMa = carteMano.split(" ");
+                    String[] carteMano = line.split(":");
+                    String cm = carteMano[carteMano.length-1];
+                    String[] carteMa = cm.trim().split(" ");
                     for (String s : carteMa) {
-                        giocatoriPartita.get(c).addCarta(stringaCarta(s));
+                        if (stringaCarta(s) != null)
+                            giocatoriPartita.get(c).addCarta(stringaCarta(s));
                     }
                 }
                 else if (line.startsWith("HpRimanente:")) {
@@ -190,7 +196,7 @@ public class GameData {
     }
     public void aggiornaFile(){
         try {
-            FileWriter file = new FileWriter((dataSet.getProjectFolderPath() + File.separator + "/" + code + ".txt"), true);
+            FileWriter file = new FileWriter((dataSet.getProjectFolderPath() + File.separator + "/" + code + ".txt"), false);
             PrintWriter writer = new PrintWriter(file);
             writer.println("Dati Generali " + tipo);
             writer.println("NumGiocatori: " + numeroGG);

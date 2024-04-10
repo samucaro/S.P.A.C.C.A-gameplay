@@ -108,7 +108,8 @@ public class GiocatoreRobot extends Giocatore {
     public String toStringMano() {
         StringBuilder str = new StringBuilder();
         for(Carta c: mano) {
-            str.append(c.toStringNome()).append(" ");
+            if (c != null)
+                str.append(c.toStringNome()).append(" ");
         }
         return str.toString();
     }

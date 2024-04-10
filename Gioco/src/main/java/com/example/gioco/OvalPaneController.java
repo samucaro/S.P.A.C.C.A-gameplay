@@ -26,7 +26,7 @@ public class OvalPaneController {
     private static Group[] pianeti;
     private PhongMaterial redMaterial;
     private PhongMaterial orangeMaterial;
-    private Giocatore giocatoreSelezionato;
+    public Giocatore giocatoreSelezionato;
     private ProgressBar progressBar;
     private AnimationTimer timer;
     private Text scegliAvversario;
