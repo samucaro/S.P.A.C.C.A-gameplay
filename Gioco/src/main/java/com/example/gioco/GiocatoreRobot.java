@@ -32,7 +32,9 @@ public class GiocatoreRobot extends Giocatore {
 
     }
     public void subisciDanno(int danno){
-        if(hpRimanente == 0) {
+        if(hpRimanente <= 0) {
+            hpRimanente = 0;
+            MainController.setMorto(this);
             System.out.println("Il giocatore è già eliminato");
         }
         hpRimanente -= danno;
@@ -46,15 +48,13 @@ public class GiocatoreRobot extends Giocatore {
         }
     }
 
-    public void giocaTurno(MainController mainController, OvalPaneController ovalPaneController, Button button) {
+    public void giocaTurno(MainController mainController, OvalPaneController ovalPaneController) {
         mainController.pescataInizialeGiocatore();
-        System.out.println("mano:" + mano.size());
         int cont = 0;
         Carta cc;
         for (int i = 0; i < mano.size(); i++) {
             cc = mano.get(i);
             if (cont < 1 && cc instanceof CartaBang) {
-                System.out.println("SONO QUI 1");
                 cc.usaAbilita(ovalPaneController, mainController);
                 i--;
                 cont++;
@@ -65,12 +65,6 @@ public class GiocatoreRobot extends Giocatore {
                     i--;
             }
         }
-        cliccaBottone(button);
-    }
-
-    private void cliccaBottone(Button button) {
-        ActionEvent event = new ActionEvent(null, null);
-        button.fireEvent(event);
     }
 
     public void setHpRimanente(int hp) {

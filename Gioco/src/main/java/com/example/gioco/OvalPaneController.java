@@ -186,7 +186,6 @@ public class OvalPaneController {
             halfDonut.setTranslateY(centroY*2-100);
         }
     }
-
     //Imposta la rotazione 3D dei pianeti
     private void rotazionePianeti(int i) {
         timer = new AnimationTimer() {
@@ -196,6 +195,16 @@ public class OvalPaneController {
             }
         };
         timer.start();
+    }
+
+    //Imposta i pianeti morti
+    public static void setMortoOP(Giocatore giocatoreMorto) {
+        for (int j = 0; j < gameData.getNumero(); j++){
+            if (giocatoreMorto.getNome().equals(((Text) pianeti[j].getChildren().getLast()).getText())) {
+                pianeti[j].setMouseTransparent(true);
+                ((Sphere) pianeti[j].getChildren().getFirst()).setMaterial(new PhongMaterial(Color.WHITE));
+            }
+        }
     }
 
     //Posiziona i pianeti nel modo corretto
@@ -262,7 +271,7 @@ public class OvalPaneController {
             int index;
             do {
                 index = (int) (Math.random() * (gameData.getNumero()));
-            } while (index == gameData.getTurnoCorrente());
+            } while ((index == gameData.getTurnoCorrente())||(gameData.getGiocatoriPartita().get(index).getHpRimanente() == 0));
             return gameData.getGiocatoriPartita().get(index);
         } else {
             return giocatoreSelezionato;
@@ -278,7 +287,7 @@ public class OvalPaneController {
             @Override
             protected Void call() throws Exception {
                 pianeti[currentSphere].setMouseTransparent(true);
-                for (int secondo = 1; secondo <= 20; secondo++) {
+                for (int secondo = 1; secondo <= 10; secondo++) {
                     if (planetSelected) {
                         succeeded();
                         return null;

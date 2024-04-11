@@ -51,7 +51,6 @@ public class MainController {
         checkInit = false;
         checkFattaPI = false;
         impostaCose();
-        //pesca.setVisible(true);
         ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setOnMouseEntered(event1 -> {
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setScaleX(1.1);
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setScaleY(1.1);
@@ -61,8 +60,17 @@ public class MainController {
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setScaleY(1.0);
         });
         turnButton.setDisable(true);
+        for (Giocatore gg : gameData.getGiocatoriPartita()) {
+            if (gg.getHpRimanente() == 0) {
+                setMorto(gg);
+            }
+        }
+        if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente() == 0) {
+            handleTurnButton();
+        }
         if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
-            ((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController, turnButton);
+            ((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController);
+            handleTurnButton();
         }
     }
 
@@ -117,7 +125,6 @@ public class MainController {
         if (var) {
                 ImageView imageView;
                 ArrayList<Carta> manoCorrente = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano();
-                System.out.println(manoCorrente.size() + " MANOOOOODIMENSIONE");
                 for (int i = 0; i< manoCorrente.size(); i++) {
                     imageView = manoCorrente.get(i).getImage();
                     anchorPane.getChildren().add(imageView);
@@ -200,6 +207,9 @@ public class MainController {
         scarti.setImage(gameData.getMazzo().ultimoScarto().getImage().getImage());
     }
 
+    public static void setMorto(Giocatore giocatoreMorto) {
+        OvalPaneController.setMortoOP(giocatoreMorto);
+    }
 
     public double[][] calcolaCoordinateArco(double cX, double cY, double semiLarghezza, double altezza, int numOggetti) {
         double[][] coordinate = new double[numOggetti][2];
@@ -227,16 +237,20 @@ public class MainController {
         verificaMano();
         PauseTransition pause = new PauseTransition(Duration.seconds(1));
         ovalPaneController.cambiaTurno();
+        for (int j : numNodiMano)
+            anchorPane.getChildren().get(j).setMouseTransparent(true);
         pause.play();
         pause.setOnFinished(event -> {
-            if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente() > 0) {
-                if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
-                    ((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController, turnButton);
-                }
+            if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente() == 0) {
+                handleTurnButton();
+            } else  if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot){
+                ((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController);
+                handleTurnButton();
+            } else {
+                for (int j : numNodiMano)
+                    anchorPane.getChildren().get(j).setMouseTransparent(false);
                 aggiornaCosa();
                 checkPI();
-            } else {
-                handleTurnButton();
             }
         });
     }
@@ -285,7 +299,8 @@ public class MainController {
         }
         checkFattaPI = true;
         checkPI();
-        mettiCarte(true);
+        if (!(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot))
+            mettiCarte(true);
     }
     public void startSelectionMC(){
         anchorPane.setDisable(true);

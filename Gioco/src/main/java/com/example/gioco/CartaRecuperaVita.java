@@ -31,7 +31,8 @@ public class CartaRecuperaVita extends Carta{
                 }
             }
             gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).cura(1);
-            mainController.aggiornaCosa();
+            if (!(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot))
+                mainController.aggiornaCosa();
         }
     }
     @Override

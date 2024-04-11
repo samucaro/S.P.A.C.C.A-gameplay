@@ -33,13 +33,14 @@ public class CartaSparaTutti extends Carta{
             }
         }
         gestisciEventiAttacco(ovalPaneController, mainController);
-        mainController.aggiornaCosa();
+        if (!(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot))
+            mainController.aggiornaCosa();
     }
     public void gestisciEventiAttacco(OvalPaneController ovalPaneController,  MainController mainController) {
         boolean checkCartaM;
         for (int i = 0; i < gameData.getGiocatoriPartita().size(); i++){
             checkCartaM = false;
-            if (i != gameData.getTurnoCorrente()) {
+            if ((i != gameData.getTurnoCorrente()) && (gameData.getGiocatoriPartita().get(i).getHpRimanente() != 0)) {
                 for (int j = 0; j < gameData.getGiocatoriPartita().get(i).getMano().size(); j++){
                     if (gameData.getGiocatoriPartita().get(i).getMano().get(j) instanceof CartaMancato){
                         checkCartaM = true;
