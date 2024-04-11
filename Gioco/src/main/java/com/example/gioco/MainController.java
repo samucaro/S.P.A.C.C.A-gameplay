@@ -209,6 +209,17 @@ public class MainController {
 
     public static void setMorto(Giocatore giocatoreMorto) {
         OvalPaneController.setMortoOP(giocatoreMorto);
+        int check = 0;
+        Giocatore vinc = null;
+        for (Giocatore gg : GameData.getInstance().getGiocatoriPartita()){
+            if (gg.getHpRimanente() > 0) {
+                check++;
+                vinc = gg;
+            }
+        }
+        if (check==1) {
+            System.out.println("VINCE LA PARTITA: " + vinc.getNome());
+        }
     }
 
     public double[][] calcolaCoordinateArco(double cX, double cY, double semiLarghezza, double altezza, int numOggetti) {

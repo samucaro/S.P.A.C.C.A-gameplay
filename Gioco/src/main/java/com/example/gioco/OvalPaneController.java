@@ -43,7 +43,6 @@ public class OvalPaneController {
     private static Shape halfDonut;
     private static int turnoDi;
 
-
     @FXML
     public void initialize() {
         gameData = GameData.getInstance();
@@ -62,10 +61,6 @@ public class OvalPaneController {
 
     //Imposta la struttura dei pianeti e la loro disposizione nel tabellone
     private void creaGruppoPianeti() {
-        double centerNomeX;
-        double centerNomeY;
-        double centerVitaX;
-        double centerVitaY;
         for (int i = 0; i < gameData.getNumero(); i++) {
             pianeti[i] = new Group();
             pianeti[i].getChildren().add(new Sphere(60));
@@ -91,14 +86,10 @@ public class OvalPaneController {
             vitaGiocatore.setStyle("-fx-fill: white; -fx-stroke: black; -fx-stroke-width: 0.5");
             nomeGiocatore.setFont(Font.font("Game of Thrones", 17));
             nomeGiocatore.setStyle("-fx-fill: white; -fx-stroke: black; -fx-stroke-width: 0.5");
-            centerVitaX = -vitaGiocatore.getBoundsInLocal().getWidth()/2;
-            centerVitaY = 22-vitaGiocatore.getBoundsInLocal().getHeight()/2;
-            centerNomeX = -nomeGiocatore.getBoundsInLocal().getWidth()/2;
-            centerNomeY = -5-nomeGiocatore.getBoundsInLocal().getHeight()/2;
-            vitaGiocatore.setLayoutX(centerVitaX);
-            vitaGiocatore.setLayoutY(centerVitaY);
-            nomeGiocatore.setLayoutX(centerNomeX);
-            nomeGiocatore.setLayoutY(centerNomeY);
+            vitaGiocatore.setLayoutX(-vitaGiocatore.getBoundsInLocal().getWidth()/2);
+            vitaGiocatore.setLayoutY(22-vitaGiocatore.getBoundsInLocal().getHeight()/2);
+            nomeGiocatore.setLayoutX(-nomeGiocatore.getBoundsInLocal().getWidth()/2);
+            nomeGiocatore.setLayoutY(-5-nomeGiocatore.getBoundsInLocal().getHeight()/2);
             pianeti[i].getChildren().addAll(vitaGiocatore, nomeGiocatore);
             gestoreEventiPianeti(i);
             ovalPane.getChildren().add(pianeti[i]);
@@ -216,6 +207,8 @@ public class OvalPaneController {
                 pianeti[j].setMouseTransparent(true);
                 ((Sphere) pianeti[j].getChildren().getFirst()).setMaterial(new PhongMaterial(Color.WHITE));
                 ((Text) pianeti[j].getChildren().get(pianeti[j].getChildren().size()-2)).setText("ELIMINATO");
+                pianeti[j].getChildren().get(pianeti[j].getChildren().size()-2).setLayoutX(-pianeti[j].getChildren().get(pianeti[j].getChildren().size()-2).getBoundsInLocal().getWidth()/2);
+                pianeti[j].getChildren().get(pianeti[j].getChildren().size()-2).setLayoutY(22-pianeti[j].getChildren().get(pianeti[j].getChildren().size()-2).getBoundsInLocal().getHeight()/2);
             }
         }
     }
