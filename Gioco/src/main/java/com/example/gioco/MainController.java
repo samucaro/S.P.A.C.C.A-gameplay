@@ -237,8 +237,9 @@ public class MainController {
         verificaMano();
         PauseTransition pause = new PauseTransition(Duration.seconds(1));
         ovalPaneController.cambiaTurno();
-        for (int j : numNodiMano)
+        for (int j : numNodiMano) {
             anchorPane.getChildren().get(j).setMouseTransparent(true);
+        }
         pause.play();
         pause.setOnFinished(event -> {
             if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente() == 0) {
@@ -247,8 +248,9 @@ public class MainController {
                 ((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController);
                 handleTurnButton();
             } else {
-                for (int j : numNodiMano)
+                for (int j : numNodiMano) {
                     anchorPane.getChildren().get(j).setMouseTransparent(false);
+                }
                 aggiornaCosa();
                 checkPI();
             }

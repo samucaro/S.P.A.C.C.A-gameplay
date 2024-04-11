@@ -32,12 +32,14 @@ public class GiocatoreRobot extends Giocatore {
 
     }
     public void subisciDanno(int danno){
+        hpRimanente -= danno;
         if(hpRimanente <= 0) {
             hpRimanente = 0;
             MainController.setMorto(this);
             System.out.println("Il giocatore è già eliminato");
+        } else {
+            OvalPaneController.setVita(this);
         }
-        hpRimanente -= danno;
     }
     public void cura(int vita){
         if(hpRimanente == HP) {
@@ -45,6 +47,7 @@ public class GiocatoreRobot extends Giocatore {
         }
         else {
             hpRimanente += vita;
+            OvalPaneController.setVita(this);
         }
     }
 
@@ -55,11 +58,13 @@ public class GiocatoreRobot extends Giocatore {
         for (int i = 0; i < mano.size(); i++) {
             cc = mano.get(i);
             if (cont < 1 && cc instanceof CartaBang) {
+                System.out.println(cc.getClass().getSimpleName());
                 cc.usaAbilita(ovalPaneController, mainController);
                 i--;
                 cont++;
             }
             else if (!(cc instanceof CartaBang)){
+                System.out.println(cc.getClass().getSimpleName());
                 cc.usaAbilita(ovalPaneController, mainController);
                 if (!(cc instanceof CartaMancato || cc instanceof CartaPerdiCarta || (cc instanceof CartaRecuperaVita && hpRimanente == 5)))
                     i--;

@@ -31,6 +31,8 @@ public class GiocatorePersona extends Giocatore{
             hpRimanente = 0;
             System.out.println("Il giocatore è già eliminato");
             MainController.setMorto(this);
+        } else {
+            OvalPaneController.setVita(this);
         }
     }
     public void cura(int vita){
@@ -39,6 +41,7 @@ public class GiocatorePersona extends Giocatore{
         }
         else {
             hpRimanente += vita;
+            OvalPaneController.setVita(this);
         }
     }
     public void setHpRimanente(int hp) {

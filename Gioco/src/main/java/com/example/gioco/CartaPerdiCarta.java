@@ -28,12 +28,6 @@ public class CartaPerdiCarta extends Carta{
     }
 
     public void usaAbilita(OvalPaneController ovalPaneController, MainController mainController) {
-        for(Carta c: gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano()) {
-            if(c instanceof CartaPerdiCarta) {
-                mainController.scartaCarte(c, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
-                break;
-            }
-        }
         if(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
             ovalPaneController.giocatoreSelezionato = null;
             gestisciEventiAttacco(ovalPaneController, mainController).handle(new ActionEvent());
@@ -50,15 +44,17 @@ public class CartaPerdiCarta extends Carta{
     public EventHandler<ActionEvent> gestisciEventiAttacco(OvalPaneController ovalPaneController, MainController mainController) {
         return event -> {
             giocatoreSelezionato = ovalPaneController.planetSelection();
-            if(giocatoreSelezionato.getMano().isEmpty()) {
-                System.out.println("VUOTAMANOGIOCATORESELEZIONATOOOOOOOOOOOOOO");
-                gestisciEventiAttacco(ovalPaneController, mainController).handle(new ActionEvent());
-            }
-            else {
+            if(!giocatoreSelezionato.getMano().isEmpty()) {
+                for(Carta c: gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano()) {
+                    if(c instanceof CartaPerdiCarta) {
+                        mainController.scartaCarte(c, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
+                        break;
+                    }
+                }
                 int val = (int) (Math.random() * (giocatoreSelezionato.getMano().size()));
                 gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).addCarta(giocatoreSelezionato.getMano().get(val));
                 giocatoreSelezionato.scarta(giocatoreSelezionato.getMano().get(val));
-                ovalPaneController.dannoSfera(giocatoreSelezionato, true);
+                ovalPaneController.dannoSfera(giocatoreSelezionato, false);
                 ovalPaneController.fineSelezione();
                 mainController.stopSelectionMC();
             }
