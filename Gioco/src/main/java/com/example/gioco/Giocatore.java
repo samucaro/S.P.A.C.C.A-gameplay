@@ -2,7 +2,7 @@ package com.example.gioco;
 
 import java.util.ArrayList;
 public abstract class Giocatore {
-    abstract public void addCarta(Carta carta);
+    abstract public void setMano(Carta carta);
     abstract void subisciDanno(int danno);
     abstract void cura(int cura);
     abstract void scarta(Carta carta);
@@ -11,8 +11,8 @@ public abstract class Giocatore {
     abstract void setNome(String n);
     abstract String getNome();
     abstract public void setMano(ArrayList<Carta> mano);
-    abstract public ArrayList<Carta> getMano();
-    abstract public void setTurno(boolean turno);
-    abstract public boolean getTurno();
+    abstract public ArrayList<Carta> getMano(); //NON usata
+    abstract public void setTurno(boolean turno); //NON usata
+    abstract public boolean getTurno(); //NON usata
     abstract public String toStringMano();
 }

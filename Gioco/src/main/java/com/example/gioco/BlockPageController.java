@@ -27,6 +27,7 @@ public class BlockPageController {
         timeline.play();
     }
 
+    //Aggiorna il tempo ogni secondo
     private void updateTimer(ActionEvent event) {
         timer.setText("" + seconds);
         if(seconds == 31) {
@@ -42,6 +43,7 @@ public class BlockPageController {
         }
     }
 
+    //Torna al login dopo la scadenza dei secondi
     public void switchToHomePage() throws IOException {
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("LoginAdminPage.fxml")));
         Stage stage = (Stage) timer.getScene().getWindow();

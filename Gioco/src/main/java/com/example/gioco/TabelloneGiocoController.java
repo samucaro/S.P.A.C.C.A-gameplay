@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class MainController {
+public class TabelloneGiocoController {
     private double centroX;
     private double centroY;
     private double xOffset;
@@ -45,24 +45,24 @@ public class MainController {
     private Label pesca;
 
     @FXML
-    public void initialize() {
+    public void initialize() throws IOException {
         ovalPaneController.getMainController(this);
         gameData = GameData.getInstance();
         checkInit = false;
         checkFattaPI = false;
         impostaCose();
-        ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setOnMouseEntered(event1 -> {
+        ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setOnMouseEntered(event -> {
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setScaleX(1.1);
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setScaleY(1.1);
         });
-        ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setOnMouseExited(event2 -> {
+        ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setOnMouseExited(event -> {
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setScaleX(1.0);
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setScaleY(1.0);
         });
         turnButton.setDisable(true);
-        for (Giocatore gg : gameData.getGiocatoriPartita()) {
-            if (gg.getHpRimanente() == 0) {
-                setMorto(gg);
+        for (Giocatore giocatore : gameData.getGiocatoriPartita()) {
+            if (giocatore.getHpRimanente() == 0) {
+                setMortiEVincitore(giocatore);
             }
         }
         if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente() == 0) {
@@ -73,6 +73,8 @@ public class MainController {
             handleTurnButton();
         }
     }
+
+    //*******************************INIZIO GESTIONE GRAFICA************************************************************
 
     //Imposta il layout del tabellone di gioco con tutte le carte, la vita e il mazzo
     private void impostaCose(){
@@ -195,33 +197,7 @@ public class MainController {
         }
     }
 
-    //Aggiorna la vita del giocatore corrente
-    public void mettiVita(){
-        int vita = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente();
-        barraVita.setProgress((double) vita/5);
-    }
-
-    public void scartaCarte(Carta c, Giocatore g){
-        g.scarta(c);
-        gameData.getMazzo().scarta(c);
-        scarti.setImage(gameData.getMazzo().ultimoScarto().getImage().getImage());
-    }
-
-    public static void setMorto(Giocatore giocatoreMorto) {
-        OvalPaneController.setMortoOP(giocatoreMorto);
-        int check = 0;
-        Giocatore vinc = null;
-        for (Giocatore gg : GameData.getInstance().getGiocatoriPartita()){
-            if (gg.getHpRimanente() > 0) {
-                check++;
-                vinc = gg;
-            }
-        }
-        if (check==1) {
-            System.out.println("VINCE LA PARTITA: " + vinc.getNome());
-        }
-    }
-
+    //Gestisce il ridimensionamento dell'arco blu
     public double[][] calcolaCoordinateArco(double cX, double cY, double semiLarghezza, double altezza, int numOggetti) {
         double[][] coordinate = new double[numOggetti][2];
         double angoloStep = Math.PI / (numOggetti - 1);
@@ -241,7 +217,32 @@ public class MainController {
         }
         return coordinate;
     }
-    @FXML
+
+    //Aggiorna la vita del giocatore corrente
+    public void mettiVita(){
+        int vita = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente();
+        barraVita.setProgress((double) vita/5);
+    }
+
+    //*******************************FINE GESTIONE GRAFICA**************************************************************
+
+    //Imposta i giocatori morti nel caso decreta il vincitore
+    public static void setMortiEVincitore(Giocatore giocatoreMorto) {
+        OvalPaneController.setMortoOP(giocatoreMorto);
+        int check = 0;
+        Giocatore vincitore = null;
+        for (Giocatore giocatore : GameData.getInstance().getGiocatoriPartita()){
+            if (giocatore.getHpRimanente() > 0) {
+                check++;
+                vincitore = giocatore;
+            }
+        }
+        if (check==1) {
+            System.out.println("VINCE LA PARTITA: " + vincitore.getNome());
+        }
+    }
+
+    //Gestisce tutte le azioni da compiere dopo il click del cambia turno
     public void handleTurnButton() {
         checkFattaPI = false;
         turnButton.setDisable(true);
@@ -267,6 +268,42 @@ public class MainController {
             }
         });
     }
+
+    //In base al numero di carte del giocatore verifica se levare o mettere carte per arrivare a 5
+    private void verificaMano() {
+        Carta carta;
+        while(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size() > 5) {
+            carta = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().get((int) (Math.random() * (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size())));
+            scartaCarte(carta, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
+        }
+        while(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size() < 5) {
+            gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).setMano(gameData.getMazzo().pesca());
+        }
+    }
+
+    //Scarta la carta dalla mano del giocatore e aggiorna la pila degli scarti
+    public void scartaCarte(Carta c, Giocatore g){
+        g.scarta(c);
+        gameData.getMazzo().setScarti(c);
+        scarti.setImage(gameData.getMazzo().ultimoScarto().getImage().getImage());
+    }
+
+    //Pesca le prime due carte dal mazzo
+    public void pescataInizialeGiocatore() {
+        pesca.setVisible(false);
+        turnButton.setDisable(false);
+        Giocatore player = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente());
+        for(int i = 1; i <= 2; i++) {
+            player.setMano(gameData.getMazzo().pesca());
+            System.out.println("Ho pescato");
+        }
+        checkFattaPI = true;
+        checkPI();
+        if (!(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot))
+            mettiCarte(true);
+    }
+
+    //Verifica se la pescata iniziale è stata fatta e nel caso attiva e disattiva il necessario
     private void checkPI(){
         if (!checkFattaPI) {
             turnButton.setDisable(true);
@@ -278,43 +315,7 @@ public class MainController {
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setMouseTransparent(true);
         }
     }
-    private void verificaMano() {
-        Carta c;
-        while(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size() > 5) {
-            c=gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().get((int) (Math.random() * (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size())));
-            scartaCarte(c, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
-        }
-        while(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size() < 5) {
-            gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).addCarta(gameData.getMazzo().pesca());
-        }
-    }
-    public void salvaPartita() {
-        gameData.aggiornaFile();
-        System.out.println(gameData.getGiocatoriPartita());
-        System.out.println(gameData.getMazzo().toStringScarti());
-    }
-    public void switchToAdminPlayerPage(ActionEvent event) throws IOException {
-        salvaPartita();
-        GameData.resetInstance();
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AdminPlayerPage.fxml")));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-    public void pescataInizialeGiocatore() {
-        pesca.setVisible(false);
-        turnButton.setDisable(false);
-        Giocatore player = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente());
-        for(int i = 1; i <= 2; i++) {
-            player.addCarta(gameData.getMazzo().pesca());
-            System.out.println("Ho pescato");
-        }
-        checkFattaPI = true;
-        checkPI();
-        if (!(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot))
-            mettiCarte(true);
-    }
+
     public void startSelectionMC(){
         anchorPane.setDisable(true);
         anchorPane.setVisible(false);
@@ -327,5 +328,23 @@ public class MainController {
     public void aggiornaCosa() {
         mettiVita();
         mettiCarte(true);
+    }
+
+    //SAVE
+    public void salvaPartita() {
+        gameData.aggiornaFile();
+        System.out.println(gameData.getGiocatoriPartita());
+        System.out.println(gameData.getMazzo().toStringScarti());
+    }
+
+    //BACK
+    public void switchToAdminPlayerPage(ActionEvent event) throws IOException {
+        salvaPartita();
+        GameData.resetInstance();
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AdminPlayerPage.fxml")));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
     }
 }

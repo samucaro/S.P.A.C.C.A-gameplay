@@ -48,8 +48,8 @@ public class DataSet {
     public boolean checkCode(int codice) {
         String percorsoCartellaProgetto = getProjectFolderPath();
         List<Integer> numbers = new ArrayList<>();
-        File cart = new File(percorsoCartellaProgetto);
-        File[] files = cart.listFiles();
+        File cartella = new File(percorsoCartellaProgetto);
+        File[] files = cartella.listFiles();
         if (files != null) {
             for (File file : files) {
                 if (file.isFile() && file.getName().matches("\\d{4}\\.txt")) {

@@ -23,6 +23,7 @@ public class SetGamePageController {
     @FXML
     private Button start;
     private DataSet dataSet;
+
     @FXML
     public void initialize() {
         dataSet = new DataSet();
@@ -54,6 +55,7 @@ public class SetGamePageController {
         }
     }
 
+    //BACK
     public void switchToAdminPlayerPage(ActionEvent event) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AdminPlayerPage.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -62,6 +64,7 @@ public class SetGamePageController {
         stage.show();
     }
 
+    //START
     public void switchToGamePage(ActionEvent event) throws IOException {
         /*GameData.resetInstance();
         gameData=GameData.getInstance();*/

@@ -1,13 +1,6 @@
 package com.example.gioco;
 
-import javafx.animation.PauseTransition;
-import javafx.event.ActionEvent;
-import javafx.scene.control.Button;
-import javafx.util.Duration;
-
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Objects;
 
 public class GiocatoreRobot extends Giocatore {
     private  String nome;
@@ -15,18 +8,17 @@ public class GiocatoreRobot extends Giocatore {
     private int hpRimanente;
     private ArrayList<Carta> mano;
     private boolean turno;
-    private GameData gameData;
 
     public GiocatoreRobot(){
         HP = 5;
         hpRimanente = HP;
         mano = new ArrayList<>();
-        gameData = GameData.getInstance();
     }
 
-    public void addCarta(Carta carta){
+    public void setMano(Carta carta){
         mano.add(carta);
     }
+
     public void scarta(Carta carta) {
         mano.remove(carta);
 
@@ -35,7 +27,7 @@ public class GiocatoreRobot extends Giocatore {
         hpRimanente -= danno;
         if(hpRimanente <= 0) {
             hpRimanente = 0;
-            MainController.setMorto(this);
+            TabelloneGiocoController.setMortiEVincitore(this);
             System.out.println("Il giocatore è già eliminato");
         } else {
             OvalPaneController.setVita(this);
@@ -51,21 +43,21 @@ public class GiocatoreRobot extends Giocatore {
         }
     }
 
-    public void giocaTurno(MainController mainController, OvalPaneController ovalPaneController) {
-        mainController.pescataInizialeGiocatore();
+    public void giocaTurno(TabelloneGiocoController tabelloneGiocoController, OvalPaneController ovalPaneController) {
+        tabelloneGiocoController.pescataInizialeGiocatore();
         int cont = 0;
         Carta cc;
         for (int i = 0; i < mano.size(); i++) {
             cc = mano.get(i);
             if (cont < 1 && cc instanceof CartaBang) {
                 System.out.println(cc.getClass().getSimpleName());
-                cc.usaAbilita(ovalPaneController, mainController);
+                cc.usaAbilita(ovalPaneController, tabelloneGiocoController);
                 i--;
                 cont++;
             }
             else if (!(cc instanceof CartaBang)){
                 System.out.println(cc.getClass().getSimpleName());
-                cc.usaAbilita(ovalPaneController, mainController);
+                cc.usaAbilita(ovalPaneController, tabelloneGiocoController);
                 if (!(cc instanceof CartaMancato || cc instanceof CartaPerdiCarta || (cc instanceof CartaRecuperaVita && hpRimanente == 5)))
                     i--;
             }

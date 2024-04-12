@@ -23,19 +23,19 @@ public class CartaScartaBang extends Carta{
         return imageView;
     }
 
-    public void usaAbilita(OvalPaneController ovalPaneController, MainController mainController) {
+    public void usaAbilita(OvalPaneController ovalPaneController, TabelloneGiocoController tabelloneGiocoController) {
         for(Carta c: gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano()) {
             if(c instanceof CartaScartaBang) {
-                mainController.scartaCarte(c, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
+                tabelloneGiocoController.scartaCarte(c, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
                 break;
             }
         }
-        gestisciEventiAttacco(ovalPaneController, mainController);
+        gestisciEventiAttacco(ovalPaneController, tabelloneGiocoController);
         if (!(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot))
-            mainController.aggiornaCosa();
+            tabelloneGiocoController.aggiornaCosa();
     }
 
-    public void gestisciEventiAttacco(OvalPaneController ovalPaneController,  MainController mainController) {
+    public void gestisciEventiAttacco(OvalPaneController ovalPaneController,  TabelloneGiocoController tabelloneGiocoController) {
         boolean checkCartaB;
         for (int i = 0; i < gameData.getGiocatoriPartita().size(); i++){
             checkCartaB = false;
@@ -44,7 +44,7 @@ public class CartaScartaBang extends Carta{
                     if (gameData.getGiocatoriPartita().get(i).getMano().get(j) instanceof CartaBang){
                         checkCartaB = true;
                         ovalPaneController.dannoSfera(gameData.getGiocatoriPartita().get(i), false);
-                        mainController.scartaCarte(gameData.getGiocatoriPartita().get(i).getMano().get(j),gameData.getGiocatoriPartita().get(i));
+                        tabelloneGiocoController.scartaCarte(gameData.getGiocatoriPartita().get(i).getMano().get(j),gameData.getGiocatoriPartita().get(i));
                         break;
                     }
                 }

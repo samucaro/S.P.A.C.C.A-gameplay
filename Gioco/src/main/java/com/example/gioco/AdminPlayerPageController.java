@@ -21,6 +21,7 @@ public class AdminPlayerPageController {
         dataSet = new DataSet();
     }
 
+    //LOGIN ADMIN
     public void switchToLoginAdminPage(ActionEvent event) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("LoginAdminPage.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -29,6 +30,7 @@ public class AdminPlayerPageController {
         stage.show();
     }
 
+    //LOGIN PLAYER
     public void switchToSetGamePage(ActionEvent event) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("SetGamePage.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -37,6 +39,7 @@ public class AdminPlayerPageController {
         stage.show();
     }
 
+    //Regole
     public void mostraRegolamento() {
         try {
             File file = new File(dataSet.getProjectFolderPath() + File.separator + "/" + "RegoleSPACCA.txt");

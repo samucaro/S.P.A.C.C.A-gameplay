@@ -29,27 +29,27 @@ public class CartaDuello extends Carta {
         imageView.setPreserveRatio(true);
         return imageView;
     }
-    public void usaAbilita(OvalPaneController ovalPaneController, MainController mainController) {
+    public void usaAbilita(OvalPaneController ovalPaneController, TabelloneGiocoController tabelloneGiocoController) {
         for(Carta c: gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano()) {
             if(c instanceof CartaDuello) {
-                mainController.scartaCarte(c, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
+                tabelloneGiocoController.scartaCarte(c, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
                 break;
             }
         }
         if(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
             ovalPaneController.giocatoreSelezionato = null;
-            gestisciEventiAttacco(ovalPaneController, mainController).handle(new ActionEvent());
+            gestisciEventiAttacco(ovalPaneController, tabelloneGiocoController).handle(new ActionEvent());
         }
         else {
             ovalPaneController.startSelection().setOnSucceeded(event -> {
-                gestisciEventiAttacco(ovalPaneController, mainController).handle(new ActionEvent());
+                gestisciEventiAttacco(ovalPaneController, tabelloneGiocoController).handle(new ActionEvent());
                 ovalPaneController.fineSelezione();
-                mainController.stopSelectionMC();
+                tabelloneGiocoController.stopSelectionMC();
             });
         }
     }
 
-    public EventHandler<ActionEvent> gestisciEventiAttacco(OvalPaneController ovalPaneController, MainController mainController) {
+    public EventHandler<ActionEvent> gestisciEventiAttacco(OvalPaneController ovalPaneController, TabelloneGiocoController tabelloneGiocoController) {
         return event -> {
             contAvversario = 0;
             contTuo = 0;
@@ -59,9 +59,9 @@ public class CartaDuello extends Carta {
                 cartaAvversario = selectedGG.getMano().get(i);
                 if (cartaAvversario instanceof CartaBang) {
                     contAvversario++;
-                    mainController.scartaCarte(cartaAvversario, selectedGG);
+                    tabelloneGiocoController.scartaCarte(cartaAvversario, selectedGG);
                     i--;
-                    if (!controlloBang(mainController)) {
+                    if (!controlloBang(tabelloneGiocoController)) {
                         gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).subisciDanno(2);
                         ovalPaneController.dannoSfera(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()), true);
                         break;
@@ -75,14 +75,14 @@ public class CartaDuello extends Carta {
         };
     }
 
-    private boolean controlloBang(MainController mainController) {
+    private boolean controlloBang(TabelloneGiocoController tabelloneGiocoController) {
         Carta cartaTua;
         boolean var = false;
         for (int i = 0; i < gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size(); i++) {
             cartaTua = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().get(i);
             if (cartaTua instanceof CartaBang) {
                 contTuo++;
-                mainController.scartaCarte(cartaTua, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
+                tabelloneGiocoController.scartaCarte(cartaTua, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
                 var = true;
                 break;
             }

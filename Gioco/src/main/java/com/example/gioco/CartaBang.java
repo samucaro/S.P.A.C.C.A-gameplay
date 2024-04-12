@@ -5,8 +5,6 @@ import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-import java.util.Iterator;
-
 public class CartaBang extends Carta{
     private final GameData gameData;
     private Giocatore selectedGG;
@@ -28,32 +26,32 @@ public class CartaBang extends Carta{
         imageView.setPreserveRatio(true);
         return imageView;
     }
-    public void usaAbilita(OvalPaneController ovalPaneController, MainController mainController) {
+    public void usaAbilita(OvalPaneController ovalPaneController, TabelloneGiocoController tabelloneGiocoController) {
         for (Carta c : gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano()) {
             if (c instanceof CartaBang) {
-                mainController.scartaCarte(c, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
+                tabelloneGiocoController.scartaCarte(c, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
                 break;
             }
         }
         if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot){
             ovalPaneController.giocatoreSelezionato = null;
-            gestisciEventiAttacco(ovalPaneController, mainController).handle(new ActionEvent());
+            gestisciEventiAttacco(ovalPaneController, tabelloneGiocoController).handle(new ActionEvent());
         } else {
             ovalPaneController.startSelection().setOnSucceeded(event -> {
-                gestisciEventiAttacco(ovalPaneController, mainController).handle(new ActionEvent());
+                gestisciEventiAttacco(ovalPaneController, tabelloneGiocoController).handle(new ActionEvent());
                 ovalPaneController.fineSelezione();
-                mainController.stopSelectionMC();
+                tabelloneGiocoController.stopSelectionMC();
             });
         }
     }
-    public EventHandler<ActionEvent> gestisciEventiAttacco(OvalPaneController ovalPaneController,  MainController mainController) {
+    public EventHandler<ActionEvent> gestisciEventiAttacco(OvalPaneController ovalPaneController,  TabelloneGiocoController tabelloneGiocoController) {
         return event -> {
             boolean var = false;
             selectedGG = ovalPaneController.planetSelection();
             for(Carta c: selectedGG.getMano()) {
                 if(c instanceof CartaMancato) {
                     var = true;
-                    mainController.scartaCarte(c,selectedGG);
+                    tabelloneGiocoController.scartaCarte(c,selectedGG);
                     ovalPaneController.dannoSfera(selectedGG, false);
                     break;
                 }

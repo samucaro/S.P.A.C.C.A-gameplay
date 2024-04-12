@@ -22,17 +22,17 @@ public class CartaRecuperaVita extends Carta{
         imageView.setPreserveRatio(true);
         return imageView;
     }
-    public void usaAbilita(OvalPaneController ovalPaneController, MainController mainController) {
+    public void usaAbilita(OvalPaneController ovalPaneController, TabelloneGiocoController tabelloneGiocoController) {
         if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente() < 5) {
             for (Carta carta : gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano()) {
                 if (carta instanceof CartaRecuperaVita) {
-                    mainController.scartaCarte(carta, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
+                    tabelloneGiocoController.scartaCarte(carta, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
                     break;
                 }
             }
             gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).cura(1);
             if (!(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot))
-                mainController.aggiornaCosa();
+                tabelloneGiocoController.aggiornaCosa();
         }
     }
     @Override

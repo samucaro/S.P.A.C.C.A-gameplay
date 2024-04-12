@@ -30,11 +30,12 @@ public class LoginAdminPageController {
 
     @FXML
     public void initialize() {
-        ut = "";
-        psw = "";
+        ut = "samuwalt";
+        psw = "waltSamu2";
         cont=0;
     }
 
+    //Verifica che il login sia corretto altrimenti lancia il recupero password
     public void verifyLogin(ActionEvent event) throws IOException {
         if(username.getText().equals(ut) && password.getText().equals(psw)) {
             switchToLoginPage(event);
@@ -54,6 +55,7 @@ public class LoginAdminPageController {
         }
     }
 
+    //Errore inserimento ut e psw
     public void switchToBlockPage(ActionEvent event) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("BlockPage.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -62,6 +64,7 @@ public class LoginAdminPageController {
         stage.show();
     }
 
+    //LOGIN
     public void switchToLoginPage(ActionEvent event) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("TypeGamePage.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -69,6 +72,8 @@ public class LoginAdminPageController {
         stage.setScene(scene);
         stage.show();
     }
+
+    //BACK
     public void switchToAdminPlayerPage(ActionEvent event) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AdminPlayerPage.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

@@ -20,10 +20,10 @@ public class TournamentPageController {
     private Scene scene;
     private Parent root;
     private int code;
-    private Mazzo m;
+    private Mazzo mazzo;
     private String[] tipoGiocatore;
     private DataSet dataSet;
-    private LinkedList<TextField> t;
+    private LinkedList<TextField> textFields;
     @FXML
     private AnchorPane anchorPane;
     @FXML
@@ -34,7 +34,7 @@ public class TournamentPageController {
     @FXML
     public void initialize() {
         dataSet = new DataSet();
-        t = new LinkedList<>();
+        textFields = new LinkedList<>();
         tipoGiocatore = new String[16];
         code = 0;
         setTextField();
@@ -45,15 +45,15 @@ public class TournamentPageController {
         int i = 0;
         for(Node node: anchorPane.getChildren()) {
             if (node instanceof TextField) {
-                t.add((TextField) node);
+                textFields.add((TextField) node);
                 if (i<16) {
-                    t.get(i).textProperty().addListener((observable, oldValue, newValue) -> {
-                        boolean ver = true;
+                    textFields.get(i).textProperty().addListener((observable, oldValue, newValue) -> {
+                        boolean var = true;
                         for (int j = 0; j<16; j++) {
-                            ver = ver && t.get(j).getText().isEmpty();
+                            var = var && textFields.get(j).getText().isEmpty();
                         }
-                        saveLogout.setDisable(ver);
-                        if (!ver) {
+                        saveLogout.setDisable(var);
+                        if (!var) {
                             codice.setText(generaCodice());
                         }
                         else {
@@ -67,6 +67,7 @@ public class TournamentPageController {
         }
     }
 
+    //Genera un codice casuale per identificare il torneo
     private String generaCodice() {
         if (code == 0)
             do {
@@ -76,12 +77,12 @@ public class TournamentPageController {
     }
 
     //Setta i bot nei TextField liberi e salva il tipo
-    public void impostaTorneo() {
+    private void impostaTorneo() {
         int cont = 0;
         for(int i = 0; i < 16; i++) {
-            if(t.get(i).getText().isEmpty()) {
+            if(textFields.get(i).getText().isEmpty()) {
                 cont++;
-                t.get(i).setText("Bot " + cont);
+                textFields.get(i).setText("Bot " + cont);
                 tipoGiocatore[i] = "Bot";
             }
             else {
@@ -94,7 +95,7 @@ public class TournamentPageController {
     private String assegnaMano() {
         StringBuilder str = new StringBuilder();
         for (int j = 1; j <= 5; j++) {
-            str.append(m.pesca().toStringNome()).append(" ");
+            str.append(mazzo.pesca().toStringNome()).append(" ");
         }
         return str.toString();
     }
@@ -109,9 +110,8 @@ public class TournamentPageController {
             writer.println("Vincitore: ");
             writer.println("******************************");
             for(int i = 0; i < 15; i++) {
-                m = new Mazzo();
-                m.componiMazzo();
-                String[] mani = {assegnaMano(), assegnaMano()};
+                mazzo = new Mazzo();
+                mazzo.componiMazzo();
                 writer.println("Numero Partita: " + i);
                 if(i <= 7) {
                     writer.println("Stato: Pronta");
@@ -119,14 +119,15 @@ public class TournamentPageController {
                 else {
                     writer.println("Stato: Attesa");
                 }
-                writer.println("Mazzo: " + m.toString());
+                writer.println("Mazzo: " + mazzo.toString());
                 writer.println("Scarti: ");
                 writer.println("Turno: 0");
+                String[] mani = {assegnaMano(), assegnaMano()};
                 if(i <= 7) {
                     for (int j = 0; j < 2; j++) {
                         writer.println("Giocatore: " + j);
                         writer.println("Tipo: " + tipoGiocatore[i+i+j]);
-                        writer.println("Nome: " + t.get(i+i+j).getText());
+                        writer.println("Nome: " + textFields.get(i+i+j).getText());
                         writer.println("Mano: " + mani[j]);
                         writer.println("HpRimanente: " + 5);
                     }
@@ -148,6 +149,7 @@ public class TournamentPageController {
         }
     }
 
+    //Save & Logout
     public void switchToAdminPlayerPage(ActionEvent event) throws IOException {
         dataSet.creaFile(code);
         impostaTorneo();
@@ -159,6 +161,7 @@ public class TournamentPageController {
         stage.show();
     }
 
+    //BACK
     public void switchToTypeGamePage(ActionEvent event) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("TypeGamePage.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();

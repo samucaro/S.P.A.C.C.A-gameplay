@@ -8,7 +8,6 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Material;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.*;
 import javafx.scene.text.Font;
@@ -22,7 +21,7 @@ public class OvalPaneController {
     private static GameData gameData;
     @FXML
     private Pane ovalPane;
-    private MainController mc;
+    private TabelloneGiocoController mc;
     private static Group[] pianeti;
     private PhongMaterial redMaterial;
     private PhongMaterial orangeMaterial;
@@ -273,8 +272,8 @@ public class OvalPaneController {
         timeline.setOnFinished(event -> posizionaPianeti());
     }
 
-    public void getMainController(MainController mainController){
-        mc = mainController;
+    public void getMainController(TabelloneGiocoController tabelloneGiocoController){
+        mc = tabelloneGiocoController;
         ovalPane.prefWidthProperty().bind(mc.stackPane.widthProperty());
         ovalPane.prefHeightProperty().bind(mc.stackPane.heightProperty());
         mc.stackPane.widthProperty().addListener((observable, oldValue, newValue) -> {

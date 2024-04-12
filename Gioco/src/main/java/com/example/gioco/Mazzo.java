@@ -4,70 +4,75 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Mazzo {
-    private ArrayList<Carta> carte;
+    private final ArrayList<Carta> mazzo;
     private final ArrayList<Carta> scarti;
     private final Random random;
 
     public Mazzo() {
-        this.carte = new ArrayList<>();
-        this.scarti = new ArrayList<>();
-        this.random = new Random();
+        mazzo = new ArrayList<>();
+        scarti = new ArrayList<>();
+        random = new Random();
     }
 
     //Realizza il mazzo con un numero preciso di carte
     public void componiMazzo() {
         for(int i = 1; i <= 30; i++) {
-            carte.add(new CartaBang());
+            mazzo.add(new CartaBang());
         }
         for(int i = 1; i <= 18; i++) {
-            carte.add(new CartaMancato());
+            mazzo.add(new CartaMancato());
         }
         for(int i = 1; i <= 2; i++) {
-            carte.add(new CartaDuello());
+            mazzo.add(new CartaDuello());
         }
         for(int i = 1; i <= 2; i++) {
-            carte.add(new CartaPerdiCarta());
+            mazzo.add(new CartaPerdiCarta());
         }
         for(int i = 1; i <= 2; i++) {
-            carte.add(new CartaScartaBang());
+            mazzo.add(new CartaScartaBang());
         }
         for(int i = 1; i <= 2; i++) {
-            carte.add(new CartaSparaTutti());
+            mazzo.add(new CartaSparaTutti());
         }
         for(int i = 1; i <= 8; i++) {
-            carte.add(new CartaRecuperaVita());
+            mazzo.add(new CartaRecuperaVita());
         }
         mescola();
     }
 
+    //Mescola il mazzo in modo casuale
     public void mescola() {
-        for (int i = carte.size()-1; i > 0; i--) {
+        for (int i = mazzo.size()-1; i > 0; i--) {
             int j = random.nextInt(i + 1);
-            Carta temp = carte.get(i);
-            carte.set(i, carte.get(j));
-            carte.set(j, temp);
+            Carta temp = mazzo.get(i);
+            mazzo.set(i, mazzo.get(j));
+            mazzo.set(j, temp);
         }
     }
 
-    public void addCarta(Carta c) {
-        carte.add(c);
-    }
-    public void addScarto(Carta c) {
-        scarti.add(c);
-    }
-
+    //pesca la prima carta dal mazzo e se è finito aggiunge tutti gli scarti rimescolandoli
     public Carta pesca(){
-        if (carte.isEmpty()) {
-            carte.addAll(scarti);
+        if (mazzo.isEmpty()) {
+            mazzo.addAll(scarti);
             scarti.clear();
             mescola();
         }
-        Carta ct = carte.getLast();
-        carte.removeLast();
+        Carta ct = mazzo.getLast();
+        mazzo.removeLast();
         return ct;
     }
-    public void scarta(Carta scarto){
-        scarti.add(scarto);
+
+    public void setMazzo(Carta c) {
+        mazzo.add(c);
+    }
+    public void setScarti(Carta c) {
+        scarti.add(c);
+    }
+    public ArrayList<Carta> getMazzo() {
+        return mazzo;
+    }
+    public ArrayList<Carta> getScarti() {
+        return scarti;
     }
 
     public Carta ultimoScarto(){
@@ -77,11 +82,12 @@ public class Mazzo {
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder();
-        for(Carta c: carte) {
+        for(Carta c: mazzo) {
             str.append(c.toStringNome()).append(" ");
         }
         return str.toString();
     }
+
     public String toStringScarti() {
         StringBuilder str = new StringBuilder();
         for(Carta c: scarti) {

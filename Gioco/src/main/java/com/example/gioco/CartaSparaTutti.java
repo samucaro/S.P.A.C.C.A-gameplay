@@ -6,11 +6,9 @@ import javafx.scene.image.ImageView;
 public class CartaSparaTutti extends Carta{
     private final String desc;
     private final GameData gameData;
-    private final Giocatore giocatoreSelezionato;
 
     public CartaSparaTutti() {
         gameData = GameData.getInstance();
-        giocatoreSelezionato = null;
         desc = "Spara a tutti gli avversari contemporaneamente";
     }
 
@@ -25,18 +23,18 @@ public class CartaSparaTutti extends Carta{
         return imageView;
     }
 
-    public void usaAbilita(OvalPaneController ovalPaneController, MainController mainController) {
+    public void usaAbilita(OvalPaneController ovalPaneController, TabelloneGiocoController tabelloneGiocoController) {
         for(Carta c: gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano()) {
             if(c instanceof CartaSparaTutti) {
-                mainController.scartaCarte(c, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
+                tabelloneGiocoController.scartaCarte(c, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
                 break;
             }
         }
-        gestisciEventiAttacco(ovalPaneController, mainController);
+        gestisciEventiAttacco(ovalPaneController, tabelloneGiocoController);
         if (!(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot))
-            mainController.aggiornaCosa();
+            tabelloneGiocoController.aggiornaCosa();
     }
-    public void gestisciEventiAttacco(OvalPaneController ovalPaneController,  MainController mainController) {
+    public void gestisciEventiAttacco(OvalPaneController ovalPaneController,  TabelloneGiocoController tabelloneGiocoController) {
         boolean checkCartaM;
         for (int i = 0; i < gameData.getGiocatoriPartita().size(); i++){
             checkCartaM = false;
@@ -44,7 +42,7 @@ public class CartaSparaTutti extends Carta{
                 for (int j = 0; j < gameData.getGiocatoriPartita().get(i).getMano().size(); j++){
                     if (gameData.getGiocatoriPartita().get(i).getMano().get(j) instanceof CartaMancato){
                         checkCartaM = true;
-                        mainController.scartaCarte(gameData.getGiocatoriPartita().get(i).getMano().get(j),gameData.getGiocatoriPartita().get(i));
+                        tabelloneGiocoController.scartaCarte(gameData.getGiocatoriPartita().get(i).getMano().get(j),gameData.getGiocatoriPartita().get(i));
                         ovalPaneController.dannoSfera(gameData.getGiocatoriPartita().get(i), false);
                         break;
                     }

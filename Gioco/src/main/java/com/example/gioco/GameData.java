@@ -13,37 +13,46 @@ public class GameData {
     private final ArrayList<Giocatore> giocatoriPartita;
     private final DataSet dataSet;
     private Mazzo mazzo;
-    private int numeroGG;
+    private int numeroGiocatori;
     private int code;
 
     public GameData() throws IOException {
         dataSet = new DataSet();
         giocatoriPartita = new ArrayList<>();
         mazzo = new Mazzo();
+        /*numeroGG = 0;
+        code = 0;
+        turnoCorrente = 0;
+        numeroPartita = 0;
+        tipo = "Partita";*/
     }
     public GameData(int n, Stato stato, int turnoCorrente, Mazzo mazzo, ArrayList<Giocatore>giocatoriPartita) {
         dataSet = new DataSet();
         partiteTorneo = new LinkedList<>();
-        numeroPartita = n;
+        /*numeroPartita = n;
         this.stato = stato;
-        this.turnoCorrente = turnoCorrente;
+        this.turnoCorrente = turnoCorrente;*/
         this.mazzo = mazzo;
         this.giocatoriPartita = giocatoriPartita;
     }
+
     public static void resetInstance() {
         instance=null;
     }
+
     public static GameData getInstance() {
-        try {
-            if (instance == null) {
-                instance = new GameData();
+            try {
+                if (instance == null) {
+                    instance = new GameData();
+                }
+            } catch(IOException e) {
+                System.out.println("ERR0RE");
+                e.printStackTrace();
             }
-        } catch(IOException e) {
-            System.out.println("ERR0RE");
-            e.printStackTrace();
-        }
-        return instance;
+            return instance;
     }
+
+    //Legge il File selezionato tramite il corrispettivo codice
     public void leggiFilePartita(int code) {
         this.code = code;
         try {
@@ -55,7 +64,7 @@ public class GameData {
                     tipo = line.split(" ")[2];
                 }
                 else if (line.startsWith("NumGiocatori:")) {
-                    numeroGG = Integer.parseInt(line.split(":")[1].trim());
+                    numeroGiocatori = Integer.parseInt(line.split(":")[1].trim());
                 }
                 else if (line.startsWith("Turno:")) {
                     turnoCorrente = Integer.parseInt(line.split(":")[1].trim());
@@ -66,7 +75,7 @@ public class GameData {
                     String[] carteM = cma.trim().split(" ");
                     for (String nomeCarta: carteM) {
                         if (stringaCarta(nomeCarta) != null)
-                            mazzo.addCarta(stringaCarta(nomeCarta));
+                            mazzo.setMazzo(stringaCarta(nomeCarta));
                     }
                 }
                 else if (line.startsWith("Scarti:")) {
@@ -75,7 +84,7 @@ public class GameData {
                     String[] carteS = cs.trim().split(" ");
                     for (String nomeCarta: carteS) {
                         if (stringaCarta(nomeCarta) != null)
-                            mazzo.addScarto(stringaCarta(nomeCarta));
+                            mazzo.setScarti(stringaCarta(nomeCarta));
                     }
                 }
                 else if (line.startsWith("Giocatore:")) {
@@ -97,7 +106,7 @@ public class GameData {
                     String[] carteMa = cm.trim().split(" ");
                     for (String s : carteMa) {
                         if (stringaCarta(s) != null)
-                            giocatoriPartita.get(c).addCarta(stringaCarta(s));
+                            giocatoriPartita.get(c).setMano(stringaCarta(s));
                     }
                 }
                 else if (line.startsWith("HpRimanente:")) {
@@ -117,7 +126,7 @@ public class GameData {
             BufferedReader reader = new BufferedReader(new FileReader(dataSet.getProjectFolderPath() + File.separator + "/" + code + ".txt"));
             int c = 0;
             String line;
-            numeroGG = 16;
+            numeroGiocatori = 16;
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith("Partita Corrente:")) {
                     turnoCorrente = Integer.parseInt(line.split(": ")[1]);
@@ -148,14 +157,14 @@ public class GameData {
                             String carteMazzo = line.split(": ")[1];
                             String[] carteM = carteMazzo.split(" ");
                             for (String nomeCarta: carteM) {
-                                mazzo.addCarta(stringaCarta(nomeCarta));
+                                mazzo.setMazzo(stringaCarta(nomeCarta));
                             }
                         }
                         else if (line.startsWith("Scarti:")) {
                             String carteScarti = line.split(":")[1];
                             String[] carteS = carteScarti.split(" ");
                             for (String nomeCarta: carteS) {
-                                mazzo.addScarto(stringaCarta(nomeCarta));
+                                mazzo.setScarti(stringaCarta(nomeCarta));
                             }
                         }
                         else if (line.startsWith("Turno:")) {
@@ -178,7 +187,7 @@ public class GameData {
                             String carteMano = line.split(": ")[1];
                             String[] carteMa = carteMano.split(" ");
                             for (String s : carteMa) {
-                                giocatoriPartita.get(c).addCarta(stringaCarta(s));
+                                giocatoriPartita.get(c).setMano(stringaCarta(s));
                             }
                         }
                         else if (line.startsWith("HpRimanente:")) {
@@ -199,12 +208,12 @@ public class GameData {
             FileWriter file = new FileWriter((dataSet.getProjectFolderPath() + File.separator + "/" + code + ".txt"), false);
             PrintWriter writer = new PrintWriter(file);
             writer.println("Dati Generali " + tipo);
-            writer.println("NumGiocatori: " + numeroGG);
+            writer.println("NumGiocatori: " + numeroGiocatori);
             writer.println("Turno: " + turnoCorrente);
             writer.println("Mazzo: " + mazzo.toString());
             writer.println("Scarti: " + mazzo.toStringScarti());
             writer.println("******************************");
-            for (int i = 0; i < numeroGG; i++) {
+            for (int i = 0; i < numeroGiocatori; i++) {
                 writer.println("Giocatore: " + i);
                 writer.println("Tipo: " + ((giocatoriPartita.get(i) instanceof GiocatorePersona) ? "Persona" : "Bot"));
                 writer.println("Nome: " + giocatoriPartita.get(i).getNome());
@@ -217,6 +226,7 @@ public class GameData {
             System.err.println("Errore durante la creazione del file: " + e.getMessage());
         }
     }
+
     public Carta stringaCarta(String c) {
         return switch (c) {
             case "Bang" -> new CartaBang();
@@ -231,7 +241,7 @@ public class GameData {
     }
     //MODIFICA
     public void setNumero(int numeroGG) {
-        this.numeroGG = numeroGG;
+        this.numeroGiocatori = numeroGG;
     }
     //MODIFICA
     public void setMazzo(Mazzo mazzo) {
@@ -241,6 +251,7 @@ public class GameData {
     public void setCode(int code) {
         this.code = code;
     }
+
     //MODIFICA
     public Mazzo getMazzo() {
         return mazzo;
@@ -259,7 +270,7 @@ public class GameData {
     }
     //MODIFICA
     public int getNumero() {
-        return numeroGG;
+        return numeroGiocatori;
     }
     public void setTipo(String tipo) {
         this.tipo = tipo;

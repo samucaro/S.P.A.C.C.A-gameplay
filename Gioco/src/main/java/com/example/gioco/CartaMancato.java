@@ -19,7 +19,7 @@ public class CartaMancato extends Carta {
         imageView.setPreserveRatio(true);
         return imageView;
     }
-    public void usaAbilita(OvalPaneController ovalPaneController, MainController mainController) {
+    public void usaAbilita(OvalPaneController ovalPaneController, TabelloneGiocoController tabelloneGiocoController) {
     }
     @Override
     public String toString() {

@@ -27,36 +27,36 @@ public class CartaPerdiCarta extends Carta{
         return imageView;
     }
 
-    public void usaAbilita(OvalPaneController ovalPaneController, MainController mainController) {
+    public void usaAbilita(OvalPaneController ovalPaneController, TabelloneGiocoController tabelloneGiocoController) {
         if(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
             ovalPaneController.giocatoreSelezionato = null;
-            gestisciEventiAttacco(ovalPaneController, mainController).handle(new ActionEvent());
+            gestisciEventiAttacco(ovalPaneController, tabelloneGiocoController).handle(new ActionEvent());
         }
         else {
             ovalPaneController.startSelection().setOnSucceeded(event -> {
-                gestisciEventiAttacco(ovalPaneController, mainController).handle(new ActionEvent());
+                gestisciEventiAttacco(ovalPaneController, tabelloneGiocoController).handle(new ActionEvent());
                 ovalPaneController.fineSelezione();
-                mainController.stopSelectionMC();
+                tabelloneGiocoController.stopSelectionMC();
             });
         }
     }
 
-    public EventHandler<ActionEvent> gestisciEventiAttacco(OvalPaneController ovalPaneController, MainController mainController) {
+    public EventHandler<ActionEvent> gestisciEventiAttacco(OvalPaneController ovalPaneController, TabelloneGiocoController tabelloneGiocoController) {
         return event -> {
             giocatoreSelezionato = ovalPaneController.planetSelection();
             if(!giocatoreSelezionato.getMano().isEmpty()) {
                 for(Carta c: gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano()) {
                     if(c instanceof CartaPerdiCarta) {
-                        mainController.scartaCarte(c, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
+                        tabelloneGiocoController.scartaCarte(c, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
                         break;
                     }
                 }
                 int val = (int) (Math.random() * (giocatoreSelezionato.getMano().size()));
-                gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).addCarta(giocatoreSelezionato.getMano().get(val));
+                gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).setMano(giocatoreSelezionato.getMano().get(val));
                 giocatoreSelezionato.scarta(giocatoreSelezionato.getMano().get(val));
                 ovalPaneController.dannoSfera(giocatoreSelezionato, false);
                 ovalPaneController.fineSelezione();
-                mainController.stopSelectionMC();
+                tabelloneGiocoController.stopSelectionMC();
             }
         };
     }
