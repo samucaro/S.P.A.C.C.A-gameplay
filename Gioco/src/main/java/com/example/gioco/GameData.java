@@ -15,6 +15,7 @@ public class GameData {
     private Mazzo mazzo;
     private int numeroGiocatori;
     private int code;
+    private String vincitore;
 
     public GameData() throws IOException {
         dataSet = new DataSet();
@@ -281,5 +282,12 @@ public class GameData {
     //MODIFICA
     public ArrayList<Giocatore> getGiocatoriPartita() {
         return giocatoriPartita;
+    }
+
+    public void setVincitore(String vincitore) {
+        this.vincitore = vincitore;
+    }
+    public String getVincitore() {
+        return vincitore;
     }
 }

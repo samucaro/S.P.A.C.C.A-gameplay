@@ -27,6 +27,7 @@ public class TabelloneGiocoController {
     private boolean checkInit;
     private boolean checkFattaPI;
     private GameData gameData;
+    public static Giocatore vincitore;
     @FXML
     public OvalPaneController ovalPaneController;
     @FXML
@@ -226,11 +227,10 @@ public class TabelloneGiocoController {
 
     //*******************************FINE GESTIONE GRAFICA**************************************************************
 
-    //Imposta i giocatori morti nel caso decreta il vincitore
+    //Imposta i giocatori morti e nel caso decreta il vincitore
     public static void setMortiEVincitore(Giocatore giocatoreMorto) {
         OvalPaneController.setMortoOP(giocatoreMorto);
         int check = 0;
-        Giocatore vincitore = null;
         for (Giocatore giocatore : GameData.getInstance().getGiocatoriPartita()){
             if (giocatore.getHpRimanente() > 0) {
                 check++;
@@ -342,6 +342,14 @@ public class TabelloneGiocoController {
         salvaPartita();
         GameData.resetInstance();
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AdminPlayerPage.fxml")));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void switchToLeaderBoard(ActionEvent event) throws IOException {
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("LeaderBoard.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);

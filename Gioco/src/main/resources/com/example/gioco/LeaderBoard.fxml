@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="238.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gioco.LeaderBoardController">
+   <center>
+      <HBox BorderPane.alignment="CENTER">
+         <children>
+            <TableView fx:id="tableView" editable="true" prefHeight="238.0" prefWidth="323.0" stylesheets="@LabelCustom.css" HBox.hgrow="ALWAYS">
+              <columns>
+                <TableColumn fx:id="rank" prefWidth="88.0" text="Rank" />
+                  <TableColumn fx:id="giocatore" prefWidth="151.0" text="Giocatore" />
+                  <TableColumn fx:id="punteggio" prefWidth="160.0" text="Punteggio" />
+              </columns>
+            </TableView>
+         </children>
+      </HBox>
+   </center>
+</BorderPane>

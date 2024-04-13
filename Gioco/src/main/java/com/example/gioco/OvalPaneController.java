@@ -19,15 +19,12 @@ import java.util.Objects;
 
 public class OvalPaneController {
     private static GameData gameData;
-    @FXML
-    private Pane ovalPane;
     private TabelloneGiocoController mc;
     private static Group[] pianeti;
     private PhongMaterial redMaterial;
     private PhongMaterial orangeMaterial;
     public Giocatore giocatoreSelezionato;
     private ProgressBar progressBar;
-    private AnimationTimer timer;
     private Text scegliAvversario;
     private Arc arcoInterno;
     private Arc arcoEsterno;
@@ -41,6 +38,8 @@ public class OvalPaneController {
     private static double iry = 130.0;
     private static Shape halfDonut;
     private static int turnoDi;
+    @FXML
+    private Pane ovalPane;
 
     @FXML
     public void initialize() {
@@ -79,9 +78,9 @@ public class OvalPaneController {
                 pianeti[i].getChildren().add(ring);
             }
             int indice = ((gameData.getNumero() - 1) - i) % gameData.getNumero();
-            Text vitaGiocatore = new Text(gameData.getGiocatoriPartita().get(indice).getHpRimanente() + "/5");
+            Text vitaGiocatore = new Text("hp: " + gameData.getGiocatoriPartita().get(indice).getHpRimanente() + "/5");
             Text nomeGiocatore = new Text(gameData.getGiocatoriPartita().get(indice).getNome());
-            vitaGiocatore.setFont(Font.font("Game of Thrones", 17));
+            vitaGiocatore.setFont(Font.font("Game of Thrones", 16));
             vitaGiocatore.setStyle("-fx-fill: white; -fx-stroke: black; -fx-stroke-width: 0.5");
             nomeGiocatore.setFont(Font.font("Game of Thrones", 17));
             nomeGiocatore.setStyle("-fx-fill: white; -fx-stroke: black; -fx-stroke-width: 0.5");
@@ -190,7 +189,7 @@ public class OvalPaneController {
     }
     //Imposta la rotazione 3D dei pianeti
     private void rotazionePianeti(int i) {
-        timer = new AnimationTimer() {
+        AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
                 pianeti[i].getChildren().getFirst().rotateProperty().set(pianeti[i].getChildren().getFirst().getRotate() + 0.2);
@@ -215,7 +214,7 @@ public class OvalPaneController {
     public static void setVita(Giocatore ggDanneggiato) {
         for (int j = 0; j < gameData.getNumero(); j++){
             if (ggDanneggiato.getNome().equals(((Text) pianeti[j].getChildren().getLast()).getText())) {
-                ((Text) pianeti[j].getChildren().get(pianeti[j].getChildren().size()-2)).setText(ggDanneggiato.getHpRimanente() + "/5");
+                ((Text) pianeti[j].getChildren().get(pianeti[j].getChildren().size()-2)).setText("hp: " + ggDanneggiato.getHpRimanente() + "/5");
             }
         }
     }
