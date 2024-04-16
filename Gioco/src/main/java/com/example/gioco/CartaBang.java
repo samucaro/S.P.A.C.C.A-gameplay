@@ -57,7 +57,7 @@ public class CartaBang extends Carta{
                 }
             }
             if (!var) {
-                selectedGG.subisciDanno(1);
+                selectedGG.subisciDanno(1, tabelloneGiocoController);
                 ovalPaneController.dannoSfera(selectedGG, true);
             }
         };

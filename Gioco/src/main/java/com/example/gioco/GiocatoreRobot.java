@@ -23,11 +23,11 @@ public class GiocatoreRobot extends Giocatore {
         mano.remove(carta);
 
     }
-    public void subisciDanno(int danno){
+    public void subisciDanno(int danno, TabelloneGiocoController tg) {
         hpRimanente -= danno;
         if(hpRimanente <= 0) {
             hpRimanente = 0;
-            TabelloneGiocoController.setMortiEVincitore(this);
+            tg.setMortiEVincitore(this);
             System.out.println("Il giocatore è già eliminato");
         } else {
             OvalPaneController.setVita(this);

@@ -48,7 +48,7 @@ public class CartaSparaTutti extends Carta{
                     }
                 }
                 if (!checkCartaM){
-                    gameData.getGiocatoriPartita().get(i).subisciDanno(1);
+                    gameData.getGiocatoriPartita().get(i).subisciDanno(1, tabelloneGiocoController);
                     ovalPaneController.dannoSfera(gameData.getGiocatoriPartita().get(i), true);
                 }
             }

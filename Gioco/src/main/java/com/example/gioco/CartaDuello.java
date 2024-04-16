@@ -62,14 +62,14 @@ public class CartaDuello extends Carta {
                     tabelloneGiocoController.scartaCarte(cartaAvversario, selectedGG);
                     i--;
                     if (!controlloBang(tabelloneGiocoController)) {
-                        gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).subisciDanno(2);
+                        gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).subisciDanno(2, tabelloneGiocoController);
                         ovalPaneController.dannoSfera(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()), true);
                         break;
                     }
                 }
             }
             if (contTuo == contAvversario) {
-                selectedGG.subisciDanno(2);
+                selectedGG.subisciDanno(2, tabelloneGiocoController);
                 ovalPaneController.dannoSfera(selectedGG, true);
             }
         };

@@ -49,7 +49,7 @@ public class CartaScartaBang extends Carta{
                     }
                 }
                 if (!checkCartaB){
-                    gameData.getGiocatoriPartita().get(i).subisciDanno(1);
+                    gameData.getGiocatoriPartita().get(i).subisciDanno(1, tabelloneGiocoController);
                     ovalPaneController.dannoSfera(gameData.getGiocatoriPartita().get(i), true);
                 }
             }

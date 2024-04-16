@@ -3,7 +3,7 @@ package com.example.gioco;
 import java.util.ArrayList;
 public abstract class Giocatore {
     abstract public void setMano(Carta carta);
-    abstract void subisciDanno(int danno);
+    abstract void subisciDanno(int danno, TabelloneGiocoController tg);
     abstract void cura(int cura);
     abstract void scarta(Carta carta);
     abstract void setHpRimanente(int hp);

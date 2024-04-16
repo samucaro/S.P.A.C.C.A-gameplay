@@ -228,10 +228,10 @@ public class TabelloneGiocoController {
     //*******************************FINE GESTIONE GRAFICA**************************************************************
 
     //Imposta i giocatori morti e nel caso decreta il vincitore
-    public static void setMortiEVincitore(Giocatore giocatoreMorto) {
+    public void setMortiEVincitore(Giocatore giocatoreMorto) {
         OvalPaneController.setMortoOP(giocatoreMorto);
         int check = 0;
-        for (Giocatore giocatore : GameData.getInstance().getGiocatoriPartita()){
+        for (Giocatore giocatore : gameData.getGiocatoriPartita()){
             if (giocatore.getHpRimanente() > 0) {
                 check++;
                 vincitore = giocatore;
@@ -239,6 +239,8 @@ public class TabelloneGiocoController {
         }
         if (check==1) {
             System.out.println("VINCE LA PARTITA: " + vincitore.getNome());
+        } else if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) == (giocatoreMorto)) {
+            handleTurnButton();
         }
     }
 
