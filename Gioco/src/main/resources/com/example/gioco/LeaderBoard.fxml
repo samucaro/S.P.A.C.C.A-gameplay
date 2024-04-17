@@ -16,6 +16,9 @@
                   <TableColumn fx:id="giocatore" prefWidth="151.0" text="Giocatore" />
                   <TableColumn fx:id="punteggio" prefWidth="160.0" text="Punteggio" />
               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
             </TableView>
          </children>
       </HBox>

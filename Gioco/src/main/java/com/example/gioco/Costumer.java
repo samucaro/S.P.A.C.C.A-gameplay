@@ -1,13 +1,12 @@
 package com.example.gioco;
 
 public class Costumer {
-    private int rank;
-    private String nome;
-    private int punteggio;
+    private int rank, punteggio;
+    private String giocatore;
 
-    public Costumer(int rank, String nome, int punteggio) {
+    public Costumer(int rank, String giocatore, int punteggio) {
         this.rank = rank;
-        this.nome = nome;
+        this.giocatore = giocatore;
         this.punteggio = punteggio;
     }
 
@@ -18,11 +17,11 @@ public class Costumer {
         this.rank = rank;
     }
 
-    public String getNome() {
-        return nome;
+    public String getGiocatore() {
+        return giocatore;
     }
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setGiocatore(String nome) {
+        this.giocatore = nome;
     }
 
     public int getPunteggio() {

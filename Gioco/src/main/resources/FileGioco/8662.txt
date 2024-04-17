@@ -1,8 +1,8 @@
 Dati Generali Partita:
 NumGiocatori: 8
-Turno: 5
-Mazzo: Bang RecuperaVita Mancato Bang PerdiCarta Bang Bang Bang ScartaBang RecuperaVita Mancato Mancato Bang RecuperaVita Mancato Bang 
-Scarti: Bang Mancato Bang Mancato Bang Bang Bang RecuperaVita 
+Turno: 6
+Mazzo: Bang Bang Mancato Mancato Bang Bang Mancato Bang Bang ScartaBang Bang Duello Bang 
+Scarti: PerdiCarta Bang Mancato Bang Mancato RecuperaVita RecuperaVita Bang Mancato Mancato Bang Mancato Bang 
 ******************************
 Giocatore: 0
 Tipo: Persona
@@ -37,18 +37,18 @@ HpRimanente: 0
 Giocatore: 5
 Tipo: Persona
 Nome: nic
-Mano: Mancato Bang Mancato Mancato Mancato 
-HpRimanente: 5
+Mano: RecuperaVita Bang Bang Mancato Duello 
+HpRimanente: 0
 ******************************
 Giocatore: 6
 Tipo: Persona
 Nome: walt
-Mano: RecuperaVita RecuperaVita Duello Mancato Duello 
-HpRimanente: 5
+Mano: Mancato Mancato Mancato Mancato 
+HpRimanente: 2
 ******************************
 Giocatore: 7
 Tipo: Persona
 Nome: tom
-Mano: RecuperaVita Bang Bang Mancato Mancato 
-HpRimanente: 5
+Mano: RecuperaVita RecuperaVita RecuperaVita RecuperaVita 
+HpRimanente: 0
 ******************************

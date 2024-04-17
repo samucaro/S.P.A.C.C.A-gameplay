@@ -27,7 +27,8 @@ public class TabelloneGiocoController {
     private boolean checkInit;
     private boolean checkFattaPI;
     private GameData gameData;
-    public static Giocatore vincitore;
+    private Giocatore vincitore;
+    private static String nomeVincitore;
     @FXML
     public OvalPaneController ovalPaneController;
     @FXML
@@ -47,6 +48,7 @@ public class TabelloneGiocoController {
 
     @FXML
     public void initialize() throws IOException {
+        nomeVincitore = "Nessuno";
         ovalPaneController.getMainController(this);
         gameData = GameData.getInstance();
         checkInit = false;
@@ -235,10 +237,11 @@ public class TabelloneGiocoController {
             if (giocatore.getHpRimanente() > 0) {
                 check++;
                 vincitore = giocatore;
+                nomeVincitore = giocatore.getNome();
             }
         }
         if (check==1) {
-            System.out.println("VINCE LA PARTITA: " + vincitore.getNome());
+            System.out.println("VINCE LA PARTITA: " + nomeVincitore);
         } else if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) == (giocatoreMorto)) {
             handleTurnButton();
         }
@@ -351,10 +354,15 @@ public class TabelloneGiocoController {
     }
 
     public void switchToLeaderBoard(ActionEvent event) throws IOException {
+        Stage stage = new Stage();
+        stage.setTitle("LeaderBoard");
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("LeaderBoard.fxml")));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public static String getNomeVincitore() {
+        return nomeVincitore;
     }
 }

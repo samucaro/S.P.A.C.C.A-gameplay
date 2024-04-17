@@ -1,12 +1,18 @@
 package com.example.gioco;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class LeaderBoardController {
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+
+public class LeaderBoardController implements Initializable {
     @FXML
     private TableView<Costumer> tableView;
     @FXML
@@ -15,11 +21,13 @@ public class LeaderBoardController {
     private TableColumn<Costumer, String> giocatore;
     @FXML
     private TableColumn<Costumer, Integer> punteggio;
-    private static int cont = 0;
+    private static int cont = 1;
     private GameData gameData;
 
+    ObservableList<Costumer> data = FXCollections.observableArrayList();
+
     @FXML
-    public void initialize() {
+    public void initialize(URL url, ResourceBundle rb) {
         gameData = GameData.getInstance();
         rank.setCellValueFactory(new PropertyValueFactory<Costumer, Integer>("rank"));
         giocatore.setCellValueFactory(new PropertyValueFactory<Costumer, String>("giocatore"));
@@ -29,12 +37,11 @@ public class LeaderBoardController {
 
     private void submit() {
         boolean var = false;
-        Costumer costumer;
-        ObservableList<Costumer> costumers;
+        ArrayList<Costumer> costumers = new ArrayList<>();
         for(int i = 0; i < gameData.getGiocatoriPartita().size(); i++) {
             for(int j = 0; j < tableView.getItems().size(); j++) {
-                if(tableView.getItems().get(j).getNome().equals(gameData.getGiocatoriPartita().get(i).getNome())) {
-                    if(gameData.getGiocatoriPartita().get(i).getNome() != null || TabelloneGiocoController.vincitore.getNome().equals(tableView.getItems().get(j).getNome())) {
+                if(tableView.getItems().get(j).getGiocatore().equals(gameData.getGiocatoriPartita().get(i).getNome())) {
+                    if(gameData.getGiocatoriPartita().get(i).getNome() != null || TabelloneGiocoController.getNomeVincitore().equals(tableView.getItems().get(j).getGiocatore())) {
                         tableView.getItems().get(j).setPunteggio(3);
                     }
                     var = true;
@@ -42,13 +49,15 @@ public class LeaderBoardController {
                 }
             }
             if(!var) {
-                if(gameData.getGiocatoriPartita().get(i).getNome() != null || gameData.getGiocatoriPartita().get(i).getNome().equals(TabelloneGiocoController.vincitore.getNome())) {
-                    costumer = new Costumer(cont++, gameData.getGiocatoriPartita().get(i).getNome(), 3);
-                    tableView.getItems().add(costumer);
+                if(gameData.getGiocatoriPartita().get(i).getNome().equals(TabelloneGiocoController.getNomeVincitore())) {
+                    Costumer costumer = new Costumer(cont++, gameData.getGiocatoriPartita().get(i).getNome(), 3);
+                    data.add(costumer);
+                    tableView.setItems(data);
                 }
                 else {
-                    costumer = new Costumer(cont++, gameData.getGiocatoriPartita().get(i).getNome(), 0);
-                    tableView.getItems().add(costumer);
+                    Costumer costumer = new Costumer(cont++, gameData.getGiocatoriPartita().get(i).getNome(), 0);
+                    data.add(costumer);
+                    tableView.setItems(data);
                 }
             }
 
@@ -66,8 +75,11 @@ public class LeaderBoardController {
             }
             if(i != min) {
                 Costumer costumer = tableView.getItems().get(i);
+                int rank = tableView.getItems().get(i).getRank();
+                costumer.setRank(tableView.getItems().get(min).getRank());
                 tableView.getItems().set(i, tableView.getItems().get(min));
                 tableView.getItems().set(min, costumer);
+                tableView.getItems().get(min).setRank(rank);
             }
         }
     }
