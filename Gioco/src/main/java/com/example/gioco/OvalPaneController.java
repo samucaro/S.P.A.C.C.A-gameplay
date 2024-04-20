@@ -4,6 +4,7 @@ import javafx.animation.*;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -29,6 +30,7 @@ public class OvalPaneController {
     private Arc arcoInterno;
     private Arc arcoEsterno;
     private static int currentSphere;
+    private Integer winnerSphere;
     private static double centroX;
     private static double centroY;
     private boolean planetSelected;
@@ -51,6 +53,7 @@ public class OvalPaneController {
         scegliAvversario = new Text("Scegli chi vuoi attaccare");
         progressBar = new ProgressBar();
         giocatoreSelezionato = null;
+        winnerSphere = null;
         planetSelected = false;
         creaGruppoPianeti();
         impostaStile();
@@ -152,13 +155,21 @@ public class OvalPaneController {
     //Metodi per ridimensionamento
     private void setScenaX(double x){
         centroX=x/2;
-        posizionaPianeti();
-        reShape();
+        if (winnerSphere == null) {
+            posizionaPianeti();
+            reShape();
+        } else {
+            mettiSferaVincitrice();
+        }
     }
     private void setScenaY(double y){
         centroY=y/2;
-        posizionaPianeti();
-        reShape();
+        if (winnerSphere == null) {
+            posizionaPianeti();
+            reShape();
+        } else {
+            mettiSferaVincitrice();
+        }
     }
     private void reShape() {
         double h = (60 * Math.min(centroX, centroY)) / 300;
@@ -166,8 +177,11 @@ public class OvalPaneController {
         ory=h + centroY*1/1.5;
         irx=2*h;
         iry=centroY/5+h;
+        boolean checkVis = halfDonut.isVisible();
         if (ovalPane.getChildren().contains(progressBar)){
-            ovalPane.getChildren().remove(halfDonut);
+            System.out.println("DISGIUNTA");
+            //ovalPane.getChildren().remove(halfDonut);
+            halfDonut.setVisible(false);
             scegliAvversario.setWrappingWidth(centroX/1.5);
             progressBar.setPrefWidth(centroX/1.5);
             progressBar.setLayoutX(centroX-centroX/3);
@@ -183,8 +197,10 @@ public class OvalPaneController {
             halfDonut = Shape.subtract(arcoEsterno, arcoInterno);
             halfDonut.setFill(Color.rgb(0, 191, 255, 0.2));
             ovalPane.getChildren().add(halfDonut);
-            halfDonut.setTranslateX(centroX-100);
-            halfDonut.setTranslateY(centroY*2-100);
+            halfDonut.setVisible(checkVis);
+            System.out.println("GIUNTA");
+            halfDonut.setTranslateX(centroX - 100);
+            halfDonut.setTranslateY(centroY * 2 - 100);
         }
     }
     //Imposta la rotazione 3D dei pianeti
@@ -337,9 +353,46 @@ public class OvalPaneController {
         }
     }
     public void fineSelezione(){
-        halfDonut.setVisible(true);
+        halfDonut.setVisible(TabelloneGiocoController.getNomeVincitore()=="");
         ovalPane.getChildren().removeAll(progressBar, scegliAvversario);
         pianeti[currentSphere].setMouseTransparent(false);
         reShape();
+    }
+
+    public void fineGiocoGrafica() {
+        for (Node n : ovalPane.getChildren()){
+            n.setVisible(false);
+            n.setDisable(true);
+            System.out.println(n.getClass());
+        }
+        for (int j = 0; j < gameData.getNumero(); j++){
+            if (!((Text) pianeti[j].getChildren().get(pianeti[j].getChildren().size()-2)).getText().equals("ELIMINATO")){
+                winnerSphere = j;
+                pianeti[j].setVisible(true);
+                ((Text) pianeti[j].getChildren().get(pianeti[j].getChildren().size()-2)).setVisible(false);
+                spostaSferaVincitrice();
+                break;
+            }
+        }
+    }
+    private void spostaSferaVincitrice() {
+        ((Sphere) pianeti[winnerSphere].getChildren().getFirst()).setRadius(50);
+        Timeline timeline = new Timeline();
+        KeyValue scx = new KeyValue(pianeti[winnerSphere].scaleXProperty(), mc.getScala()*3);
+        KeyValue scy = new KeyValue(pianeti[winnerSphere].scaleYProperty(), mc.getScala()*3);
+        KeyValue kv1 = new KeyValue(pianeti[winnerSphere].translateXProperty(), centroX);
+        KeyValue kv2 = new KeyValue(pianeti[winnerSphere].translateYProperty(), centroY);
+        KeyFrame kf = new KeyFrame(Duration.seconds(1), kv1, kv2, scx, scy);
+        timeline.getKeyFrames().add(kf);
+        timeline.play();
+        timeline.setOnFinished(actionEvent -> {
+            mettiSferaVincitrice();
+        });
+    }
+    public void mettiSferaVincitrice(){
+        pianeti[winnerSphere].setScaleX(mc.getScala()*3);
+        pianeti[winnerSphere].setScaleY(mc.getScala()*3);
+        pianeti[winnerSphere].setTranslateX(centroX);
+        pianeti[winnerSphere].setTranslateY(centroY);
     }
 }

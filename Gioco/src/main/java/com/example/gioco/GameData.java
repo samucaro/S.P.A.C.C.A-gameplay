@@ -204,6 +204,7 @@ public class GameData {
             System.err.println("Errore durante la lettura del file: " + e.getMessage());
         }
     }
+
     public void aggiornaFile(){
         try {
             FileWriter file = new FileWriter((dataSet.getProjectFolderPath() + File.separator + "/" + code + ".txt"), false);

@@ -1,0 +1,4 @@
+samu 9
+walt 18
+luca 2
+nic 3

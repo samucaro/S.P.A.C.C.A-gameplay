@@ -8,6 +8,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -21,66 +22,86 @@ public class LeaderBoardController implements Initializable {
     private TableColumn<Costumer, String> giocatore;
     @FXML
     private TableColumn<Costumer, Integer> punteggio;
-    private static int cont = 1;
-    private GameData gameData;
+    private static int cont;
+    private String nomeVincitore;
+    private final DataSet dataSet = new DataSet();
 
     ObservableList<Costumer> data = FXCollections.observableArrayList();
 
     @FXML
     public void initialize(URL url, ResourceBundle rb) {
-        gameData = GameData.getInstance();
+        GameData gameData = GameData.getInstance();
         rank.setCellValueFactory(new PropertyValueFactory<Costumer, Integer>("rank"));
         giocatore.setCellValueFactory(new PropertyValueFactory<Costumer, String>("giocatore"));
         punteggio.setCellValueFactory(new PropertyValueFactory<Costumer, Integer>("punteggio"));
-        submit();
+        punteggio.setSortable(true);
+        nomeVincitore = TabelloneGiocoController.getNomeVincitore();
+        submit2();
     }
 
-    private void submit() {
-        boolean var = false;
-        ArrayList<Costumer> costumers = new ArrayList<>();
-        for(int i = 0; i < gameData.getGiocatoriPartita().size(); i++) {
-            for(int j = 0; j < tableView.getItems().size(); j++) {
-                if(tableView.getItems().get(j).getGiocatore().equals(gameData.getGiocatoriPartita().get(i).getNome())) {
-                    if(gameData.getGiocatoriPartita().get(i).getNome() != null || TabelloneGiocoController.getNomeVincitore().equals(tableView.getItems().get(j).getGiocatore())) {
-                        tableView.getItems().get(j).setPunteggio(3);
-                    }
-                    var = true;
-                    break;
-                }
+    private void submit2() {
+        ArrayList<String> nomi = leggiFile();
+        for (int i = 0; i < nomi.size(); i++) {
+            if(nomeVincitore.equals(nomi.get(i).split(" ")[0])) {
+                aggiornaFile(nomi.get(i).split(" ")[0]);
+                Costumer customer = new Costumer(i+1, nomi.get(i).split(" ")[0], Integer.parseInt(nomi.get(i).split(" ")[1])+3);
+                data.add(customer);
             }
-            if(!var) {
-                if(gameData.getGiocatoriPartita().get(i).getNome().equals(TabelloneGiocoController.getNomeVincitore())) {
-                    Costumer costumer = new Costumer(cont++, gameData.getGiocatoriPartita().get(i).getNome(), 3);
-                    data.add(costumer);
-                    tableView.setItems(data);
-                }
-                else {
-                    Costumer costumer = new Costumer(cont++, gameData.getGiocatoriPartita().get(i).getNome(), 0);
-                    data.add(costumer);
-                    tableView.setItems(data);
-                }
+            else {
+                Costumer customer = new Costumer(i+1, nomi.get(i).split(" ")[0], Integer.parseInt(nomi.get(i).split(" ")[1]));
+                data.add(customer);
             }
-
         }
         sortingRank();
     }
 
-    private void sortingRank() {
-        for(int i = 0; i < tableView.getItems().size(); i++) {
-            int min = i;
-            for(int j = i+1; j < tableView.getItems().size(); j++) {
-                if(tableView.getItems().get(j).getPunteggio() > tableView.getItems().get(min).getPunteggio()) {
-                    min = j;
+    private ArrayList<String> leggiFile() {
+        ArrayList<String> nomi = new ArrayList<>();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(dataSet.getProjectFolderPath() + File.separator + "/" + "LeaderBoard.txt"));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                nomi.add(line);
+            }
+            reader.close();
+        } catch (IOException e) {
+            System.err.println("Errore durante la lettura del file: " + e.getMessage());
+        }
+        return nomi;
+    }
+
+    private void aggiornaFile(String nomeVincitore){
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(dataSet.getProjectFolderPath() + File.separator + "/" + "LeaderBoard.txt"));
+            StringBuilder contenuto = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String word = line.split(" ")[0];
+                if(word.equals(nomeVincitore)) {
+                    int nuovoPunteggio = Integer.parseInt(line.split(" ")[1]) + 3;
+                    contenuto.append(nomeVincitore).append(" ").append(nuovoPunteggio).append("\n");
+                }
+                else {
+                    contenuto.append(line).append("\n");
                 }
             }
-            if(i != min) {
-                Costumer costumer = tableView.getItems().get(i);
-                int rank = tableView.getItems().get(i).getRank();
-                costumer.setRank(tableView.getItems().get(min).getRank());
-                tableView.getItems().set(i, tableView.getItems().get(min));
-                tableView.getItems().set(min, costumer);
-                tableView.getItems().get(min).setRank(rank);
-            }
+            reader.close();
+            FileWriter file = new FileWriter((dataSet.getProjectFolderPath() + File.separator + "/" + "LeaderBoard.txt"), false);
+            PrintWriter writer = new PrintWriter(file);
+            writer.write(contenuto.toString());
+            writer.close();
+        } catch (IOException e) {
+            System.err.println("Errore durante la creazione del file: " + e.getMessage());
+        }
+    }
+
+    private void sortingRank() {
+        tableView.setItems(data);
+        punteggio.setSortType(TableColumn.SortType.DESCENDING);
+        tableView.getSortOrder().add(punteggio);
+        tableView.sort();
+        for(int i = 0; i < tableView.getItems().size(); i++) {
+            tableView.getItems().get(i).setRank(i+1);
         }
     }
 }

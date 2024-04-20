@@ -30,8 +30,8 @@ public class LoginAdminPageController {
 
     @FXML
     public void initialize() {
-        ut = "samuwalt";
-        psw = "waltSamu2";
+        ut = "";
+        psw = "";
         cont=0;
     }
 

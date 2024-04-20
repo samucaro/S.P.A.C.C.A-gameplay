@@ -27,12 +27,15 @@ public class TabelloneGiocoController {
     private boolean checkInit;
     private boolean checkFattaPI;
     private GameData gameData;
-    private Giocatore vincitore;
-    private static String nomeVincitore;
+    private static Giocatore vincitore;
     @FXML
     public OvalPaneController ovalPaneController;
     @FXML
     private Button turnButton;
+    @FXML
+    private Button backButton;
+    @FXML
+    private Button leaderBoardButton;
     @FXML
     public StackPane stackPane;
     @FXML
@@ -48,7 +51,7 @@ public class TabelloneGiocoController {
 
     @FXML
     public void initialize() throws IOException {
-        nomeVincitore = "Nessuno";
+        vincitore = null;
         ovalPaneController.getMainController(this);
         gameData = GameData.getInstance();
         checkInit = false;
@@ -110,27 +113,28 @@ public class TabelloneGiocoController {
         mazzoEScarti.setScaleY(scala);
     }
     //Da il fattore di scala
-    private double getScala(){
+    public double getScala(){
         return 0.01 * (10 * Math.min(centroX, centroY)) / 50;
     }
 
     //Aggiorna la disposizione delle carte del giocatore corrente levandole prima tutte e rimettendo quelle esatte
     public void mettiCarte(boolean var) {
-        numNodiMano = new ArrayList<>();
-        for(int i = 0; i < anchorPane.getChildren().size(); i++) {
-            if (anchorPane.getChildren().get(i) instanceof ImageView) {
-                if (var) {
-                    anchorPane.getChildren().remove(i);
-                    i--;
-                } else {
-                    numNodiMano.add(i);
+        if (vincitore == null) {
+            numNodiMano = new ArrayList<>();
+            for (int i = 0; i < anchorPane.getChildren().size(); i++) {
+                if (anchorPane.getChildren().get(i) instanceof ImageView) {
+                    if (var) {
+                        anchorPane.getChildren().remove(i);
+                        i--;
+                    } else {
+                        numNodiMano.add(i);
+                    }
                 }
             }
-        }
-        if (var) {
+            if (var) {
                 ImageView imageView;
                 ArrayList<Carta> manoCorrente = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano();
-                for (int i = 0; i< manoCorrente.size(); i++) {
+                for (int i = 0; i < manoCorrente.size(); i++) {
                     imageView = manoCorrente.get(i).getImage();
                     anchorPane.getChildren().add(imageView);
                     scalaImageView(imageView);
@@ -138,11 +142,12 @@ public class TabelloneGiocoController {
                     numNodiMano.add(anchorPane.getChildren().indexOf(imageView));
                 }
                 spostaCarta();
-        } else {
-            for (int i : numNodiMano) {
-                scalaImageView((ImageView) anchorPane.getChildren().get(i));
+            } else {
+                for (int i : numNodiMano) {
+                    scalaImageView((ImageView) anchorPane.getChildren().get(i));
+                }
+                spostaCarta();
             }
-            spostaCarta();
         }
     }
 
@@ -233,15 +238,16 @@ public class TabelloneGiocoController {
     public void setMortiEVincitore(Giocatore giocatoreMorto) {
         OvalPaneController.setMortoOP(giocatoreMorto);
         int check = 0;
+        Giocatore ggVivo = null;
         for (Giocatore giocatore : gameData.getGiocatoriPartita()){
             if (giocatore.getHpRimanente() > 0) {
                 check++;
-                vincitore = giocatore;
-                nomeVincitore = giocatore.getNome();
+                ggVivo = giocatore;
             }
         }
         if (check==1) {
-            System.out.println("VINCE LA PARTITA: " + nomeVincitore);
+            vincitore = ggVivo;
+            handleFineGioco();
         } else if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) == (giocatoreMorto)) {
             handleTurnButton();
         }
@@ -362,7 +368,23 @@ public class TabelloneGiocoController {
         stage.show();
     }
 
+    public void handleFineGioco() {
+            System.out.println("VINCE LA PARTITA: " + vincitore.getNome());
+            //metti solo il pianeta vincitore in primo piano
+            ovalPaneController.fineGiocoGrafica();
+            //leva tutto tranne il button back
+            Node n;
+            for (int i = 0; i < anchorPane.getChildren().size(); i++) {
+                n = anchorPane.getChildren().get(i);
+                if ((n != backButton) && (n != leaderBoardButton)) {
+                    anchorPane.getChildren().remove(n);
+                    i--;
+                    System.out.println(n.getClass());
+                }
+            }
+    }
+
     public static String getNomeVincitore() {
-        return nomeVincitore;
+        return vincitore == null?"":vincitore.getNome();
     }
 }

@@ -4,15 +4,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import java.io.PrintWriter;
+import java.io.*;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Vector;
@@ -156,6 +153,7 @@ public class SetPlayerPageController {
         mazzo.componiMazzo();
         assegnaMano();
         nuovoFile();
+        aggiornaFileLeaderBoard();
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AdminPlayerPage.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
@@ -206,5 +204,41 @@ public class SetPlayerPageController {
         } catch (IOException e) {
             System.err.println("Errore durante la creazione del file: " + e.getMessage());
         }
+    }
+
+    private void aggiornaFileLeaderBoard() {
+        try {
+            FileWriter file = new FileWriter((dataSet.getProjectFolderPath() + File.separator + "/" + "LeaderBoard.txt"), true);
+            PrintWriter writer = new PrintWriter(file);
+            for(int i = 0; i < numGiocatori; i++) {
+                if(!controllaNomi(i)) {
+                    if(!nomi[i].split(" ")[0].equals("Bot")) {
+                        writer.println(nomi[i] + " 0");
+                    }
+                }
+            }
+            writer.close();
+        } catch (IOException e) {
+            System.err.println("Errore durante la creazione del file: " + e.getMessage());
+        }
+    }
+
+    private boolean controllaNomi(int i) throws IOException {
+        boolean check = false;
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(dataSet.getProjectFolderPath() + File.separator + "/" + "LeaderBoard.txt"));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String word = line.split(" ")[0];
+                if (!word.equals("Bot") && word.equals(nomi[i])) {
+                    check = true;
+                    break;
+                }
+            }
+        }
+        catch (IOException e) {
+            System.err.println("Errore durante la lettura del file: " + e.getMessage());
+        }
+        return check;
     }
 }
