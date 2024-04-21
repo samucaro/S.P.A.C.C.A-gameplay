@@ -44,10 +44,12 @@ public class SetGamePageController {
             String[] files = directory.list();
             if (files != null) {
                 for (String fileName : files) {
-                    if(fileName.charAt(3) == '.')
-                        list.getItems().add(fileName.substring(0, 3));
-                    else
-                        list.getItems().add(fileName.substring(0, 4));
+                    if(!fileName.equals("LeaderBoard.txt") && !fileName.equals("RegoleSPACCA.txt")) {
+                        if(fileName.charAt(3) == '.')
+                            list.getItems().add(fileName.substring(0, 3));
+                        else
+                            list.getItems().add(fileName.substring(0, 4));
+                    }
                 }
             }
         } else {

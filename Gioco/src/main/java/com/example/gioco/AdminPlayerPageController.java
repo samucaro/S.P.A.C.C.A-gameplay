@@ -43,10 +43,11 @@ public class AdminPlayerPageController {
     public void mostraRegolamento() {
         try {
             File file = new File(dataSet.getProjectFolderPath() + File.separator + "/" + "RegoleSPACCA.txt");
-            if (file.exists() && file.isFile() && file.getName().endsWith(".txt")) {
+            System.out.println(file);
+            if (file.exists() && file.isFile()) {
                 Desktop.getDesktop().open(file);
             } else {
-                System.out.println("Il file specificato non esiste o non è un file .txt");
+                System.out.println("Il file specificato non esiste");
             }
         } catch (Exception e) {
             e.printStackTrace();
