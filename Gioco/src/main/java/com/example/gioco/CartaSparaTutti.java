@@ -12,10 +12,6 @@ public class CartaSparaTutti extends Carta{
         desc = "Spara a tutti gli avversari contemporaneamente";
     }
 
-    public String getDesc() {
-        return desc;
-    }
-
     public ImageView getImage(){
         ImageView imageView = new ImageView(new Image("CartaSparaTutti.png"));
         imageView.setFitWidth(100);

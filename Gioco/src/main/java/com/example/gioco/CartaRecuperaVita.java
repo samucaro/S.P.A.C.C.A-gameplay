@@ -12,10 +12,6 @@ public class CartaRecuperaVita extends Carta{
         desc = "Recuperi un punto vita";
     }
 
-    public String getDesc() {
-        return desc;
-    }
-
     public ImageView getImage(){
         ImageView imageView = new ImageView(new Image("CartaRecuperaVita.png"));
         imageView.setFitWidth(100);
@@ -30,7 +26,7 @@ public class CartaRecuperaVita extends Carta{
                     break;
                 }
             }
-            gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).cura(1);
+            gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).cura();
             if (!(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot))
                 tabelloneGiocoController.aggiornaCosa();
         }

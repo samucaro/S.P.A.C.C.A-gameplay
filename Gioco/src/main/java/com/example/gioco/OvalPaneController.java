@@ -60,9 +60,9 @@ public class OvalPaneController {
         iniziaHD();
     }
 
-    //Imposta la struttura dei pianeti e la loro disposizione nel tabellone
+    //Imposta la struttura dei pianeti e la loro disposizione nel tabellone, con nome e vita di ognuno
     private void creaGruppoPianeti() {
-        for (int i = 0; i < gameData.getNumero(); i++) {
+        for(int i = 0; i < gameData.getNumero(); i++) {
             pianeti[i] = new Group();
             pianeti[i].getChildren().add(new Sphere(60));
             Image texture = textures(i);
@@ -71,7 +71,7 @@ public class OvalPaneController {
             ((Sphere) pianeti[i].getChildren().getFirst()).setMaterial(material1);
             pianeti[i].getChildren().getFirst().setRotationAxis(Rotate.Y_AXIS);
             rotazionePianeti(i);
-            if (i==2){
+            if(i==2) {
                 Cylinder ring = new Cylinder(80, 3);
                 PhongMaterial material2 = new PhongMaterial();
                 material2.setDiffuseColor(Color.BEIGE);
@@ -80,7 +80,7 @@ public class OvalPaneController {
                 ring.setRotate(75);
                 pianeti[i].getChildren().add(ring);
             }
-            int indice = ((gameData.getNumero() - 1) - i) % gameData.getNumero();
+            int indice = ((gameData.getNumero()-1) - i) % gameData.getNumero();
             Text vitaGiocatore = new Text("hp: " + gameData.getGiocatoriPartita().get(indice).getHpRimanente() + "/5");
             Text nomeGiocatore = new Text(gameData.getGiocatoriPartita().get(indice).getNome());
             vitaGiocatore.setFont(Font.font("Game of Thrones", 16));
@@ -133,8 +133,8 @@ public class OvalPaneController {
             pianeti[ind].setScaleY(pianeti[ind].getScaleY()-0.1);
         });
         pianeti[ind].setOnMouseClicked(event -> {
-            for (int j = 0; j < gameData.getGiocatoriPartita().size(); j++){
-                if (gameData.getGiocatoriPartita().get(j).getNome().equals(((Text) pianeti[ind].getChildren().getLast()).getText())){
+            for(int j = 0; j < gameData.getGiocatoriPartita().size(); j++) {
+                if(gameData.getGiocatoriPartita().get(j).getNome().equals(((Text) pianeti[ind].getChildren().getLast()).getText())) {
                     giocatoreSelezionato = gameData.getGiocatoriPartita().get(j);
                     planetSelected = true;
                 }
@@ -155,10 +155,11 @@ public class OvalPaneController {
     //Metodi per ridimensionamento
     private void setScenaX(double x){
         centroX=x/2;
-        if (winnerSphere == null) {
+        if(winnerSphere == null) {
             posizionaPianeti();
             reShape();
-        } else {
+        }
+        else {
             mettiSferaVincitrice();
         }
     }
@@ -167,18 +168,19 @@ public class OvalPaneController {
         if (winnerSphere == null) {
             posizionaPianeti();
             reShape();
-        } else {
+        }
+        else {
             mettiSferaVincitrice();
         }
     }
     private void reShape() {
         double h = (60 * Math.min(centroX, centroY)) / 300;
-        orx=h + centroX*1/2;
-        ory=h + centroY*1/1.5;
-        irx=2*h;
-        iry=centroY/5+h;
+        orx = h+centroX*1/2;
+        ory = h+centroY*1/1.5;
+        irx = 2*h;
+        iry = centroY/5+h;
         boolean checkVis = halfDonut.isVisible();
-        if (ovalPane.getChildren().contains(progressBar)){
+        if(ovalPane.getChildren().contains(progressBar)) {
             System.out.println("DISGIUNTA");
             //ovalPane.getChildren().remove(halfDonut);
             halfDonut.setVisible(false);
@@ -188,7 +190,8 @@ public class OvalPaneController {
             progressBar.setLayoutY(centroY+30);
             scegliAvversario.setLayoutX(centroX-centroX/3);
             scegliAvversario.setLayoutY(centroY);
-        } else {
+        }
+        else {
             ovalPane.getChildren().remove(halfDonut);
             arcoEsterno.setRadiusX(orx);
             arcoEsterno.setRadiusY(ory);
@@ -203,6 +206,7 @@ public class OvalPaneController {
             halfDonut.setTranslateY(centroY * 2 - 100);
         }
     }
+
     //Imposta la rotazione 3D dei pianeti
     private void rotazionePianeti(int i) {
         AnimationTimer timer = new AnimationTimer() {
@@ -216,8 +220,8 @@ public class OvalPaneController {
 
     //Imposta i pianeti morti
     public static void setMortoOP(Giocatore giocatoreMorto) {
-        for (int j = 0; j < gameData.getNumero(); j++){
-            if (giocatoreMorto.getNome().equals(((Text) pianeti[j].getChildren().getLast()).getText())) {
+        for(int j = 0; j < gameData.getNumero(); j++) {
+            if(giocatoreMorto.getNome().equals(((Text) pianeti[j].getChildren().getLast()).getText())) {
                 pianeti[j].setMouseTransparent(true);
                 ((Sphere) pianeti[j].getChildren().getFirst()).setMaterial(new PhongMaterial(Color.WHITE));
                 ((Text) pianeti[j].getChildren().get(pianeti[j].getChildren().size()-2)).setText("ELIMINATO");
@@ -227,9 +231,10 @@ public class OvalPaneController {
         }
     }
 
+    //Aggiorna la riga di testo della vita di ogni giocatore con la vita corrente di ognuno
     public static void setVita(Giocatore ggDanneggiato) {
-        for (int j = 0; j < gameData.getNumero(); j++){
-            if (ggDanneggiato.getNome().equals(((Text) pianeti[j].getChildren().getLast()).getText())) {
+        for(int j = 0; j < gameData.getNumero(); j++) {
+            if(ggDanneggiato.getNome().equals(((Text) pianeti[j].getChildren().getLast()).getText())) {
                 ((Text) pianeti[j].getChildren().get(pianeti[j].getChildren().size()-2)).setText("hp: " + ggDanneggiato.getHpRimanente() + "/5");
             }
         }
@@ -237,20 +242,21 @@ public class OvalPaneController {
 
     //Posiziona i pianeti nel modo corretto
     private static void posizionaPianeti() {
-        double scale = 1;
-        for (int i = 0; i < gameData.getNumero(); i++) {
+        double scale;
+        for(int i = 0; i < gameData.getNumero(); i++) {
             int indice = ((gameData.getNumero() - turnoDi) + i) % gameData.getNumero();
-            if (indice == 2) {
+            if(indice == 2) {
                 ((Cylinder) pianeti[indice].getChildren().get(1)).setRadius((60 * Math.min(centroX, centroY)) / 300 + 30);
             }
             ((Sphere) pianeti[indice].getChildren().getFirst()).setRadius((60 * Math.min(centroX, centroY)) / 300);
             pianeti[indice].setTranslateX((centroX - ((Sphere) pianeti[indice].getChildren().getFirst()).getRadius() * 2 + 50) * Math.cos((2 * Math.PI * (i + 1) / gameData.getNumero())+(Math.PI/2)) + centroX);
             pianeti[indice].setTranslateY((centroY - ((Sphere) pianeti[indice].getChildren().getFirst()).getRadius() * 2 + 40) * Math.sin((2 * Math.PI * (i + 1) / gameData.getNumero())+(Math.PI/2)) + centroY);
-            if (i == gameData.getNumero()-1) {
+            if(i == gameData.getNumero()-1) {
                 pianeti[indice].getChildren().get(pianeti[indice].getChildren().size() - 2).setVisible(false);
                 currentSphere = indice;
                 scale = 0.6;
-            } else {
+            }
+            else {
                 pianeti[indice].getChildren().get(pianeti[indice].getChildren().size() - 2).setVisible(true);
                 scale = 1;
             }
@@ -268,7 +274,7 @@ public class OvalPaneController {
         Timeline timeline = new Timeline();
         turnoDi = (turnoDi == (gameData.getNumero()-1)) ? 0 : turnoDi+1;
         gameData.setTurnoCorrente(turnoDi);
-        for (int ind = 0; ind < gameData.getNumero()-1; ind++) {
+        for(int ind = 0; ind < gameData.getNumero()-1; ind++) {
             i = ind % gameData.getNumero();
             kv1 = new KeyValue(pianeti[i].translateXProperty(), pianeti[i+1].getTranslateX());
             kv2 = new KeyValue(pianeti[i].translateYProperty(), pianeti[i+1].getTranslateY());
@@ -287,28 +293,29 @@ public class OvalPaneController {
         timeline.setOnFinished(event -> posizionaPianeti());
     }
 
-    public void getMainController(TabelloneGiocoController tabelloneGiocoController){
+    public void getMainController(TabelloneGiocoController tabelloneGiocoController) {
         mc = tabelloneGiocoController;
         ovalPane.prefWidthProperty().bind(mc.stackPane.widthProperty());
         ovalPane.prefHeightProperty().bind(mc.stackPane.heightProperty());
-        mc.stackPane.widthProperty().addListener((observable, oldValue, newValue) -> {
-            setScenaX((Double) newValue);
-        });
-        mc.stackPane.heightProperty().addListener((observable, oldValue, newValue) -> {
-            setScenaY((Double) newValue);
-        });
+        mc.stackPane.widthProperty().addListener((observable, oldValue, newValue) -> setScenaX((Double) newValue));
+        mc.stackPane.heightProperty().addListener((observable, oldValue, newValue) -> setScenaY((Double) newValue));
     }
+
+    //Ritorna un giocatore casuale fra quelli presenti
     public Giocatore planetSelection(){
-        if (giocatoreSelezionato == null) {
+        if(giocatoreSelezionato == null) {
             int index;
             do {
                 index = (int) (Math.random() * (gameData.getNumero()));
-            } while ((index == gameData.getTurnoCorrente())||(gameData.getGiocatoriPartita().get(index).getHpRimanente() == 0));
+            } while((index == gameData.getTurnoCorrente()) || (gameData.getGiocatoriPartita().get(index).getHpRimanente() == 0));
             return gameData.getGiocatoriPartita().get(index);
-        } else {
+        }
+        else {
             return giocatoreSelezionato;
         }
     }
+
+    //Inizia la task di scelta del giocatore verso cui compiere l'effetto della carta scartata
     public Task<Void> startSelection(){
         giocatoreSelezionato = null;
         halfDonut.setVisible(false);
@@ -319,8 +326,8 @@ public class OvalPaneController {
             @Override
             protected Void call() throws Exception {
                 pianeti[currentSphere].setMouseTransparent(true);
-                for (int secondo = 1; secondo <= 10; secondo++) {
-                    if (planetSelected) {
+                for(int secondo = 1; secondo <= 10; secondo++) {
+                    if(planetSelected) {
                         succeeded();
                         return null;
                     }
@@ -335,14 +342,17 @@ public class OvalPaneController {
         new Thread(task).start();
         return task;
     }
+
+    //Colora il pianeta colpito di rosso, di arancione altrimenti
     public void dannoSfera(Giocatore ggAttaccato, boolean c){
         Timeline animation;
         PhongMaterial matOriginale = new PhongMaterial();
-        for (int j = 0; j < gameData.getNumero(); j++){
-            if (ggAttaccato.getNome().equals(((Text) pianeti[j].getChildren().getLast()).getText())) {
+        for(int j = 0; j < gameData.getNumero(); j++) {
+            if(ggAttaccato.getNome().equals(((Text) pianeti[j].getChildren().getLast()).getText())) {
                 matOriginale.setDiffuseMap(textures(j));
-                if (ggAttaccato.getHpRimanente() == 0)
+                if(ggAttaccato.getHpRimanente() == 0) {
                     matOriginale = new PhongMaterial(Color.WHITE);
+                    }
                 animation = new Timeline(
                         new KeyFrame(Duration.ZERO, new KeyValue(((Sphere) pianeti[j].getChildren().getFirst()).materialProperty(), c ? redMaterial : orangeMaterial)),
                         new KeyFrame(Duration.seconds(1), new KeyValue(((Sphere) pianeti[j].getChildren().getFirst()).materialProperty(), matOriginale))
@@ -352,29 +362,34 @@ public class OvalPaneController {
             }
         }
     }
+
+    //Reimposta il tabellone completata la task di selezione del giocatore da attaccare
     public void fineSelezione(){
-        halfDonut.setVisible(TabelloneGiocoController.getNomeVincitore()=="");
+        halfDonut.setVisible(Objects.equals(TabelloneGiocoController.getNomeVincitore(), ""));
         ovalPane.getChildren().removeAll(progressBar, scegliAvversario);
         pianeti[currentSphere].setMouseTransparent(false);
         reShape();
     }
 
+    //Blocca il giocatore eliminato
     public void fineGiocoGrafica() {
-        for (Node n : ovalPane.getChildren()){
+        for(Node n : ovalPane.getChildren()) {
             n.setVisible(false);
             n.setDisable(true);
             System.out.println(n.getClass());
         }
-        for (int j = 0; j < gameData.getNumero(); j++){
-            if (!((Text) pianeti[j].getChildren().get(pianeti[j].getChildren().size()-2)).getText().equals("ELIMINATO")){
+        for(int j = 0; j < gameData.getNumero(); j++) {
+            if(!((Text) pianeti[j].getChildren().get(pianeti[j].getChildren().size()-2)).getText().equals("ELIMINATO")) {
                 winnerSphere = j;
                 pianeti[j].setVisible(true);
-                ((Text) pianeti[j].getChildren().get(pianeti[j].getChildren().size()-2)).setVisible(false);
+                (pianeti[j].getChildren().get(pianeti[j].getChildren().size()-2)).setVisible(false);
                 spostaSferaVincitrice();
                 break;
             }
         }
     }
+
+    //Impostano la grafica di visualizzazione del giocatore vincitore
     private void spostaSferaVincitrice() {
         ((Sphere) pianeti[winnerSphere].getChildren().getFirst()).setRadius(50);
         Timeline timeline = new Timeline();
@@ -385,9 +400,7 @@ public class OvalPaneController {
         KeyFrame kf = new KeyFrame(Duration.seconds(1), kv1, kv2, scx, scy);
         timeline.getKeyFrames().add(kf);
         timeline.play();
-        timeline.setOnFinished(actionEvent -> {
-            mettiSferaVincitrice();
-        });
+        timeline.setOnFinished(actionEvent -> mettiSferaVincitrice());
     }
     public void mettiSferaVincitrice(){
         pianeti[winnerSphere].setScaleX(mc.getScala()*3);

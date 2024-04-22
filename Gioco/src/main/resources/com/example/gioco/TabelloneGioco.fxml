@@ -54,7 +54,7 @@
                </font>
             </Button>
             <ProgressBar fx:id="barraVita" layoutX="255.0" layoutY="364.0" prefHeight="18.0" prefWidth="90.0" progress="0.0" styleClass="bar" stylesheets="@StileBottoni.css" AnchorPane.bottomAnchor="18.0" AnchorPane.leftAnchor="255.0" AnchorPane.rightAnchor="255.0" />
-            <Button fx:id="leaderBoardButton" layoutX="395.0" layoutY="27.0" mnemonicParsing="false" onAction="#switchToLeaderBoard" styleClass="a" stylesheets="@StileBottoni.css" text="Show LeaderBoard" textFill="WHITE" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="26.0">
+            <Button fx:id="leaderBoardButton" layoutX="395.0" layoutY="27.0" mnemonicParsing="false" onAction="#switchToLeaderBoard" styleClass="a" stylesheets="@StileBottoni.css" text="LeaderBoard" textFill="WHITE" AnchorPane.rightAnchor="26.0" AnchorPane.topAnchor="26.0">
                <font>
                   <Font name="Game of Thrones" size="12.0" />
                </font>

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public abstract class Giocatore {
     abstract public void setMano(Carta carta);
     abstract void subisciDanno(int danno, TabelloneGiocoController tg);
-    abstract void cura(int cura);
+    abstract void cura();
     abstract void scarta(Carta carta);
     abstract void setHpRimanente(int hp);
     abstract int getHpRimanente();

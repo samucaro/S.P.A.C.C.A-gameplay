@@ -5,12 +5,9 @@ import javafx.scene.image.ImageView;
 
 public class CartaMancato extends Carta {
     private final String desc;
+
     public CartaMancato() {
         desc = "Colpo schivato!";
-    }
-
-    public String getDesc() {
-        return desc;
     }
 
     public ImageView getImage(){

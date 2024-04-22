@@ -1,4 +1,5 @@
 package com.example.gioco;
+
 import javafx.animation.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,7 +14,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -80,8 +80,6 @@ public class TabelloneGiocoController {
         }
     }
 
-    //*******************************INIZIO GESTIONE GRAFICA************************************************************
-
     //Imposta il layout del tabellone di gioco con tutte le carte, la vita e il mazzo
     private void impostaCose(){
         anchorPane.prefWidthProperty().bind(stackPane.widthProperty());
@@ -91,16 +89,18 @@ public class TabelloneGiocoController {
             scalaMazzo();
             mazzoEScarti.setLayoutX(centroX/2 - (checkInit ? mazzoEScarti.getWidth() : 140)/2);
             mettiCarte(false);
-            if (mazzoEScarti.getHeight() != 0)
-                checkInit=true;
+            if(mazzoEScarti.getHeight() != 0) {
+                checkInit = true;
+            }
         });
         stackPane.heightProperty().addListener((observable, oldValue, newValue) -> {
             centroY = (double) newValue;
             scalaMazzo();
             mazzoEScarti.setLayoutY(centroY/2 - (checkInit ? mazzoEScarti.getHeight() + mazzoEScarti.getHeight()*getScala()/2 : 171) / 2);
             mettiCarte(false);
-            if (mazzoEScarti.getHeight() != 0)
-                checkInit=true;
+            if(mazzoEScarti.getHeight() != 0) {
+                checkInit = true;
+            }
         });
         mettiCarte(true);
         mettiVita();
@@ -118,23 +118,24 @@ public class TabelloneGiocoController {
     }
 
     //Aggiorna la disposizione delle carte del giocatore corrente levandole prima tutte e rimettendo quelle esatte
-    public void mettiCarte(boolean var) {
-        if (vincitore == null) {
+    private void mettiCarte(boolean var) {
+        if(vincitore == null) {
             numNodiMano = new ArrayList<>();
-            for (int i = 0; i < anchorPane.getChildren().size(); i++) {
-                if (anchorPane.getChildren().get(i) instanceof ImageView) {
-                    if (var) {
+            for(int i = 0; i < anchorPane.getChildren().size(); i++) {
+                if(anchorPane.getChildren().get(i) instanceof ImageView) {
+                    if(var) {
                         anchorPane.getChildren().remove(i);
                         i--;
-                    } else {
+                    }
+                    else {
                         numNodiMano.add(i);
                     }
                 }
             }
-            if (var) {
+            if(var) {
                 ImageView imageView;
                 ArrayList<Carta> manoCorrente = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano();
-                for (int i = 0; i < manoCorrente.size(); i++) {
+                for(int i = 0; i < manoCorrente.size(); i++) {
                     imageView = manoCorrente.get(i).getImage();
                     anchorPane.getChildren().add(imageView);
                     scalaImageView(imageView);
@@ -142,8 +143,9 @@ public class TabelloneGiocoController {
                     numNodiMano.add(anchorPane.getChildren().indexOf(imageView));
                 }
                 spostaCarta();
-            } else {
-                for (int i : numNodiMano) {
+            }
+            else {
+                for(int i : numNodiMano) {
                     scalaImageView((ImageView) anchorPane.getChildren().get(i));
                 }
                 spostaCarta();
@@ -152,7 +154,7 @@ public class TabelloneGiocoController {
     }
 
     //Imposta il fattore di scala per le ImageView
-    public void scalaImageView(ImageView c){
+    private void scalaImageView(ImageView c){
         double dim = (5 * Math.min(centroX, centroY)) / 37;
         c.setFitWidth(dim);
     }
@@ -181,14 +183,14 @@ public class TabelloneGiocoController {
             double finalY = event.getSceneY();
             imageView.setTranslateX(0);
             imageView.setTranslateY(0);
-            if (finalX<centroX/2+100 && finalX>centroX/2-100 && finalY<centroY/2+100 && finalY>centroY/2-100){
+            if(finalX<centroX/2+100 && finalX>centroX/2-100 && finalY<centroY/2+100 && finalY>centroY/2-100) {
                 cartaAttuale.usaAbilita(ovalPaneController, this);
             }
         });
     }
 
     //posiziona le carte nel modo corretto all'interno dell'anello azzurro
-    public void spostaCarta(){
+    private void spostaCarta(){
         double cX = centroX/2;
         double cY = centroY-centroY/11;
         double semiLarghezza = centroX/5;
@@ -196,7 +198,7 @@ public class TabelloneGiocoController {
         int numOggetti = numNodiMano.size();
         double[][] coordinate = calcolaCoordinateArco(cX, cY, semiLarghezza, altezza, numOggetti);
         double[] angoli = new double[numOggetti];
-        for (int i = 0; i < numNodiMano.size(); i++) {
+        for(int i = 0; i < numNodiMano.size(); i++) {
             angoli[i] = numOggetti <= 1 ? 0 : -(-30 + i * ((double) 60/(numOggetti-1)));
             ImageView imageView = (ImageView) anchorPane.getChildren().get(numNodiMano.get(i));
             imageView.setLayoutX(coordinate[i][0] - imageView.getFitWidth()/2);
@@ -206,20 +208,20 @@ public class TabelloneGiocoController {
     }
 
     //Gestisce il ridimensionamento dell'arco blu
-    public double[][] calcolaCoordinateArco(double cX, double cY, double semiLarghezza, double altezza, int numOggetti) {
+    private double[][] calcolaCoordinateArco(double cX, double cY, double semiLarghezza, double altezza, int numOggetti) {
         double[][] coordinate = new double[numOggetti][2];
         double angoloStep = Math.PI / (numOggetti - 1);
         double angolo;
         double x;
         double y;
-        for (int i = 0; i < numOggetti; i++) {
+        for(int i = 0; i < numOggetti; i++) {
             angolo = i * angoloStep;
             x = cX + semiLarghezza * Math.cos(angolo);
             y = cY - altezza * Math.sin(angolo);
             coordinate[i][0] = x;
             coordinate[i][1] = y;
         }
-        if (numOggetti == 1) {
+        if(numOggetti == 1) {
             coordinate[0][0] = cX;
             coordinate[0][1] = cY - altezza;
         }
@@ -227,28 +229,27 @@ public class TabelloneGiocoController {
     }
 
     //Aggiorna la vita del giocatore corrente
-    public void mettiVita(){
+    private void mettiVita(){
         int vita = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente();
         barraVita.setProgress((double) vita/5);
     }
-
-    //*******************************FINE GESTIONE GRAFICA**************************************************************
 
     //Imposta i giocatori morti e nel caso decreta il vincitore
     public void setMortiEVincitore(Giocatore giocatoreMorto) {
         OvalPaneController.setMortoOP(giocatoreMorto);
         int check = 0;
         Giocatore ggVivo = null;
-        for (Giocatore giocatore : gameData.getGiocatoriPartita()){
-            if (giocatore.getHpRimanente() > 0) {
+        for(Giocatore giocatore : gameData.getGiocatoriPartita()) {
+            if(giocatore.getHpRimanente() > 0) {
                 check++;
                 ggVivo = giocatore;
             }
         }
-        if (check==1) {
+        if(check==1) {
             vincitore = ggVivo;
             handleFineGioco();
-        } else if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) == (giocatoreMorto)) {
+        }
+        else if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) == (giocatoreMorto)) {
             handleTurnButton();
         }
     }
@@ -260,18 +261,20 @@ public class TabelloneGiocoController {
         verificaMano();
         PauseTransition pause = new PauseTransition(Duration.seconds(1));
         ovalPaneController.cambiaTurno();
-        for (int j : numNodiMano) {
+        for(int j : numNodiMano) {
             anchorPane.getChildren().get(j).setMouseTransparent(true);
         }
         pause.play();
         pause.setOnFinished(event -> {
-            if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente() == 0) {
+            if(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente() == 0) {
                 handleTurnButton();
-            } else  if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot){
+            }
+            else  if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot){
                 ((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController);
                 handleTurnButton();
-            } else {
-                for (int j : numNodiMano) {
+            }
+            else {
+                for(int j : numNodiMano) {
                     anchorPane.getChildren().get(j).setMouseTransparent(false);
                 }
                 aggiornaCosa();
@@ -306,27 +309,29 @@ public class TabelloneGiocoController {
         Giocatore player = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente());
         for(int i = 1; i <= 2; i++) {
             player.setMano(gameData.getMazzo().pesca());
-            System.out.println("Ho pescato");
         }
         checkFattaPI = true;
         checkPI();
-        if (!(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot))
+        if(!(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot)) {
             mettiCarte(true);
+        }
     }
 
     //Verifica se la pescata iniziale è stata fatta e nel caso attiva e disattiva il necessario
     private void checkPI(){
-        if (!checkFattaPI) {
+        if(!checkFattaPI) {
             turnButton.setDisable(true);
             pesca.setVisible(true);
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setMouseTransparent(false);
-        } else {
+        }
+        else {
             turnButton.setDisable(false);
             pesca.setVisible(false);
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setMouseTransparent(true);
         }
     }
 
+    //Disabilita e abilita l'anchorPane ogni task di selezione e aggiorna il necessario
     public void startSelectionMC(){
         anchorPane.setDisable(true);
         anchorPane.setVisible(false);
@@ -359,7 +364,8 @@ public class TabelloneGiocoController {
         stage.show();
     }
 
-    public void switchToLeaderBoard(ActionEvent event) throws IOException {
+    //LEADERBOARD
+    public void switchToLeaderBoard() throws IOException {
         Stage stage = new Stage();
         stage.setTitle("LeaderBoard");
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("LeaderBoard.fxml")));
@@ -368,23 +374,22 @@ public class TabelloneGiocoController {
         stage.show();
     }
 
-    public void handleFineGioco() {
+    //Attiva la grafica per mostrare il vincitore della partita
+    private void handleFineGioco() {
             System.out.println("VINCE LA PARTITA: " + vincitore.getNome());
-            //metti solo il pianeta vincitore in primo piano
             ovalPaneController.fineGiocoGrafica();
-            //leva tutto tranne il button back
             Node n;
-            for (int i = 0; i < anchorPane.getChildren().size(); i++) {
+            for(int i = 0; i < anchorPane.getChildren().size(); i++) {
                 n = anchorPane.getChildren().get(i);
-                if ((n != backButton) && (n != leaderBoardButton)) {
+                if((n != backButton) && (n != leaderBoardButton)) {
                     anchorPane.getChildren().remove(n);
                     i--;
-                    System.out.println(n.getClass());
                 }
             }
     }
 
+
     public static String getNomeVincitore() {
-        return vincitore == null?"":vincitore.getNome();
+        return vincitore == null ? "" : vincitore.getNome();
     }
 }

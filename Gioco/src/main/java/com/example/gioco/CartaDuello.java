@@ -19,10 +19,6 @@ public class CartaDuello extends Carta {
                 "scartate un Bang, il primo che rimane senza perde un punto vita. Parte l'avversario.";
     }
 
-    public String getDesc() {
-        return desc;
-    }
-
     public ImageView getImage(){
         ImageView imageView = new ImageView(new Image("CartaDuello.png"));
         imageView.setFitWidth(100);

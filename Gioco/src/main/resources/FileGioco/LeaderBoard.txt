@@ -3,3 +3,4 @@ walt 18
 luca 2
 nic 6
 anto 0
+gab 0

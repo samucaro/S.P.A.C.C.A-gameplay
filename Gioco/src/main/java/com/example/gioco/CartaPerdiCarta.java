@@ -16,10 +16,6 @@ public class CartaPerdiCarta extends Carta{
         desc = "Pesca carta casuale da un avversario a tua scelta";
     }
 
-    public String getDesc() {
-        return desc;
-    }
-
     public ImageView getImage(){
         ImageView imageView = new ImageView(new Image("CartaPescaCarta.png"));
         imageView.setFitWidth(100);

@@ -12,10 +12,6 @@ public class CartaScartaBang extends Carta{
         desc = "Tutti i tuoi avversari scartano una carta Bang";
     }
 
-    public String getDesc() {
-        return desc;
-    }
-
     public ImageView getImage(){
         ImageView imageView = new ImageView(new Image("CartaScartaBang.png"));
         imageView.setFitWidth(100);

@@ -16,10 +16,6 @@ public class CartaBang extends Carta{
         desc = "Spara a un tuo avversario";
     }
 
-    public String getDesc() {
-        return desc;
-    }
-
     public ImageView getImage(){
         ImageView imageView = new ImageView(new Image("CartaBang.png"));
         imageView.setFitWidth(100);

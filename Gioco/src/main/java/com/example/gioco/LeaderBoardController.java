@@ -7,7 +7,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
@@ -22,7 +21,6 @@ public class LeaderBoardController implements Initializable {
     private TableColumn<Costumer, String> giocatore;
     @FXML
     private TableColumn<Costumer, Integer> punteggio;
-    private static int cont;
     private String nomeVincitore;
     private final DataSet dataSet = new DataSet();
 
@@ -30,16 +28,16 @@ public class LeaderBoardController implements Initializable {
 
     @FXML
     public void initialize(URL url, ResourceBundle rb) {
-        GameData gameData = GameData.getInstance();
-        rank.setCellValueFactory(new PropertyValueFactory<Costumer, Integer>("rank"));
-        giocatore.setCellValueFactory(new PropertyValueFactory<Costumer, String>("giocatore"));
-        punteggio.setCellValueFactory(new PropertyValueFactory<Costumer, Integer>("punteggio"));
+        rank.setCellValueFactory(new PropertyValueFactory<>("rank"));
+        giocatore.setCellValueFactory(new PropertyValueFactory<>("giocatore"));
+        punteggio.setCellValueFactory(new PropertyValueFactory<>("punteggio"));
         punteggio.setSortable(true);
         nomeVincitore = TabelloneGiocoController.getNomeVincitore();
-        submit2();
+        submit();
     }
 
-    private void submit2() {
+    //Aggiorna la tabella leggendo il file della LeaderBoard
+    private void submit() {
         ArrayList<String> nomi = leggiFile();
         for (int i = 0; i < nomi.size(); i++) {
             if(nomeVincitore.equals(nomi.get(i).split(" ")[0])) {
@@ -55,6 +53,7 @@ public class LeaderBoardController implements Initializable {
         sortingRank();
     }
 
+    //Crea un ArrayList di stringhe salvando nome e punteggio di ogni giocatore
     private ArrayList<String> leggiFile() {
         ArrayList<String> nomi = new ArrayList<>();
         try {
@@ -70,6 +69,7 @@ public class LeaderBoardController implements Initializable {
         return nomi;
     }
 
+    //Aggiorna il file delle LeaderBoard ogni volta che vi è un vincitore
     private void aggiornaFile(String nomeVincitore){
         try {
             BufferedReader reader = new BufferedReader(new FileReader(dataSet.getProjectFolderPath() + File.separator + "/" + "LeaderBoard.txt"));
@@ -95,6 +95,7 @@ public class LeaderBoardController implements Initializable {
         }
     }
 
+    //Ordina la tabella in base al punteggio di ogni giocatore
     private void sortingRank() {
         tableView.setItems(data);
         punteggio.setSortType(TableColumn.SortType.DESCENDING);

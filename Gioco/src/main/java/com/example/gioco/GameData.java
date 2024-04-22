@@ -5,7 +5,6 @@ import java.util.*;
 
 public class GameData {
     private int turnoCorrente;
-    private int numeroPartita;
     private Stato stato;
     private String tipo;
     private static GameData instance = null;
@@ -241,17 +240,10 @@ public class GameData {
             default -> null;
         };
     }
-    //MODIFICA
-    public void setNumero(int numeroGG) {
-        this.numeroGiocatori = numeroGG;
-    }
+
     //MODIFICA
     public void setMazzo(Mazzo mazzo) {
         this.mazzo = mazzo;
-    }
-    //MODIFICA
-    public void setCode(int code) {
-        this.code = code;
     }
 
     //MODIFICA
@@ -266,10 +258,7 @@ public class GameData {
     public int getTurnoCorrente() {
         return turnoCorrente;
     }
-    //MODIFICA
-    public int getCode() {
-        return code;
-    }
+
     //MODIFICA
     public int getNumero() {
         return numeroGiocatori;
@@ -283,12 +272,5 @@ public class GameData {
     //MODIFICA
     public ArrayList<Giocatore> getGiocatoriPartita() {
         return giocatoriPartita;
-    }
-
-    public void setVincitore(String vincitore) {
-        this.vincitore = vincitore;
-    }
-    public String getVincitore() {
-        return vincitore;
     }
 }

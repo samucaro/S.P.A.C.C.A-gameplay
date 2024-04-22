@@ -33,12 +33,12 @@ public class GiocatoreRobot extends Giocatore {
             OvalPaneController.setVita(this);
         }
     }
-    public void cura(int vita){
+    public void cura(){
         if(hpRimanente == HP) {
             System.out.println("Il personaggio ha già la vita massima, non verrà aggiunto nessun punto vita");
         }
         else {
-            hpRimanente += vita;
+            hpRimanente += 1;
             OvalPaneController.setVita(this);
         }
     }

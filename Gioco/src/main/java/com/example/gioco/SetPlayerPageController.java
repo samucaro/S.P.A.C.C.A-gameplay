@@ -206,13 +206,14 @@ public class SetPlayerPageController {
         }
     }
 
+    //Salvando i giocatori carica i nomi in un file per aggiornare la LeaderBoard
     private void aggiornaFileLeaderBoard() {
         try {
             FileWriter file = new FileWriter((dataSet.getProjectFolderPath() + File.separator + "/" + "LeaderBoard.txt"), true);
             PrintWriter writer = new PrintWriter(file);
             for(int i = 0; i < numGiocatori; i++) {
                 if(!controllaNomi(i)) {
-                    if(!nomi[i].split(" ")[0].equals("Bot")) {
+                    if(nomi[i] != null && !nomi[i].split(" ")[0].equals("Bot")) {
                         writer.println(nomi[i] + " 0");
                     }
                 }
@@ -223,6 +224,7 @@ public class SetPlayerPageController {
         }
     }
 
+    //Controlla se i nomi sono già presenti o vanno aggiunti
     private boolean controllaNomi(int i) throws IOException {
         boolean check = false;
         try {

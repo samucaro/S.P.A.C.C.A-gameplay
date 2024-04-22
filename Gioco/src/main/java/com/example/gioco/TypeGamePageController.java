@@ -52,10 +52,13 @@ public class TypeGamePageController {
             String[] files = directory.list();
             if (files != null) {
                 for (String fileName : files) {
-                    if(fileName.length() > 7)
-                        partite.getItems().add(fileName.substring(0, 4));
-                    else
-                        partite.getItems().add(fileName.substring(0, 3));
+                    if(!fileName.equals("LeaderBoard.txt") && !fileName.equals("RegoleSPACCA.txt")) {
+                        if (fileName.length() > 7) {
+                            partite.getItems().add(fileName.substring(0, 4));
+                        } else {
+                            partite.getItems().add(fileName.substring(0, 3));
+                        }
+                    }
                 }
             }
         } else {
