@@ -110,6 +110,11 @@ public class SetPlayerPageController {
             nomiGiocatori.getChildren().get(i).setDisable(true);
             tipoGiocatore[i] = "Bot";
         }
+        if(numPersone == 0) {
+            for(int i = 0; i < numGiocatori; i++) {
+                nomi[i] = ((TextField) nomiGiocatori.getChildren().get(i)).getText();
+            }
+        }
     }
 
     //metodo che abilita il salvataggio solo sotto determinate condizioni necessarie
