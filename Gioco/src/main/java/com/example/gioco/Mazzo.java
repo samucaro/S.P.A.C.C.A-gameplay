@@ -22,7 +22,7 @@ public class Mazzo {
         for(int i = 1; i <= 18; i++) {
             mazzo.add(new CartaMancato());
         }
-        for(int i = 1; i <= 2; i++) {
+        for(int i = 1; i <= 4; i++) {
             mazzo.add(new CartaDuello());
         }
         for(int i = 1; i <= 2; i++) {
@@ -31,10 +31,10 @@ public class Mazzo {
         for(int i = 1; i <= 2; i++) {
             mazzo.add(new CartaScartaBang());
         }
-        for(int i = 1; i <= 2; i++) {
+        for(int i = 1; i <= 4; i++) {
             mazzo.add(new CartaSparaTutti());
         }
-        for(int i = 1; i <= 8; i++) {
+        for(int i = 1; i <= 4; i++) {
             mazzo.add(new CartaRecuperaVita());
         }
         mescola();

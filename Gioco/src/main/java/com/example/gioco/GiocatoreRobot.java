@@ -19,9 +19,12 @@ public class GiocatoreRobot extends Giocatore {
         mano.add(carta);
     }
 
+    public void setMano(int i, Carta carta){
+        mano.add(i, carta);
+    }
+
     public void scarta(Carta carta) {
         mano.remove(carta);
-
     }
     public void subisciDanno(int danno, TabelloneGiocoController tg) {
         hpRimanente -= danno;
@@ -48,18 +51,21 @@ public class GiocatoreRobot extends Giocatore {
         int cont = 0;
         Carta cc;
         for (int i = 0; i < mano.size(); i++) {
-            cc = mano.get(i);
-            if (cont < 1 && cc instanceof CartaBang) {
-                System.out.println(cc.getClass().getSimpleName());
-                cc.usaAbilita(ovalPaneController, tabelloneGiocoController);
-                i--;
-                cont++;
-            }
-            else if (!(cc instanceof CartaBang)){
-                System.out.println(cc.getClass().getSimpleName());
-                cc.usaAbilita(ovalPaneController, tabelloneGiocoController);
-                if (!(cc instanceof CartaMancato || cc instanceof CartaPerdiCarta || (cc instanceof CartaRecuperaVita && hpRimanente == 5)))
+            if (TabelloneGiocoController.getNomeVincitore() == "") {
+                cc = mano.get(i);
+                if (cc instanceof CartaBang && cont < 2) {
+                    System.out.println(cc.getClass().getSimpleName());
+                    cc.usaAbilita(ovalPaneController, tabelloneGiocoController);
                     i--;
+                    cont++;
+                } else if (!(cc instanceof CartaBang)) {
+                    System.out.println(cc.getClass().getSimpleName());
+                    if ((!(cc instanceof CartaMancato) && !(cc instanceof CartaPerdiCarta)) && !(cc instanceof CartaRecuperaVita && hpRimanente == 5))
+                        i--;
+                    System.out.println("VITARIMANENETE: " + hpRimanente + " DI " + nome);
+                    cc.usaAbilita(ovalPaneController, tabelloneGiocoController);
+                    System.out.println("VITARIMANENETEDOPOABILITA: " + hpRimanente + " DI " + nome);
+                }
             }
         }
     }
@@ -70,9 +76,6 @@ public class GiocatoreRobot extends Giocatore {
     public int getHpRimanente() {
         return hpRimanente;
     }
-    public void setMano(ArrayList<Carta> mano){
-        this.mano=mano;
-    }
     public ArrayList<Carta> getMano() {
         return mano;
     }
@@ -82,12 +85,7 @@ public class GiocatoreRobot extends Giocatore {
     public String getNome() {
         return nome;
     }
-    public void setTurno(boolean turno) {
-        this.turno = turno;
-    }
-    public boolean getTurno() {
-        return turno;
-    }
+
     @Override
     public String toString() {
         return "\n***GiocatoreRobot***\n" +

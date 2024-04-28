@@ -19,6 +19,10 @@ public class GiocatorePersona extends Giocatore{
         mano.add(carta);
     }
 
+    public void setMano(int i, Carta carta){
+        mano.add(i, carta);
+    }
+
     public void scarta(Carta carta) {
         mano.remove(carta);
     }
@@ -52,10 +56,6 @@ public class GiocatorePersona extends Giocatore{
         return hpRimanente;
     }
 
-    public void setMano(ArrayList<Carta> mano) {
-        this.mano = mano;
-    }
-
     public ArrayList<Carta> getMano() {
         return mano;
     }
@@ -66,14 +66,6 @@ public class GiocatorePersona extends Giocatore{
 
     public String getNome() {
         return nome;
-    }
-
-    public void setTurno(boolean turno) {
-        this.turno = turno;
-    }
-
-    public boolean getTurno() {
-        return turno;
     }
 
     @Override

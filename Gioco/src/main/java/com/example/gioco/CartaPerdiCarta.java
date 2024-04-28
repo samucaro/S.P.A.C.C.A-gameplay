@@ -41,18 +41,18 @@ public class CartaPerdiCarta extends Carta{
         return event -> {
             giocatoreSelezionato = ovalPaneController.planetSelection();
             if(!giocatoreSelezionato.getMano().isEmpty()) {
+                int index = 0;
                 for(Carta c: gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano()) {
                     if(c instanceof CartaPerdiCarta) {
+                        index = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().indexOf(c);
                         tabelloneGiocoController.scartaCarte(c, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
                         break;
                     }
                 }
                 int val = (int) (Math.random() * (giocatoreSelezionato.getMano().size()));
-                gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).setMano(giocatoreSelezionato.getMano().get(val));
+                gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).setMano(index, giocatoreSelezionato.getMano().get(val));
                 giocatoreSelezionato.scarta(giocatoreSelezionato.getMano().get(val));
                 ovalPaneController.dannoSfera(giocatoreSelezionato, false);
-                ovalPaneController.fineSelezione();
-                tabelloneGiocoController.stopSelectionMC();
             }
         };
     }

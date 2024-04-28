@@ -20,16 +20,11 @@ public class GameData {
         dataSet = new DataSet();
         giocatoriPartita = new ArrayList<>();
         mazzo = new Mazzo();
-        /*numeroGG = 0;
-        code = 0;
-        turnoCorrente = 0;
-        numeroPartita = 0;
-        tipo = "Partita";*/
     }
     public GameData(int n, Stato stato, int turnoCorrente, Mazzo mazzo, ArrayList<Giocatore>giocatoriPartita) {
         dataSet = new DataSet();
         partiteTorneo = new LinkedList<>();
-        /*numeroPartita = n;
+        /*numeroPartita = n;io ti sento
         this.stato = stato;
         this.turnoCorrente = turnoCorrente;*/
         this.mazzo = mazzo;

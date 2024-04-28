@@ -25,9 +25,9 @@ public class TabelloneGiocoController {
     private double yOffset;
     private ArrayList<Integer> numNodiMano;
     private boolean checkInit;
-    private boolean checkFattaPI;
+    private boolean checkBack;
     private GameData gameData;
-    private static Giocatore vincitore;
+     static Giocatore vincitore;
     @FXML
     public OvalPaneController ovalPaneController;
     @FXML
@@ -55,7 +55,7 @@ public class TabelloneGiocoController {
         ovalPaneController.getMainController(this);
         gameData = GameData.getInstance();
         checkInit = false;
-        checkFattaPI = false;
+        checkBack = true;
         impostaCose();
         ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setOnMouseEntered(event -> {
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setScaleX(1.1);
@@ -74,9 +74,14 @@ public class TabelloneGiocoController {
         if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente() == 0) {
             handleTurnButton();
         }
-        if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
-            ((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController);
-            handleTurnButton();
+        else if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
+            PauseTransition pause = new PauseTransition(Duration.seconds(1));
+            pause.setOnFinished(event -> {
+                System.out.println("BOT INIZIA A GIOCARE");
+                ((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController);
+                handleTurnButton();
+            });
+            pause.playFromStart();
         }
     }
 
@@ -119,6 +124,7 @@ public class TabelloneGiocoController {
 
     //Aggiorna la disposizione delle carte del giocatore corrente levandole prima tutte e rimettendo quelle esatte
     private void mettiCarte(boolean var) {
+        System.out.println("METTIMENTO CARTE");
         if(vincitore == null) {
             numNodiMano = new ArrayList<>();
             for(int i = 0; i < anchorPane.getChildren().size(); i++) {
@@ -256,31 +262,40 @@ public class TabelloneGiocoController {
 
     //Gestisce tutte le azioni da compiere dopo il click del cambia turno
     public void handleTurnButton() {
-        checkFattaPI = false;
-        turnButton.setDisable(true);
-        verificaMano();
-        PauseTransition pause = new PauseTransition(Duration.seconds(1));
-        ovalPaneController.cambiaTurno();
-        for(int j : numNodiMano) {
-            anchorPane.getChildren().get(j).setMouseTransparent(true);
-        }
-        pause.play();
-        pause.setOnFinished(event -> {
-            if(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente() == 0) {
-                handleTurnButton();
+        System.out.println("CAMBIAGGIO TURNO");
+        if (vincitore == null && checkBack) {
+            ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setMouseTransparent(true);
+            turnButton.setDisable(true);
+            pesca.setVisible(false);
+            verificaMano();
+            Timeline tm = ovalPaneController.cambiaTurno();
+            for (int j : numNodiMano) {
+                anchorPane.getChildren().get(j).setMouseTransparent(true);
             }
-            else  if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot){
-                ((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController);
-                handleTurnButton();
-            }
-            else {
-                for(int j : numNodiMano) {
-                    anchorPane.getChildren().get(j).setMouseTransparent(false);
+            tm.playFromStart();
+            PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
+            tm.setOnFinished(event -> {
+                System.out.println("TURNO DI: " + gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getNome());
+                OvalPaneController.posizionaPianeti();
+                if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente() == 0) {
+                    handleTurnButton();
+                } else if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
+                    pause.playFromStart();
+                    ((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController);
+                    aggiornaCosa();
+                    pause.setOnFinished(event1 -> handleTurnButton());
+                } else {
+                    System.out.println("PERSONAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                    for (int j : numNodiMano) {
+                        anchorPane.getChildren().get(j).setMouseTransparent(false);
+                    }
+                    aggiornaCosa();
+                    pesca.setVisible(true);
+                    ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setMouseTransparent(false);
                 }
-                aggiornaCosa();
-                checkPI();
-            }
-        });
+            });
+            //System.out.println("FINE PAUSETRANSITION");
+        }
     }
 
     //In base al numero di carte del giocatore verifica se levare o mettere carte per arrivare a 5
@@ -304,30 +319,15 @@ public class TabelloneGiocoController {
 
     //Pesca le prime due carte dal mazzo
     public void pescataInizialeGiocatore() {
-        pesca.setVisible(false);
-        turnButton.setDisable(false);
         Giocatore player = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente());
         for(int i = 1; i <= 2; i++) {
             player.setMano(gameData.getMazzo().pesca());
         }
-        checkFattaPI = true;
-        checkPI();
+        mettiCarte(true);
+        ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setMouseTransparent(true);
         if(!(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot)) {
-            mettiCarte(true);
-        }
-    }
-
-    //Verifica se la pescata iniziale è stata fatta e nel caso attiva e disattiva il necessario
-    private void checkPI(){
-        if(!checkFattaPI) {
-            turnButton.setDisable(true);
-            pesca.setVisible(true);
-            ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setMouseTransparent(false);
-        }
-        else {
             turnButton.setDisable(false);
             pesca.setVisible(false);
-            ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setMouseTransparent(true);
         }
     }
 
@@ -355,6 +355,7 @@ public class TabelloneGiocoController {
 
     //BACK
     public void switchToAdminPlayerPage(ActionEvent event) throws IOException {
+        checkBack = false;
         salvaPartita();
         GameData.resetInstance();
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AdminPlayerPage.fxml")));
@@ -377,6 +378,7 @@ public class TabelloneGiocoController {
     //Attiva la grafica per mostrare il vincitore della partita
     private void handleFineGioco() {
             System.out.println("VINCE LA PARTITA: " + vincitore.getNome());
+            checkBack = false;
             ovalPaneController.fineGiocoGrafica();
             Node n;
             for(int i = 0; i < anchorPane.getChildren().size(); i++) {

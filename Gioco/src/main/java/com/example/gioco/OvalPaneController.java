@@ -55,8 +55,11 @@ public class OvalPaneController {
         giocatoreSelezionato = null;
         winnerSphere = null;
         planetSelected = false;
+        System.out.println("creaGruppoPianeti");
         creaGruppoPianeti();
+        System.out.println("impostaStile");
         impostaStile();
+        System.out.println("iniziaHD");
         iniziaHD();
     }
 
@@ -173,7 +176,7 @@ public class OvalPaneController {
             mettiSferaVincitrice();
         }
     }
-    private void reShape() {
+    public void reShape() {
         double h = (60 * Math.min(centroX, centroY)) / 300;
         orx = h+centroX*1/2;
         ory = h+centroY*1/1.5;
@@ -241,7 +244,8 @@ public class OvalPaneController {
     }
 
     //Posiziona i pianeti nel modo corretto
-    private static void posizionaPianeti() {
+    public static void posizionaPianeti() {
+        System.out.println("METTIMENTO PIANETI");
         double scale;
         for(int i = 0; i < gameData.getNumero(); i++) {
             int indice = ((gameData.getNumero() - turnoDi) + i) % gameData.getNumero();
@@ -252,7 +256,7 @@ public class OvalPaneController {
             pianeti[indice].setTranslateX((centroX - ((Sphere) pianeti[indice].getChildren().getFirst()).getRadius() * 2 + 50) * Math.cos((2 * Math.PI * (i + 1) / gameData.getNumero())+(Math.PI/2)) + centroX);
             pianeti[indice].setTranslateY((centroY - ((Sphere) pianeti[indice].getChildren().getFirst()).getRadius() * 2 + 40) * Math.sin((2 * Math.PI * (i + 1) / gameData.getNumero())+(Math.PI/2)) + centroY);
             if(i == gameData.getNumero()-1) {
-                pianeti[indice].getChildren().get(pianeti[indice].getChildren().size() - 2).setVisible(false);
+                pianeti[indice].getChildren().get(pianeti[indice].getChildren().size() - 2).setVisible(((Text) pianeti[indice].getChildren().get(pianeti[indice].getChildren().size() - 2)).getText().equals("ELIMINATO"));
                 currentSphere = indice;
                 scale = 0.6;
             }
@@ -267,7 +271,7 @@ public class OvalPaneController {
     }
 
     //Gestisce l'evento del cambio turno
-    public void cambiaTurno() {
+    public Timeline cambiaTurno() {
         KeyValue kv1, kv2, kv3, kv4;
         KeyFrame kf;
         int i;
@@ -289,8 +293,7 @@ public class OvalPaneController {
         kv4 = new KeyValue(pianeti[gameData.getNumero()-1].scaleYProperty(), pianeti[0].getScaleY());
         kf = new KeyFrame(Duration.seconds(1), kv1, kv2, kv3, kv4);
         timeline.getKeyFrames().add(kf);
-        timeline.playFromStart();
-        timeline.setOnFinished(event -> posizionaPianeti());
+        return timeline;
     }
 
     public void getMainController(TabelloneGiocoController tabelloneGiocoController) {
@@ -368,6 +371,7 @@ public class OvalPaneController {
         halfDonut.setVisible(Objects.equals(TabelloneGiocoController.getNomeVincitore(), ""));
         ovalPane.getChildren().removeAll(progressBar, scegliAvversario);
         pianeti[currentSphere].setMouseTransparent(false);
+        System.out.println("FINESELEZIONE");
         reShape();
     }
 
