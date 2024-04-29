@@ -24,7 +24,7 @@ public class GameData {
     public GameData(int n, Stato stato, int turnoCorrente, Mazzo mazzo, ArrayList<Giocatore>giocatoriPartita) {
         dataSet = new DataSet();
         partiteTorneo = new LinkedList<>();
-        /*numeroPartita = n;io ti sento
+        /*numeroPartita = n;
         this.stato = stato;
         this.turnoCorrente = turnoCorrente;*/
         this.mazzo = mazzo;
@@ -46,6 +46,8 @@ public class GameData {
             }
             return instance;
     }
+
+    //Fare un metodo
 
     //Legge il File selezionato tramite il corrispettivo codice
     public void leggiFilePartita(int code) {

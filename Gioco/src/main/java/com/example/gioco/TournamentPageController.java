@@ -110,18 +110,14 @@ public class TournamentPageController {
             writer.println("Vincitore: ");
             writer.println("******************************");
             for(int i = 0; i < 15; i++) {
+                writer.println("Numero Partita: " + i);
+                writer.println("Dati Generali Partita:");
+                writer.println("NumGiocatori: " + 2);
+                writer.println("Turno: 0");
                 mazzo = new Mazzo();
                 mazzo.componiMazzo();
-                writer.println("Numero Partita: " + i);
-                if(i <= 7) {
-                    writer.println("Stato: Pronta");
-                }
-                else {
-                    writer.println("Stato: Attesa");
-                }
                 writer.println("Mazzo: " + mazzo.toString());
                 writer.println("Scarti: ");
-                writer.println("Turno: 0");
                 String[] mani = {assegnaMano(), assegnaMano()};
                 if(i <= 7) {
                     for (int j = 0; j < 2; j++) {
