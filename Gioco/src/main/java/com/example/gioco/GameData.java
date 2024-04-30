@@ -48,66 +48,80 @@ public class GameData {
     }
 
     //Fare un metodo
+    public void leggiFile(int code) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(dataSet.getProjectFolderPath() + File.separator + "/" + code + ".txt"));
+        if(code <= 999) {
+            String line;
+            int numPartita = 0;
+            while ((line = reader.readLine()) != null) {
+                if(line.startsWith("Partita Corrente")) {
+                    numPartita = Integer.parseInt(line.split(" ")[2]);
+                }
+                else if (line.startsWith("Numero Partita") && numPartita == Integer.parseInt(line.split(" ")[2])) {
+                    leggiFilePartita(reader, numPartita, true);
+                    break;
+                }
+            }
+
+        }
+        else {
+            leggiFilePartita(reader, -1, false);
+        }
+    }
 
     //Legge il File selezionato tramite il corrispettivo codice
-    public void leggiFilePartita(int code) {
-        this.code = code;
+    public void leggiFilePartita(BufferedReader reader, int numPartita, boolean check) {
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(dataSet.getProjectFolderPath() + File.separator + "/" + code + ".txt"));
             int c = 0;
             String line;
             while ((line = reader.readLine()) != null) {
-                if(line.startsWith("Dati Generali")) {
-                    tipo = line.split(" ")[2];
-                }
-                else if (line.startsWith("NumGiocatori:")) {
-                    numeroGiocatori = Integer.parseInt(line.split(":")[1].trim());
-                }
-                else if (line.startsWith("Turno:")) {
-                    turnoCorrente = Integer.parseInt(line.split(":")[1].trim());
-                }
-                else if (line.startsWith("Mazzo:")) {
-                    String[] carteMazzo = line.split(": ");
-                    String cma = carteMazzo[carteMazzo.length-1];
-                    String[] carteM = cma.trim().split(" ");
-                    for (String nomeCarta: carteM) {
-                        if (stringaCarta(nomeCarta) != null)
-                            mazzo.setMazzo(stringaCarta(nomeCarta));
+                if (numPartita == -1 || check) {
+                    if (line.startsWith("Dati Generali")) {
+                        tipo = line.split(" ")[2];
+                    } else if (line.startsWith("NumGiocatori:")) {
+                        numeroGiocatori = Integer.parseInt(line.split(":")[1].trim());
+                    } else if (line.startsWith("Turno:")) {
+                        turnoCorrente = Integer.parseInt(line.split(":")[1].trim());
+                    } else if (line.startsWith("Mazzo:")) {
+                        String[] carteMazzo = line.split(": ");
+                        String cma = carteMazzo[carteMazzo.length - 1];
+                        String[] carteM = cma.trim().split(" ");
+                        for (String nomeCarta : carteM) {
+                            if (stringaCarta(nomeCarta) != null)
+                                mazzo.setMazzo(stringaCarta(nomeCarta));
+                        }
+                    } else if (line.startsWith("Scarti:")) {
+                        String[] carteScarti = line.split(":");
+                        String cs = carteScarti[carteScarti.length - 1];
+                        String[] carteS = cs.trim().split(" ");
+                        for (String nomeCarta : carteS) {
+                            if (stringaCarta(nomeCarta) != null)
+                                mazzo.setScarti(stringaCarta(nomeCarta));
+                        }
+                    } else if (line.startsWith("Giocatore:")) {
+                        c = (Integer.parseInt(line.split(" ")[1].trim()));
+                    } else if (line.startsWith("Tipo:")) {
+                        if (line.split(":")[1].trim().equals("Persona")) {
+                            giocatoriPartita.add(new GiocatorePersona());
+                        } else {
+                            giocatoriPartita.add(new GiocatoreRobot());
+                        }
+                    } else if (line.startsWith("Nome:")) {
+                        giocatoriPartita.get(c).setNome(line.split(":")[1].trim());
+                    } else if (line.startsWith("Mano:")) {
+                        String[] carteMano = line.split(":");
+                        String cm = carteMano[carteMano.length - 1];
+                        String[] carteMa = cm.trim().split(" ");
+                        for (String s : carteMa) {
+                            if (stringaCarta(s) != null)
+                                giocatoriPartita.get(c).setMano(stringaCarta(s));
+                        }
+                    } else if (line.startsWith("HpRimanente:")) {
+                        giocatoriPartita.get(c).setHpRimanente(Integer.parseInt(line.split(":")[1].trim()));
                     }
-                }
-                else if (line.startsWith("Scarti:")) {
-                    String[] carteScarti = line.split(":");
-                    String cs = carteScarti[carteScarti.length-1];
-                    String[] carteS = cs.trim().split(" ");
-                    for (String nomeCarta: carteS) {
-                        if (stringaCarta(nomeCarta) != null)
-                            mazzo.setScarti(stringaCarta(nomeCarta));
+                    else if(line.startsWith("******************************")) {
+                        check = false;
                     }
-                }
-                else if (line.startsWith("Giocatore:")) {
-                    c = (Integer.parseInt(line.split(" ")[1].trim()));
-                }
-                else if (line.startsWith("Tipo:")) {
-                    if (line.split(":")[1].trim().equals("Persona")) {
-                        giocatoriPartita.add(new GiocatorePersona());
-                    } else {
-                        giocatoriPartita.add(new GiocatoreRobot());
-                    }
-                }
-                else if (line.startsWith("Nome:")) {
-                    giocatoriPartita.get(c).setNome(line.split(":")[1].trim());
-                }
-                else if (line.startsWith("Mano:")) {
-                    String[] carteMano = line.split(":");
-                    String cm = carteMano[carteMano.length-1];
-                    String[] carteMa = cm.trim().split(" ");
-                    for (String s : carteMa) {
-                        if (stringaCarta(s) != null)
-                            giocatoriPartita.get(c).setMano(stringaCarta(s));
-                    }
-                }
-                else if (line.startsWith("HpRimanente:")) {
-                    giocatoriPartita.get(c).setHpRimanente(Integer.parseInt(line.split(":")[1].trim()));
                 }
             }
             System.out.println(giocatoriPartita);

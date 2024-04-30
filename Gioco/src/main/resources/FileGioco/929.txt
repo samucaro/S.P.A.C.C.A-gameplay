@@ -1,5 +1,5 @@
 Dati Generali Torneo:
-Partita Corrente: 0
+Partita Corrente: 2
 Vincitore: 
 ******************************
 Numero Partita: 0
