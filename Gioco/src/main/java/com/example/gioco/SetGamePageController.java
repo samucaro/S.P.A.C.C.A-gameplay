@@ -68,14 +68,25 @@ public class SetGamePageController {
 
     //START
     public void switchToGamePage(ActionEvent event) throws IOException {
-        gameData.leggiFile(Integer.parseInt(list.getValue()));
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("TabelloneGioco.fxml")));
+        if(Integer.parseInt(list.getValue()) <= 999) {
+            FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("TournamentPage.fxml")));
+            StartTournamentController st = new StartTournamentController();
+            fxmlLoader.setController(st);
+            root = fxmlLoader.load();
+            scene = new Scene(root);
+            st.leggiFile(Integer.parseInt(list.getValue()));
+        }
+        else {
+            gameData.leggiFile(Integer.parseInt(list.getValue()));
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("TabelloneGioco.fxml")));
+            ParallelCamera cam = new ParallelCamera();
+            cam.setFarClip(2000);
+            cam.setNearClip(0.5);
+            scene = new Scene(root);
+            scene.setCamera(cam);
+
+        }
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        ParallelCamera cam = new ParallelCamera();
-        cam.setFarClip(2000);
-        cam.setNearClip(0.5);
-        scene.setCamera(cam);
         stage.setScene(scene);
         stage.show();
     }

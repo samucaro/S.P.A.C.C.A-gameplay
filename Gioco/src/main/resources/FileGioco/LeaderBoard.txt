@@ -6,3 +6,6 @@ anto 0
 gab 0
 dani 0
 marta 0
+giova 0
+emma 0
+ale 0

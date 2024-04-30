@@ -194,7 +194,6 @@ public class SetPlayerPageController {
             writer.println("Turno: 0");
             writer.println("Mazzo: " + mazzo.toString());
             writer.println("Scarti: ");
-            writer.println("******************************");
             int j = 0;
             for (int i : vector) {
                 writer.println("Giocatore: " + j);
@@ -202,9 +201,9 @@ public class SetPlayerPageController {
                 writer.println("Nome: " + nomi[i]);
                 writer.println("Mano: " + mani[i]);
                 writer.println("HpRimanente: " + 5);
-                writer.println("******************************");
                 j++;
             }
+            writer.println("******************************");
             writer.close();
         } catch (IOException e) {
             System.err.println("Errore durante la creazione del file: " + e.getMessage());

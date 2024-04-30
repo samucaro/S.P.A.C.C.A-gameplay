@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class TabelloneGiocoController {
+    private Parent root;
+    private Scene scene;
     private double centroX;
     private double centroY;
     private double xOffset;
@@ -347,7 +349,7 @@ public class TabelloneGiocoController {
     }
 
     //SAVE
-    public void salvaPartita() {
+    public void salvaPartita(ActionEvent event) throws IOException {
         gameData.aggiornaFile();
         System.out.println(gameData.getGiocatoriPartita());
         System.out.println(gameData.getMazzo().toStringScarti());
@@ -356,7 +358,7 @@ public class TabelloneGiocoController {
     //BACK
     public void switchToAdminPlayerPage(ActionEvent event) throws IOException {
         checkBack = false;
-        salvaPartita();
+        salvaPartita(event);
         GameData.resetInstance();
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AdminPlayerPage.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -369,8 +371,8 @@ public class TabelloneGiocoController {
     public void switchToLeaderBoard() throws IOException {
         Stage stage = new Stage();
         stage.setTitle("LeaderBoard");
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("LeaderBoard.fxml")));
-        Scene scene = new Scene(root);
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("LeaderBoard.fxml")));
+        scene = new Scene(root);
         stage.setScene(scene);
         stage.show();
     }

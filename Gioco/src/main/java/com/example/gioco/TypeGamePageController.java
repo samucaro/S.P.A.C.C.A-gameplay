@@ -95,7 +95,10 @@ public class TypeGamePageController {
     //TOURNAMENT
     public void switchToTournamentPage(ActionEvent event) throws IOException {
         gameData.setTipo("Torneo");
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("TournamentPage.fxml")));
+        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("TournamentPage.fxml")));
+        TournamentPageController tp = new TournamentPageController();
+        fxmlLoader.setController(tp);
+        root = fxmlLoader.load();
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setScene(scene);
