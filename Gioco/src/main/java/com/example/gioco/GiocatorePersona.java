@@ -32,7 +32,7 @@ public class GiocatorePersona extends Giocatore{
         if(hpRimanente <= 0) {
             hpRimanente = 0;
             System.out.println("Il giocatore è già eliminato");
-            tg.setMortiEVincitore(this);
+            tg.setMortiEVincitore(this, true);
         } else {
             OvalPaneController.setVita(this);
         }

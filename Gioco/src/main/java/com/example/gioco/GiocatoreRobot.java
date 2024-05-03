@@ -30,15 +30,15 @@ public class GiocatoreRobot extends Giocatore {
         hpRimanente -= danno;
         if(hpRimanente <= 0) {
             hpRimanente = 0;
-            tg.setMortiEVincitore(this);
-            System.out.println("Il giocatore è già eliminato");
+            tg.setMortiEVincitore(this, true);
+            System.out.println("Il giocatore " + nome +" è già eliminato");
         } else {
             OvalPaneController.setVita(this);
         }
     }
     public void cura(){
         if(hpRimanente == HP) {
-            System.out.println("Il personaggio ha già la vita massima, non verrà aggiunto nessun punto vita");
+            System.out.println("Il personaggio " + nome + " ha già la vita massima, non verrà aggiunto nessun punto vita");
         }
         else {
             hpRimanente += 1;
@@ -54,17 +54,15 @@ public class GiocatoreRobot extends Giocatore {
             if (TabelloneGiocoController.getNomeVincitore() == "") {
                 cc = mano.get(i);
                 if (cc instanceof CartaBang && cont < 2) {
-                    System.out.println(cc.getClass().getSimpleName());
+                    System.out.println(cc.getClass().getSimpleName() + " giocata da " + nome);
                     cc.usaAbilita(ovalPaneController, tabelloneGiocoController);
                     i--;
                     cont++;
                 } else if (!(cc instanceof CartaBang)) {
-                    System.out.println(cc.getClass().getSimpleName());
+                    System.out.println(cc.getClass().getSimpleName() + " giocata da " + nome);
                     if ((!(cc instanceof CartaMancato) && !(cc instanceof CartaPerdiCarta)) && !(cc instanceof CartaRecuperaVita && hpRimanente == 5))
                         i--;
-                    System.out.println("VITARIMANENETE: " + hpRimanente + " DI " + nome);
                     cc.usaAbilita(ovalPaneController, tabelloneGiocoController);
-                    System.out.println("VITARIMANENETEDOPOABILITA: " + hpRimanente + " DI " + nome);
                 }
             }
         }

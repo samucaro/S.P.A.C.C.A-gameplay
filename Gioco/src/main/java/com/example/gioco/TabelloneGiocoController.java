@@ -59,32 +59,26 @@ public class TabelloneGiocoController {
         checkInit = false;
         checkBack = true;
         impostaCose();
-        ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setOnMouseEntered(event -> {
-            ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setScaleX(1.1);
-            ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setScaleY(1.1);
-        });
-        ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setOnMouseExited(event -> {
-            ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setScaleX(1.0);
-            ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setScaleY(1.0);
-        });
-        turnButton.setDisable(true);
         for (Giocatore giocatore : gameData.getGiocatoriPartita()) {
             if (giocatore.getHpRimanente() == 0) {
-                setMortiEVincitore(giocatore);
+                setMortiEVincitore(giocatore, false);
             }
         }
-        if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente() == 0) {
-            handleTurnButton();
-        }
-        else if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
-            PauseTransition pause = new PauseTransition(Duration.seconds(1));
-            pause.setOnFinished(event -> {
-                System.out.println("BOT INIZIA A GIOCARE");
-                ((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController);
+        PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
+        pause.setOnFinished(event -> {
+            if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente() == 0) {
                 handleTurnButton();
-            });
-            pause.playFromStart();
-        }
+            }
+            else if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
+                ((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController);
+                aggiornaCosa();
+                handleTurnButton();
+            } else {
+                pesca.setVisible(true);
+                aggiornaCosa();
+            }
+        });
+        pause.playFromStart();
     }
 
     //Imposta il layout del tabellone di gioco con tutte le carte, la vita e il mazzo
@@ -109,8 +103,17 @@ public class TabelloneGiocoController {
                 checkInit = true;
             }
         });
-        mettiCarte(true);
         mettiVita();
+        ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setOnMouseEntered(event -> {
+            ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setScaleX(1.1);
+            ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setScaleY(1.1);
+        });
+        ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setOnMouseExited(event -> {
+            ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setScaleX(1.0);
+            ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setScaleY(1.0);
+        });
+        pesca.setVisible(false);
+        turnButton.setDisable(true);
     }
 
     //Impone una valore di scala per il mazzo valido ogni qualvolta si ridimensiona la scena
@@ -126,7 +129,6 @@ public class TabelloneGiocoController {
 
     //Aggiorna la disposizione delle carte del giocatore corrente levandole prima tutte e rimettendo quelle esatte
     private void mettiCarte(boolean var) {
-        System.out.println("METTIMENTO CARTE");
         if(vincitore == null) {
             numNodiMano = new ArrayList<>();
             for(int i = 0; i < anchorPane.getChildren().size(); i++) {
@@ -142,6 +144,7 @@ public class TabelloneGiocoController {
             }
             if(var) {
                 ImageView imageView;
+                System.out.println("METTICARTE AGGIUNGI");
                 ArrayList<Carta> manoCorrente = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano();
                 for(int i = 0; i < manoCorrente.size(); i++) {
                     imageView = manoCorrente.get(i).getImage();
@@ -153,6 +156,7 @@ public class TabelloneGiocoController {
                 spostaCarta();
             }
             else {
+                System.out.println("METTICARTE SPOSTA");
                 for(int i : numNodiMano) {
                     scalaImageView((ImageView) anchorPane.getChildren().get(i));
                 }
@@ -243,7 +247,7 @@ public class TabelloneGiocoController {
     }
 
     //Imposta i giocatori morti e nel caso decreta il vincitore
-    public void setMortiEVincitore(Giocatore giocatoreMorto) {
+    public void setMortiEVincitore(Giocatore giocatoreMorto, boolean iniz) {
         OvalPaneController.setMortoOP(giocatoreMorto);
         int check = 0;
         Giocatore ggVivo = null;
@@ -257,14 +261,13 @@ public class TabelloneGiocoController {
             vincitore = ggVivo;
             handleFineGioco();
         }
-        else if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) == (giocatoreMorto)) {
+        else if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) == (giocatoreMorto) && iniz) {
             handleTurnButton();
         }
     }
 
     //Gestisce tutte le azioni da compiere dopo il click del cambia turno
     public void handleTurnButton() {
-        System.out.println("CAMBIAGGIO TURNO");
         if (vincitore == null && checkBack) {
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setMouseTransparent(true);
             turnButton.setDisable(true);
@@ -278,6 +281,7 @@ public class TabelloneGiocoController {
             PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
             tm.setOnFinished(event -> {
                 System.out.println("TURNO DI: " + gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getNome());
+                System.out.println(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
                 OvalPaneController.posizionaPianeti();
                 if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente() == 0) {
                     handleTurnButton();
@@ -287,7 +291,6 @@ public class TabelloneGiocoController {
                     aggiornaCosa();
                     pause.setOnFinished(event1 -> handleTurnButton());
                 } else {
-                    System.out.println("PERSONAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
                     for (int j : numNodiMano) {
                         anchorPane.getChildren().get(j).setMouseTransparent(false);
                     }
@@ -296,7 +299,6 @@ public class TabelloneGiocoController {
                     ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setMouseTransparent(false);
                 }
             });
-            //System.out.println("FINE PAUSETRANSITION");
         }
     }
 
@@ -325,9 +327,9 @@ public class TabelloneGiocoController {
         for(int i = 1; i <= 2; i++) {
             player.setMano(gameData.getMazzo().pesca());
         }
-        mettiCarte(true);
         ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setMouseTransparent(true);
         if(!(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot)) {
+            mettiCarte(true);
             turnButton.setDisable(false);
             pesca.setVisible(false);
         }

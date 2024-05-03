@@ -55,11 +55,8 @@ public class OvalPaneController {
         giocatoreSelezionato = null;
         winnerSphere = null;
         planetSelected = false;
-        System.out.println("creaGruppoPianeti");
         creaGruppoPianeti();
-        System.out.println("impostaStile");
         impostaStile();
-        System.out.println("iniziaHD");
         iniziaHD();
     }
 
@@ -184,7 +181,7 @@ public class OvalPaneController {
         iry = centroY/5+h;
         boolean checkVis = halfDonut.isVisible();
         if(ovalPane.getChildren().contains(progressBar)) {
-            System.out.println("DISGIUNTA");
+            System.out.println("Reshape Selezione");
             //ovalPane.getChildren().remove(halfDonut);
             halfDonut.setVisible(false);
             scegliAvversario.setWrappingWidth(centroX/1.5);
@@ -204,7 +201,7 @@ public class OvalPaneController {
             halfDonut.setFill(Color.rgb(0, 191, 255, 0.2));
             ovalPane.getChildren().add(halfDonut);
             halfDonut.setVisible(checkVis);
-            System.out.println("GIUNTA");
+            System.out.println("Rshape giusto bot");
             halfDonut.setTranslateX(centroX - 100);
             halfDonut.setTranslateY(centroY * 2 - 100);
         }
@@ -311,9 +308,11 @@ public class OvalPaneController {
             do {
                 index = (int) (Math.random() * (gameData.getNumero()));
             } while((index == gameData.getTurnoCorrente()) || (gameData.getGiocatoriPartita().get(index).getHpRimanente() == 0));
+            System.out.println("Giocatore attaccato: " + gameData.getGiocatoriPartita().get(index).getNome());
             return gameData.getGiocatoriPartita().get(index);
         }
         else {
+            System.out.println("Giocatore attaccato: " + giocatoreSelezionato.getNome());
             return giocatoreSelezionato;
         }
     }
@@ -371,7 +370,6 @@ public class OvalPaneController {
         halfDonut.setVisible(Objects.equals(TabelloneGiocoController.getNomeVincitore(), ""));
         ovalPane.getChildren().removeAll(progressBar, scegliAvversario);
         pianeti[currentSphere].setMouseTransparent(false);
-        System.out.println("FINESELEZIONE");
         reShape();
     }
 
@@ -380,7 +378,6 @@ public class OvalPaneController {
         for(Node n : ovalPane.getChildren()) {
             n.setVisible(false);
             n.setDisable(true);
-            System.out.println(n.getClass());
         }
         for(int j = 0; j < gameData.getNumero(); j++) {
             if(!((Text) pianeti[j].getChildren().get(pianeti[j].getChildren().size()-2)).getText().equals("ELIMINATO")) {
