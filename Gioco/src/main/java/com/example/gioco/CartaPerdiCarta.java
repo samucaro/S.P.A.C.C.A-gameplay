@@ -26,19 +26,18 @@ public class CartaPerdiCarta extends Carta{
     public void usaAbilita(OvalPaneController ovalPaneController, TabelloneGiocoController tabelloneGiocoController) {
         if(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
             ovalPaneController.giocatoreSelezionato = null;
-            gestisciEventiAttacco(ovalPaneController, tabelloneGiocoController).handle(new ActionEvent());
+            gestisciEventiAttacco(ovalPaneController, tabelloneGiocoController);
         }
         else {
             ovalPaneController.startSelection().setOnSucceeded(event -> {
-                gestisciEventiAttacco(ovalPaneController, tabelloneGiocoController).handle(new ActionEvent());
+                gestisciEventiAttacco(ovalPaneController, tabelloneGiocoController);
                 ovalPaneController.fineSelezione();
                 tabelloneGiocoController.stopSelectionMC();
             });
         }
     }
 
-    public EventHandler<ActionEvent> gestisciEventiAttacco(OvalPaneController ovalPaneController, TabelloneGiocoController tabelloneGiocoController) {
-        return event -> {
+    public void gestisciEventiAttacco(OvalPaneController ovalPaneController, TabelloneGiocoController tabelloneGiocoController) {
             giocatoreSelezionato = ovalPaneController.planetSelection();
             if(!giocatoreSelezionato.getMano().isEmpty()) {
                 int index = 0;
@@ -54,7 +53,6 @@ public class CartaPerdiCarta extends Carta{
                 giocatoreSelezionato.scarta(giocatoreSelezionato.getMano().get(val));
                 ovalPaneController.dannoSfera(giocatoreSelezionato, false);
             }
-        };
     }
 
     @Override

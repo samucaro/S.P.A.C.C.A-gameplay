@@ -181,7 +181,6 @@ public class OvalPaneController {
         iry = centroY/5+h;
         boolean checkVis = halfDonut.isVisible();
         if(ovalPane.getChildren().contains(progressBar)) {
-            System.out.println("Reshape Selezione");
             //ovalPane.getChildren().remove(halfDonut);
             halfDonut.setVisible(false);
             scegliAvversario.setWrappingWidth(centroX/1.5);
@@ -201,7 +200,6 @@ public class OvalPaneController {
             halfDonut.setFill(Color.rgb(0, 191, 255, 0.2));
             ovalPane.getChildren().add(halfDonut);
             halfDonut.setVisible(checkVis);
-            System.out.println("Rshape giusto bot");
             halfDonut.setTranslateX(centroX - 100);
             halfDonut.setTranslateY(centroY * 2 - 100);
         }
@@ -242,7 +240,6 @@ public class OvalPaneController {
 
     //Posiziona i pianeti nel modo corretto
     public static void posizionaPianeti() {
-        System.out.println("METTIMENTO PIANETI");
         double scale;
         for(int i = 0; i < gameData.getNumero(); i++) {
             int indice = ((gameData.getNumero() - turnoDi) + i) % gameData.getNumero();
@@ -269,6 +266,7 @@ public class OvalPaneController {
 
     //Gestisce l'evento del cambio turno
     public Timeline cambiaTurno() {
+        pianeti[currentSphere].getChildren().get(pianeti[currentSphere].getChildren().size() - 2).setVisible(true);
         KeyValue kv1, kv2, kv3, kv4;
         KeyFrame kf;
         int i;
@@ -281,14 +279,14 @@ public class OvalPaneController {
             kv2 = new KeyValue(pianeti[i].translateYProperty(), pianeti[i+1].getTranslateY());
             kv3 = new KeyValue(pianeti[i].scaleXProperty(), pianeti[i+1].getScaleX());
             kv4 = new KeyValue(pianeti[i].scaleYProperty(), pianeti[i+1].getScaleY());
-            kf = new KeyFrame(Duration.seconds(1), kv1, kv2, kv3, kv4);
+            kf = new KeyFrame(Duration.seconds(0.8), kv1, kv2, kv3, kv4);
             timeline.getKeyFrames().add(kf);
         }
         kv1 = new KeyValue(pianeti[gameData.getNumero()-1].translateXProperty(), pianeti[0].getTranslateX());
         kv2 = new KeyValue(pianeti[gameData.getNumero()-1].translateYProperty(), pianeti[0].getTranslateY());
         kv3 = new KeyValue(pianeti[gameData.getNumero()-1].scaleXProperty(), pianeti[0].getScaleX());
         kv4 = new KeyValue(pianeti[gameData.getNumero()-1].scaleYProperty(), pianeti[0].getScaleY());
-        kf = new KeyFrame(Duration.seconds(1), kv1, kv2, kv3, kv4);
+        kf = new KeyFrame(Duration.seconds(0.8), kv1, kv2, kv3, kv4);
         timeline.getKeyFrames().add(kf);
         return timeline;
     }
@@ -308,11 +306,9 @@ public class OvalPaneController {
             do {
                 index = (int) (Math.random() * (gameData.getNumero()));
             } while((index == gameData.getTurnoCorrente()) || (gameData.getGiocatoriPartita().get(index).getHpRimanente() == 0));
-            System.out.println("Giocatore attaccato: " + gameData.getGiocatoriPartita().get(index).getNome());
             return gameData.getGiocatoriPartita().get(index);
         }
         else {
-            System.out.println("Giocatore attaccato: " + giocatoreSelezionato.getNome());
             return giocatoreSelezionato;
         }
     }

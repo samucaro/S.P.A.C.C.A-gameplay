@@ -19,6 +19,10 @@ public class GiocatoreRobot extends Giocatore {
         mano.add(carta);
     }
 
+    public void clearMano() {
+        mano.clear();
+    }
+
     public void setMano(int i, Carta carta){
         mano.add(i, carta);
     }
@@ -26,12 +30,13 @@ public class GiocatoreRobot extends Giocatore {
     public void scarta(Carta carta) {
         mano.remove(carta);
     }
+
     public void subisciDanno(int danno, TabelloneGiocoController tg) {
         hpRimanente -= danno;
         if(hpRimanente <= 0) {
             hpRimanente = 0;
-            tg.setMortiEVincitore(this, true);
-            System.out.println("Il giocatore " + nome +" è già eliminato");
+            System.out.println("Il giocatore " + nome +" è eliminato");
+            tg.setMortiEVincitore(this);
         } else {
             OvalPaneController.setVita(this);
         }
@@ -47,19 +52,16 @@ public class GiocatoreRobot extends Giocatore {
     }
 
     public void giocaTurno(TabelloneGiocoController tabelloneGiocoController, OvalPaneController ovalPaneController) {
-        tabelloneGiocoController.pescataInizialeGiocatore();
         int cont = 0;
         Carta cc;
         for (int i = 0; i < mano.size(); i++) {
-            if (TabelloneGiocoController.getNomeVincitore() == "") {
+            if (TabelloneGiocoController.getNomeVincitore() == "" && hpRimanente > 0) {
                 cc = mano.get(i);
                 if (cc instanceof CartaBang && cont < 2) {
-                    System.out.println(cc.getClass().getSimpleName() + " giocata da " + nome);
                     cc.usaAbilita(ovalPaneController, tabelloneGiocoController);
                     i--;
                     cont++;
                 } else if (!(cc instanceof CartaBang)) {
-                    System.out.println(cc.getClass().getSimpleName() + " giocata da " + nome);
                     if ((!(cc instanceof CartaMancato) && !(cc instanceof CartaPerdiCarta)) && !(cc instanceof CartaRecuperaVita && hpRimanente == 5))
                         i--;
                     cc.usaAbilita(ovalPaneController, tabelloneGiocoController);

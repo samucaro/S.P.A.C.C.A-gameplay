@@ -19,6 +19,8 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 public class TabelloneGiocoController {
+    @FXML
+    public OvalPaneController ovalPaneController;
     private Parent root;
     private Scene scene;
     private double centroX;
@@ -29,9 +31,22 @@ public class TabelloneGiocoController {
     private boolean checkInit;
     private boolean checkBack;
     private GameData gameData;
-     static Giocatore vincitore;
-    @FXML
-    public OvalPaneController ovalPaneController;
+    private final Timeline turnoBot = new Timeline(
+            new KeyFrame(Duration.ZERO, inizioTurno -> aggiornaCosa()),
+            new KeyFrame(Duration.seconds(0.5), eventoPescata -> {
+                pescataInizialeGiocatore();
+                aggiornaCosa();
+            }),
+            new KeyFrame(Duration.seconds(1.5), eventoTurno -> {
+                ((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController);
+                aggiornaCosa();
+            }),
+            new KeyFrame(Duration.seconds(2.3), eventoFineTurno -> {
+                aggiornaCosa();
+                handleTurnButton();
+            })
+    );
+    static Giocatore vincitore;
     @FXML
     private Button turnButton;
     @FXML
@@ -61,7 +76,7 @@ public class TabelloneGiocoController {
         impostaCose();
         for (Giocatore giocatore : gameData.getGiocatoriPartita()) {
             if (giocatore.getHpRimanente() == 0) {
-                setMortiEVincitore(giocatore, false);
+                setMortiEVincitore(giocatore);
             }
         }
         PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
@@ -70,9 +85,7 @@ public class TabelloneGiocoController {
                 handleTurnButton();
             }
             else if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
-                ((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController);
-                aggiornaCosa();
-                handleTurnButton();
+                turnoBot.playFromStart();
             } else {
                 pesca.setVisible(true);
                 aggiornaCosa();
@@ -144,7 +157,6 @@ public class TabelloneGiocoController {
             }
             if(var) {
                 ImageView imageView;
-                System.out.println("METTICARTE AGGIUNGI");
                 ArrayList<Carta> manoCorrente = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano();
                 for(int i = 0; i < manoCorrente.size(); i++) {
                     imageView = manoCorrente.get(i).getImage();
@@ -156,7 +168,6 @@ public class TabelloneGiocoController {
                 spostaCarta();
             }
             else {
-                System.out.println("METTICARTE SPOSTA");
                 for(int i : numNodiMano) {
                     scalaImageView((ImageView) anchorPane.getChildren().get(i));
                 }
@@ -195,7 +206,7 @@ public class TabelloneGiocoController {
             double finalY = event.getSceneY();
             imageView.setTranslateX(0);
             imageView.setTranslateY(0);
-            if(finalX<centroX/2+100 && finalX>centroX/2-100 && finalY<centroY/2+100 && finalY>centroY/2-100) {
+            if(finalX<centroX/2+centroX/8 && finalX>centroX/2-centroX/8 && finalY<centroY/2+centroY/8 && finalY>centroY/2-centroY/8) {
                 cartaAttuale.usaAbilita(ovalPaneController, this);
             }
         });
@@ -247,8 +258,9 @@ public class TabelloneGiocoController {
     }
 
     //Imposta i giocatori morti e nel caso decreta il vincitore
-    public void setMortiEVincitore(Giocatore giocatoreMorto, boolean iniz) {
+    public void setMortiEVincitore(Giocatore giocatoreMorto) {
         OvalPaneController.setMortoOP(giocatoreMorto);
+        giocatoreMorto.clearMano();
         int check = 0;
         Giocatore ggVivo = null;
         for(Giocatore giocatore : gameData.getGiocatoriPartita()) {
@@ -261,14 +273,14 @@ public class TabelloneGiocoController {
             vincitore = ggVivo;
             handleFineGioco();
         }
-        else if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) == (giocatoreMorto) && iniz) {
+        else if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) == (giocatoreMorto) && gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatorePersona) {
             handleTurnButton();
         }
     }
 
     //Gestisce tutte le azioni da compiere dopo il click del cambia turno
     public void handleTurnButton() {
-        if (vincitore == null && checkBack) {
+        if (checkBack) {
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setMouseTransparent(true);
             turnButton.setDisable(true);
             pesca.setVisible(false);
@@ -278,18 +290,13 @@ public class TabelloneGiocoController {
                 anchorPane.getChildren().get(j).setMouseTransparent(true);
             }
             tm.playFromStart();
-            PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
             tm.setOnFinished(event -> {
-                System.out.println("TURNO DI: " + gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getNome());
-                System.out.println(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
                 OvalPaneController.posizionaPianeti();
                 if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente() == 0) {
                     handleTurnButton();
                 } else if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
-                    pause.playFromStart();
-                    ((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController);
                     aggiornaCosa();
-                    pause.setOnFinished(event1 -> handleTurnButton());
+                    turnoBot.playFromStart();
                 } else {
                     for (int j : numNodiMano) {
                         anchorPane.getChildren().get(j).setMouseTransparent(false);
@@ -305,12 +312,16 @@ public class TabelloneGiocoController {
     //In base al numero di carte del giocatore verifica se levare o mettere carte per arrivare a 5
     private void verificaMano() {
         Carta carta;
-        while(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size() > 5) {
-            carta = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().get((int) (Math.random() * (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size())));
-            scartaCarte(carta, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
-        }
-        while(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size() < 5) {
-            gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).setMano(gameData.getMazzo().pesca());
+        if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente()>0) {
+            while (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size() > 5) {
+                carta = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().get((int) (Math.random() * (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size())));
+                scartaCarte(carta, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
+            }
+            while (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size() < 5) {
+                gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).setMano(gameData.getMazzo().pesca());
+            }
+        } else {
+            gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).clearMano();
         }
     }
 

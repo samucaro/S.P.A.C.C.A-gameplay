@@ -20,7 +20,6 @@ public class CartaScartaBang extends Carta{
     }
 
     public void usaAbilita(OvalPaneController ovalPaneController, TabelloneGiocoController tabelloneGiocoController) {
-        System.out.println("TURNOCARTABANG: "+gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getNome());
         for(Carta c: gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano()) {
             if(c instanceof CartaScartaBang) {
                 tabelloneGiocoController.scartaCarte(c, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));

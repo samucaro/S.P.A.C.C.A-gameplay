@@ -34,19 +34,18 @@ public class CartaDuello extends Carta {
         }
         if(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
             ovalPaneController.giocatoreSelezionato = null;
-            gestisciEventiAttacco(ovalPaneController, tabelloneGiocoController).handle(new ActionEvent());
+            gestisciEventiAttacco(ovalPaneController, tabelloneGiocoController);
         }
         else {
             ovalPaneController.startSelection().setOnSucceeded(event -> {
-                gestisciEventiAttacco(ovalPaneController, tabelloneGiocoController).handle(new ActionEvent());
+                gestisciEventiAttacco(ovalPaneController, tabelloneGiocoController);
                 ovalPaneController.fineSelezione();
                 tabelloneGiocoController.stopSelectionMC();
             });
         }
     }
 
-    public EventHandler<ActionEvent> gestisciEventiAttacco(OvalPaneController ovalPaneController, TabelloneGiocoController tabelloneGiocoController) {
-        return event -> {
+    public void gestisciEventiAttacco(OvalPaneController ovalPaneController, TabelloneGiocoController tabelloneGiocoController) {
             contAvversario = 0;
             contTuo = 0;
             Carta cartaAvversario;
@@ -68,7 +67,6 @@ public class CartaDuello extends Carta {
                 selectedGG.subisciDanno(2, tabelloneGiocoController);
                 ovalPaneController.dannoSfera(selectedGG, true);
             }
-        };
     }
 
     private boolean controlloBang(TabelloneGiocoController tabelloneGiocoController) {

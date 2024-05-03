@@ -27,12 +27,16 @@ public class GiocatorePersona extends Giocatore{
         mano.remove(carta);
     }
 
+    public void clearMano() {
+        mano.clear();
+    }
+
     public void subisciDanno(int danno, TabelloneGiocoController tg){
         hpRimanente -= danno;
         if(hpRimanente <= 0) {
             hpRimanente = 0;
-            System.out.println("Il giocatore è già eliminato");
-            tg.setMortiEVincitore(this, true);
+            System.out.println("Il giocatore " + nome + " è eliminato");
+            tg.setMortiEVincitore(this);
         } else {
             OvalPaneController.setVita(this);
         }
