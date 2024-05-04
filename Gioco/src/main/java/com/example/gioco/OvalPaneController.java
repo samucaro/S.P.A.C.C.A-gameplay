@@ -242,7 +242,6 @@ public class OvalPaneController {
 
     //Posiziona i pianeti nel modo corretto
     public static void posizionaPianeti() {
-        System.out.println("POSIZIONA PIANETI");
         double scale;
         int indice;
         for(int i = 0; i < gameData.getNumero(); i++) {
@@ -323,7 +322,6 @@ public class OvalPaneController {
             @Override
             protected Void call() throws Exception {
                 pianeti[currentSphere].setMouseTransparent(true);
-                System.out.println("TASK STARTSELECTION      " + ((Text) pianeti[currentSphere].getChildren().getLast()).getText());
                 for(int secondo = 1; secondo <= 10; secondo++) {
                     if(planetSelected) {
                         succeeded();

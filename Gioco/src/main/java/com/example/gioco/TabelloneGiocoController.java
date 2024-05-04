@@ -28,6 +28,7 @@ public class TabelloneGiocoController {
     private double xOffset;
     private double yOffset;
     private ArrayList<Integer> numNodiMano;
+    public boolean checkRidimensionato;
     private boolean checkInit;
     private boolean checkBack;
     private GameData gameData;
@@ -35,14 +36,14 @@ public class TabelloneGiocoController {
             new KeyFrame(Duration.ZERO, inizioTurno -> aggiornaCosa()),
             new KeyFrame(Duration.seconds(0.5), eventoPescata -> {
                 pescataInizialeGiocatore();
-                aggiornaCosa();
+                mettiCarte(true);
             }),
             new KeyFrame(Duration.seconds(1.5), eventoTurno -> {
                 ((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController);
-                aggiornaCosa();
+                mettiVita();
+                mettiCarte(true);
             }),
             new KeyFrame(Duration.seconds(2.3), eventoFineTurno -> {
-                aggiornaCosa();
                 handleTurnButton();
             })
     );
@@ -99,6 +100,7 @@ public class TabelloneGiocoController {
         anchorPane.prefWidthProperty().bind(stackPane.widthProperty());
         anchorPane.prefHeightProperty().bind(stackPane.heightProperty());
         stackPane.widthProperty().addListener((observable, oldValue, newValue) -> {
+            checkRidimensionato = true;
             centroX = (double) newValue;
             scalaMazzo();
             mazzoEScarti.setLayoutX(centroX/2 - (checkInit ? mazzoEScarti.getWidth() : 140)/2);
@@ -108,6 +110,7 @@ public class TabelloneGiocoController {
             }
         });
         stackPane.heightProperty().addListener((observable, oldValue, newValue) -> {
+            checkRidimensionato = true;
             centroY = (double) newValue;
             scalaMazzo();
             mazzoEScarti.setLayoutY(centroY/2 - (checkInit ? mazzoEScarti.getHeight() + mazzoEScarti.getHeight()*getScala()/2 : 171) / 2);
@@ -282,6 +285,7 @@ public class TabelloneGiocoController {
     //Gestisce tutte le azioni da compiere dopo il click del cambia turno
     public void handleTurnButton() {
         if (checkBack) {
+            checkRidimensionato = false;
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setMouseTransparent(true);
             turnButton.setDisable(true);
             pesca.setVisible(false);
@@ -293,14 +297,15 @@ public class TabelloneGiocoController {
             tm.playFromStart();
             tm.setOnFinished(event -> {
                 if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente() == 0) {
+                    if (checkRidimensionato)
+                        OvalPaneController.posizionaPianeti();
                     handleTurnButton();
                 } else if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
-                    aggiornaCosa();
                     turnoBot.playFromStart();
                 } else {
                     ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setMouseTransparent(false);
-                    pesca.setVisible(true);
                     aggiornaCosa();
+                    pesca.setVisible(true);
                 }
             });
         }
@@ -352,6 +357,7 @@ public class TabelloneGiocoController {
         aggiornaCosa();
     }
     public void aggiornaCosa() {
+        OvalPaneController.posizionaPianeti();
         mettiVita();
         mettiCarte(true);
     }
