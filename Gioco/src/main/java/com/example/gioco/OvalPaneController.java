@@ -369,27 +369,28 @@ public class OvalPaneController {
 
     //Blocca il giocatore eliminato
     public void fineGiocoGrafica() {
-        for(Node n : ovalPane.getChildren()) {
-            n.setVisible(false);
-            n.setDisable(true);
-        }
+        ovalPane.getChildren().remove(halfDonut);
         for(int j = 0; j < gameData.getNumero(); j++) {
             if(!((Text) pianeti[j].getChildren().get(pianeti[j].getChildren().size()-2)).getText().equals("ELIMINATO")) {
                 winnerSphere = j;
-                pianeti[j].setVisible(true);
                 (pianeti[j].getChildren().get(pianeti[j].getChildren().size()-2)).setVisible(false);
                 spostaSferaVincitrice();
-                break;
+            } else {
+                ovalPane.getChildren().remove(pianeti[j]);
             }
         }
+    }
+
+    public double getScala(){
+        return 0.03 * ((20 * Math.min(centroX, centroY)) / 50);
     }
 
     //Impostano la grafica di visualizzazione del giocatore vincitore
     private void spostaSferaVincitrice() {
         ((Sphere) pianeti[winnerSphere].getChildren().getFirst()).setRadius(50);
         Timeline timeline = new Timeline();
-        KeyValue scx = new KeyValue(pianeti[winnerSphere].scaleXProperty(), mc.getScala()*3);
-        KeyValue scy = new KeyValue(pianeti[winnerSphere].scaleYProperty(), mc.getScala()*3);
+        KeyValue scx = new KeyValue(pianeti[winnerSphere].scaleXProperty(), getScala());
+        KeyValue scy = new KeyValue(pianeti[winnerSphere].scaleYProperty(), getScala());
         KeyValue kv1 = new KeyValue(pianeti[winnerSphere].translateXProperty(), centroX);
         KeyValue kv2 = new KeyValue(pianeti[winnerSphere].translateYProperty(), centroY);
         KeyFrame kf = new KeyFrame(Duration.seconds(1), kv1, kv2, scx, scy);
@@ -397,9 +398,11 @@ public class OvalPaneController {
         timeline.play();
         timeline.setOnFinished(actionEvent -> mettiSferaVincitrice());
     }
+
     public void mettiSferaVincitrice(){
-        pianeti[winnerSphere].setScaleX(mc.getScala()*3);
-        pianeti[winnerSphere].setScaleY(mc.getScala()*3);
+        System.out.println("SCALA: " + getScala());
+        pianeti[winnerSphere].setScaleX(getScala());
+        pianeti[winnerSphere].setScaleY(getScala());
         pianeti[winnerSphere].setTranslateX(centroX);
         pianeti[winnerSphere].setTranslateY(centroY);
     }

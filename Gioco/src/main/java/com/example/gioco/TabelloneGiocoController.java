@@ -113,7 +113,7 @@ public class TabelloneGiocoController {
             checkRidimensionato = true;
             centroY = (double) newValue;
             scalaMazzo();
-            mazzoEScarti.setLayoutY(centroY/2 - (checkInit ? mazzoEScarti.getHeight() + mazzoEScarti.getHeight()*getScala()/2 : 171) / 2);
+            mazzoEScarti.setLayoutY(centroY/2 - (checkInit ? mazzoEScarti.getHeight() + mazzoEScarti.getHeight()*(ovalPaneController.getScala()/3)/2 : 171) / 2);
             mettiCarte(false);
             if(mazzoEScarti.getHeight() != 0) {
                 checkInit = true;
@@ -134,13 +134,8 @@ public class TabelloneGiocoController {
 
     //Impone una valore di scala per il mazzo valido ogni qualvolta si ridimensiona la scena
     private void scalaMazzo(){
-        double scala = getScala();
-        mazzoEScarti.setScaleX(scala);
-        mazzoEScarti.setScaleY(scala);
-    }
-    //Da il fattore di scala
-    public double getScala(){
-        return 0.01 * (10 * Math.min(centroX, centroY)) / 50;
+        mazzoEScarti.setScaleX(ovalPaneController.getScala()/3);
+        mazzoEScarti.setScaleY(ovalPaneController.getScala()/3);
     }
 
     //Aggiorna la disposizione delle carte del giocatore corrente levandole prima tutte e rimettendo quelle esatte
