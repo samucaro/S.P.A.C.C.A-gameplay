@@ -47,6 +47,7 @@ public class OvalPaneController {
     public void initialize() {
         gameData = GameData.getInstance();
         turnoDi = gameData.getTurnoCorrente();
+        currentSphere = gameData.getNumero()-1;
         pianeti = new Group[gameData.getNumero()];
         redMaterial = new PhongMaterial(Color.RED);
         orangeMaterial = new PhongMaterial(Color.ORANGE);
@@ -133,7 +134,7 @@ public class OvalPaneController {
             pianeti[ind].setScaleY(pianeti[ind].getScaleY()-0.1);
         });
         pianeti[ind].setOnMouseClicked(event -> {
-            for(int j = 0; j < gameData.getGiocatoriPartita().size(); j++) {
+            for(int j = 0; j < gameData.getNumero(); j++) {
                 if(gameData.getGiocatoriPartita().get(j).getNome().equals(((Text) pianeti[ind].getChildren().getLast()).getText())) {
                     giocatoreSelezionato = gameData.getGiocatoriPartita().get(j);
                     planetSelected = true;
@@ -174,6 +175,7 @@ public class OvalPaneController {
         }
     }
     public void reShape() {
+        System.out.println("RESHAPE");
         double h = (60 * Math.min(centroX, centroY)) / 300;
         orx = h+centroX*1/2;
         ory = h+centroY*1/1.5;
@@ -240,9 +242,11 @@ public class OvalPaneController {
 
     //Posiziona i pianeti nel modo corretto
     public static void posizionaPianeti() {
+        System.out.println("POSIZIONA PIANETI");
         double scale;
+        int indice;
         for(int i = 0; i < gameData.getNumero(); i++) {
-            int indice = ((gameData.getNumero() - turnoDi) + i) % gameData.getNumero();
+            indice = ((gameData.getNumero() - turnoDi) + i) % gameData.getNumero();
             if(indice == 2) {
                 ((Cylinder) pianeti[indice].getChildren().get(1)).setRadius((60 * Math.min(centroX, centroY)) / 300 + 30);
             }
@@ -251,7 +255,6 @@ public class OvalPaneController {
             pianeti[indice].setTranslateY((centroY - ((Sphere) pianeti[indice].getChildren().getFirst()).getRadius() * 2 + 40) * Math.sin((2 * Math.PI * (i + 1) / gameData.getNumero())+(Math.PI/2)) + centroY);
             if(i == gameData.getNumero()-1) {
                 pianeti[indice].getChildren().get(pianeti[indice].getChildren().size() - 2).setVisible(((Text) pianeti[indice].getChildren().get(pianeti[indice].getChildren().size() - 2)).getText().equals("ELIMINATO"));
-                currentSphere = indice;
                 scale = 0.6;
             }
             else {
@@ -266,28 +269,24 @@ public class OvalPaneController {
 
     //Gestisce l'evento del cambio turno
     public Timeline cambiaTurno() {
+        System.out.println("CAMBIA TURNO");
         pianeti[currentSphere].getChildren().get(pianeti[currentSphere].getChildren().size() - 2).setVisible(true);
         KeyValue kv1, kv2, kv3, kv4;
         KeyFrame kf;
         int i;
         Timeline timeline = new Timeline();
         turnoDi = (turnoDi == (gameData.getNumero()-1)) ? 0 : turnoDi+1;
+        currentSphere = currentSphere == 0 ? gameData.getNumero()-1 : currentSphere-1;
         gameData.setTurnoCorrente(turnoDi);
-        for(int ind = 0; ind < gameData.getNumero()-1; ind++) {
+        for (int ind = 0; ind < gameData.getNumero(); ind++) {
             i = ind % gameData.getNumero();
-            kv1 = new KeyValue(pianeti[i].translateXProperty(), pianeti[i+1].getTranslateX());
-            kv2 = new KeyValue(pianeti[i].translateYProperty(), pianeti[i+1].getTranslateY());
-            kv3 = new KeyValue(pianeti[i].scaleXProperty(), pianeti[i+1].getScaleX());
-            kv4 = new KeyValue(pianeti[i].scaleYProperty(), pianeti[i+1].getScaleY());
+            kv1 = new KeyValue(pianeti[i].translateXProperty(), pianeti[(i + 1) % gameData.getNumero()].getTranslateX());
+            kv2 = new KeyValue(pianeti[i].translateYProperty(), pianeti[(i + 1) % gameData.getNumero()].getTranslateY());
+            kv3 = new KeyValue(pianeti[i].scaleXProperty(), pianeti[(i + 1) % gameData.getNumero()].getScaleX());
+            kv4 = new KeyValue(pianeti[i].scaleYProperty(), pianeti[(i + 1) % gameData.getNumero()].getScaleY());
             kf = new KeyFrame(Duration.seconds(0.8), kv1, kv2, kv3, kv4);
             timeline.getKeyFrames().add(kf);
         }
-        kv1 = new KeyValue(pianeti[gameData.getNumero()-1].translateXProperty(), pianeti[0].getTranslateX());
-        kv2 = new KeyValue(pianeti[gameData.getNumero()-1].translateYProperty(), pianeti[0].getTranslateY());
-        kv3 = new KeyValue(pianeti[gameData.getNumero()-1].scaleXProperty(), pianeti[0].getScaleX());
-        kv4 = new KeyValue(pianeti[gameData.getNumero()-1].scaleYProperty(), pianeti[0].getScaleY());
-        kf = new KeyFrame(Duration.seconds(0.8), kv1, kv2, kv3, kv4);
-        timeline.getKeyFrames().add(kf);
         return timeline;
     }
 
@@ -324,6 +323,7 @@ public class OvalPaneController {
             @Override
             protected Void call() throws Exception {
                 pianeti[currentSphere].setMouseTransparent(true);
+                System.out.println("TASK STARTSELECTION      " + ((Text) pianeti[currentSphere].getChildren().getLast()).getText());
                 for(int secondo = 1; secondo <= 10; secondo++) {
                     if(planetSelected) {
                         succeeded();
