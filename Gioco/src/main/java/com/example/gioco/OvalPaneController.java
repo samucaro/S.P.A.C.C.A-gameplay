@@ -400,7 +400,6 @@ public class OvalPaneController {
     }
 
     public void mettiSferaVincitrice(){
-        System.out.println("SCALA: " + getScala());
         pianeti[winnerSphere].setScaleX(getScala());
         pianeti[winnerSphere].setScaleY(getScala());
         pianeti[winnerSphere].setTranslateX(centroX);

@@ -5,7 +5,6 @@ import java.util.*;
 
 public class GameData {
     private int turnoCorrente;
-    private Stato stato;
     private int numPartita;
     private String tipo;
     private static GameData instance = null;
@@ -56,6 +55,9 @@ public class GameData {
             String line;
             numPartita = 0;
             while ((line = reader.readLine()) != null) {
+                if (line.startsWith("Vincitore")) {
+
+                }
                 if(line.startsWith("Partita Corrente")) {
                     numPartita = Integer.parseInt(line.split(" ")[2]);
                 }
@@ -139,8 +141,8 @@ public class GameData {
         String line;
         if (code <= 999){
             while ((line = reader.readLine()) != null) {
-                if (line.startsWith("Numero Partita") && numPartita == Integer.parseInt(line.split(" ")[2])) {
-                    cont.append("Numero Partita ").append(numPartita).append("\n").append(scriviFilePartita());
+                if (line.startsWith("Numero Partita") && numPartita == Integer.parseInt(line.split(":")[1].trim())) {
+                    cont.append("Numero Partita: ").append(numPartita).append("\n").append(scriviFilePartita());
                     do {
                         line = reader.readLine();
                     } while (!line.startsWith("******************************"));
@@ -153,6 +155,82 @@ public class GameData {
             cont.append(scriviFilePartita());
         }
         reader.close();
+        FileWriter file = new FileWriter((dataSet.getProjectFolderPath() + File.separator + "/" + code + ".txt"), false);
+        PrintWriter writer = new PrintWriter(file);
+        writer.write(cont.toString());
+        writer.close();
+    }
+
+    public void aggiornaPartitaCorrente(String nomeVincitore) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(dataSet.getProjectFolderPath() + File.separator + "/" + code + ".txt"));
+        StringBuilder cont = new StringBuilder();
+        String line;
+        if (numPartita < 14) {
+            boolean checkPari = numPartita % 2 == 0;
+            int numVero = checkPari ? numPartita : numPartita - 1;
+            while ((line = reader.readLine()) != null) {
+                if (line.startsWith("Partita Corrente")) {
+                    cont.append("Partita Corrente: ").append(numPartita + 1).append("\n");
+                } else if (line.startsWith("Numero Partita")) {
+                    cont.append(line).append("\n");
+                    if (Integer.parseInt(line.split(":")[1].trim()) == (((numVero) / 2) + 8)) {
+                        if (checkPari) {
+                            aggiornaNomeGiocatore(reader, cont, nomeVincitore);
+                        } else {
+                            do {
+                                line = reader.readLine();
+                                cont.append(line).append("\n");
+                            } while (!line.startsWith("Giocatore: 1"));
+                            aggiornaNomeGiocatore(reader, cont, nomeVincitore);
+                        }
+                    }
+                } else {
+                    cont.append(line).append("\n");
+                }
+            }
+            FileWriter file = new FileWriter((dataSet.getProjectFolderPath() + File.separator + "/" + code + ".txt"), false);
+            PrintWriter writer = new PrintWriter(file);
+            writer.write(cont.toString());
+            writer.close();
+        }
+        else {
+            System.out.println("SONOQUI");
+            aggiornaVincitoreTorneo(reader, cont, nomeVincitore);
+            reader.close();
+        }
+    }
+
+    private void aggiornaNomeGiocatore(BufferedReader reader, StringBuilder cont, String nomeVincitore) throws IOException {
+        String line;
+        while ((line = reader.readLine()) != null) {
+            if (line.startsWith("Tipo")) {
+                if (nomeVincitore.startsWith("Bot")) {
+                    cont.append("Tipo: ").append("Bot").append("\n");
+                } else {
+                    cont.append("Tipo: ").append("Persona").append("\n");
+                }
+            } else if (line.startsWith("Nome")) {
+                cont.append("Nome: ").append(nomeVincitore).append("\n");
+                break;
+            }
+            else {
+                cont.append(line).append("\n");
+            }
+        }
+    }
+
+    private void aggiornaVincitoreTorneo(BufferedReader reader, StringBuilder cont, String nomeVincitore) throws IOException {
+        String line;
+        System.out.println("SONO QUI " + nomeVincitore);
+        while ((line = reader.readLine()) != null) {
+            if (line.startsWith("Vincitore")) {
+                cont.append("Vincitore:").append(nomeVincitore).append("\n");
+                System.out.println("APPESO VINCITORE");
+            }
+            else {
+                cont.append(line).append("\n");
+            }
+        }
         FileWriter file = new FileWriter((dataSet.getProjectFolderPath() + File.separator + "/" + code + ".txt"), false);
         PrintWriter writer = new PrintWriter(file);
         writer.write(cont.toString());
@@ -216,8 +294,8 @@ public class GameData {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-    public String getTipo() {
-        return tipo;
+    public int getCode() {
+        return code;
     }
     //MODIFICA
     public ArrayList<Giocatore> getGiocatoriPartita() {

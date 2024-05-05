@@ -42,7 +42,10 @@
                      </children>
                   </HBox>
                </children></VBox>
-            <Button fx:id="turnButton" alignment="CENTER" contentDisplay="CENTER" layoutX="27.0" layoutY="348.0" onAction="#handleTurnButton" styleClass="a" stylesheets="@StileBottoni.css" text="C A M B I A T U R N O" textFill="WHITE" AnchorPane.bottomAnchor="27.0" AnchorPane.leftAnchor="27.0" />
+            <Button fx:id="turnButton" alignment="CENTER" contentDisplay="CENTER" layoutX="27.0" layoutY="348.0" onAction="#handleTurnButton" styleClass="a" stylesheets="@StileBottoni.css" text="CAMBIA TURNO" textFill="WHITE" AnchorPane.bottomAnchor="27.0" AnchorPane.leftAnchor="27.0">
+               <font>
+                  <Font name="Game of Thrones" size="12.0" />
+               </font></Button>
             <Button layoutX="31.0" layoutY="25.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#salvaPartita" styleClass="a" stylesheets="@StileBottoni.css" text="S A V E" textFill="WHITE" AnchorPane.leftAnchor="27.0" AnchorPane.topAnchor="27.0">
                <font>
                   <Font name="Game of Thrones" size="12.0" />

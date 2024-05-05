@@ -10,3 +10,8 @@ giova 0
 emma 0
 ale 0
 dave 0
+nicco 0
+lore 0
+paolo 0
+ali 0
+tom 0

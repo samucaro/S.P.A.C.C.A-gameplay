@@ -1,26 +1,26 @@
 Dati Generali Partita:
 NumGiocatori: 4
-Turno: 3
-Mazzo: Duello PerdiCarta SparaTutti Bang Mancato Bang Duello Mancato Bang Mancato ScartaBang Mancato Mancato ScartaBang Bang SparaTutti Bang Mancato Mancato SparaTutti Bang Bang Mancato Mancato Bang Mancato Mancato Bang Mancato RecuperaVita Mancato Bang 
-Scarti: Duello Bang Bang Bang Bang Bang Mancato PerdiCarta Bang Bang Duello Bang Bang Bang SparaTutti Mancato Mancato 
+Turno: 1
+Mazzo: Duello PerdiCarta SparaTutti Bang Mancato Bang Duello Mancato Bang Mancato ScartaBang Mancato Mancato ScartaBang Bang SparaTutti Bang Mancato Mancato SparaTutti Bang Bang Mancato Mancato Bang 
+Scarti: Duello Bang Bang Bang Bang Bang Mancato PerdiCarta Bang Bang Duello Bang Bang Bang SparaTutti Mancato Mancato Bang Bang Mancato 
 Giocatore: 0
 Tipo: Persona
 Nome: giova
-Mano: Bang Bang 
+Mano: Bang Mancato Bang Mancato Mancato 
 HpRimanente: 5
 Giocatore: 1
 Tipo: Persona
 Nome: samu
 Mano: Bang Bang Bang RecuperaVita RecuperaVita 
-HpRimanente: 4
+HpRimanente: 3
 Giocatore: 2
 Tipo: Bot
 Nome: Bot 1
-Mano: Mancato Bang Bang Mancato Bang 
+Mano: Bang Bang Mancato Bang 
 HpRimanente: 1
 Giocatore: 3
 Tipo: Persona
 Nome: walt
-Mano: RecuperaVita Bang Bang 
+Mano: RecuperaVita Bang Bang Mancato RecuperaVita 
 HpRimanente: 5
 ******************************

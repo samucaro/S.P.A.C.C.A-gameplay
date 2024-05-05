@@ -12,9 +12,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import java.io.IOException;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -69,9 +71,9 @@ public class TabelloneGiocoController {
 
     @FXML
     public void initialize() throws IOException {
+        gameData = GameData.getInstance();
         vincitore = null;
         ovalPaneController.getMainController(this);
-        gameData = GameData.getInstance();
         checkInit = false;
         checkBack = true;
         impostaCose();
@@ -358,7 +360,7 @@ public class TabelloneGiocoController {
     }
 
     //SAVE
-    public void salvaPartita(ActionEvent event) throws IOException {
+    public void salvaPartita() throws IOException {
         gameData.aggiornaFile();
         System.out.println(gameData.getGiocatoriPartita());
         System.out.println(gameData.getMazzo().toStringScarti());
@@ -367,7 +369,7 @@ public class TabelloneGiocoController {
     //BACK
     public void switchToAdminPlayerPage(ActionEvent event) throws IOException {
         checkBack = false;
-        salvaPartita(event);
+        salvaPartita();
         GameData.resetInstance();
         Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AdminPlayerPage.fxml")));
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -386,19 +388,49 @@ public class TabelloneGiocoController {
         stage.show();
     }
 
+    //CONTINUA TORNEO
+    public void switchToTournamentPage(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("TournamentPage.fxml")));
+        StartTournamentController st = new StartTournamentController();
+        fxmlLoader.setController(st);
+        Parent root = fxmlLoader.load();
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        st.leggiFile(gameData.getCode());
+        System.out.println("CODICE CHE FACCIAMO LEGGERE: " + gameData.getCode());
+    }
+
 
     //Attiva la grafica per mostrare il vincitore della partita
     private void handleFineGioco() {
             System.out.println("VINCE LA PARTITA: " + vincitore.getNome());
             checkBack = false;
             ovalPaneController.fineGiocoGrafica();
+            Boolean bol = gameData.getCode() > 999;
             Node n;
             for(int i = 0; i < anchorPane.getChildren().size(); i++) {
                 n = anchorPane.getChildren().get(i);
-                if((n != backButton) && (n != leaderBoardButton)) {
+                if((n != backButton) && (n != leaderBoardButton) && (bol?true:n!=turnButton)) {
                     anchorPane.getChildren().remove(n);
                     i--;
                 }
+            }
+            if (!bol) {
+                turnButton.setDisable(false);
+                turnButton.setText("CONTINUA TORNEO");
+                turnButton.setFont(new Font("Game of Thrones", 12));
+                turnButton.setOnAction(event -> {
+                    try {
+                        salvaPartita();
+                        gameData.aggiornaPartitaCorrente(vincitore.getNome());
+                        GameData.resetInstance();
+                        switchToTournamentPage(event);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
             }
     }
 
