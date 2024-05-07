@@ -22,18 +22,23 @@ public class LeaderBoardController implements Initializable {
     @FXML
     private TableColumn<Costumer, Integer> punteggio;
     private String nomeVincitore;
+    private String nomeVincitoreTorneo;
     private final DataSet dataSet = new DataSet();
-
+    private GameData gameData;
     ObservableList<Costumer> data = FXCollections.observableArrayList();
 
     @FXML
     public void initialize(URL url, ResourceBundle rb) {
+        gameData = GameData.getInstance();
         rank.setCellValueFactory(new PropertyValueFactory<>("rank"));
         giocatore.setCellValueFactory(new PropertyValueFactory<>("giocatore"));
         punteggio.setCellValueFactory(new PropertyValueFactory<>("punteggio"));
         punteggio.setSortable(true);
         nomeVincitore = TabelloneGiocoController.getNomeVincitore();
+        nomeVincitoreTorneo = TabelloneGiocoController.getNomeVincitoreTorneo();
         submit();
+        System.out.println("NOME PARTITA" + nomeVincitore);
+        System.out.println("NOME TORNEO" + nomeVincitoreTorneo);
     }
 
     //Aggiorna la tabella leggendo il file della LeaderBoard
@@ -41,9 +46,22 @@ public class LeaderBoardController implements Initializable {
         ArrayList<String> nomi = leggiFile();
         for (int i = 0; i < nomi.size(); i++) {
             if(nomeVincitore.equals(nomi.get(i).split(" ")[0])) {
-                aggiornaFile(nomi.get(i).split(" ")[0]);
-                Costumer customer = new Costumer(i+1, nomi.get(i).split(" ")[0], Integer.parseInt(nomi.get(i).split(" ")[1])+3);
-                data.add(customer);
+                if(gameData.getGiocatoriPartita().size() != 2) {
+                    aggiornaFile(nomi.get(i).split(" ")[0]);
+                    Costumer customer = new Costumer(i + 1, nomi.get(i).split(" ")[0], Integer.parseInt(nomi.get(i).split(" ")[1]) + 3);
+                    data.add(customer);
+                }
+                else {
+                    if(nomeVincitoreTorneo.equals(nomi.get(i).split(" ")[0])) {
+                        aggiornaFile(nomi.get(i).split(" ")[0]);
+                        Costumer customer = new Costumer(i + 1, nomi.get(i).split(" ")[0], Integer.parseInt(nomi.get(i).split(" ")[1]) + 5);
+                        data.add(customer);
+                    }
+                    else {
+                        Costumer customer = new Costumer(i+1, nomi.get(i).split(" ")[0], Integer.parseInt(nomi.get(i).split(" ")[1]));
+                        data.add(customer);
+                    }
+                }
             }
             else {
                 Costumer customer = new Costumer(i+1, nomi.get(i).split(" ")[0], Integer.parseInt(nomi.get(i).split(" ")[1]));
@@ -78,7 +96,13 @@ public class LeaderBoardController implements Initializable {
             while ((line = reader.readLine()) != null) {
                 String word = line.split(" ")[0];
                 if(word.equals(nomeVincitore)) {
-                    int nuovoPunteggio = Integer.parseInt(line.split(" ")[1]) + 3;
+                    int nuovoPunteggio;
+                    if(word.equals(nomeVincitoreTorneo)) {
+                        nuovoPunteggio = Integer.parseInt(line.split(" ")[1]) + 5;
+                    }
+                    else {
+                        nuovoPunteggio = Integer.parseInt(line.split(" ")[1]) + 3;
+                    }
                     contenuto.append(nomeVincitore).append(" ").append(nuovoPunteggio).append("\n");
                 }
                 else {

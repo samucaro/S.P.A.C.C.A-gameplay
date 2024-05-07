@@ -8,27 +8,16 @@ public class GameData {
     private int numPartita;
     private String tipo;
     private static GameData instance = null;
-    private LinkedList<GameData> partiteTorneo;
     private final ArrayList<Giocatore> giocatoriPartita;
     private final DataSet dataSet;
     private Mazzo mazzo;
     private int numeroGiocatori;
     private int code;
-    private String vincitore;
 
     public GameData() throws IOException {
         dataSet = new DataSet();
         giocatoriPartita = new ArrayList<>();
         mazzo = new Mazzo();
-    }
-    public GameData(int n, Stato stato, int turnoCorrente, Mazzo mazzo, ArrayList<Giocatore>giocatoriPartita) {
-        dataSet = new DataSet();
-        partiteTorneo = new LinkedList<>();
-        /*numeroPartita = n;
-        this.stato = stato;
-        this.turnoCorrente = turnoCorrente;*/
-        this.mazzo = mazzo;
-        this.giocatoriPartita = giocatoriPartita;
     }
 
     public static void resetInstance() {
@@ -267,6 +256,10 @@ public class GameData {
             case "RecuperaVita" -> new CartaRecuperaVita();
             default -> null;
         };
+    }
+
+    public int getNumPartitaCorrente() {
+        return numPartita;
     }
 
     //MODIFICA

@@ -1,6 +1,7 @@
 package com.example.gioco;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class GiocatoreRobot extends Giocatore {
     private  String nome;
@@ -55,7 +56,7 @@ public class GiocatoreRobot extends Giocatore {
         int cont = 0;
         Carta cc;
         for (int i = 0; i < mano.size(); i++) {
-            if (TabelloneGiocoController.getNomeVincitore() == "" && hpRimanente > 0) {
+            if (Objects.equals(TabelloneGiocoController.getNomeVincitore(), "") && hpRimanente > 0) {
                 cc = mano.get(i);
                 if (cc instanceof CartaBang && cont < 2) {
                     cc.usaAbilita(ovalPaneController, tabelloneGiocoController);

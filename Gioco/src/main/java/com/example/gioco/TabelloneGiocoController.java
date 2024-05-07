@@ -50,6 +50,7 @@ public class TabelloneGiocoController {
             })
     );
     static Giocatore vincitore;
+    static Giocatore vincitoreTorneo;
     @FXML
     private Button turnButton;
     @FXML
@@ -406,13 +407,17 @@ public class TabelloneGiocoController {
     //Attiva la grafica per mostrare il vincitore della partita
     private void handleFineGioco() {
             System.out.println("VINCE LA PARTITA: " + vincitore.getNome());
+            if(gameData.getNumPartitaCorrente() == 14) {
+                System.out.println("SONOQUI" + gameData.getNumPartitaCorrente());
+                vincitoreTorneo = vincitore;
+            }
             checkBack = false;
             ovalPaneController.fineGiocoGrafica();
-            Boolean bol = gameData.getCode() > 999;
+            boolean bol = gameData.getCode() > 999;
             Node n;
             for(int i = 0; i < anchorPane.getChildren().size(); i++) {
                 n = anchorPane.getChildren().get(i);
-                if((n != backButton) && (n != leaderBoardButton) && (bol?true:n!=turnButton)) {
+                if((n != backButton) && (n != leaderBoardButton) && (bol || n != turnButton)) {
                     anchorPane.getChildren().remove(n);
                     i--;
                 }
@@ -437,5 +442,8 @@ public class TabelloneGiocoController {
 
     public static String getNomeVincitore() {
         return vincitore == null ? "" : vincitore.getNome();
+    }
+    public static String getNomeVincitoreTorneo() {
+        return vincitoreTorneo == null ? "" : vincitoreTorneo.getNome();
     }
 }
