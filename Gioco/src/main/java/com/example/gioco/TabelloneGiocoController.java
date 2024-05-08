@@ -13,6 +13,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -34,6 +35,7 @@ public class TabelloneGiocoController {
     private boolean checkInit;
     private boolean checkBack;
     private GameData gameData;
+    private static int numBang;
     private final Timeline turnoBot = new Timeline(
             new KeyFrame(Duration.ZERO, inizioTurno -> aggiornaCosa()),
             new KeyFrame(Duration.seconds(0.5), eventoPescata -> {
@@ -69,6 +71,8 @@ public class TabelloneGiocoController {
     private AnchorPane anchorPane;
     @FXML
     private Label pesca;
+    @FXML
+    private Text stringaErroreBang;
 
     @FXML
     public void initialize() throws IOException {
@@ -209,7 +213,19 @@ public class TabelloneGiocoController {
             imageView.setTranslateX(0);
             imageView.setTranslateY(0);
             if(finalX<centroX/2+centroX/8 && finalX>centroX/2-centroX/8 && finalY<centroY/2+centroY/8 && finalY>centroY/2-centroY/8) {
-                cartaAttuale.usaAbilita(ovalPaneController, this);
+                if(cartaAttuale instanceof  CartaBang) {
+                    numBang++;
+                    if(numBang > 2) {
+                        stringaErroreBang.setVisible(true);
+                        System.out.println("Puoi giocare massimo due BANG a turno");
+                    }
+                    else {
+                        cartaAttuale.usaAbilita(ovalPaneController, this);
+                    }
+                }
+                else {
+                    cartaAttuale.usaAbilita(ovalPaneController, this);
+                }
             }
         });
     }
@@ -282,6 +298,8 @@ public class TabelloneGiocoController {
 
     //Gestisce tutte le azioni da compiere dopo il click del cambia turno
     public void handleTurnButton() {
+        numBang = 0;
+        stringaErroreBang.setVisible(false);
         if (checkBack) {
             checkRidimensionato = false;
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setMouseTransparent(true);

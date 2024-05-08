@@ -37,8 +37,6 @@ public class LeaderBoardController implements Initializable {
         nomeVincitore = TabelloneGiocoController.getNomeVincitore();
         nomeVincitoreTorneo = TabelloneGiocoController.getNomeVincitoreTorneo();
         submit();
-        System.out.println("NOME PARTITA" + nomeVincitore);
-        System.out.println("NOME TORNEO" + nomeVincitoreTorneo);
     }
 
     //Aggiorna la tabella leggendo il file della LeaderBoard
@@ -88,7 +86,7 @@ public class LeaderBoardController implements Initializable {
     }
 
     //Aggiorna il file delle LeaderBoard ogni volta che vi è un vincitore
-    private void aggiornaFile(String nomeVincitore){
+    private void aggiornaFile(String nomeVincitore) {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(dataSet.getProjectFolderPath() + File.separator + "/" + "LeaderBoard.txt"));
             StringBuilder contenuto = new StringBuilder();

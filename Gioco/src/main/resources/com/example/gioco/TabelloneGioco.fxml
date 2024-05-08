@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <StackPane fx:id="stackPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-image: url('SfondoGioco.jpg'); -fx-background-size: cover;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gioco.TabelloneGiocoController">
    <children>
@@ -62,6 +63,11 @@
                   <Font name="Game of Thrones" size="12.0" />
                </font>
             </Button>
+            <Text fx:id="stringaErroreBang" fill="RED" layoutX="183.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Puoi giocare massimo 2 BANG" visible="false">
+               <font>
+                  <Font name="Game of Thrones" size="12.0" />
+               </font>
+            </Text>
          </children>
       </AnchorPane>
    </children>
