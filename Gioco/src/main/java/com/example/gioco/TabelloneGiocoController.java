@@ -73,6 +73,8 @@ public class TabelloneGiocoController {
     private Label pesca;
     @FXML
     private Text stringaErroreBang;
+    @FXML
+    private Text messaggioSalvataggio;
 
     @FXML
     public void initialize() throws IOException {
@@ -325,6 +327,7 @@ public class TabelloneGiocoController {
                 }
             });
         }
+        messaggioSalvataggio.setVisible(false);
     }
 
     //In base al numero di carte del giocatore verifica se levare o mettere carte per arrivare a 5
@@ -383,6 +386,14 @@ public class TabelloneGiocoController {
         gameData.aggiornaFile();
         System.out.println(gameData.getGiocatoriPartita());
         System.out.println(gameData.getMazzo().toStringScarti());
+        messaggioSalvataggio.setVisible(true);
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), messaggioSalvataggio);
+        fadeTransition.setFromValue(1.0);
+        fadeTransition.setToValue(0.0);
+        fadeTransition.setOnFinished(event -> {
+            messaggioSalvataggio.setVisible(false);
+        });
+        fadeTransition.play();
     }
 
     //BACK
@@ -424,37 +435,39 @@ public class TabelloneGiocoController {
 
     //Attiva la grafica per mostrare il vincitore della partita
     private void handleFineGioco() {
-            System.out.println("VINCE LA PARTITA: " + vincitore.getNome());
-            if(gameData.getNumPartitaCorrente() == 14) {
-                System.out.println("SONOQUI" + gameData.getNumPartitaCorrente());
-                vincitoreTorneo = vincitore;
+        System.out.println("VINCE LA PARTITA: " + vincitore.getNome());
+        if(gameData.getNumPartitaCorrente() == 14) {
+            System.out.println("SONOQUI" + gameData.getNumPartitaCorrente());
+            vincitoreTorneo = vincitore;
+        }
+        checkBack = false;
+        ovalPaneController.fineGiocoGrafica();
+        boolean bol = gameData.getCode() > 999;
+        Node n;
+        for(int i = 0; i < anchorPane.getChildren().size(); i++) {
+            n = anchorPane.getChildren().get(i);
+            if((n != backButton) && (n != leaderBoardButton) && (bol || n != turnButton)) {
+                anchorPane.getChildren().remove(n);
+                i--;
             }
-            checkBack = false;
-            ovalPaneController.fineGiocoGrafica();
-            boolean bol = gameData.getCode() > 999;
-            Node n;
-            for(int i = 0; i < anchorPane.getChildren().size(); i++) {
-                n = anchorPane.getChildren().get(i);
-                if((n != backButton) && (n != leaderBoardButton) && (bol || n != turnButton)) {
-                    anchorPane.getChildren().remove(n);
-                    i--;
+        }
+        if (!bol) {
+            turnButton.setDisable(false);
+            turnButton.setText("CONTINUA TORNEO");
+            turnButton.setFont(new Font("Game of Thrones", 12));
+            turnButton.setOnAction(event -> {
+                try {
+                    salvaPartita();
+                    gameData.aggiornaPartitaCorrente(vincitore.getNome());
+                    GameData.resetInstance();
+                    switchToTournamentPage(event);
                 }
-            }
-            if (!bol) {
-                turnButton.setDisable(false);
-                turnButton.setText("CONTINUA TORNEO");
-                turnButton.setFont(new Font("Game of Thrones", 12));
-                turnButton.setOnAction(event -> {
-                    try {
-                        salvaPartita();
-                        gameData.aggiornaPartitaCorrente(vincitore.getNome());
-                        GameData.resetInstance();
-                        switchToTournamentPage(event);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                });
-            }
+                catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        }
+        messaggioSalvataggio.setVisible(false);
     }
 
 

@@ -68,6 +68,7 @@
                   <Font name="Game of Thrones" size="12.0" />
                </font>
             </Text>
+            <Text fx:id="messaggioSalvataggio" fill="WHITE" layoutX="97.0" layoutY="46.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Partita salvata correttamente" visible="false" AnchorPane.leftAnchor="97.0" AnchorPane.topAnchor="33.0" />
          </children>
       </AnchorPane>
    </children>
