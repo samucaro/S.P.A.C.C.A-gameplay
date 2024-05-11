@@ -50,10 +50,10 @@ public class AdminPlayerPageController {
     public void mostraRegolamento() {
         try {
             Stage stage = new Stage();
-            stage.setMinWidth(600);
-            stage.setMinHeight(400);
-            stage.setMaxWidth(600);
-            stage.setMaxHeight(400);
+            stage.setMinWidth(612.5);
+            stage.setMinHeight(412.5);
+            stage.setMaxWidth(612.5);
+            stage.setMaxHeight(412.5);
             stage.setTitle("Regolamento");
             stage.getIcons().add(new Image("logo.png"));
             root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Regolamento.fxml")));

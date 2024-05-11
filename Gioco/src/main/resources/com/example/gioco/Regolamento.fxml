@@ -12,8 +12,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-
-<ScrollPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<ScrollPane prefHeight="1811.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <content>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1818.0" prefWidth="585.0" style="-fx-background-color: #010820; -fx-border-radius: 15px;">
          <children>
@@ -29,7 +28,7 @@
                   </DropShadow>
                </effect>
             </ImageView>
-            <VBox alignment="TOP_CENTER" layoutX="17.0" layoutY="199.0" prefHeight="1604.0" prefWidth="555.0" styleClass="a" stylesheets="@StileBottoni.css">
+            <VBox alignment="TOP_CENTER" layoutX="17.0" layoutY="199.0" prefHeight="1604.0" prefWidth="550.0" styleClass="c" stylesheets="@StileBottoni.css">
                <children>
                   <Label alignment="CENTER" lineSpacing="2.0" prefHeight="31.0" prefWidth="530.0" style="-fx-font-weight: bold;" text="REGOLAMENTO S.P.A.C.C.A" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="WORD_ELLIPSIS" wrapText="true" VBox.vgrow="ALWAYS">
                      <font>
@@ -288,6 +287,11 @@
                   </Label>
                   <HBox alignment="TOP_CENTER" prefHeight="80.0" prefWidth="200.0" spacing="15.0">
                      <children>
+                        <Label prefHeight="93.0" prefWidth="457.0" text="Con questa carta puoi sfidare un altro giocatore. Il giocatore sfidato deve scartere una carta BANG! (anche se non è il suo turno). Se lo fa, allora tu dovrai scartare una cara BANG! e via così: il primo sfidante che non potrà più scartare una carta BANG! perderà due punti vita e il duello è finito. Non potrai usare MISS! in questa situazione" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
                         <ImageView fitHeight="75.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
                            <image>
                               <Image url="@../../../CartaDuello.png" />
@@ -296,11 +300,6 @@
                               <Insets top="3.0" />
                            </HBox.margin>
                         </ImageView>
-                        <Label prefHeight="93.0" prefWidth="457.0" text="Con questa carta puoi sfidare un altro giocatore. Il giocatore sfidato deve scartere una carta BANG! (anche se non è il suo turno). Se lo fa, allora tu dovrai scartare una cara BANG! e via così: il primo sfidante che non potrà più scartare una carta BANG! perderà due punti vita e il duello è finito. Non potrai usare MISS! in questa situazione" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" HBox.hgrow="ALWAYS">
-                           <HBox.margin>
-                              <Insets />
-                           </HBox.margin>
-                        </Label>
                      </children>
                      <VBox.margin>
                         <Insets bottom="10.0" left="15.0" right="15.0" />
@@ -316,11 +315,6 @@
                   </Label>
                   <HBox alignment="TOP_CENTER" prefHeight="80.0" prefWidth="200.0" spacing="15.0">
                      <children>
-                        <Label prefHeight="34.0" prefWidth="457.0" text="Ogni giocatore, escluso chi gioca questa carta deve scartare una carta BANG!, altrimenti perderà un punto vita." textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" HBox.hgrow="ALWAYS">
-                           <HBox.margin>
-                              <Insets top="23.0" />
-                           </HBox.margin>
-                        </Label>
                         <ImageView fitHeight="75.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
                            <image>
                               <Image url="@../../../CartaScartaBang.png" />
@@ -329,6 +323,11 @@
                               <Insets />
                            </HBox.margin>
                         </ImageView>
+                        <Label prefHeight="34.0" prefWidth="457.0" text="Ogni giocatore, escluso chi gioca questa carta deve scartare una carta BANG!, altrimenti perderà un punto vita." textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets top="23.0" />
+                           </HBox.margin>
+                        </Label>
                      </children>
                      <VBox.margin>
                         <Insets left="15.0" right="15.0" />
