@@ -44,9 +44,6 @@ public class GameData {
             String line;
             numPartita = 0;
             while ((line = reader.readLine()) != null) {
-                if (line.startsWith("Vincitore")) {
-
-                }
                 if(line.startsWith("Partita Corrente")) {
                     numPartita = Integer.parseInt(line.split(" ")[2]);
                 }

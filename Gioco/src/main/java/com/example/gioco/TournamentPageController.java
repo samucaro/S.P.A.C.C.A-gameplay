@@ -60,25 +60,11 @@ public class TournamentPageController implements Initializable {
     //Permette di attivare e disattivare il salvataggio sotto determinate condizioni
     private void setTextField() {
         int i = 0;
+        codice.setText(generaCodice());
+        saveLogout.setDisable(false);
         for(Node node: anchorPane.getChildren()) {
             if (node instanceof TextField) {
                 textFields.add((TextField) node);
-                if (i<16) {
-                    textFields.get(i).textProperty().addListener((observable, oldValue, newValue) -> {
-                        boolean var = true;
-                        for (int j = 0; j<16; j++) {
-                            var = var && textFields.get(j).getText().isEmpty();
-                        }
-                        saveLogout.setDisable(var);
-                        if (!var) {
-                            codice.setText(generaCodice());
-                        }
-                        else {
-                            codice.clear();
-                            code = 0;
-                        }
-                    });
-                }
                 i++;
             }
         }

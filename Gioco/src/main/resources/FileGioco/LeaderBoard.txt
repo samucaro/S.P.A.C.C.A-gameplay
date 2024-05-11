@@ -1,4 +1,4 @@
-samu 18
+samu 21
 walt 18
 luca 2
 nic 6
@@ -15,3 +15,6 @@ lore 0
 paolo 0
 ali 0
 tom 0
+carlone 0
+diego 3
+carlo 0

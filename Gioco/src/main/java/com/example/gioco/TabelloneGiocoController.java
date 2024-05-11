@@ -19,6 +19,7 @@ import javafx.util.Duration;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Objects;
 
 public class TabelloneGiocoController {
@@ -279,7 +280,11 @@ public class TabelloneGiocoController {
 
     //Imposta i giocatori morti e nel caso decreta il vincitore
     public void setMortiEVincitore(Giocatore giocatoreMorto) {
+        System.out.println("CHIAMATA");
         OvalPaneController.setMortoOP(giocatoreMorto);
+        while (!(giocatoreMorto.getMano().isEmpty())) {
+            scartaCarte(giocatoreMorto.getMano().getFirst(), giocatoreMorto);
+        }
         giocatoreMorto.clearMano();
         int check = 0;
         Giocatore ggVivo = null;
@@ -435,6 +440,7 @@ public class TabelloneGiocoController {
 
     //Attiva la grafica per mostrare il vincitore della partita
     private void handleFineGioco() {
+        numBang = 0;
         System.out.println("VINCE LA PARTITA: " + vincitore.getNome());
         if(gameData.getNumPartitaCorrente() == 14) {
             System.out.println("SONOQUI" + gameData.getNumPartitaCorrente());

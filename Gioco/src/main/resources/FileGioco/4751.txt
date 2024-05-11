@@ -1,0 +1,21 @@
+Dati Generali Partita:
+NumGiocatori: 3
+Turno: 2
+Mazzo: Mancato Bang Mancato ScartaBang Mancato Bang Bang Bang Mancato Bang Mancato Bang Bang Bang SparaTutti Bang Bang Mancato Mancato Mancato Bang Bang Bang Duello Mancato Bang RecuperaVita ScartaBang Bang RecuperaVita Bang Bang Bang PerdiCarta Mancato Duello Mancato Bang Bang Duello Bang SparaTutti SparaTutti Mancato Mancato Bang 
+Scarti: RecuperaVita Bang Mancato Bang Mancato PerdiCarta Bang Bang 
+Giocatore: 0
+Tipo: Persona
+Nome: samu
+Mano: 
+HpRimanente: 0
+Giocatore: 1
+Tipo: Persona
+Nome: carlo
+Mano: 
+HpRimanente: 0
+Giocatore: 2
+Tipo: Persona
+Nome: diego
+Mano: Mancato Bang Mancato 
+HpRimanente: 3
+******************************

@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.text.Font?>
+
+
+<ScrollPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+   <content>
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1818.0" prefWidth="585.0" style="-fx-background-color: #010820; -fx-border-radius: 15px;">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="225.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../logo.png" />
+               </image>
+               <effect>
+                  <DropShadow height="50.0" radius="24.5" width="50.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </ImageView>
+            <VBox alignment="TOP_CENTER" layoutX="17.0" layoutY="199.0" prefHeight="1604.0" prefWidth="555.0" styleClass="a" stylesheets="@StileBottoni.css">
+               <children>
+                  <Label alignment="CENTER" lineSpacing="2.0" prefHeight="31.0" prefWidth="530.0" style="-fx-font-weight: bold;" text="REGOLAMENTO S.P.A.C.C.A" textAlignment="JUSTIFY" textFill="WHITE" textOverrun="WORD_ELLIPSIS" wrapText="true" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="Game of Thrones" size="14.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="15.0" top="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label prefHeight="125.0" prefWidth="530.0" text="L'umano ha ormai da anni perso il controllo della Terra, le sue stesse capacità gli hanno permesso di sviluppare AI talmente potenti da non poterle più controllare. L'AI ha così preso il controllo dell'universo. Le grandi capacità di calcolo e l'elaborazione dati hanno permesso all'AI di sviluppare capacità fin ad ora impensabili, tanto da prendere il controllo di interi pianeti. In questo scenario apocalittico si sono sviluppate tante inteligenze artificiali diverse, ognuna per ogni pianeta del sistema solare. Ma questo non bastava! La fame di potere ha portato loro in una guerra senza precedenti che vedrà solo un AI vincitrice e con essa il suo pianeta, così da poter regnare su tutto l'universo." textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="System Italic" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label prefHeight="17.0" prefWidth="530.0" text="CONTENUTO:" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </Label>
+                  <Label prefHeight="34.0" prefWidth="530.0" text="Il gioco prevede 66 carte fra BANG (30), MISS (18), FIGHT (4), STEAL (2), 1-UP (4), GUNFIRE (2) e REJECT (2)." textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label prefHeight="17.0" prefWidth="530.0" text="PREPARAZIONE:" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="34.0" prefWidth="530.0" text="Ogni giocatore riceve in automatico inizialmente 5 carte in modo casuale. Casuale è anche la scelta del giocatore che parte per primo a giocare" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label prefHeight="17.0" prefWidth="530.0" text="IL GIOCO:" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="35.0" prefWidth="530.0" text="Il gioco si svolge in senso orario partendo dal primo giocatore selezionato (in caso di un Bot giocherà in automatico)." textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS" />
+                  <Label prefHeight="6.0" prefWidth="530.0" text="Ogni turno è diviso in 3 fasi, non per forza nel seguente ordine:" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS" />
+                  <Label prefHeight="17.0" prefWidth="510.0" text="1. Pesca due carte;" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="System Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="17.0" prefWidth="510.0" text="2. Gioca quante carte vuoi;" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="System Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="17.0" prefWidth="510.0" text="3. Scarta/pesca le carte in eccesso/mancanti;" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="System Italic" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label prefHeight="6.0" prefWidth="530.0" text="1. Pesca due carte" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="System Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="37.0" prefWidth="530.0" text="Pesca le prime due carte dal mazzo. Se il mazzo finisce verrano rimescolati gli scarti e formeranno così il nuovo mazzo." textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label prefHeight="6.0" prefWidth="530.0" text="2. Gioca quante carte vuoi" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="System Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="37.0" prefWidth="530.0" text="Ora puoi giocare il numero di carte che preferisci. Solo durante il tuo turno potrai giocare le tue carte. Non sei obbligato a giocare carte durante il tuo turno. C'è però un'unica limitazione:" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS" />
+                  <Label prefHeight="2.0" prefWidth="510.0" text="- puoi giocare solo 2 BANG per turno." textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS" />
+                  <Label prefHeight="56.0" prefWidth="530.0" text="Ci sono due tipi di carte: le carte INTERACTIVE e le carte NOINTERACTIVE. Le carte INTERACTIVE prevedono la scelta del giocatore verso cui compire l'abilità della carta. Le carte NOINTERACTIVE prevedono che l'abilità venga copmpiuta direttamente dal sistema. " textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label prefHeight="6.0" prefWidth="530.0" text="3. Scarta/pesca le carte in eccesso/mancanti" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="System Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="56.0" prefWidth="530.0" text="Una volta completata la seconda fase il giocatore deve cliccare &quot;CAMBIA TURNO&quot;. Così il sistema in automatico si occupera di rimuovere/aggiungere le carte necessarie in base al numero di carte rimaste in mano per arrivare a 5. Così il turno passera al giocatore successivo in senso orario." textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label prefHeight="13.0" prefWidth="530.0" text="Giocatore eliminato" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="35.0" prefWidth="530.0" text="Quando perdi il tuo ultimo punto vita, sei eliminato e il gioco per te è finito. Le carte che avevi in mano vengo scartate." textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label prefHeight="17.0" prefWidth="530.0" text="LA FINE DEL GIOCO:" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label prefHeight="3.0" prefWidth="530.0" text="Il gioco finisce quando rimane un solo giocatore in vita." textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
+                     <VBox.margin>
+                        <Insets bottom="15.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label prefHeight="17.0" prefWidth="530.0" text="LE CARTE:" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <Label prefHeight="0.0" prefWidth="530.0" text="BANG! e MISS!" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox alignment="TOP_CENTER" prefHeight="80.0" prefWidth="200.0" spacing="15.0">
+                     <children>
+                        <ImageView fitHeight="75.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+                           <image>
+                              <Image url="@../../../CartaBang.png" />
+                           </image>
+                        </ImageView>
+                        <Label text="BANG! è la carta principale per rimuovere punti vita all'avversario. Una volta giocata dovrai scegliere contro quale giocatore, se ritardi la scelta verra scelto un giocatore random." textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets top="14.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets left="15.0" right="15.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox alignment="TOP_CENTER" prefHeight="80.0" prefWidth="200.0" spacing="15.0">
+                     <children>
+                        <Label text="Se vieni colpito da un BANG! ti verrà scartato automaticamente, anche se non è il tuo turno, un MISS! per cancellare il colpo e non perdere un punto vita. Se non lo possiedi perderai un punto vita." textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets top="14.0" />
+                           </HBox.margin>
+                        </Label>
+                        <ImageView fitHeight="75.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+                           <image>
+                              <Image url="@../../../CartaMancato.png" />
+                           </image>
+                        </ImageView>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="15.0" right="15.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Label prefHeight="0.0" prefWidth="530.0" text="1-UP" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox alignment="TOP_CENTER" prefHeight="80.0" prefWidth="200.0" spacing="15.0">
+                     <children>
+                        <ImageView fitHeight="75.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+                           <image>
+                              <Image url="@../../../CartaRecuperaVita.png" />
+                           </image>
+                        </ImageView>
+                        <Label prefHeight="35.0" prefWidth="457.0" text="Questa carta ti permette di recuperare un punto vita. Non puoi recuperare più di cinque punti vita." textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets top="18.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="15.0" right="15.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Label prefHeight="0.0" prefWidth="530.0" text="STEAL" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox alignment="TOP_CENTER" prefHeight="80.0" prefWidth="200.0" spacing="15.0">
+                     <children>
+                        <Label prefHeight="53.0" prefWidth="457.0" text="Puoi rubare una carta dalla mano del tuo avversario in modo casuale. Scegliendo il giocatore contro cui giocarla riceverai una carta della sua mano scelta in modo causale." textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets top="13.0" />
+                           </HBox.margin>
+                        </Label>
+                        <ImageView fitHeight="75.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+                           <image>
+                              <Image url="@../../../CartaPescaCarta.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </ImageView>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="15.0" right="15.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Label prefHeight="0.0" prefWidth="530.0" text="GUNFIRE" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox alignment="TOP_CENTER" prefHeight="80.0" prefWidth="200.0" spacing="15.0">
+                     <children>
+                        <ImageView fitHeight="75.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+                           <image>
+                              <Image url="@../../../CartaSparaTutti.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </ImageView>
+                        <Label prefHeight="53.0" prefWidth="457.0" text="Con questa carta spari contemporaneamente a tutti i giocatori ancora vivi. Loro possono però difendersi scartando una carta MISS!. Questo verrà fatto in automatico se i giocatori possiedono una carta MISS!" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets top="12.0" />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="15.0" right="15.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Label prefHeight="0.0" prefWidth="530.0" text="FIGHT" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox alignment="TOP_CENTER" prefHeight="80.0" prefWidth="200.0" spacing="15.0">
+                     <children>
+                        <ImageView fitHeight="75.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+                           <image>
+                              <Image url="@../../../CartaDuello.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets top="3.0" />
+                           </HBox.margin>
+                        </ImageView>
+                        <Label prefHeight="93.0" prefWidth="457.0" text="Con questa carta puoi sfidare un altro giocatore. Il giocatore sfidato deve scartere una carta BANG! (anche se non è il suo turno). Se lo fa, allora tu dovrai scartare una cara BANG! e via così: il primo sfidante che non potrà più scartare una carta BANG! perderà due punti vita e il duello è finito. Non potrai usare MISS! in questa situazione" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="10.0" left="15.0" right="15.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Label prefHeight="0.0" prefWidth="530.0" text="REJECT" textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" VBox.vgrow="ALWAYS">
+                     <font>
+                        <Font name="System Bold Italic" size="12.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                  </Label>
+                  <HBox alignment="TOP_CENTER" prefHeight="80.0" prefWidth="200.0" spacing="15.0">
+                     <children>
+                        <Label prefHeight="34.0" prefWidth="457.0" text="Ogni giocatore, escluso chi gioca questa carta deve scartare una carta BANG!, altrimenti perderà un punto vita." textAlignment="JUSTIFY" textFill="WHITE" wrapText="true" HBox.hgrow="ALWAYS">
+                           <HBox.margin>
+                              <Insets top="23.0" />
+                           </HBox.margin>
+                        </Label>
+                        <ImageView fitHeight="75.0" fitWidth="125.0" pickOnBounds="true" preserveRatio="true" HBox.hgrow="ALWAYS">
+                           <image>
+                              <Image url="@../../../CartaScartaBang.png" />
+                           </image>
+                           <HBox.margin>
+                              <Insets />
+                           </HBox.margin>
+                        </ImageView>
+                     </children>
+                     <VBox.margin>
+                        <Insets left="15.0" right="15.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+   </content>
+</ScrollPane>
