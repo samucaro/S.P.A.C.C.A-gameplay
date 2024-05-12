@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="200.0" prefWidth="350.0" style="-fx-background-color: #010820; -fx-background-radius: 10px;" styleClass="c" stylesheets="@StileBottoni.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.gioco.IndovinelloController">
+   <children>
+      <Label layoutX="58.0" layoutY="55.0" prefHeight="43.0" prefWidth="236.0" text="Quante gocce d'acqua si possono mettere in un bicchiere vuoto?" textAlignment="CENTER" textFill="WHITE" wrapText="true" />
+      <TextField fx:id="risposta" layoutX="101.0" layoutY="98.0" promptText="Risposta" />
+      <Label fx:id="datiAccesso" layoutX="120.0" layoutY="140.0" prefHeight="43.0" prefWidth="111.0" text="L'ut è: samuwalt     La psw è: waltSamu2" textFill="WHITE" visible="false" wrapText="true" />
+      <Label layoutX="68.0" layoutY="24.0" text="Risolvi l'indovinello per sapere i codici" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="12.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

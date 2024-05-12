@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -15,14 +16,15 @@ import java.io.*;
 import java.net.URL;
 import java.util.*;
 
+//Primo controller per la schermata del tabellone del torneo, serve alla gestione dei giocatori all'interno dell torneo
 public class TournamentPageController implements Initializable {
     private Scene scene;
     private Parent root;
-    private int code;
     private Mazzo mazzo;
     private String[] tipoGiocatore;
     private DataSet dataSet;
     private LinkedList<TextField> textFields;
+    private int code;
     @FXML
     private AnchorPane anchorPane;
     @FXML
@@ -30,9 +32,10 @@ public class TournamentPageController implements Initializable {
     @FXML
     private Button saveLogout;
     @FXML
-    private Button start;
-    @FXML
     private Button back;
+
+    public TournamentPageController() {
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -41,17 +44,12 @@ public class TournamentPageController implements Initializable {
         tipoGiocatore = new String[16];
         code = 0;
         setTextField();
-        saveLogout.setOnAction(event -> {
-            try {
-                switchToAdminPlayerPage(event);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        });
+        saveLogout.setOnAction(this::switchToAdminPlayerPage);
         back.setOnAction(event -> {
             try {
                 switchToTypeGamePage(event);
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 throw new RuntimeException(e);
             }
         });
@@ -59,23 +57,22 @@ public class TournamentPageController implements Initializable {
 
     //Permette di attivare e disattivare il salvataggio sotto determinate condizioni
     private void setTextField() {
-        int i = 0;
         codice.setText(generaCodice());
         saveLogout.setDisable(false);
         for(Node node: anchorPane.getChildren()) {
             if (node instanceof TextField) {
                 textFields.add((TextField) node);
-                i++;
             }
         }
     }
 
     //Genera un codice casuale per identificare il torneo
     private String generaCodice() {
-        if (code == 0)
+        if(code == 0) {
             do {
                 code = (int) (Math.random() * (999 - 100 + 1)) + 100;
             } while (dataSet.checkCode(code));
+        }
         return "" + code;
     }
 
@@ -123,7 +120,7 @@ public class TournamentPageController implements Initializable {
                 writer.println("Scarti: ");
                 String[] mani = {assegnaMano(), assegnaMano()};
                 if(i <= 7) {
-                    for (int j = 0; j < 2; j++) {
+                    for(int j = 0; j < 2; j++) {
                         writer.println("Giocatore: " + j);
                         writer.println("Tipo: " + tipoGiocatore[i+i+j]);
                         writer.println("Nome: " + textFields.get(i+i+j).getText());
@@ -132,7 +129,7 @@ public class TournamentPageController implements Initializable {
                     }
                 }
                 else {
-                    for (int j = 0; j < 2; j++) {
+                    for(int j = 0; j < 2; j++) {
                         writer.println("Giocatore: " + j);
                         writer.println("Tipo: ");
                         writer.println("Nome: ");
@@ -143,22 +140,10 @@ public class TournamentPageController implements Initializable {
                 writer.println("******************************");
             }
             writer.close();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             System.err.println("Errore durante la creazione del file: " + e.getMessage());
         }
-    }
-
-    //Save & Logout
-    public void switchToAdminPlayerPage(ActionEvent event) throws IOException {
-        dataSet.creaFile(code);
-        impostaTorneo();
-        nuovoFile();
-        aggiornaFileLeaderBoard();
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AdminPlayerPage.fxml")));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
     }
 
     //Salvando i giocatori carica i nomi in un file per aggiornare la LeaderBoard
@@ -177,12 +162,13 @@ public class TournamentPageController implements Initializable {
                 }
             }
             writer.close();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             System.err.println("Errore durante la creazione del file: " + e.getMessage());
         }
     }
 
-    private boolean controllaNomi(String nome) throws IOException {
+    private boolean controllaNomi(String nome) {
         boolean check = false;
         try {
             BufferedReader reader = new BufferedReader(new FileReader(dataSet.getProjectFolderPath() + File.separator + "/" + "LeaderBoard.txt"));
@@ -201,12 +187,46 @@ public class TournamentPageController implements Initializable {
         return check;
     }
 
+    //Save & Logout
+    public void switchToAdminPlayerPage(ActionEvent event) {
+        try {
+            dataSet.creaFile(code);
+            impostaTorneo();
+            nuovoFile();
+            aggiornaFileLeaderBoard();
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AdminPlayerPage.fxml")));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (IOException | NullPointerException e) {
+            mostraErrore();
+            System.err.println(e.getMessage());
+        }
+    }
+
     //BACK
     public void switchToTypeGamePage(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("TypeGamePage.fxml")));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        try {
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("TypeGamePage.fxml")));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (IOException | NullPointerException e) {
+            mostraErrore();
+            System.err.println(e.getMessage());
+        }
+    }
+
+    private void mostraErrore() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("ERRORE");
+        alert.setHeaderText("Impossibile caricare il contenuto");
+        alert.setContentText("Si è verificato un errore durante il caricamento del contenuto. Contatta l'assistenza" +
+                "tecnica al seguente numero verde: +393209786308");
+        alert.showAndWait();
     }
 }

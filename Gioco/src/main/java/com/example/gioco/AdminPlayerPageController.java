@@ -17,36 +17,45 @@ import java.util.Objects;
 public class AdminPlayerPageController {
     private Scene scene;
     private Parent root;
-    private DataSet dataSet;
     @FXML
     private Button regoleButton;
     @FXML
     private Text errorMessage;
 
     @FXML
-    public void initialize() {
-        dataSet = new DataSet();
-    }
+    public void initialize() {}
 
     //LOGIN ADMIN
-    public void switchToLoginAdminPage(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("LoginAdminPage.fxml")));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    public void switchToLoginAdminPage(ActionEvent event) {
+        try {
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("LoginAdminPage.fxml")));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (IOException | NullPointerException e) {
+            mostraErrore();
+            System.out.println(e.getMessage());
+        }
     }
 
     //LOGIN PLAYER
-    public void switchToSetGamePage(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("SetGamePage.fxml")));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    public void switchToSetGamePage(ActionEvent event) {
+        try {
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("SetGamePage.fxml")));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (IOException | NullPointerException e) {
+            mostraErrore();
+            System.out.println(e.getMessage());
+        }
     }
 
-    //Regole
+    //REGOLE
     public void mostraRegolamento() {
         try {
             Stage stage = new Stage();
@@ -62,18 +71,19 @@ public class AdminPlayerPageController {
             stage.show();
         }
         catch (IOException | NullPointerException ex) {
+            regoleButton.setDisable(true);
+            errorMessage.setVisible(true);
             mostraErrore();
-            System.out.println(ex.getMessage());
+            System.err.println(ex.getMessage());
         }
     }
 
     private void mostraErrore() {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("ERRORE");
-        alert.setHeaderText("Impossibile caricare il regolamento");
-        alert.setContentText("Si è verificato un errore durante il caricamento del regolamento. Contatta l'assistenza tecnica.");
+        alert.setHeaderText("Impossibile caricare il contenuto");
+        alert.setContentText("Si è verificato un errore durante il caricamento del contenuto. Contatta l'assistenza" +
+                "tecnica al seguente numero verde: +393209786308");
         alert.showAndWait();
-        regoleButton.setDisable(true);
-        errorMessage.setVisible(true);
     }
 }

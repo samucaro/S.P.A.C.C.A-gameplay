@@ -7,13 +7,17 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import java.io.IOException;
 import java.util.Objects;
 
 public class BlockPageController {
+    private Parent root;
+    private Scene scene;
     private int seconds;
     private Timeline timeline;
     @FXML
@@ -45,10 +49,46 @@ public class BlockPageController {
 
     //Torna al login dopo la scadenza dei secondi
     public void switchToHomePage() throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("LoginAdminPage.fxml")));
-        Stage stage = (Stage) timer.getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+        try {
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("LoginAdminPage.fxml")));
+            Stage stage = (Stage) timer.getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (IOException | NullPointerException e) {
+            mostraErrore();
+            System.err.println(e.getMessage());
+        }
+    }
+
+    //Forgot Password
+    public void mostraIndovinello() {
+        try {
+            Stage stage = new Stage();
+            stage.setMinWidth(400);
+            stage.setMinHeight(250);
+            stage.setMaxWidth(400);
+            stage.setMaxHeight(250);
+            stage.setTitle("Indovinello");
+            stage.getIcons().add(new Image("logo.png"));
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Indovinello.fxml")));
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (IOException | NullPointerException ex) {
+            mostraErrore();
+            System.err.println(ex.getMessage());
+        }
+    }
+
+    private void mostraErrore() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("ERRORE");
+        alert.setHeaderText("Impossibile caricare il contenuto");
+        alert.setContentText("Si è verificato un errore durante il caricamento del contenuto. Contatta l'assistenza" +
+                "tecnica al seguente numero verde: +393209786308");
+        alert.showAndWait();
     }
 }

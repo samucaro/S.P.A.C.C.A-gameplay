@@ -7,12 +7,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
@@ -22,14 +22,14 @@ public class TypeGamePageController {
     private Parent root;
     private GameData gameData;
     private DataSet dataSet;
+    private String newValue;
+    private String percorsoCartellaProgetto;
     @FXML
     private ChoiceBox<String> partite;
     @FXML
     private Button elimina;
     @FXML
     private Text testo;
-    private String newValue;
-    private String percorsoCartellaProgetto;
 
     @FXML
     public void initialize() {
@@ -51,20 +51,22 @@ public class TypeGamePageController {
     public void mostraPartite(String percorsoCartellaProgetto) {
         partite.getItems().clear();
         File directory = new File(percorsoCartellaProgetto);
-        if (directory.exists() && directory.isDirectory()) {
+        if(directory.exists() && directory.isDirectory()) {
             String[] files = directory.list();
-            if (files != null) {
-                for (String fileName : files) {
-                    if(!fileName.equals("LeaderBoard.txt") && !fileName.equals("RegoleSPACCA.txt")) {
-                        if (fileName.length() > 7) {
+            if(files != null) {
+                for(String fileName : files) {
+                    if(!fileName.equals("LeaderBoard.txt")) {
+                        if(fileName.length() > 7) {
                             partite.getItems().add(fileName.substring(0, 4));
-                        } else {
+                        }
+                        else {
                             partite.getItems().add(fileName.substring(0, 3));
                         }
                     }
                 }
             }
-        } else {
+        }
+        else {
             System.err.println("La cartella specificata non esiste o non è una cartella valida.");
         }
     }
@@ -84,34 +86,61 @@ public class TypeGamePageController {
     }
 
     //BACK
-    public void switchToAdminPlayerPage(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AdminPlayerPage.fxml")));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    public void switchToAdminPlayerPage(ActionEvent event) {
+        try {
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AdminPlayerPage.fxml")));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (IOException | NullPointerException ex) {
+            mostraErrore();
+            System.err.println(ex.getMessage());
+        }
     }
 
     //MULTIPLAYER
-    public void switchToSetPlayerPage(ActionEvent event) throws IOException {
-        gameData.setTipo("Partita");
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("SetPlayerPage.fxml")));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    public void switchToSetPlayerPage(ActionEvent event) {
+        try {
+            gameData.setTipo("Partita");
+            root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("SetPlayerPage.fxml")));
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (IOException | NullPointerException ex) {
+            mostraErrore();
+            System.err.println(ex.getMessage());
+        }
     }
 
     //TOURNAMENT
-    public void switchToTournamentPage(ActionEvent event) throws IOException {
-        gameData.setTipo("Torneo");
-        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("TournamentPage.fxml")));
-        TournamentPageController tp = new TournamentPageController();
-        fxmlLoader.setController(tp);
-        root = fxmlLoader.load();
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+    public void switchToTournamentPage(ActionEvent event) {
+        try {
+            gameData.setTipo("Torneo");
+            FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("TournamentPage.fxml")));
+            TournamentPageController tp = new TournamentPageController();
+            fxmlLoader.setController(tp);
+            root = fxmlLoader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (IOException | NullPointerException ex) {
+            mostraErrore();
+            System.err.println(ex.getMessage());
+        }
+    }
+
+    private void mostraErrore() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("ERRORE");
+        alert.setHeaderText("Impossibile caricare il contenuto");
+        alert.setContentText("Si è verificato un errore durante il caricamento del contenuto. Contatta l'assistenza" +
+                "tecnica al seguente numero verde: +393209786308");
+        alert.showAndWait();
     }
 }
