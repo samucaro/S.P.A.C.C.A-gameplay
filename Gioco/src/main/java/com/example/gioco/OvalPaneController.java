@@ -4,7 +4,6 @@ import javafx.animation.*;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
@@ -20,8 +19,17 @@ import java.util.Objects;
 
 public class OvalPaneController {
     private static GameData gameData;
-    private TabelloneGiocoController mc;
     private static Group[] pianeti;
+    private static int currentSphere;
+    private static double centroX;
+    private static double centroY;
+    private static double orx = 230.0;
+    private static double ory = 250.0;
+    private static double irx = 90.0;
+    private static double iry = 130.0;
+    private static Shape halfDonut;
+    private static int turnoDi;
+    private TabelloneGiocoController mc;
     private PhongMaterial redMaterial;
     private PhongMaterial orangeMaterial;
     public Giocatore giocatoreSelezionato;
@@ -29,17 +37,8 @@ public class OvalPaneController {
     private Text scegliAvversario;
     private Arc arcoInterno;
     private Arc arcoEsterno;
-    private static int currentSphere;
     private Integer winnerSphere;
-    private static double centroX;
-    private static double centroY;
     private boolean planetSelected;
-    private static double orx = 230.0;
-    private static double ory = 250.0;
-    private static double irx = 90.0;
-    private static double iry = 130.0;
-    private static Shape halfDonut;
-    private static int turnoDi;
     @FXML
     private Pane ovalPane;
 
@@ -175,7 +174,6 @@ public class OvalPaneController {
         }
     }
     public void reShape() {
-        System.out.println("RESHAPE");
         double h = (60 * Math.min(centroX, centroY)) / 300;
         orx = h+centroX*1/2;
         ory = h+centroY*1/1.5;
@@ -183,7 +181,6 @@ public class OvalPaneController {
         iry = centroY/5+h;
         boolean checkVis = halfDonut.isVisible();
         if(ovalPane.getChildren().contains(progressBar)) {
-            //ovalPane.getChildren().remove(halfDonut);
             halfDonut.setVisible(false);
             scegliAvversario.setWrappingWidth(centroX/1.5);
             progressBar.setPrefWidth(centroX/1.5);
@@ -205,6 +202,9 @@ public class OvalPaneController {
             halfDonut.setTranslateX(centroX - 100);
             halfDonut.setTranslateY(centroY * 2 - 100);
         }
+    }
+    public double getScala(){
+        return 0.03 * ((20 * Math.min(centroX, centroY)) / 50);
     }
 
     //Imposta la rotazione 3D dei pianeti
@@ -266,9 +266,8 @@ public class OvalPaneController {
 
     }
 
-    //Gestisce l'evento del cambio turno
+    //Gestisce l'evento del cambio turno muovendo i pianeti correttamente
     public Timeline cambiaTurno() {
-        System.out.println("CAMBIA TURNO");
         pianeti[currentSphere].getChildren().get(pianeti[currentSphere].getChildren().size() - 2).setVisible(true);
         KeyValue kv1, kv2, kv3, kv4;
         KeyFrame kf;
@@ -287,14 +286,6 @@ public class OvalPaneController {
             timeline.getKeyFrames().add(kf);
         }
         return timeline;
-    }
-
-    public void getMainController(TabelloneGiocoController tabelloneGiocoController) {
-        mc = tabelloneGiocoController;
-        ovalPane.prefWidthProperty().bind(mc.stackPane.widthProperty());
-        ovalPane.prefHeightProperty().bind(mc.stackPane.heightProperty());
-        mc.stackPane.widthProperty().addListener((observable, oldValue, newValue) -> setScenaX((Double) newValue));
-        mc.stackPane.heightProperty().addListener((observable, oldValue, newValue) -> setScenaY((Double) newValue));
     }
 
     //Ritorna un giocatore casuale fra quelli presenti
@@ -381,10 +372,6 @@ public class OvalPaneController {
         }
     }
 
-    public double getScala(){
-        return 0.03 * ((20 * Math.min(centroX, centroY)) / 50);
-    }
-
     //Impostano la grafica di visualizzazione del giocatore vincitore
     private void spostaSferaVincitrice() {
         ((Sphere) pianeti[winnerSphere].getChildren().getFirst()).setRadius(50);
@@ -398,11 +385,18 @@ public class OvalPaneController {
         timeline.play();
         timeline.setOnFinished(actionEvent -> mettiSferaVincitrice());
     }
-
     public void mettiSferaVincitrice(){
         pianeti[winnerSphere].setScaleX(getScala());
         pianeti[winnerSphere].setScaleY(getScala());
         pianeti[winnerSphere].setTranslateX(centroX);
         pianeti[winnerSphere].setTranslateY(centroY);
+    }
+
+    public void getMainController(TabelloneGiocoController tabelloneGiocoController) {
+        mc = tabelloneGiocoController;
+        ovalPane.prefWidthProperty().bind(mc.stackPane.widthProperty());
+        ovalPane.prefHeightProperty().bind(mc.stackPane.heightProperty());
+        mc.stackPane.widthProperty().addListener((observable, oldValue, newValue) -> setScenaX((Double) newValue));
+        mc.stackPane.heightProperty().addListener((observable, oldValue, newValue) -> setScenaY((Double) newValue));
     }
 }

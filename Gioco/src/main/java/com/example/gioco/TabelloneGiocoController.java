@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -16,44 +17,25 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Objects;
 
 public class TabelloneGiocoController {
-    @FXML
-    public OvalPaneController ovalPaneController;
-    private Parent root;
-    private Scene scene;
+    private static int numBang;
+    private static Giocatore vincitore;
+    private static Giocatore vincitoreTorneo;
     private double centroX;
     private double centroY;
     private double xOffset;
     private double yOffset;
-    private ArrayList<Integer> numNodiMano;
     public boolean checkRidimensionato;
     private boolean checkInit;
     private boolean checkBack;
     private GameData gameData;
-    private static int numBang;
-    private final Timeline turnoBot = new Timeline(
-            new KeyFrame(Duration.ZERO, inizioTurno -> aggiornaCosa()),
-            new KeyFrame(Duration.seconds(0.5), eventoPescata -> {
-                pescataInizialeGiocatore();
-                mettiCarte(true);
-            }),
-            new KeyFrame(Duration.seconds(1.5), eventoTurno -> {
-                ((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController);
-                mettiVita();
-                mettiCarte(true);
-            }),
-            new KeyFrame(Duration.seconds(2.3), eventoFineTurno -> {
-                handleTurnButton();
-            })
-    );
-    static Giocatore vincitore;
-    static Giocatore vincitoreTorneo;
+    private ArrayList<Integer> numNodiMano;
+    @FXML
+    public OvalPaneController ovalPaneController;
     @FXML
     private Button turnButton;
     @FXML
@@ -76,20 +58,38 @@ public class TabelloneGiocoController {
     private Text stringaErroreBang;
     @FXML
     private Text messaggioSalvataggio;
+    private final Timeline turnoBot = new Timeline(
+            new KeyFrame(Duration.ZERO, inizioTurno -> aggiornaCosa()),
+            new KeyFrame(Duration.seconds(0.5), eventoPescata -> {
+                pescataInizialeGiocatore();
+                mettiCarte(true);
+            }),
+            new KeyFrame(Duration.seconds(1.5), eventoTurno -> {
+                ((GiocatoreRobot) gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente())).giocaTurno(this, ovalPaneController);
+                mettiVita();
+                mettiCarte(true);
+            }),
+            new KeyFrame(Duration.seconds(2.3), eventoFineTurno -> handleTurnButton())
+    );
 
     @FXML
-    public void initialize() throws IOException {
+    public void initialize() {
         gameData = GameData.getInstance();
         vincitore = null;
         ovalPaneController.getMainController(this);
         checkInit = false;
         checkBack = true;
         impostaCose();
-        for (Giocatore giocatore : gameData.getGiocatoriPartita()) {
+        for(Giocatore giocatore : gameData.getGiocatoriPartita()) {
             if (giocatore.getHpRimanente() == 0) {
                 setMortiEVincitore(giocatore);
             }
         }
+        PauseTransition pause = getPauseTransition();
+        pause.playFromStart();
+    }
+
+    private PauseTransition getPauseTransition() {
         PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
         pause.setOnFinished(event -> {
             if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente() == 0) {
@@ -102,7 +102,7 @@ public class TabelloneGiocoController {
                 aggiornaCosa();
             }
         });
-        pause.playFromStart();
+        return pause;
     }
 
     //Imposta il layout del tabellone di gioco con tutte le carte, la vita e il mazzo
@@ -192,7 +192,7 @@ public class TabelloneGiocoController {
     }
 
     //Setta tutti i listener necessari alle carte per garantirne l'animazione
-    private void impostaListenerCarta(ImageView imageView, int i){
+    private void impostaListenerCarta(ImageView imageView, int i) {
         Carta cartaAttuale = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().get(i);
         imageView.setOnMouseEntered(event1 -> {
             imageView.setScaleX(1.1);
@@ -273,16 +273,15 @@ public class TabelloneGiocoController {
     }
 
     //Aggiorna la vita del giocatore corrente
-    private void mettiVita(){
+    private void mettiVita() {
         int vita = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente();
         barraVita.setProgress((double) vita/5);
     }
 
     //Imposta i giocatori morti e nel caso decreta il vincitore
     public void setMortiEVincitore(Giocatore giocatoreMorto) {
-        System.out.println("CHIAMATA");
         OvalPaneController.setMortoOP(giocatoreMorto);
-        while (!(giocatoreMorto.getMano().isEmpty())) {
+        while(!(giocatoreMorto.getMano().isEmpty())) {
             scartaCarte(giocatoreMorto.getMano().getFirst(), giocatoreMorto);
         }
         giocatoreMorto.clearMano();
@@ -307,25 +306,28 @@ public class TabelloneGiocoController {
     public void handleTurnButton() {
         numBang = 0;
         stringaErroreBang.setVisible(false);
-        if (checkBack) {
+        if(checkBack) {
             checkRidimensionato = false;
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setMouseTransparent(true);
             turnButton.setDisable(true);
             pesca.setVisible(false);
             verificaMano();
             Timeline tm = ovalPaneController.cambiaTurno();
-            for (int j : numNodiMano) {
+            for(int j : numNodiMano) {
                 anchorPane.getChildren().get(j).setMouseTransparent(true);
             }
             tm.playFromStart();
             tm.setOnFinished(event -> {
-                if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente() == 0) {
-                    if (checkRidimensionato)
+                if(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente() == 0) {
+                    if(checkRidimensionato) {
                         OvalPaneController.posizionaPianeti();
+                    }
                     handleTurnButton();
-                } else if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
+                }
+                else if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
                     turnoBot.playFromStart();
-                } else {
+                }
+                else {
                     ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setMouseTransparent(false);
                     aggiornaCosa();
                     pesca.setVisible(true);
@@ -338,12 +340,12 @@ public class TabelloneGiocoController {
     //In base al numero di carte del giocatore verifica se levare o mettere carte per arrivare a 5
     private void verificaMano() {
         Carta carta;
-        if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente() != 0) {
-            while (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size() > 5) {
+        if(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getHpRimanente() != 0) {
+            while(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size() > 5) {
                 carta = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().get((int) (Math.random() * (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size())));
                 scartaCarte(carta, gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()));
             }
-            while (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size() < 5) {
+            while(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().size() < 5) {
                 gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).setMano(gameData.getMazzo().pesca());
             }
         }
@@ -370,7 +372,7 @@ public class TabelloneGiocoController {
         }
     }
 
-    //Disabilita e abilita l'anchorPane ogni task di selezione e aggiorna il necessario
+    //Disabilita e abilita anchorPane ogni task di selezione e aggiorna il necessario
     public void startSelectionMC(){
         anchorPane.setDisable(true);
         anchorPane.setVisible(false);
@@ -386,64 +388,10 @@ public class TabelloneGiocoController {
         mettiCarte(true);
     }
 
-    //SAVE
-    public void salvaPartita() throws IOException {
-        gameData.aggiornaFile();
-        System.out.println(gameData.getGiocatoriPartita());
-        System.out.println(gameData.getMazzo().toStringScarti());
-        messaggioSalvataggio.setVisible(true);
-        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), messaggioSalvataggio);
-        fadeTransition.setFromValue(1.0);
-        fadeTransition.setToValue(0.0);
-        fadeTransition.setOnFinished(event -> {
-            messaggioSalvataggio.setVisible(false);
-        });
-        fadeTransition.play();
-    }
-
-    //BACK
-    public void switchToAdminPlayerPage(ActionEvent event) throws IOException {
-        checkBack = false;
-        salvaPartita();
-        GameData.resetInstance();
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AdminPlayerPage.fxml")));
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    //LEADERBOARD
-    public void switchToLeaderBoard() throws IOException {
-        Stage stage = new Stage();
-        stage.setTitle("LeaderBoard");
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("LeaderBoard.fxml")));
-        scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-    }
-
-    //CONTINUA TORNEO
-    public void switchToTournamentPage(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("TournamentPage.fxml")));
-        StartTournamentController st = new StartTournamentController();
-        fxmlLoader.setController(st);
-        Parent root = fxmlLoader.load();
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-        st.leggiFile(gameData.getCode());
-        System.out.println("CODICE CHE FACCIAMO LEGGERE: " + gameData.getCode());
-    }
-
-
     //Attiva la grafica per mostrare il vincitore della partita
     private void handleFineGioco() {
         numBang = 0;
-        System.out.println("VINCE LA PARTITA: " + vincitore.getNome());
         if(gameData.getNumPartitaCorrente() == 14) {
-            System.out.println("SONOQUI" + gameData.getNumPartitaCorrente());
             vincitoreTorneo = vincitore;
         }
         checkBack = false;
@@ -457,7 +405,7 @@ public class TabelloneGiocoController {
                 i--;
             }
         }
-        if (!bol) {
+        if(!bol) {
             turnButton.setDisable(false);
             turnButton.setText("CONTINUA TORNEO");
             turnButton.setFont(new Font("Game of Thrones", 12));
@@ -476,11 +424,80 @@ public class TabelloneGiocoController {
         messaggioSalvataggio.setVisible(false);
     }
 
-
     public static String getNomeVincitore() {
         return vincitore == null ? "" : vincitore.getNome();
     }
     public static String getNomeVincitoreTorneo() {
         return vincitoreTorneo == null ? "" : vincitoreTorneo.getNome();
+    }
+
+    //SAVE
+    public void salvaPartita() throws IOException {
+        gameData.aggiornaFile();
+        System.out.println(gameData.getGiocatoriPartita());
+        System.out.println(gameData.getMazzo().toStringScarti());
+        messaggioSalvataggio.setVisible(true);
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), messaggioSalvataggio);
+        fadeTransition.setFromValue(1.0);
+        fadeTransition.setToValue(0.0);
+        fadeTransition.setOnFinished(event -> messaggioSalvataggio.setVisible(false));
+        fadeTransition.play();
+    }
+
+    //BACK
+    public void switchToAdminPlayerPage(ActionEvent event) throws IOException {
+        checkBack = false;
+        salvaPartita();
+        GameData.resetInstance();
+        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AdminPlayerPage.fxml")));
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    //LEADERBOARD
+    public void switchToLeaderBoard() {
+        try {
+            Stage stage = new Stage();
+            stage.setTitle("LeaderBoard");
+            Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("LeaderBoard.fxml")));
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+        catch (IOException | NullPointerException e) {
+            leaderBoardButton.setDisable(true);
+            mostraErrore();
+            System.err.println(e.getMessage());
+        }
+    }
+
+    //CONTINUA TORNEO
+    public void switchToTournamentPage(ActionEvent event) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(Objects.requireNonNull(getClass().getResource("TournamentPage.fxml")));
+            StartTournamentController st = new StartTournamentController();
+            fxmlLoader.setController(st);
+            Parent root = fxmlLoader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+            st.leggiFile(gameData.getCode());
+        }
+        catch (IOException | NullPointerException e) {
+            mostraErrore();
+            System.err.println(e.getMessage());
+        }
+    }
+
+    private void mostraErrore() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("ERRORE");
+        alert.setHeaderText("Impossibile caricare il contenuto");
+        alert.setContentText("Si è verificato un errore durante il caricamento del contenuto. Contatta l'assistenza" +
+                "tecnica al seguente numero verde: +393209786308");
+        alert.showAndWait();
     }
 }

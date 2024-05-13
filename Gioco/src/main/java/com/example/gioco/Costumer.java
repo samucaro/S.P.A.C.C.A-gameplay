@@ -10,20 +10,18 @@ public class Costumer {
         this.punteggio = punteggio;
     }
 
-    public int getRank() {
-        return rank;
-    }
     public void setRank(int rank) {
         this.rank = rank;
     }
-
+    public int getRank() {
+        return rank;
+    }
     public String getGiocatore() {
         return giocatore;
     }
     public void setGiocatore(String nome) {
         this.giocatore = nome;
     }
-
     public int getPunteggio() {
         return punteggio;
     }

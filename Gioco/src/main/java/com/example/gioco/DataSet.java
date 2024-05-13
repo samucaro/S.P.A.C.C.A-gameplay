@@ -1,11 +1,13 @@
 package com.example.gioco;
 
+import javafx.scene.control.Alert;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DataSet {
+
     public DataSet() {
     }
 
@@ -31,8 +33,8 @@ public class DataSet {
                 System.out.println("Il file esiste già.");
             }
         } catch (IOException e) {
-            System.out.println("Si è verificato un errore.");
-            e.printStackTrace();
+            mostraErrore();
+            System.err.println("Si è verificato un errore.");
         }
     }
 
@@ -60,5 +62,13 @@ public class DataSet {
             }
         }
         return numbers.contains(codice);
+    }
+
+    private void mostraErrore() {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("ERRORE");
+        alert.setHeaderText("Impossibile generare il contenuto");
+        alert.setContentText("Si è verificato un errore durante la creazione del file.\nRiprova, il file non è stato creato");
+        alert.showAndWait();
     }
 }

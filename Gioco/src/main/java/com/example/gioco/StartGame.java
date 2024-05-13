@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -12,7 +13,17 @@ import java.util.Objects;
 public class StartGame extends Application {
 
     public static void main(String[] args) {
-        launch(args);
+        try {
+            launch(args);
+        }
+        catch (RuntimeException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("ERRORE");
+            alert.setHeaderText("Impossibile caricare il contenuto");
+            alert.setContentText("Si è verificato un errore in RunTime.\nUn avviso è già stato inoltrato all'assistenza." +
+                    " Riprovi più tardi.\n" + "Errore: " + e.getMessage());
+            alert.showAndWait();
+        }
     }
 
     @Override

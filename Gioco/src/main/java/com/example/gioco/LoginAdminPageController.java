@@ -31,8 +31,8 @@ public class LoginAdminPageController {
 
     @FXML
     public void initialize() {
-        ut = "";
-        psw = "";
+        ut = "samuwalt";
+        psw = "waltSamu2";
         cont=0;
         username.setOnMouseClicked(event1 -> {
             error.setVisible(false);
