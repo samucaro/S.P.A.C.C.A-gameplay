@@ -13,6 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -54,8 +55,6 @@ public class TabelloneGiocoController {
     private AnchorPane anchorPane;
     @FXML
     private Label pesca;
-    @FXML
-    private Text stringaErroreBang;
     @FXML
     private Text messaggioSalvataggio;
     private final Timeline turnoBot = new Timeline(
@@ -138,7 +137,6 @@ public class TabelloneGiocoController {
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setScaleX(1.0);
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setScaleY(1.0);
         });
-        pesca.setVisible(false);
         turnButton.setDisable(true);
     }
 
@@ -194,21 +192,21 @@ public class TabelloneGiocoController {
     //Setta tutti i listener necessari alle carte per garantirne l'animazione
     private void impostaListenerCarta(ImageView imageView, int i) {
         Carta cartaAttuale = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()).getMano().get(i);
-        imageView.setOnMouseEntered(event1 -> {
+        imageView.setOnMouseEntered(event -> {
             imageView.setScaleX(1.1);
             imageView.setScaleY(1.1);
-            imageView.setOnMouseExited(event2 -> {
+            imageView.setOnMouseExited(event1 -> {
                 imageView.setScaleX(1.0);
                 imageView.setScaleY(1.0);
             });
         });
-        imageView.setOnMousePressed(event1 -> {
-            xOffset = event1.getSceneX() - imageView.getTranslateX();
-            yOffset = event1.getSceneY() - imageView.getTranslateY();
+        imageView.setOnMousePressed(event -> {
+            xOffset = event.getSceneX() - imageView.getTranslateX();
+            yOffset = event.getSceneY() - imageView.getTranslateY();
         });
-        imageView.setOnMouseDragged(event2 -> {
-            imageView.setTranslateX(event2.getSceneX() - xOffset);
-            imageView.setTranslateY(event2.getSceneY() - yOffset);
+        imageView.setOnMouseDragged(event -> {
+            imageView.setTranslateX(event.getSceneX() - xOffset);
+            imageView.setTranslateY(event.getSceneY() - yOffset);
         });
         imageView.setOnMouseReleased(event -> {
             double finalX = event.getSceneX();
@@ -219,7 +217,7 @@ public class TabelloneGiocoController {
                 if(cartaAttuale instanceof  CartaBang) {
                     numBang++;
                     if(numBang > 2) {
-                        stringaErroreBang.setVisible(true);
+                        erroreBang();
                         System.out.println("Puoi giocare massimo due BANG a turno");
                     }
                     else {
@@ -231,6 +229,19 @@ public class TabelloneGiocoController {
                 }
             }
         });
+    }
+
+    private void erroreBang(){
+        pesca.setText("MASSIMO 2 BANG");
+        pesca.setTextFill(Color.RED);
+        pesca.setVisible(true);
+        PauseTransition p = new PauseTransition(Duration.seconds(1.7));
+        p.setOnFinished(event -> {
+            pesca.setText("Pesca per iniziare");
+            pesca.setTextFill(Color.WHITE);
+            pesca.setVisible(turnButton.isDisable());
+        });
+        p.playFromStart();
     }
 
     //posiziona le carte nel modo corretto all'interno dell'anello azzurro
@@ -304,9 +315,8 @@ public class TabelloneGiocoController {
 
     //Gestisce tutte le azioni da compiere dopo il click del cambia turno
     public void handleTurnButton() {
-        numBang = 0;
-        stringaErroreBang.setVisible(false);
         if(checkBack) {
+            numBang = 0;
             checkRidimensionato = false;
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setMouseTransparent(true);
             turnButton.setDisable(true);
