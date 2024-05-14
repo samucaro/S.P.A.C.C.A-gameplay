@@ -321,7 +321,7 @@ public class TabelloneGiocoController {
             checkRidimensionato = false;
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setMouseTransparent(true);
             turnButton.setDisable(true);
-            pesca.setVisible(numPescate == 0);
+            pesca.setVisible(true);
             verificaMano();
             Timeline tm = ovalPaneController.cambiaTurno();
             for(int j : numNodiMano) {
@@ -341,7 +341,7 @@ public class TabelloneGiocoController {
                 else {
                     ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setMouseTransparent(false);
                     aggiornaCosa();
-                    pesca.setVisible(numPescate == 0);
+                    pesca.setVisible(true);
                 }
             });
         }

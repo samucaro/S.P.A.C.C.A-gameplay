@@ -303,7 +303,7 @@ public class OvalPaneController {
     }
 
     //Inizia la task di scelta del giocatore verso cui compiere l'effetto della carta scartata
-    public Task<Void> startSelection(){
+    public Task<Void> startSelection() {
         giocatoreSelezionato = null;
         halfDonut.setVisible(false);
         mc.startSelectionMC();
