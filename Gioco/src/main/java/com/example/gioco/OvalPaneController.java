@@ -46,7 +46,7 @@ public class OvalPaneController {
     public void initialize() {
         gameData = GameData.getInstance();
         turnoDi = gameData.getTurnoCorrente();
-        currentSphere = gameData.getNumero()-1;
+        currentSphere = ((gameData.getNumero() - turnoDi) + gameData.getNumero()-1) % gameData.getNumero();
         pianeti = new Group[gameData.getNumero()];
         redMaterial = new PhongMaterial(Color.RED);
         orangeMaterial = new PhongMaterial(Color.ORANGE);
@@ -209,13 +209,15 @@ public class OvalPaneController {
 
     //Imposta la rotazione 3D dei pianeti
     private void rotazionePianeti(int i) {
-        AnimationTimer timer = new AnimationTimer() {
-            @Override
-            public void handle(long l) {
-                pianeti[i].getChildren().getFirst().rotateProperty().set(pianeti[i].getChildren().getFirst().getRotate() + 0.2);
-            }
-        };
-        timer.start();
+        RotateTransition rotateTransition = new RotateTransition();
+        rotateTransition.setDuration(Duration.millis(6000));
+        rotateTransition.setNode(pianeti[i].getChildren().getFirst());
+        rotateTransition.setAxis(Rotate.Y_AXIS);
+        rotateTransition.setByAngle(360);
+        rotateTransition.setCycleCount(RotateTransition.INDEFINITE);
+        rotateTransition.setAutoReverse(false);
+        rotateTransition.setInterpolator(Interpolator.LINEAR);
+        rotateTransition.play();
     }
 
     //Imposta i pianeti morti
