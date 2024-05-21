@@ -24,7 +24,6 @@ import java.util.Objects;
 
 public class TabelloneGiocoController {
     private static int numBang;
-    private static int numPescate;
     private static Giocatore vincitore;
     private static Giocatore vincitoreTorneo;
     private double centroX;
@@ -98,7 +97,7 @@ public class TabelloneGiocoController {
             else if (gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot) {
                 turnoBot.playFromStart();
             } else {
-                pesca.setVisible(numPescate == 0);
+                pesca.setVisible(true);
                 aggiornaCosa();
             }
         });
@@ -138,7 +137,7 @@ public class TabelloneGiocoController {
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setScaleX(1.0);
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setScaleY(1.0);
         });
-        turnButton.setDisable(numPescate == 0);
+        turnButton.setDisable(true);
     }
 
     //Impone una valore di scala per il mazzo valido ogni qualvolta si ridimensiona la scena
@@ -232,14 +231,14 @@ public class TabelloneGiocoController {
     }
 
     private void erroreBang(){
-        pesca.setText("massimo 2 BANG!");
+        pesca.setText("MASSIMO 2 BANG");
         pesca.setTextFill(Color.RED);
         pesca.setVisible(true);
         PauseTransition p = new PauseTransition(Duration.seconds(1.7));
         p.setOnFinished(event -> {
             pesca.setText("Pesca per iniziare");
             pesca.setTextFill(Color.WHITE);
-            pesca.setVisible(numPescate == 0 || turnButton.isDisable());
+            pesca.setVisible(turnButton.isDisable());
         });
         p.playFromStart();
     }
@@ -317,11 +316,10 @@ public class TabelloneGiocoController {
     public void handleTurnButton() {
         if(checkBack) {
             numBang = 0;
-            numPescate = 0;
             checkRidimensionato = false;
             ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setMouseTransparent(true);
             turnButton.setDisable(true);
-            pesca.setVisible(true);
+            pesca.setVisible(false);
             verificaMano();
             Timeline tm = ovalPaneController.cambiaTurno();
             for(int j : numNodiMano) {
@@ -371,19 +369,16 @@ public class TabelloneGiocoController {
 
     //Pesca le prime due carte dal mazzo
     public void pescataInizialeGiocatore() {
-        if(numPescate == 0) {
-            Giocatore player = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente());
-            for (int i = 1; i <= 2; i++) {
-                player.setMano(gameData.getMazzo().pesca());
-            }
-            ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setMouseTransparent(true);
-            if (!(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot)) {
-                mettiCarte(true);
-                turnButton.setDisable(false);
-                pesca.setVisible(false);
-            }
+        Giocatore player = gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente());
+        for(int i = 1; i <= 2; i++) {
+            player.setMano(gameData.getMazzo().pesca());
         }
-        numPescate++;
+        ((HBox) mazzoEScarti.getChildren().get(1)).getChildren().getFirst().setMouseTransparent(true);
+        if(!(gameData.getGiocatoriPartita().get(gameData.getTurnoCorrente()) instanceof GiocatoreRobot)) {
+            mettiCarte(true);
+            turnButton.setDisable(false);
+            pesca.setVisible(false);
+        }
     }
 
     //Disabilita e abilita anchorPane ogni task di selezione e aggiorna il necessario
@@ -405,7 +400,6 @@ public class TabelloneGiocoController {
     //Attiva la grafica per mostrare il vincitore della partita
     private void handleFineGioco() {
         numBang = 0;
-        numPescate = 0;
         if(gameData.getNumPartitaCorrente() == 14) {
             vincitoreTorneo = vincitore;
         }

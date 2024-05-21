@@ -29,6 +29,7 @@ public class OvalPaneController {
     private static double iry = 130.0;
     private static Shape halfDonut;
     private static int turnoDi;
+    private RotateTransition rotateTransition;
     private TabelloneGiocoController mc;
     private PhongMaterial redMaterial;
     private PhongMaterial orangeMaterial;
@@ -209,7 +210,7 @@ public class OvalPaneController {
 
     //Imposta la rotazione 3D dei pianeti
     private void rotazionePianeti(int i) {
-        RotateTransition rotateTransition = new RotateTransition();
+        rotateTransition = new RotateTransition();
         rotateTransition.setDuration(Duration.millis(6000));
         rotateTransition.setNode(pianeti[i].getChildren().getFirst());
         rotateTransition.setAxis(Rotate.Y_AXIS);
