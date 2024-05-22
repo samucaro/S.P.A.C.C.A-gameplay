@@ -1,23 +1,23 @@
 Dati Generali Partita:
 NumGiocatori: 8
-Turno: 1
-Mazzo: Bang Mancato Bang 
-Scarti: ScartaBang Bang Bang Mancato Mancato Mancato Duello Bang SparaTutti Mancato Mancato Mancato Bang Bang Bang Bang Mancato Bang Mancato Bang Bang Bang Bang Mancato Bang Mancato Bang Duello Bang SparaTutti PerdiCarta Mancato Bang Mancato Bang Bang Mancato Bang RecuperaVita ScartaBang RecuperaVita SparaTutti Bang Bang RecuperaVita 
+Turno: 6
+Mazzo: Mancato Mancato RecuperaVita Mancato Mancato RecuperaVita Bang Bang Bang Bang Bang Bang PerdiCarta SparaTutti SparaTutti Bang Duello ScartaBang Bang Mancato Mancato Mancato Bang Mancato Mancato Bang SparaTutti Bang Bang Bang ScartaBang Mancato Bang Duello Mancato Mancato Bang Bang Bang Bang Bang 
+Scarti: RecuperaVita Bang 
 Giocatore: 0
 Tipo: Persona
 Nome: anto
 Mano: Bang Bang Bang Bang Duello 
-HpRimanente: 4
+HpRimanente: 3
 Giocatore: 1
 Tipo: Persona
 Nome: emma
-Mano: RecuperaVita 
-HpRimanente: 1
+Mano: Mancato Bang Mancato Bang RecuperaVita 
+HpRimanente: 2
 Giocatore: 2
 Tipo: Persona
 Nome: marta
-Mano: Mancato Mancato Duello 
-HpRimanente: 2
+Mano: Mancato Mancato Duello Bang Mancato 
+HpRimanente: 3
 Giocatore: 3
 Tipo: Bot
 Nome: Bot 2
@@ -36,7 +36,7 @@ HpRimanente: 0
 Giocatore: 6
 Tipo: Persona
 Nome: ale
-Mano: PerdiCarta Mancato Bang 
+Mano: PerdiCarta Bang 
 HpRimanente: 5
 Giocatore: 7
 Tipo: Persona

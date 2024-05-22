@@ -34,6 +34,7 @@ public class TabelloneGiocoController {
     private boolean checkInit;
     private boolean checkBack;
     private GameData gameData;
+    private final DataSet dataSet = new DataSet();
     private ArrayList<Integer> numNodiMano;
     @FXML
     public OvalPaneController ovalPaneController;
@@ -431,6 +432,39 @@ public class TabelloneGiocoController {
             });
         }
         messaggioSalvataggio.setVisible(false);
+        aggiornaFileLeaderBoard();
+    }
+
+    //Aggiorna il file delle LeaderBoard ogni volta che vi è un vincitore
+    private void aggiornaFileLeaderBoard() {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(dataSet.getProjectFolderPath() + File.separator + "/" + "LeaderBoard.txt"));
+            StringBuilder contenuto = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String word = line.split(" ")[0];
+                if(word.equals(getNomeVincitore())) {
+                    int nuovoPunteggio;
+                    if(word.equals(getNomeVincitoreTorneo())) {
+                        nuovoPunteggio = Integer.parseInt(line.split(" ")[1]) + 5;
+                    }
+                    else {
+                        nuovoPunteggio = Integer.parseInt(line.split(" ")[1]) + 3;
+                    }
+                    contenuto.append(getNomeVincitore()).append(" ").append(nuovoPunteggio).append("\n");
+                }
+                else {
+                    contenuto.append(line).append("\n");
+                }
+            }
+            reader.close();
+            FileWriter file = new FileWriter((dataSet.getProjectFolderPath() + File.separator + "/" + "LeaderBoard.txt"), false);
+            PrintWriter writer = new PrintWriter(file);
+            writer.write(contenuto.toString());
+            writer.close();
+        } catch (IOException e) {
+            System.err.println("Errore durante la creazione del file: " + e.getMessage());
+        }
     }
 
     public static String getNomeVincitore() {

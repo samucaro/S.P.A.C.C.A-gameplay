@@ -1,0 +1,259 @@
+Dati Generali Torneo:
+Partita Corrente: 14
+Vincitore: 
+******************************
+Numero Partita: 0
+Dati Generali Partita:
+NumGiocatori: 2
+Turno: 0
+Mazzo: SparaTutti 
+Scarti: Duello Bang Bang Bang SparaTutti Mancato Duello SparaTutti Mancato Bang Mancato Bang Mancato Bang Mancato Bang Mancato Bang Mancato ScartaBang Bang Bang Mancato Bang Mancato RecuperaVita Bang Mancato Mancato Duello Duello Bang Mancato Bang Mancato RecuperaVita RecuperaVita RecuperaVita SparaTutti Mancato RecuperaVita PerdiCarta Bang Mancato Bang SparaTutti Mancato Bang Mancato Bang Mancato Duello Bang ScartaBang Bang Bang Mancato Bang Mancato Bang Mancato Bang PerdiCarta Duello Bang Bang Bang Bang Bang Bang Bang Bang 
+Giocatore: 0
+Tipo: Persona
+Nome: samu
+Mano: Bang 
+HpRimanente: 2
+Giocatore: 1
+Tipo: Bot
+Nome: Bot 1
+Mano: 
+HpRimanente: 0
+******************************
+Numero Partita: 1
+Dati Generali Partita:
+NumGiocatori: 2
+Turno: 1
+Mazzo: Mancato Bang Mancato ScartaBang Bang Mancato Bang Mancato RecuperaVita Bang Bang Bang SparaTutti RecuperaVita PerdiCarta Mancato Bang Bang Mancato Bang Duello Bang Duello PerdiCarta Bang Mancato Bang Mancato Bang RecuperaVita 
+Scarti: Duello Bang Bang Bang Bang Bang Duello Bang Mancato Bang Mancato Bang Mancato Bang Mancato Bang Mancato Bang Mancato RecuperaVita Bang Mancato Bang Mancato Duello Bang Bang Mancato Bang Mancato Bang Mancato ScartaBang Bang SparaTutti Mancato Bang Mancato SparaTutti Mancato Bang Bang Bang SparaTutti 
+Giocatore: 0
+Tipo: Bot
+Nome: Bot 2
+Mano: 
+HpRimanente: 0
+Giocatore: 1
+Tipo: Bot
+Nome: Bot 3
+Mano: 
+HpRimanente: 4
+******************************
+Numero Partita: 2
+Dati Generali Partita:
+NumGiocatori: 2
+Turno: 1
+Mazzo: Mancato RecuperaVita Mancato Bang SparaTutti Bang Bang Bang Mancato Mancato Bang Bang Bang Duello Bang Mancato SparaTutti SparaTutti 
+Scarti: Bang Mancato Duello Bang Bang Mancato Bang Mancato Duello Bang Mancato Bang Mancato Bang Mancato Bang Mancato Bang Mancato Duello Bang Bang Bang Bang RecuperaVita RecuperaVita Bang Mancato ScartaBang Bang Bang Mancato Bang Bang Mancato SparaTutti Mancato Bang Mancato ScartaBang Bang PerdiCarta Bang Mancato Bang Mancato Bang Mancato PerdiCarta RecuperaVita Bang RecuperaVita Duello Bang 
+Giocatore: 0
+Tipo: Bot
+Nome: Bot 4
+Mano: 
+HpRimanente: 0
+Giocatore: 1
+Tipo: Bot
+Nome: Bot 5
+Mano: Bang Mancato 
+HpRimanente: 5
+******************************
+Numero Partita: 3
+Dati Generali Partita:
+NumGiocatori: 2
+Turno: 0
+Mazzo: Bang Mancato SparaTutti Bang Duello Mancato Duello Duello Mancato Mancato Mancato Bang Bang Mancato Bang RecuperaVita SparaTutti Bang Bang ScartaBang Bang Bang Bang ScartaBang Mancato PerdiCarta Mancato Bang Bang Bang SparaTutti Mancato Mancato PerdiCarta Bang Mancato Bang Bang Mancato Mancato 
+Scarti: Bang Mancato Bang Bang Mancato Bang RecuperaVita Bang Mancato Bang Bang Mancato Bang RecuperaVita Bang Bang Duello Bang Bang Bang Bang Mancato Bang Mancato Bang Mancato RecuperaVita RecuperaVita Bang Bang Bang SparaTutti Bang 
+Giocatore: 0
+Tipo: Bot
+Nome: Bot 6
+Mano: Bang 
+HpRimanente: 5
+Giocatore: 1
+Tipo: Bot
+Nome: Bot 7
+Mano: 
+HpRimanente: 0
+******************************
+Numero Partita: 4
+Dati Generali Partita:
+NumGiocatori: 2
+Turno: 0
+Mazzo: Bang Bang 
+Scarti: Bang Mancato ScartaBang Bang Bang Mancato ScartaBang RecuperaVita PerdiCarta Bang Mancato PerdiCarta ScartaBang RecuperaVita Bang Mancato Bang Mancato Bang Mancato Mancato Bang Mancato Bang Mancato SparaTutti Mancato Bang Mancato Bang Mancato Bang Mancato Bang Mancato PerdiCarta Bang Duello Bang RecuperaVita SparaTutti Mancato Bang Bang RecuperaVita RecuperaVita Bang Bang RecuperaVita Bang Mancato Bang Mancato Duello Bang Bang Bang Bang Bang Mancato SparaTutti Mancato Bang Mancato Bang Mancato Duello Bang Bang SparaTutti Mancato 
+Giocatore: 0
+Tipo: Bot
+Nome: Bot 8
+Mano: Duello 
+HpRimanente: 4
+Giocatore: 1
+Tipo: Bot
+Nome: Bot 9
+Mano: 
+HpRimanente: 0
+******************************
+Numero Partita: 5
+Dati Generali Partita:
+NumGiocatori: 2
+Turno: 0
+Mazzo: Bang Bang Mancato Bang Bang Mancato Mancato Bang Bang RecuperaVita SparaTutti SparaTutti Bang Bang Mancato PerdiCarta Mancato Bang Bang Bang Bang Bang Bang Mancato Bang Bang Bang Mancato Bang Duello RecuperaVita Bang RecuperaVita SparaTutti Bang Bang Bang Mancato Mancato Duello Mancato Bang Bang Bang Mancato Mancato Mancato SparaTutti RecuperaVita Bang Bang Duello Mancato 
+Scarti: Bang Mancato Duello Bang Bang Bang ScartaBang Bang PerdiCarta ScartaBang Bang Mancato Duello Mancato Mancato ScartaBang PerdiCarta Mancato 
+Giocatore: 0
+Tipo: Bot
+Nome: Bot 10
+Mano: Mancato ScartaBang Mancato 
+HpRimanente: 4
+Giocatore: 1
+Tipo: Bot
+Nome: Bot 11
+Mano: 
+HpRimanente: 0
+******************************
+Numero Partita: 6
+Dati Generali Partita:
+NumGiocatori: 2
+Turno: 0
+Mazzo: Bang SparaTutti RecuperaVita Mancato Mancato Mancato Bang Bang Mancato Mancato Mancato Mancato Bang SparaTutti Bang Bang Bang Bang ScartaBang Bang Bang Mancato Mancato Duello Bang 
+Scarti: Bang Bang PerdiCarta Bang Mancato RecuperaVita ScartaBang Bang Bang Mancato Bang Mancato ScartaBang Bang PerdiCarta Bang Mancato Bang Mancato Bang Mancato Bang Mancato SparaTutti RecuperaVita Bang Bang Bang Mancato Bang Mancato Duello Bang Bang Bang Bang Bang RecuperaVita PerdiCarta Bang Mancato Bang SparaTutti Duello RecuperaVita Duello 
+Giocatore: 0
+Tipo: Bot
+Nome: Bot 12
+Mano: Mancato Bang Bang 
+HpRimanente: 3
+Giocatore: 1
+Tipo: Bot
+Nome: Bot 13
+Mano: 
+HpRimanente: 0
+******************************
+Numero Partita: 7
+Dati Generali Partita:
+NumGiocatori: 2
+Turno: 1
+Mazzo: Bang Mancato Bang SparaTutti Bang RecuperaVita RecuperaVita Bang Bang Bang Duello Bang SparaTutti PerdiCarta Duello Bang Mancato Bang Bang Bang Mancato Bang Bang Bang Mancato Mancato Bang Mancato Mancato Bang Bang ScartaBang Mancato SparaTutti Mancato Bang ScartaBang Mancato 
+Scarti: Bang Mancato Bang Duello Bang Bang Bang Bang SparaTutti Mancato PerdiCarta Bang Mancato Bang Mancato Duello Bang Bang SparaTutti Mancato PerdiCarta RecuperaVita Bang Mancato Bang Mancato Duello Bang Bang Mancato Mancato Mancato Mancato 
+Giocatore: 0
+Tipo: Bot
+Nome: Bot 14
+Mano: 
+HpRimanente: 0
+Giocatore: 1
+Tipo: Bot
+Nome: Bot 15
+Mano: RecuperaVita Bang Bang 
+HpRimanente: 5
+******************************
+Numero Partita: 8
+Dati Generali Partita:
+NumGiocatori: 2
+Turno: 0
+Mazzo: Mancato Bang SparaTutti Bang Bang Bang Bang Bang RecuperaVita Bang Mancato Duello Bang Bang Mancato Mancato Mancato Bang Bang ScartaBang Bang Bang Bang Bang Mancato PerdiCarta Bang SparaTutti Bang Bang Bang PerdiCarta Mancato Bang Mancato Bang Mancato Bang Bang Bang Mancato RecuperaVita Mancato Bang Mancato Duello 
+Scarti: ScartaBang Bang SparaTutti Mancato SparaTutti Mancato Duello Bang Mancato Bang Mancato ScartaBang Bang Bang Mancato SparaTutti Mancato Duello Duello Duello RecuperaVita RecuperaVita Mancato Mancato Mancato 
+Giocatore: 0
+Tipo: Persona
+Nome: samu
+Mano: Duello Mancato Bang 
+HpRimanente: 3
+Giocatore: 1
+Tipo: Bot
+Nome: Bot 3
+Mano: 
+HpRimanente: 0
+******************************
+Numero Partita: 9
+Dati Generali Partita:
+NumGiocatori: 2
+Turno: 1
+Mazzo: Bang Bang Bang Bang Bang Mancato SparaTutti Bang RecuperaVita Mancato Bang Mancato Bang Bang Mancato Duello Duello Mancato Mancato RecuperaVita Duello Bang RecuperaVita Bang Bang Mancato Bang PerdiCarta 
+Scarti: Bang Mancato Bang SparaTutti Duello Bang Bang Bang Bang Bang Mancato Bang RecuperaVita PerdiCarta Bang Mancato Bang Mancato SparaTutti Mancato RecuperaVita Duello Bang Bang Mancato Bang Mancato Bang Mancato Bang ScartaBang Bang Bang Mancato Bang Mancato Bang Mancato SparaTutti Bang Bang Bang ScartaBang Bang 
+Giocatore: 0
+Tipo: Bot
+Nome: Bot 5
+Mano: 
+HpRimanente: 0
+Giocatore: 1
+Tipo: Bot
+Nome: Bot 6
+Mano: Mancato Mancato 
+HpRimanente: 2
+******************************
+Numero Partita: 10
+Dati Generali Partita:
+NumGiocatori: 2
+Turno: 0
+Mazzo: Mancato Bang RecuperaVita Bang Mancato Bang SparaTutti Bang Mancato Bang Mancato Mancato Bang RecuperaVita SparaTutti Bang Bang Bang Bang Bang Duello PerdiCarta Bang ScartaBang ScartaBang Bang Bang Bang RecuperaVita Mancato Bang 
+Scarti: SparaTutti Mancato Duello Bang Bang Mancato Bang Mancato Bang Mancato Bang Mancato Bang Mancato Bang Mancato Bang Mancato Bang Mancato SparaTutti Mancato Duello Bang Mancato RecuperaVita Bang Mancato Bang Mancato PerdiCarta Bang Mancato SparaTutti Mancato Bang Mancato Duello Bang Mancato 
+Giocatore: 0
+Tipo: Bot
+Nome: Bot 8
+Mano: 
+HpRimanente: 0
+Giocatore: 1
+Tipo: Bot
+Nome: Bot 10
+Mano: RecuperaVita Duello Bang 
+HpRimanente: 5
+******************************
+Numero Partita: 11
+Dati Generali Partita:
+NumGiocatori: 2
+Turno: 0
+Mazzo: Mancato RecuperaVita Bang Bang Duello Bang SparaTutti Mancato Duello SparaTutti Mancato Bang Mancato ScartaBang Mancato RecuperaVita Mancato Bang Mancato Bang Mancato Bang Mancato Bang Bang Mancato Mancato Bang RecuperaVita PerdiCarta Bang Mancato Bang ScartaBang Bang Bang 
+Scarti: Bang Mancato Duello Bang Bang Bang Bang Duello Bang Bang PerdiCarta RecuperaVita SparaTutti Mancato Bang Mancato SparaTutti Mancato Bang Mancato Bang Mancato Duello Bang Bang Bang Mancato Bang Mancato Duello Bang Bang Bang Bang Bang Mancato 
+Giocatore: 0
+Tipo: Bot
+Nome: Bot 12
+Mano: 
+HpRimanente: 0
+Giocatore: 1
+Tipo: Bot
+Nome: Bot 15
+Mano: Mancato Mancato 
+HpRimanente: 3
+******************************
+Numero Partita: 12
+Dati Generali Partita:
+NumGiocatori: 2
+Turno: 0
+Mazzo: RecuperaVita Mancato Bang Bang Mancato Mancato Bang Bang PerdiCarta Bang Bang Mancato SparaTutti Bang Mancato Bang RecuperaVita Mancato Mancato Bang ScartaBang Bang Bang Bang Mancato Bang Mancato Bang Mancato Mancato Mancato SparaTutti Bang SparaTutti Duello SparaTutti 
+Scarti: Bang Mancato Bang Bang Mancato Bang Mancato RecuperaVita Duello Bang Bang Bang Bang Bang Bang Duello Bang Duello Duello RecuperaVita Bang Mancato Bang Mancato Bang Mancato Bang Mancato PerdiCarta ScartaBang Bang Duello Bang Bang Bang Bang Mancato 
+Giocatore: 0
+Tipo: Persona
+Nome: samu
+Mano: Bang 
+HpRimanente: 2
+Giocatore: 1
+Tipo: Bot
+Nome: Bot 6
+Mano: 
+HpRimanente: 0
+******************************
+Numero Partita: 13
+Dati Generali Partita:
+NumGiocatori: 2
+Turno: 1
+Mazzo: Bang Mancato Mancato PerdiCarta Bang Bang Mancato Bang RecuperaVita Bang Mancato Mancato Bang Mancato SparaTutti Mancato Bang ScartaBang Bang Bang Mancato Mancato Mancato ScartaBang Mancato Mancato RecuperaVita Bang Bang Bang Bang Mancato Bang Bang Bang Bang PerdiCarta RecuperaVita SparaTutti Bang Mancato Bang Bang Duello Duello Duello Mancato Bang Bang Bang Mancato Bang Duello RecuperaVita SparaTutti Mancato Bang 
+Scarti: Duello Bang Bang Bang Bang Bang Mancato Bang Duello Bang Bang Bang Duello SparaTutti 
+Giocatore: 0
+Tipo: Bot
+Nome: Bot 10
+Mano: RecuperaVita Mancato Mancato 
+HpRimanente: 5
+Giocatore: 1
+Tipo: Bot
+Nome: Bot 15
+Mano: 
+HpRimanente: 0
+******************************
+Numero Partita: 14
+Dati Generali Partita:
+NumGiocatori: 2
+Turno: 1
+Mazzo: Mancato Mancato Mancato Duello Mancato Bang ScartaBang Mancato Bang SparaTutti SparaTutti 
+Scarti: SparaTutti Mancato Bang Bang Bang Mancato PerdiCarta RecuperaVita Bang Mancato ScartaBang Bang Bang Mancato Bang RecuperaVita Bang Mancato SparaTutti Bang RecuperaVita Bang Mancato Bang Bang Bang PerdiCarta RecuperaVita PerdiCarta RecuperaVita RecuperaVita Bang Mancato Bang Bang Mancato Bang Bang Mancato Bang Bang Mancato Bang Duello Bang Bang Bang Bang Bang Bang Bang Bang Mancato Bang Mancato Duello Bang Mancato Mancato Mancato Duello 
+Giocatore: 0
+Tipo: Persona
+Nome: samu
+Mano: Bang Bang 
+HpRimanente: 2
+Giocatore: 1
+Tipo: Bot
+Nome: Bot 10
+Mano: 
+HpRimanente: 0
+******************************
