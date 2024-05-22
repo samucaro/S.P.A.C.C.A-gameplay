@@ -1,0 +1,21 @@
+Dati Generali Partita:
+NumGiocatori: 3
+Turno: 0
+Mazzo: 
+Scarti: Bang Bang SparaTutti Mancato Duello Bang Bang Bang Bang RecuperaVita Duello RecuperaVita Bang Mancato Bang Mancato Bang Mancato Bang Mancato Duello Bang Mancato Bang Mancato Bang Mancato ScartaBang Bang Bang Mancato Bang Mancato Duello Bang Bang Bang Bang Mancato PerdiCarta Bang Mancato Bang ScartaBang Bang RecuperaVita Bang Mancato Bang Mancato Bang Mancato Bang SparaTutti Mancato SparaTutti Mancato RecuperaVita PerdiCarta SparaTutti Bang Bang 
+Giocatore: 0
+Tipo: Persona
+Nome: dani
+Mano: Bang Mancato 
+HpRimanente: 5
+Giocatore: 1
+Tipo: Persona
+Nome: walt
+Mano: 
+HpRimanente: 0
+Giocatore: 2
+Tipo: Persona
+Nome: samu
+Mano: 
+HpRimanente: 0
+******************************

@@ -66,10 +66,10 @@ public class BlockPageController {
     public void mostraIndovinello() {
         try {
             Stage stage = new Stage();
-            stage.setMinWidth(400);
+            /*stage.setMinWidth(400);
             stage.setMinHeight(250);
             stage.setMaxWidth(400);
-            stage.setMaxHeight(250);
+            stage.setMaxHeight(250);*/
             stage.setTitle("Indovinello");
             stage.getIcons().add(new Image("logo.png"));
             root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Indovinello.fxml")));

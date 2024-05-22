@@ -1,12 +1,12 @@
 samu 10
-walt 0
+walt 14
 emma 0
 ale 0
 anto 0
 marta 0
-dani 3
+dani 6
 gab 0
-nic 5
+nic 11
 lore 0
 ali 0
 giuli 0
@@ -14,3 +14,4 @@ giova 0
 dario 0
 edo 0
 marco 0
+giulia 3
