@@ -47,7 +47,7 @@ public class OvalPaneController {
     public void initialize() {
         gameData = GameData.getInstance();
         turnoDi = gameData.getTurnoCorrente();
-        currentSphere = ((gameData.getNumero() - turnoDi) + gameData.getNumero()-1) % gameData.getNumero();
+        currentSphere = gameData.getNumero()-turnoDi-1;
         pianeti = new Group[gameData.getNumero()];
         redMaterial = new PhongMaterial(Color.RED);
         orangeMaterial = new PhongMaterial(Color.ORANGE);
@@ -308,6 +308,7 @@ public class OvalPaneController {
     //Inizia la task di scelta del giocatore verso cui compiere l'effetto della carta scartata
     public Task<Void> startSelection() {
         giocatoreSelezionato = null;
+        planetSelected = false;
         halfDonut.setVisible(false);
         mc.startSelectionMC();
         ovalPane.getChildren().addAll(progressBar, scegliAvversario);
@@ -327,7 +328,6 @@ public class OvalPaneController {
                 return null;
             }
         };
-        planetSelected = false;
         progressBar.progressProperty().bind(task.progressProperty());
         new Thread(task).start();
         return task;

@@ -29,6 +29,8 @@ public class StartGame extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
             primaryStage.setTitle("S.P.A.C.C.A.");
+            primaryStage.setMinWidth(550);
+            primaryStage.setMinHeight(280);
             Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("AdminPlayerPage.fxml")));
             Image logo = new Image("logo.png");
             Scene scene = new Scene(root);

@@ -21,21 +21,15 @@ public class LeaderBoardController implements Initializable {
     private TableColumn<Costumer, String> giocatore;
     @FXML
     private TableColumn<Costumer, Integer> punteggio;
-    private String nomeVincitore;
-    private String nomeVincitoreTorneo;
     private final DataSet dataSet = new DataSet();
-    private GameData gameData;
     ObservableList<Costumer> data = FXCollections.observableArrayList();
 
     @FXML
     public void initialize(URL url, ResourceBundle rb) {
-        gameData = GameData.getInstance();
         rank.setCellValueFactory(new PropertyValueFactory<>("rank"));
         giocatore.setCellValueFactory(new PropertyValueFactory<>("giocatore"));
         punteggio.setCellValueFactory(new PropertyValueFactory<>("punteggio"));
         punteggio.setSortable(true);
-        nomeVincitore = TabelloneGiocoController.getNomeVincitore();
-        nomeVincitoreTorneo = TabelloneGiocoController.getNomeVincitoreTorneo();
         submit();
     }
 
