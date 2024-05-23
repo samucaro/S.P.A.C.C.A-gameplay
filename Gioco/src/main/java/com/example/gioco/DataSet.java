@@ -27,11 +27,7 @@ public class DataSet {
         try {
             String nome = percorsoCartellaProgetto + File.separator + codice + ".txt";
             File myObj = new File(nome);
-            if (myObj.createNewFile()) {
-                System.out.println("File creato: " + myObj.getName());
-            } else {
-                System.out.println("Il file esiste già.");
-            }
+            myObj.createNewFile();
         } catch (IOException e) {
             mostraErrore();
             System.err.println("Si è verificato un errore.");

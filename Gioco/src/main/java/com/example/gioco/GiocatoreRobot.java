@@ -35,7 +35,6 @@ public class GiocatoreRobot extends Giocatore {
         hpRimanente -= danno;
         if(hpRimanente <= 0) {
             hpRimanente = 0;
-            System.out.println("Il giocatore " + nome +" è eliminato");
             tg.setMortiEVincitore(this);
         } else {
             OvalPaneController.setVita(this);
@@ -43,7 +42,6 @@ public class GiocatoreRobot extends Giocatore {
     }
     public void cura(){
         if(hpRimanente == HP) {
-            System.out.println("Il personaggio " + nome + " ha già la vita massima, non verrà aggiunto nessun punto vita");
         }
         else {
             hpRimanente += 1;
