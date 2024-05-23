@@ -41,9 +41,7 @@ public class GiocatoreRobot extends Giocatore {
         }
     }
     public void cura(){
-        if(hpRimanente == HP) {
-        }
-        else {
+        if(hpRimanente < HP) {
             hpRimanente += 1;
             OvalPaneController.setVita(this);
         }
