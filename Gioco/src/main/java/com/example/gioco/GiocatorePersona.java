@@ -7,7 +7,6 @@ public class GiocatorePersona extends Giocatore{
     private final int HP;
     private int hpRimanente;
     private ArrayList<Carta> mano;
-    private boolean turno;
 
     public GiocatorePersona(){
         HP = 5;
@@ -35,7 +34,6 @@ public class GiocatorePersona extends Giocatore{
         hpRimanente -= danno;
         if(hpRimanente <= 0) {
             hpRimanente = 0;
-            System.out.println("Il giocatore " + nome + " è eliminato");
             tg.setMortiEVincitore(this);
         } else {
             OvalPaneController.setVita(this);
@@ -43,10 +41,7 @@ public class GiocatorePersona extends Giocatore{
     }
 
     public void cura(){
-        if(hpRimanente == HP) {
-            System.out.println("Il personaggio ha già la vita massima, non verrà aggiunto nessun punto vita");
-        }
-        else {
+        if(hpRimanente < HP) {
             hpRimanente += 1;
             OvalPaneController.setVita(this);
         }

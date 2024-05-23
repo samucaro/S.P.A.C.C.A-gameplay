@@ -59,12 +59,9 @@ public class AdminPlayerPageController {
     public void mostraRegolamento() {
         try {
             Stage stage = new Stage();
-            /*stage.setMinWidth(612.5);
-            stage.setMinHeight(412.5);
-            stage.setMaxWidth(612.5);
-            stage.setMaxHeight(412.5);*/
             stage.setTitle("Regolamento");
             stage.getIcons().add(new Image("logo.png"));
+            stage.setMaxWidth(605);
             root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Regolamento.fxml")));
             scene = new Scene(root);
             stage.setScene(scene);
@@ -75,6 +72,7 @@ public class AdminPlayerPageController {
             errorMessage.setVisible(true);
             mostraErrore();
             System.err.println(ex.getMessage());
+            System.out.println("OOOOOOOOOO");
         }
     }
 

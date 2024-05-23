@@ -8,7 +8,6 @@ public class GiocatoreRobot extends Giocatore {
     private final int HP;
     private int hpRimanente;
     private ArrayList<Carta> mano;
-    private boolean turno;
 
     public GiocatoreRobot(){
         HP = 5;

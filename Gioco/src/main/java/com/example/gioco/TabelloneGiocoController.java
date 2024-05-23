@@ -477,8 +477,6 @@ public class TabelloneGiocoController {
     //SAVE
     public void salvaPartita() throws IOException {
         gameData.aggiornaFile();
-        System.out.println(gameData.getGiocatoriPartita());
-        System.out.println(gameData.getMazzo().toStringScarti());
         messaggioSalvataggio.setVisible(true);
         FadeTransition fadeTransition = new FadeTransition(Duration.seconds(2), messaggioSalvataggio);
         fadeTransition.setFromValue(1.0);
